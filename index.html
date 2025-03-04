@@ -34,7 +34,7 @@
     window.isAmplitudeInitialized = false;
     window.sha256Email = '';
 
-    <!--function getCookieOrLocalStorage(name) {
+    function getCookieOrLocalStorage(name) {
         var nameEQ = name + "=";
         var ca = document.cookie.split(';');
         for (var i = 0; i < ca.length; i++) {
@@ -48,7 +48,7 @@
         return !!lsValue;
     }
 
-   function sendAnalyticsData(eventType, props, cb)
+    function sendAnalyticsData(eventType, props, cb) {
         var json = { data: {} };
         json.userToken = np_userId;
         json.data.adsParams = $.cookie('AdsParameters');
@@ -67,7 +67,7 @@
         });
     
 
-       function initializeAmplitudeUser() 
+    function initializeAmplitudeUser() {
         if (isAmplitudeInitialized) {
             return;
         }
@@ -273,13 +273,13 @@
             'ad_user_data': consentDefaultValue,
             'ad_personalization': consentDefaultValue,
             'analytics_storage': consentDefaultValue
-        });-->
+        });
         
         if (hasGoogleIdFromUrl()) {
             useExternalGtmCode = 1;
         }
     </script>
-    <!-- Google Tag Manager 
+    <!-- Google Tag Manager -->
     <script>
         if (useExternalGtmCode) {
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://load.api9.nicepage.com/nldlswob.js?st='+i+dl+'';f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','W76XGFR');
@@ -287,8 +287,8 @@
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W76XGFR');
         }
     </script>
-   End Google Tag Manager -->
-    <!-- Facebook Pixel Code
+    <!-- End Google Tag Manager -->
+    <!-- Facebook Pixel Code -->
         <script>
             if(window.hideFacebookPixelCode !== true) {
                 !function (f, b, e, v, n, t, s) {
@@ -313,9 +313,9 @@
             }
         </script>
         <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=251025992170426&ev=PageView&noscript=1" /></noscript>
-    End Facebook Pixel Code -->
+    <!-- End Facebook Pixel Code -->
 
-<!-- Amplitude Code
+<!-- Amplitude Code -->
 <script type="text/javascript">
     (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
             ;r.type="text/javascript"
@@ -351,8 +351,8 @@ var shareasaleSSCID=shareasaleGetParameterByName("sscid");function shareasaleSet
 
 
 
-<!-- <link rel="preconnect" href="https://images01.nicepagecdn.com" />
-    <!-- <link rel="preconnect" href="https://csite.nicepage.com" />
+<link rel="preconnect" href="https://images01.nicepagecdn.com" />
+<link rel="preconnect" href="https://csite.nicepage.com" />
 
 <!--[if lt IE 9]>
     <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -370,8 +370,8 @@ var shareasaleSSCID=shareasaleGetParameterByName("sscid");function shareasaleSet
             googleAppId: '13150095650-mo8psu2colep6uv90a2mu6r87u87s35a.apps.googleusercontent.com'
         };
     </script>
-    <!--  <script src="https://accounts.google.com/gsi/client?hl=en" async></script>
-        <!-- <script src="//csite.nicepage.com/Scripts/Site/auth-common.js?version=f5b278ee11255f67e69c029939c1178125d19d6d" defer></script>
+    <script src="https://accounts.google.com/gsi/client?hl=en" async></script>
+    <script src="//csite.nicepage.com/Scripts/Site/auth-common.js?version=f5b278ee11255f67e69c029939c1178125d19d6d" defer></script>
 
 
     
@@ -512,6 +512,45 @@ var shareasaleSSCID=shareasaleGetParameterByName("sscid");function shareasaleSet
             display: inline-block;
             height: 100%;
         }
+    </style>
+
+</head>
+    <body>
+        
+
+
+<div class="page-preview">
+    <div class="page-preview-header">
+        <a class="hidden-sm hidden-xs" href="#" id="previewDesktopBtn" data-preview-size="100%"><img alt="Responsive Desktop Mode" src="//csite.nicepage.com/Images/Site/responsive-desktop.png"></a>
+        <a class="hidden-sm hidden-xs" href="#" id="previewLaptopBtn" data-preview-size="1040px"><img alt="Responsive Laptop Mode" src="//csite.nicepage.com/Images/Site/responsive-laptop.png"></a>
+        <a class="hidden-xs" href="#" id="previewTabletBtn" data-preview-size="820px"><img alt="Responsive Tablet Mode" src="//csite.nicepage.com/Images/Site/responsive-tablet.png"></a>
+        <a class="hidden-xs" href="#" id="previewPhoneHorizontalBtn" data-preview-size="640px"><img alt="Responsive Phone Horizontal Mode" src="//csite.nicepage.com/Images/Site/responsive-phone-horizontal.png"></a>
+        <a class="hidden-xs" href="#" id="previewPhoneBtn" data-preview-size="440px"><img alt="Responsive Phone Mode" src="//csite.nicepage.com/Images/Site/responsive-phone.png"></a>
+        <a class="close" href="/ht/6058706/elevate-your-brand-with-us-html-template"><img alt="Close" src="//csite.nicepage.com/Images/Site/icon-close.png"></a>
+    </div>
+    <div class="page-preview-body">
+        <iframe id="livePreviewFrame" src="https://website47374.nicepage.io/Portfolio.html?version=de2eb8ea-0d43-46b8-80ad-2c3a2ba0fe15" width="1057" height="640" style="width:100%;"></iframe>
+    </div>
+</div>
+<a style="position:absolute;top:17px;left:10px;" href="/"><img alt="NicePage.com" src="//csite.nicepage.com/Images/logo-w.png"></a>
+
+        <script>
+            if (window.parent) {
+                var _w = 0, _h = 0;
+                var updateFormSize = function () {
+                    var form = $('form.shaped-form-extended,form.shaped-form');
+                    var w = form.outerWidth(true);
+                    var h = form.outerHeight(true);
+                    if (Math.abs(_w - w) > 5 || Math.abs(_h - h) > 5) {
+                        _w = w;
+                        _h = h;
+                        var msg = { key: 'login-frame-size', width: w, height: h };
+                        window.parent.postMessage(msg, "*");
+                    }
+                    setTimeout(updateFormSize, 300);
+                }
+                updateFormSize();
+            }
         </script>
     </body>
 </html>}
