@@ -12,17 +12,31 @@
 </head>
 <body class="bg-neutral-900 text-white">
     <!-- Header and Navigation -->
-    <header class="fixed top-0 left-0 w-full z-50 py-6 px-8 flex justify-between items-center bg-black text-white transition-colors duration-300 shadow-md">
-        <a href="./index.html" class="text-2xl font-bold uppercase tracking-widest">Riccardo Riva</a>
-        <nav class="hidden md:block">
-            <ul class="flex space-x-8 text-sm uppercase font-medium">
-                <li><a href="./portfolio.html" class="hover:text-gray-300">Portfolio</a></li>
-                <li><a href="./blog.html" class="hover:text-gray-300">Blog</a></li>
-                <li><a href="./about.html" class="hover:text-gray-300">Chi Sono</a></li>
-                <li><a href="./contact.html" class="hover:text-gray-300">Contatti</a></li>
-            </ul>
-        </nav>
-    </header>
+    <header class="fixed top-0 left-0 w-full z-50 py-6 px-8 flex justify-between items-center bg-transparent text-white transition-colors duration-300">
+    <a href="index.html" class="text-2xl font-bold uppercase tracking-widest">Riccardo Riva</a>
+    
+    <button id="menu-toggle" class="md:hidden z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    
+    <nav id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-black z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col items-center justify-center space-y-8 text-xl uppercase font-medium">
+        <a href="./portfolio.html" class="hover:text-gray-300">Portfolio</a>
+        <a href="./blog.html" class="hover:text-gray-300">Blog</a>
+        <a href="./about.html" class="hover:text-gray-300">About</a>
+        <a href="./contact.html" class="hover:text-gray-300">Contact</a>
+    </nav>
+
+    <nav class="hidden md:block">
+        <ul class="flex space-x-8 text-sm uppercase font-medium">
+            <li><a href="./portfolio.html" class="hover:text-gray-300">Portfolio</a></li>
+            <li><a href="./blog.html" class="hover:text-gray-300">Blog</a></li>
+            <li><a href="./about.html" class="hover:text-gray-300">About</a></li>
+            <li><a href="./contact.html" class="hover:text-gray-300">Contact</a></li>
+        </ul>
+    </nav>
+</header>
 
     <!-- Contact Section -->
     <section class="py-40 md:py-52 bg-neutral-900 text-white">
@@ -41,5 +55,26 @@
     <footer class="bg-black text-white py-4 text-center text-sm">
         &copy; 2025 Riccardo Riva. Tutti i diritti riservati.
     </footer>
+    <script>
+    // Header scroll behavior
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.remove('bg-transparent', 'text-white');
+            header.classList.add('bg-black', 'text-white', 'shadow-md');
+        } else {
+            header.classList.remove('bg-black', 'text-white', 'shadow-md');
+            header.classList.add('bg-transparent', 'text-white');
+        }
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('translate-x-full');
+    });
+</script>
 </body>
 </html>
