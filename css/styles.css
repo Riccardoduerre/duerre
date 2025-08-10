@@ -3,7 +3,7 @@
 /* Custom styles for the hero section background, specific to the home page */
 .hero {
     height: 100vh;
-    background-image: url('https://placehold.co/1920x1080/000000/FFFFFF.png?text=Hero+Image+Placeholder');
+    background-image: url(../images/_RIK7376_HDR.jpg);
     background-size: cover;
     background-position: center;
     display: flex;
