@@ -3,33 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Photo & Video Portfolio</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Redirecting...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>Welcome to My Portfolio</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="pages/portfolio.html">Portfolio</a>
-            <a href="pages/about.html">About Me</a>
-            <a href="pages/contact.html">Contact</a>
-            <a href="blog/blog.html">Blog</a>
-        </nav>
-    </header>
-    <div class="banner"></div>
-    <main>
-        <section>
-            <h2>Capturing Moments, Creating Stories</h2>
-            <p>Explore a showcase of my best work in photography and videography.</p>
-        </section>
-        <section class="gallery">
-            <img src="images/_DSC2919.jpg" alt="Gallery Image 1">
-            <img src="images/_DSC2241.jpg" alt="Gallery Image 2">
-            <img src="images/_DSC2344.jpg" alt="Gallery Image 3">
-            <img src="images/_DSC2365.jpg" alt="Gallery Image 4">
-        </section>
-    </main>
-    <footer>&copy; 2025 My Portfolio</footer>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <p class="text-gray-600 text-lg">Redirecting to your language...</p>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            let targetPath = '';
+
+            if (userLang.startsWith('it')) {
+                // If the user's language starts with 'it', redirect to the Italian page
+                targetPath = 'it/index.html';
+            } else {
+                // For all other languages, default to the English page
+                targetPath = 'en/index.html';
+            }
+
+            // Construct an absolute URL for redirection to avoid issues with relative paths
+            const currentPath = window.location.pathname;
+            const newUrl = currentPath.substring(0, currentPath.lastIndexOf('/') + 1) + targetPath;
+
+            // Use window.location.replace to redirect the user
+            window.location.replace(newUrl);
+        });
+    </script>
 </body>
 </html>

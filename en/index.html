@@ -1,0 +1,92 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Your Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+    <!-- Header and Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 py-6 px-8 flex justify-between items-center bg-transparent text-white transition-colors duration-300">
+        <a href="#home" class="text-2xl font-bold uppercase tracking-widest">Your Name</a>
+        <nav class="hidden md:block">
+            <ul class="flex space-x-8 text-sm uppercase font-medium">
+                <li><a href="#work" class="hover:text-gray-300">Work</a></li>
+                <li><a href="./about.html" class="hover:text-gray-300">About</a></li>
+                <li><a href="./contact.html" class="hover:text-gray-300">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Homepage Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="relative z-10 text-center text-white">
+            <h1 class="text-4xl md:text-6xl font-bold uppercase tracking-widest leading-tight">Your Tagline Here</h1>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="py-20 md:py-32 bg-neutral-900 text-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-16 text-center">Work</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+                <!-- Placeholder for images from the original files -->
+                <div class="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://placehold.co/800x600/1e1e1e/d4d4d4?text=_DSC2919.jpg" alt="Gallery Image 1" class="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white text-xl font-medium">Placeholder Project</span>
+                    </div>
+                </div>
+
+                <div class="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://placehold.co/800x600/1e1e1e/d4d4d4?text=_DSC2241.jpg" alt="Gallery Image 2" class="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white text-xl font-medium">Placeholder Project</span>
+                    </div>
+                </div>
+
+                <div class="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://placehold.co/800x600/1e1e1e/d4d4d4?text=_DSC2344.jpg" alt="Gallery Image 3" class="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white text-xl font-medium">Placeholder Project</span>
+                    </div>
+                </div>
+
+                <div class="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://placehold.co/800x600/1e1e1e/d4d4d4?text=_DSC2365.jpg" alt="Gallery Image 4" class="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white text-xl font-medium">Placeholder Project</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-4 text-center text-sm">
+        &copy; 2025 Your Name. All rights reserved.
+    </footer>
+
+    <!-- A small script to change header color on scroll -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.remove('bg-transparent', 'text-white');
+                header.classList.add('bg-black', 'text-white', 'shadow-md');
+            } else {
+                header.classList.remove('bg-black', 'text-white', 'shadow-md');
+                header.classList.add('bg-transparent', 'text-white');
+            }
+        });
+    </script>
+</body>
+</html>
