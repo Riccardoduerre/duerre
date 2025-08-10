@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Riccardo Riva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header class="fixed top-0 left-0 w-full z-50 py-6 px-8 flex justify-between items-center bg-transparent text-white transition-colors duration-300">
+        <a href="index.html" class="text-2xl font-bold uppercase tracking-widest">Riccardo Riva</a>
+        <nav class="hidden md:block">
+            <ul class="flex space-x-8 text-sm uppercase font-medium">
+                <li><a href="./portfolio.html" class="hover:text-gray-300">Portfolio</a></li>
+                <li><a href="./about.html" class="hover:text-gray-300">Chi Sono</a></li>
+                <li><a href="./contact.html" class="hover:text-gray-300">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="py-20 md:py-32 bg-neutral-900 text-white min-h-screen">
+        <div class="container mx-auto px-4 md:px-8 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-16">Il Mio Portfolio</h2>
+            <div class="flex flex-col md:flex-row justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <a href="./photos.html" class="bg-white text-black font-bold py-4 px-8 rounded-lg shadow-lg hover:bg-gray-200 transition-colors duration-300">Foto</a>
+                <a href="./videos.html" class="bg-white text-black font-bold py-4 px-8 rounded-lg shadow-lg hover:bg-gray-200 transition-colors duration-300">Video</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-4 text-center text-sm">
+        &copy; 2025 Riccardo Riva. All rights reserved.
+    </footer>
+
+    <script>
+        // Header scroll behavior
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.remove('bg-transparent', 'text-white');
+                header.classList.add('bg-black', 'text-white', 'shadow-md');
+            } else {
+                header.classList.remove('bg-black', 'text-white', 'shadow-md');
+                header.classList.add('bg-transparent', 'text-white');
+            }
+        });
+    </script>
+</body>
+</html>
