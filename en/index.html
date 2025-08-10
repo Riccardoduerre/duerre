@@ -12,7 +12,6 @@
 </head>
 <body>
 
-    <!-- Header and Navigation -->
     <header class="fixed top-0 left-0 w-full z-50 py-6 px-8 flex justify-between items-center bg-transparent text-white transition-colors duration-300">
         <a href="#home" class="text-2xl font-bold uppercase tracking-widest">Riccardo Riva</a>
         <nav class="hidden md:block">
@@ -24,7 +23,6 @@
         </nav>
     </header>
 
-    <!-- Homepage Hero Section -->
     <section id="home" class="hero">
         <div class="hero-overlay"></div>
         <div class="relative z-10 text-center text-white">
@@ -32,13 +30,11 @@
         </div>
     </section>
 
-    <!-- Work Section -->
     <section id="work" class="py-20 md:py-32 bg-neutral-900 text-white">
         <div class="container mx-auto px-4 md:px-8">
             <h2 class="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-16 text-center">Work</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-                <!-- Placeholder for images from the original files -->
                 <div class="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg aspect-w-4 aspect-h-3 gallery-item">
                     <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/_DSC2241.jpg" alt="Gallery Image 1" class="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105">
                     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -70,12 +66,11 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-black text-white py-4 text-center text-sm">
         &copy; 2025 Riccardo Riva. All rights reserved.
     </footer>
 
-<div id="lightbox" class="lightbox">
+    <div id="lightbox" class="lightbox">
         <button class="close">&times;</button>
         <button class="prev">&lt;</button>
         <img src="" alt="Full-screen image">
@@ -96,7 +91,7 @@
         });
 
         // Lightbox functionality
-        const galleryItems = document.querySelectorAll('.gallery-item img');
+        const galleryItems = document.querySelectorAll('.gallery-item');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = lightbox.querySelector('img');
         const prevBtn = lightbox.querySelector('.prev');
@@ -126,7 +121,7 @@
         });
 
         function showImage(index) {
-            const imgSrc = galleryItems[index].getAttribute('src');
+            const imgSrc = galleryItems[index].querySelector('img').getAttribute('src');
             lightboxImg.src = imgSrc;
             lightbox.classList.add('active');
         }
