@@ -22,4 +22,12 @@ async function updateTexts(lang) {
             }
         }
     });
-};
+}
+
+// gestione cambio lingua
+document.getElementById("langSelect").addEventListener("change", (e) => {
+    updateTexts(e.target.value);
+});
+
+// inizializza lingua di default
+updateTexts(document.getElementById("langSelect").value);

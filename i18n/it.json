@@ -1,4 +1,7 @@
 {
-    "title":"Home - Il Tuo Portfolio"
-
+    "title" : "Home - Riccardo Riva",
+    "Portfolio" : "Portfolio",
+    "About" : "Chi sono",
+    "Contact" : "Contatti",
+    "Blog" : "Blog"
 }
