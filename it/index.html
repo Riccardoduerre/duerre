@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Il Tuo Portfolio</title>
+    <title data-i18n="title">Home - Il Tuo Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,6 +55,21 @@
         <img src="" alt="Full-screen image">
         <button class="next">&gt;</button>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const userLang = navigator.language || navigator.userLanguage;
+        let lang = '';
+
+        if (userLang.startsWith('it')) {
+            // If the user's language starts with 'it', redirect to the Italian page
+            lang = 'it';
+        } else {
+            // For all other languages, default to the English page
+            lang = 'en';
+        }}); 
+    </script>
+    <script src="i18n.js"></script>
 
     <script>
         // Header scroll behavior

@@ -21,13 +21,7 @@
             const userLang = navigator.language || navigator.userLanguage;
             let targetPath = '';
 
-            if (userLang.startsWith('it')) {
-                // If the user's language starts with 'it', redirect to the Italian page
-                targetPath = 'it/index.html';
-            } else {
-                // For all other languages, default to the English page
-                targetPath = 'en/index.html';
-            }
+            targetPath = 'it/index.html';
 
             // Construct an absolute URL for redirection to avoid issues with relative paths
             const currentPath = window.location.pathname;
