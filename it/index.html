@@ -22,10 +22,16 @@
     </button>
     
     <nav id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-black z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col items-center justify-center space-y-8 text-xl uppercase font-medium">
-        <a href="./portfolio.html" class="hover:text-gray-300">Portfolio</a>
-        <a href="./blog.html" class="hover:text-gray-300">Blog</a>
-        <a href="./about.html" class="hover:text-gray-300">Chi Sono</a>
-        <a href="./contact.html" class="hover:text-gray-300">Contatti</a>
+        <li><a href="./portfolio.html" class="hover:text-gray-300" data-i18n="Portfolio">Portfolio</a></li>
+            <li><a href="./blog.html" class="hover:text-gray-300" data-i18n="Blog">Blog</a></li>
+            <li><a href="./about.html" class="hover:text-gray-300" data-i18n="About">Chi Sono</a></li>
+            <li><a href="./contact.html" class="hover:text-gray-300" data-i18n="Contact">Contatti</a></li>
+            <li>
+                <select id="langSelect">
+                    <option value="it">Italiano</option>
+                    <option value="en">English</option>
+                </select>
+            </li>
     </nav>
 
     <nav class="hidden md:block">
