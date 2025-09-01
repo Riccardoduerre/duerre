@@ -25,38 +25,50 @@ const langDropdown = document.getElementById("langDropdown");
 const langFlag = document.getElementById("langFlag");
 const langCode = document.getElementById("langCode");
 
-let currentLang = "it"; // lingua di default
+let currentLang; // will be set dynamically
 
+// Detect browser language
+function detectLanguage() {
+    const userLang = navigator.language || navigator.userLanguage;
+    return userLang.startsWith("it") ? "it" : "en";
+}
+
+// Apply language settings (flag, code, texts)
+async function setLanguage(lang) {
+    const flag = lang === "it"
+        ? "https://flagcdn.com/16x12/it.png"
+        : "https://flagcdn.com/16x12/gb.png";
+
+    langFlag.src = flag;
+    langFlag.alt = lang;
+    langCode.textContent = lang.toUpperCase();
+    currentLang = lang;
+
+    if (typeof updateTexts === "function") {
+        await updateTexts(lang);
+    }
+}
+
+// --- Dropdown handling ---
 langButton.addEventListener("click", () => langDropdown.classList.toggle("hidden"));
 
 langDropdown.querySelectorAll("li").forEach(item => {
     item.addEventListener("click", async () => {
         const lang = item.dataset.lang;
-        const flag = item.dataset.flag;
-
-        langFlag.src = flag;
-        langFlag.alt = lang;
-        langCode.textContent = lang.toUpperCase();
-
-        currentLang = lang;
+        await setLanguage(lang);
         langDropdown.classList.add("hidden");
-
-        if (typeof updateTexts === "function") {
-            await updateTexts(lang);
-        }
     });
 });
 
-// Chiudi dropdown cliccando fuori
+// Close dropdown clicking outside
 document.addEventListener("click", e => {
     if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
         langDropdown.classList.add("hidden");
     }
 });
 
-// Inizializza testi
-document.addEventListener("DOMContentLoaded", () => {
-    if (typeof updateTexts === "function") {
-        updateTexts(currentLang);
-    }
+// --- Initialize on page load ---
+document.addEventListener("DOMContentLoaded", async () => {
+    const browserLang = detectLanguage();
+    await setLanguage(browserLang);
 });
