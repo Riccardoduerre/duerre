@@ -11,130 +11,109 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="font-inter">
+    <div id="navbar-container"></div>
 
-<div id="navbar-container"></div>
+    <!-- Hero Section -->
+    <section id="home" class="hero relative h-screen flex items-center justify-center text-center text-white">
+        <div class="hero-overlay absolute inset-0 bg-black opacity-20"></div>
+        <div class="relative z-10 px-4"></div>
+            <h1 class="text-4xl md:text-6xl font-bold uppercase tracking-widest leading-tight" data-i18n="header">
+                Your best moments, saved forever
+            </h1>
 
-<!-- Hero Section -->
-<section id="home" class="hero relative h-screen flex items-center justify-center text-center text-white">
-    <div class="hero-overlay absolute inset-0 bg-black opacity-50"></div>
-    <div class="relative z-10 px-4">
-        <h1 class="text-4xl md:text-6xl font-bold uppercase tracking-widest leading-tight" data-i18n="header">
-            Your best moments, saved forever
-        </h1>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-4 text-center text-sm">
+        &copy; 2025 Riccardo Riva. All rights reserved.
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+        <button class="close absolute top-4 right-6 text-white text-3xl">&times;</button>
+        <button class="prev absolute left-6 text-white text-3xl">&lt;</button>
+        <img src="" alt="Full-screen image" class="max-h-[90%] max-w-[90%] mx-auto">
+        <button class="next absolute right-6 text-white text-3xl">&gt;</button>
     </div>
-</section>
 
-<!-- Footer -->
-<footer class="bg-black text-white py-4 text-center text-sm">
-    &copy; 2025 Riccardo Riva. All rights reserved.
-</footer>
+    <!-- Scripts -->
+    <script src="navbar/loadNavbar.js"></script>
+    <script src="i18n.js"></script>
+    <script>
+        // Language selector
+        const langButton = document.getElementById("langButton");
+        const langDropdown = document.getElementById("langDropdown");
+        const langFlag = document.getElementById("langFlag");
+        const langCode = document.getElementById("langCode");
+        let currentLang;
 
-<!-- Lightbox -->
-<div id="lightbox" class="lightbox fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
-    <button class="close absolute top-4 right-6 text-white text-3xl">&times;</button>
-    <button class="prev absolute left-6 text-white text-3xl">&lt;</button>
-    <img src="" alt="Full-screen image" class="max-h-[90%] max-w-[90%] mx-auto">
-    <button class="next absolute right-6 text-white text-3xl">&gt;</button>
-</div>
-
-<!-- Scripts -->
-<script src="i18n.js"></script>
-<script>
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('translate-x-full');
-    });
-
-    // Header scroll behavior
-    const header = document.querySelector('header');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('bg-black', 'text-white', 'shadow-md');
-            header.classList.remove('bg-transparent');
-        } else {
-            header.classList.add('bg-transparent', 'text-white');
-            header.classList.remove('bg-black', 'shadow-md');
+        // Detect browser language
+        function detectLanguage() {
+            const userLang = navigator.language || navigator.userLanguage;
+            return userLang.startsWith("it") ? "it" : "en";
         }
-    });
 
-    // Language selector
-    const langButton = document.getElementById("langButton");
-    const langDropdown = document.getElementById("langDropdown");
-    const langFlag = document.getElementById("langFlag");
-    const langCode = document.getElementById("langCode");
-    let currentLang;
+        function setLanguage(lang) {
+            const flag = lang === "it"
+                ? "https://flagcdn.com/16x12/it.png"
+                : "https://flagcdn.com/16x12/gb.png";
 
-    // Detect browser language
-    function detectLanguage() {
-        const userLang = navigator.language || navigator.userLanguage;
-        return userLang.startsWith("it") ? "it" : "en";
-    }
+            langFlag.src = flag;
+            langFlag.alt = lang;
+            langCode.textContent = lang.toUpperCase();
+            currentLang = lang;
+            updateTexts(lang);
+        }
 
-    function setLanguage(lang) {
-        const flag = lang === "it"
-            ? "https://flagcdn.com/16x12/it.png"
-            : "https://flagcdn.com/16x12/gb.png";
-
-        langFlag.src = flag;
-        langFlag.alt = lang;
-        langCode.textContent = lang.toUpperCase();
-        currentLang = lang;
-        updateTexts(lang);
-    }
-
-    langButton.addEventListener("click", () => langDropdown.classList.toggle("hidden"));
-    langDropdown.querySelectorAll("li").forEach(item => {
-        item.addEventListener("click", () => {
-            const lang = item.dataset.lang;
-            setLanguage(lang);
-            langDropdown.classList.add("hidden");
+        langButton.addEventListener("click", () => langDropdown.classList.toggle("hidden"));
+        langDropdown.querySelectorAll("li").forEach(item => {
+            item.addEventListener("click", () => {
+                const lang = item.dataset.lang;
+                setLanguage(lang);
+                langDropdown.classList.add("hidden");
+            });
         });
-    });
 
-    document.addEventListener("click", e => {
-        if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
-            langDropdown.classList.add("hidden");
-        }
-    });
+        document.addEventListener("click", e => {
+            if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.add("hidden");
+            }
+        });
 
-    // Initialize with browser language
-    setLanguage(detectLanguage());
+        // Initialize with browser language
+        setLanguage(detectLanguage());
 
-    // Lightbox
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = lightbox.querySelector('img');
-    const prevBtn = lightbox.querySelector('.prev');
-    const nextBtn = lightbox.querySelector('.next');
-    const closeBtn = lightbox.querySelector('.close');
-    let currentIndex = 0;
+        // Lightbox
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const prevBtn = lightbox.querySelector('.prev');
+        const nextBtn = lightbox.querySelector('.next');
+        const closeBtn = lightbox.querySelector('.close');
+        let currentIndex = 0;
 
-    galleryItems.forEach((item, index) => {
-        item.addEventListener('click', () => {
-            currentIndex = index;
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                showImage(currentIndex);
+            });
+        });
+
+        closeBtn.addEventListener('click', () => lightbox.classList.add('hidden'));
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
             showImage(currentIndex);
         });
-    });
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % galleryItems.length;
+            showImage(currentIndex);
+        });
 
-    closeBtn.addEventListener('click', () => lightbox.classList.add('hidden'));
-    prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-        showImage(currentIndex);
-    });
-    nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % galleryItems.length;
-        showImage(currentIndex);
-    });
-
-    function showImage(index) {
-        const imgSrc = galleryItems[index].querySelector('img').src;
-        lightboxImg.src = imgSrc;
-        lightbox.classList.remove('hidden');
-    }
-</script>
-<script src="i18n.js"></script>
-<script src="loadNavbar.js"></script>
+        function showImage(index) {
+            const imgSrc = galleryItems[index].querySelector('img').src;
+            lightboxImg.src = imgSrc;
+            lightbox.classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
