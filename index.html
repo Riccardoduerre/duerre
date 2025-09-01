@@ -15,21 +15,19 @@
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <p class="text-gray-600 text-lg">Redirecting to your language...</p>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const userLang = navigator.language || navigator.userLanguage;
-            let targetPath = '';
+<p class="text-gray-600 text-lg">Redirecting to your language...</p>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let targetPath = '';
+        targetPath = 'src/index.html';
 
-            targetPath = 'it/index.html';
+        // Construct an absolute URL for redirection to avoid issues with relative paths
+        const currentPath = window.location.pathname;
+        const newUrl = currentPath.substring(0, currentPath.lastIndexOf('/') + 1) + targetPath;
 
-            // Construct an absolute URL for redirection to avoid issues with relative paths
-            const currentPath = window.location.pathname;
-            const newUrl = currentPath.substring(0, currentPath.lastIndexOf('/') + 1) + targetPath;
-
-            // Use window.location.replace to redirect the user
-            window.location.replace(newUrl);
-        });
-    </script>
+        // Use window.location.replace to redirect the user
+        window.location.replace(newUrl);
+    });
+</script>
 </body>
 </html>
