@@ -117,27 +117,43 @@
     const langDropdown = document.getElementById("langDropdown");
     const langFlag = document.getElementById("langFlag");
     const langCode = document.getElementById("langCode");
-    let currentLang = "it";
+    let currentLang;
+
+    // Detect browser language
+    function detectLanguage() {
+        const userLang = navigator.language || navigator.userLanguage;
+        return userLang.startsWith("it") ? "it" : "en";
+    }
+
+    function setLanguage(lang) {
+        const flag = lang === "it"
+            ? "https://flagcdn.com/16x12/it.png"
+            : "https://flagcdn.com/16x12/gb.png";
+
+        langFlag.src = flag;
+        langFlag.alt = lang;
+        langCode.textContent = lang.toUpperCase();
+        currentLang = lang;
+        updateTexts(lang);
+    }
 
     langButton.addEventListener("click", () => langDropdown.classList.toggle("hidden"));
     langDropdown.querySelectorAll("li").forEach(item => {
         item.addEventListener("click", () => {
             const lang = item.dataset.lang;
-            const flag = item.dataset.flag;
-            langFlag.src = flag;
-            langFlag.alt = lang;
-            langCode.textContent = lang.toUpperCase();
-            currentLang = lang;
+            setLanguage(lang);
             langDropdown.classList.add("hidden");
-            updateTexts(lang);
         });
     });
+
     document.addEventListener("click", e => {
         if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
             langDropdown.classList.add("hidden");
         }
     });
-    updateTexts(currentLang);
+
+    // Initialize with browser language
+    setLanguage(detectLanguage());
 
     // Lightbox
     const galleryItems = document.querySelectorAll('.gallery-item');
