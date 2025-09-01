@@ -5,5 +5,18 @@
   "Contact": "Contact",
   "Blog": "Blog",
   "header": "Your best moments, saved forever",
-  "first-post-intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  "first-post-intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  "about_p1": "I'm a photographer and videographer based in Italy. I have worked with several local clients and gained experience as an in-house photographer for a local company. I love capturing the beauty of everyday life through my lens — whether it's a sweeping landscape, a candid moment, or a carefully composed portrait.",
+  "about_p2": "This site is a work in progress; I will add more information about my background and projects soon. Stay tuned!",
+  "contact_intro": "Have a project in mind or just want to say hello? I'd love to hear from you.",
+  "portfolio_heading": "My Portfolio",
+  "photos_label": "Photos",
+  "videos_label": "Videos",
+  "photos_heading": "Photo Collections",
+  "wedding_gig": "Wedding Gig",
+  "corporate_event": "Corporate Event",
+  "blog_post1_title": "My First Blog Post Title",
+  "blog_post1_preview": "A short, intriguing preview of my first blog post. Read more about my experience and thoughts.",
+  "blog_post2_title": "The Art of Photography",
+  "blog_post2_preview": "Exploring the techniques and inspiration behind some of my best shots."
 }
