@@ -1,10 +1,21 @@
 // i18n.js
-const i18nData = {}; // memorizza le traduzioni caricate
+const i18nData = {}; // Stores loaded translations
+
+function getTranslationPath(lang) {
+    // If the page is in a subfolder, use '../en.json', else use 'en.json'
+    const pathParts = window.location.pathname.split('/');
+    // If there is a subfolder (e.g. /photo-gigs/...), use '../'
+    if (pathParts.length > 2 && pathParts[1] !== '') {
+        return `../${lang}.json`;
+    }
+    return `${lang}.json`;
+}
 
 async function loadTranslations(lang) {
     if (!i18nData[lang]) {
         try {
-            const response = await fetch(`../${lang}.json`);
+            const path = getTranslationPath(lang);
+            const response = await fetch(path);
             if (!response.ok) throw new Error("Errore nel caricamento delle traduzioni");
             i18nData[lang] = await response.json();
         } catch (err) {
