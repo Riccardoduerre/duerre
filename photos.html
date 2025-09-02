@@ -137,16 +137,11 @@
         // Update page texts (h2, etc.) using i18n.js
         function updatePageTexts() {
             const lang = localStorage.getItem('lang') || 'en';
-            // Use same logic as i18n.js to get translation file path
-            function getTranslationPath(lang) {
-                const pathParts = window.location.pathname.split('/').filter(Boolean);
-                if (pathParts.length > 1) {
-                    return `../${lang}.json`;
-                }
-                return `${lang}.json`;
+            // Force i18n.js to reload translations by clearing cache
+            if (typeof i18nData !== 'undefined') {
+                i18nData[lang] = undefined;
             }
             if (typeof updateTexts === 'function') {
-                // Patch updateTexts to accept a custom path
                 updateTexts(lang);
             }
         }
