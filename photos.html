@@ -84,9 +84,6 @@
 
         async function updateCollectionPreviews() {
             const lang = localStorage.getItem('lang') || 'en';
-            const translationsPath = getTranslationPath(lang);
-            const translations = await fetch(translationsPath + `?t=${Date.now()}`).then(r => r.json());
-
             const previews = document.querySelectorAll('.collection-preview');
 
             for (const preview of previews) {
@@ -94,6 +91,15 @@
                 const span = preview.querySelector('.collection-preview-text span');
                 if (link && span) {
                     try {
+                        // Determine translation path for the linked page
+                        let translationsPath;
+                        if (link.startsWith('photo-gigs/')) {
+                            translationsPath = `../${lang}.json`;
+                        } else {
+                            translationsPath = `${lang}.json`;
+                        }
+                        const translations = await fetch(translationsPath + `?t=${Date.now()}`).then(r => r.json());
+
                         const response = await fetch(link);
                         const html = await response.text();
                         const tempDiv = document.createElement('div');
