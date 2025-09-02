@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,24 +42,27 @@
         }
     </style>
 </head>
+
 <body>
     <div id="navbar-container"></div>
 
 
     <section id="collections" class="py-20 md:py-32 bg-neutral-900 text-white min-h-screen">
         <div class="container mx-auto px-4 md:px-8 text-center">
-            <h2 class="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-16">Photo Collections</h2>
+            <h2 class="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-16" data-i18n="Collections"></h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                <a href="photo-gigs/wedding-gig.html" class="relative block h-64 rounded-lg shadow-lg overflow-hidden collection-preview" style="background-image: url('https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/_DSC2241.jpg');">
+                <a href="photo-gigs/wedding-gig.html"
+                    class="relative block h-64 rounded-lg shadow-lg overflow-hidden collection-preview">
                     <div class="collection-preview-text">
-                        <span class="text-white text-3xl font-bold uppercase tracking-widest">Wedding Gig</span>
+                        <span class="text-white text-3xl font-bold uppercase tracking-widest"></span>
                     </div>
                 </a>
 
-                <a href="photo-gigs/corporate-event.html" class="relative block h-64 rounded-lg shadow-lg overflow-hidden collection-preview" style="background-image: url('https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/_DSC2365.jpg');">
+                <a href="photo-gigs/giau-2025.html"
+                    class="relative block h-64 rounded-lg shadow-lg overflow-hidden collection-preview">
                     <div class="collection-preview-text">
-                        <span class="text-white text-3xl font-bold uppercase tracking-widest">Corporate Event</span>
+                        <span class="text-white text-3xl font-bold uppercase tracking-widest"></span>
                     </div>
                 </a>
             </div>
@@ -70,5 +74,38 @@
     </footer>
     <script src="navbar/loadNavbar.js"></script>
     <script src="i18n.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const previews = document.querySelectorAll('.collection-preview');
+
+            for (const preview of previews) {
+                const link = preview.getAttribute('href');
+                const span = preview.querySelector('.collection-preview-text span');
+                if (link && span) {
+                    try {
+                        const response = await fetch(link);
+                        const html = await response.text();
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = html;
+
+                        // Get first h2 for the title
+                        const h2 = tempDiv.querySelector('h2');
+                        if (h2 && h2.textContent.trim()) {
+                            span.textContent = h2.textContent.trim();
+                        }
+
+                        // Get first image for the preview background
+                        const firstImg = tempDiv.querySelector('img');
+                        if (firstImg && firstImg.src) {
+                            preview.style.backgroundImage = `url('${firstImg.src}')`;
+                        }
+                    } catch (err) {
+                        console.error('Could not fetch collection info:', err);
+                    }
+                }
+            }
+        });
+    </script>
 </body>
+
 </html>
