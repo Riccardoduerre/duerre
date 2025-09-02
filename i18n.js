@@ -12,16 +12,15 @@ function getTranslationPath(lang) {
 }
 
 async function loadTranslations(lang) {
-    if (!i18nData[lang]) {
-        try {
-            const path = getTranslationPath(lang);
-            const response = await fetch(path);
-            if (!response.ok) throw new Error("Errore nel caricamento delle traduzioni");
-            i18nData[lang] = await response.json();
-        } catch (err) {
-            console.error("Errore i18n:", err);
-            i18nData[lang] = {};
-        }
+    // Always fetch fresh translations to reflect language changes immediately
+    try {
+        const path = getTranslationPath(lang);
+        const response = await fetch(path);
+        if (!response.ok) throw new Error("Errore nel caricamento delle traduzioni");
+        i18nData[lang] = await response.json();
+    } catch (err) {
+        console.error("Errore i18n:", err);
+        i18nData[lang] = {};
     }
     return i18nData[lang];
 }
