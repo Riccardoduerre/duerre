@@ -21,10 +21,17 @@ async function loadTranslations(lang) {
     const response = await fetch(path + `?t=${Date.now()}`); // prevent caching
         if (!response.ok) throw new Error("Errore nel caricamento delle traduzioni");
         i18nData[lang] = await response.json();
-    console.debug('[i18n] loaded keys', Object.keys(i18nData[lang] || {}));
+        console.debug('[i18n] loaded keys', Object.keys(i18nData[lang] || {}));
+        // Expose last loaded info for debugging
+        window.i18nInfo = {
+            lang,
+            path,
+            keys: Object.keys(i18nData[lang] || {})
+        };
     } catch (err) {
         console.error("Errore i18n:", err);
         i18nData[lang] = {};
+        window.i18nInfo = { lang, path: getTranslationPath(lang), keys: [] };
     }
     return i18nData[lang];
 }

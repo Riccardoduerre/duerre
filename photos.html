@@ -154,6 +154,11 @@
         // Also run when i18n system signals it's ready
         window.addEventListener('i18nReady', () => {
             updateCollectionPreviews();
+            // update debug panel
+            const info = window.i18nInfo || {};
+            document.getElementById('i18n-debug-lang').textContent = 'lang: ' + (info.lang || '');
+            document.getElementById('i18n-debug-path').textContent = 'path: ' + (info.path || '');
+            document.getElementById('i18n-debug-keys').textContent = 'keys: ' + ((info.keys && info.keys.join(', ')) || '');
         });
 
         // Update previews when language changes
