@@ -44,9 +44,13 @@ async function setLanguage(lang) {
     langCode.textContent = lang.toUpperCase();
     currentLang = lang;
 
+    localStorage.setItem('lang', lang); // Save selected language
+
     if (typeof updateTexts === "function") {
         await updateTexts(lang);
     }
+
+    window.dispatchEvent(new Event('languageChanged')); // Notify other scripts
 }
 
 // --- Dropdown handling ---
@@ -69,6 +73,8 @@ document.addEventListener("click", e => {
 
 // --- Initialize on page load ---
 document.addEventListener("DOMContentLoaded", async () => {
+    const storedLang = localStorage.getItem('lang');
     const browserLang = detectLanguage();
-    await setLanguage(browserLang);
+    const langToUse = storedLang || browserLang;
+    await setLanguage(langToUse);
 });
