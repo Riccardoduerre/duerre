@@ -112,6 +112,8 @@
                             if (link.includes('wedding-gig')) key = 'wedding_gig';
                             // Add more mappings as needed
                         }
+                        // Always use the selected language from localStorage
+                        const langSelected = localStorage.getItem('lang') || 'en';
                         if (key && translations[key]) {
                             span.textContent = translations[key];
                         } else if (h2 && h2.textContent.trim()) {
