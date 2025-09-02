@@ -8,37 +8,150 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body class="font-inter">
-    <div id="navbar-container"></div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero relative h-screen flex items-center justify-center text-center text-white">
-        <div class="hero-overlay absolute inset-0 bg-black opacity-20"></div>
-        <div class="relative z-10 px-4">
-            <h1 class="text-4xl md:text-6xl font-bold uppercase tracking-widest leading-tight" data-i18n="header">
-                Your best moments, saved forever
-            </h1>
+<!-- Header -->
+<div id="navbar-container"></div>
+
+<!-- Hero Section replaced with Gallery Grid -->
+<section id="gallery" class="py-12 bg-black">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00001.jpg" alt="Gallery Image 1" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00002.jpg" alt="Gallery Image 2" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00003.jpg" alt="Gallery Image 3" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00004.jpg" alt="Gallery Image 4" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00005.jpg" alt="Gallery Image 5" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00006.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00007.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00008.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00009.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00010.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00011.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://github.com/Riccardoduerre/duerre/blob/0dfd1f89c61819eeff6414f97635b3b2d35cfd0f/images/Giau_00012.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
         </div>
-
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-black text-white py-4 text-center text-sm">
-        &copy; 2025 Riccardo Riva. All rights reserved.
-    </footer>
-
-    <!-- Lightbox -->
-    <div id="lightbox" class="lightbox fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
-        <button class="close absolute top-4 right-6 text-white text-3xl">&times;</button>
-        <button class="prev absolute left-6 text-white text-3xl">&lt;</button>
-        <img src="" alt="Full-screen image" class="max-h-[90%] max-w-[90%] mx-auto">
-        <button class="next absolute right-6 text-white text-3xl">&gt;</button>
     </div>
+</section>
 
-    <!-- Scripts -->
-    <script src="i18n.js"></script>
-    <script src="navbar/loadNavbar.js"></script>
+<!-- Footer -->
+<footer class="bg-black text-white py-4 text-center text-sm">
+    &copy; 2025 Riccardo Riva. All rights reserved.
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+    <button class="close absolute top-4 right-6 text-white text-3xl">&times;</button>
+    <button class="prev absolute left-6 text-white text-3xl">&lt;</button>
+    <img src="" alt="Full-screen image" class="max-h-[90%] max-w-[90%] mx-auto">
+    <button class="next absolute right-6 text-white text-3xl">&gt;</button>
+</div>
+
+<!-- Scripts -->
+<script src="i18n.js"></script>
+<script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('translate-x-full');
+    });
+
+    // Header scroll behavior
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('bg-black', 'text-white', 'shadow-md');
+            header.classList.remove('bg-transparent');
+        } else {
+            header.classList.add('bg-transparent', 'text-white');
+            header.classList.remove('bg-black', 'shadow-md');
+        }
+    });
+
+    // Language selector
+    const langButton = document.getElementById("langButton");
+    const langDropdown = document.getElementById("langDropdown");
+    const langFlag = document.getElementById("langFlag");
+    const langCode = document.getElementById("langCode");
+    let currentLang = "it";
+
+    langButton.addEventListener("click", () => langDropdown.classList.toggle("hidden"));
+    langDropdown.querySelectorAll("li").forEach(item => {
+        item.addEventListener("click", () => {
+            const lang = item.dataset.lang;
+            const flag = item.dataset.flag;
+            langFlag.src = flag;
+            langFlag.alt = lang;
+            langCode.textContent = lang.toUpperCase();
+            currentLang = lang;
+            langDropdown.classList.add("hidden");
+            updateTexts(lang);
+        });
+    });
+    document.addEventListener("click", e => {
+        if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
+            langDropdown.classList.add("hidden");
+        }
+    });
+    updateTexts(currentLang);
+
+    // Lightbox
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    const prevBtn = lightbox.querySelector('.prev');
+    const nextBtn = lightbox.querySelector('.next');
+    const closeBtn = lightbox.querySelector('.close');
+    let currentIndex = 0;
+
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            currentIndex = index;
+            showImage(currentIndex);
+        });
+    });
+
+    closeBtn.addEventListener('click', () => lightbox.classList.add('hidden'));
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+        showImage(currentIndex);
+    });
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % galleryItems.length;
+        showImage(currentIndex);
+    });
+
+    function showImage(index) {
+        const imgSrc = galleryItems[index].querySelector('img').src;
+        lightboxImg.src = imgSrc;
+        lightbox.classList.remove('hidden');
+    }
+</script>
 </body>
 </html>
