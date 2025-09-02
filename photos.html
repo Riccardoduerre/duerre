@@ -96,12 +96,6 @@
             console.debug('[photos] loading translations for', lang);
             const translations = await loadTranslations(lang);
 
-            // Map preview links to translation keys (explicit, reliable)
-            const keyMap = {
-                'photo-gigs/giau-2025.html': 'Giau',
-                'photo-gigs/wedding-gig.html': 'wedding_gig'
-            };
-
             const previews = document.querySelectorAll('.collection-preview');
 
             for (const preview of previews) {
@@ -109,37 +103,35 @@
                 const span = preview.querySelector('.collection-preview-text span');
                 if (!link || !span) continue;
 
-                // Set title from translations using keyMap
-                const mapKey = keyMap[link];
-                console.debug('[photos] preview', link, 'mapKey', mapKey);
-                if (mapKey && translations[mapKey]) {
-                    span.textContent = translations[mapKey];
-                } else {
-                    // Fallback: try to fetch page and read raw h2 text
-                    try {
-                        const resp = await fetch(link);
-                        const html = await resp.text();
-                        const tmp = document.createElement('div');
-                        tmp.innerHTML = html;
-                        const h2 = tmp.querySelector('h2');
-                        if (h2 && h2.textContent.trim()) span.textContent = h2.textContent.trim();
-                    } catch (err) {
-                        console.error('Failed to load linked page for title fallback', err);
-                    }
-                }
-
-                // Load first image from linked page for preview background
                 try {
-                    const resp2 = await fetch(link);
-                    const html2 = await resp2.text();
-                    const tmp2 = document.createElement('div');
-                    tmp2.innerHTML = html2;
-                    const firstImg = tmp2.querySelector('img');
+                    console.debug('[photos] fetching linked page', link);
+                    const resp = await fetch(link);
+                    const html = await resp.text();
+                    const tmp = document.createElement('div');
+                    tmp.innerHTML = html;
+
+                    // Prefer data-i18n key on the linked page's h2
+                    const h2 = tmp.querySelector('h2');
+                    const key = h2 ? h2.getAttribute('data-i18n') : null;
+                    console.debug('[photos] linked h2 key/text', { link, key, text: h2 ? h2.textContent.trim() : null });
+
+                    if (key && translations[key]) {
+                        span.textContent = translations[key];
+                    } else if (h2 && h2.textContent.trim()) {
+                        span.textContent = h2.textContent.trim();
+                    } else {
+                        // last resort: infer from filename (very small fallback)
+                        if (link.includes('giau-2025')) span.textContent = translations['Giau'] || 'Giau';
+                        else if (link.includes('wedding-gig')) span.textContent = translations['wedding_gig'] || 'Wedding Gig';
+                    }
+
+                    // Set preview background from first image in linked page
+                    const firstImg = tmp.querySelector('img');
                     if (firstImg && firstImg.src) {
                         preview.style.backgroundImage = `url('${firstImg.src}')`;
                     }
                 } catch (err) {
-                    console.error('Failed to load linked page for image', err);
+                    console.error('Could not fetch collection info for', link, err);
                 }
             }
         }
@@ -152,13 +144,24 @@
         });
 
         // Also run when i18n system signals it's ready
-        window.addEventListener('i18nReady', () => {
-            updateCollectionPreviews();
-            // update debug panel
+        function updateDebugPanel() {
             const info = window.i18nInfo || {};
             document.getElementById('i18n-debug-lang').textContent = 'lang: ' + (info.lang || '');
             document.getElementById('i18n-debug-path').textContent = 'path: ' + (info.path || '');
             document.getElementById('i18n-debug-keys').textContent = 'keys: ' + ((info.keys && info.keys.join(', ')) || '');
+        }
+
+        window.addEventListener('i18nReady', () => {
+            updateCollectionPreviews();
+            updateDebugPanel();
+        });
+
+        // If i18n already loaded earlier, show debug immediately
+        if (window.i18nInfo) updateDebugPanel();
+
+        window.addEventListener('languageChanged', () => {
+            updateCollectionPreviews();
+            updateDebugPanel();
         });
 
         // Update previews when language changes

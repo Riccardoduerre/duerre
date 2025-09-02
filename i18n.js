@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const lang = stored || detectLanguage();
     await updateTexts(lang);
     // signal other scripts that i18n is ready
+    window.i18nReady = true;
     window.dispatchEvent(new Event('i18nReady'));
 });
 
@@ -69,5 +70,6 @@ window.addEventListener('languageChanged', async () => {
     // clear cached translations for fresh load
     i18nData[lang] = undefined;
     await updateTexts(lang);
+    window.i18nReady = true;
     window.dispatchEvent(new Event('i18nReady'));
 });
