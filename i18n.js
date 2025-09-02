@@ -17,9 +17,11 @@ async function loadTranslations(lang) {
     // Always fetch fresh translations to reflect language changes immediately
     try {
         const path = getTranslationPath(lang);
-        const response = await fetch(path + `?t=${Date.now()}`); // prevent caching
+    console.debug('[i18n] loading translations', { lang, path });
+    const response = await fetch(path + `?t=${Date.now()}`); // prevent caching
         if (!response.ok) throw new Error("Errore nel caricamento delle traduzioni");
         i18nData[lang] = await response.json();
+    console.debug('[i18n] loaded keys', Object.keys(i18nData[lang] || {}));
     } catch (err) {
         console.error("Errore i18n:", err);
         i18nData[lang] = {};

@@ -84,8 +84,9 @@
 
         async function updateCollectionPreviews() {
             const lang = localStorage.getItem('lang') || 'en';
-            const translationsPath = getTranslationPath(lang);
-            const translations = await fetch(translationsPath + `?t=${Date.now()}`).then(r => r.json());
+            // Use centralized loader so path logic matches i18n.js
+            console.debug('[photos] loading translations for', lang);
+            const translations = await loadTranslations(lang);
 
             // Map preview links to translation keys (explicit, reliable)
             const keyMap = {
@@ -102,6 +103,7 @@
 
                 // Set title from translations using keyMap
                 const mapKey = keyMap[link];
+                console.debug('[photos] preview', link, 'mapKey', mapKey);
                 if (mapKey && translations[mapKey]) {
                     span.textContent = translations[mapKey];
                 } else {
