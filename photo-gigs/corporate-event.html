@@ -105,11 +105,10 @@
             lightbox.classList.add('active');
         }
     </script>
+    <script src="../i18n.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof updateI18n === 'function') {
-                updateI18n();
-            }
+            updateTexts('en'); // Change 'en' to 'it' for Italian
         });
     </script>
 </body>
