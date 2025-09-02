@@ -3,9 +3,11 @@ const i18nData = {}; // Stores loaded translations
 
 function getTranslationPath(lang) {
     // If the page is in a subfolder, use '../en.json', else use 'en.json'
-    const pathParts = window.location.pathname.split('/');
-    // If there is a subfolder (e.g. /photo-gigs/...), use '../'
-    if (pathParts.length > 2 && pathParts[1] !== '') {
+    // Remove empty strings from split (e.g. leading slash)
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    // If the file is in a subfolder (e.g. /photo-gigs/...), use '../'
+    // pathParts[0] is the folder, pathParts[1] is the file (if in root, pathParts.length == 1)
+    if (pathParts.length > 1) {
         return `../${lang}.json`;
     }
     return `${lang}.json`;
