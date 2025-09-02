@@ -40,3 +40,25 @@ async function updateTexts(lang) {
         }
     });
 }
+
+function detectLanguage() {
+    const userLang = navigator.language || navigator.userLanguage;
+    return userLang && userLang.startsWith && userLang.startsWith('it') ? 'it' : 'en';
+}
+
+// Auto-initialize translations on page load and react to language changes
+document.addEventListener('DOMContentLoaded', async () => {
+    const stored = localStorage.getItem('lang');
+    const lang = stored || detectLanguage();
+    await updateTexts(lang);
+    // signal other scripts that i18n is ready
+    window.dispatchEvent(new Event('i18nReady'));
+});
+
+window.addEventListener('languageChanged', async () => {
+    const lang = localStorage.getItem('lang') || detectLanguage();
+    // clear cached translations for fresh load
+    i18nData[lang] = undefined;
+    await updateTexts(lang);
+    window.dispatchEvent(new Event('i18nReady'));
+});
