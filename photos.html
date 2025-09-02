@@ -84,50 +84,52 @@
 
         async function updateCollectionPreviews() {
             const lang = localStorage.getItem('lang') || 'en';
-            // Always use the translation file for the current page's language
             const translationsPath = getTranslationPath(lang);
             const translations = await fetch(translationsPath + `?t=${Date.now()}`).then(r => r.json());
+
+            // Map preview links to translation keys (explicit, reliable)
+            const keyMap = {
+                'photo-gigs/giau-2025.html': 'Giau',
+                'photo-gigs/wedding-gig.html': 'wedding_gig'
+            };
 
             const previews = document.querySelectorAll('.collection-preview');
 
             for (const preview of previews) {
                 const link = preview.getAttribute('href');
                 const span = preview.querySelector('.collection-preview-text span');
-                if (link && span) {
+                if (!link || !span) continue;
+
+                // Set title from translations using keyMap
+                const mapKey = keyMap[link];
+                if (mapKey && translations[mapKey]) {
+                    span.textContent = translations[mapKey];
+                } else {
+                    // Fallback: try to fetch page and read raw h2 text
                     try {
-                        const response = await fetch(link);
-                        const html = await response.text();
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = html;
-
-                        // Get h2's data-i18n key
-                        let key = null;
-                        const h2 = tempDiv.querySelector('h2[data-i18n]');
-                        if (h2) {
-                            key = h2.getAttribute('data-i18n');
-                        }
-                        // Fallback: if no h2 or no key, try to infer key from link
-                        if (!key) {
-                            if (link.includes('giau-2025')) key = 'Giau';
-                            if (link.includes('wedding-gig')) key = 'wedding_gig';
-                            // Add more mappings as needed
-                        }
-                        // Always use the selected language from localStorage
-                        const langSelected = localStorage.getItem('lang') || 'en';
-                        if (key && translations[key]) {
-                            span.textContent = translations[key];
-                        } else if (h2 && h2.textContent.trim()) {
-                            span.textContent = h2.textContent.trim();
-                        }
-
-                        // Get first image for the preview background
-                        const firstImg = tempDiv.querySelector('img');
-                        if (firstImg && firstImg.src) {
-                            preview.style.backgroundImage = `url('${firstImg.src}')`;
-                        }
+                        const resp = await fetch(link);
+                        const html = await resp.text();
+                        const tmp = document.createElement('div');
+                        tmp.innerHTML = html;
+                        const h2 = tmp.querySelector('h2');
+                        if (h2 && h2.textContent.trim()) span.textContent = h2.textContent.trim();
                     } catch (err) {
-                        console.error('Could not fetch collection info:', err);
+                        console.error('Failed to load linked page for title fallback', err);
                     }
+                }
+
+                // Load first image from linked page for preview background
+                try {
+                    const resp2 = await fetch(link);
+                    const html2 = await resp2.text();
+                    const tmp2 = document.createElement('div');
+                    tmp2.innerHTML = html2;
+                    const firstImg = tmp2.querySelector('img');
+                    if (firstImg && firstImg.src) {
+                        preview.style.backgroundImage = `url('${firstImg.src}')`;
+                    }
+                } catch (err) {
+                    console.error('Failed to load linked page for image', err);
                 }
             }
         }
