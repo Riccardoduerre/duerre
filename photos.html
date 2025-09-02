@@ -76,8 +76,9 @@
     <script src="i18n.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function () {
-            // Load translations once
-            const translations = await fetch('en.json').then(r => r.json());
+            // Get language from localStorage or default to 'en'
+            const lang = localStorage.getItem('lang') || 'en';
+            const translations = await fetch(`${lang}.json`).then(r => r.json());
 
             const previews = document.querySelectorAll('.collection-preview');
 
@@ -97,6 +98,9 @@
                             const key = h2.getAttribute('data-i18n');
                             if (key && translations[key]) {
                                 span.textContent = translations[key];
+                            } else if (h2.textContent.trim()) {
+                                // Fallback to raw h2 text if translation missing
+                                span.textContent = h2.textContent.trim();
                             }
                         }
 
