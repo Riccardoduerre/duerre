@@ -75,8 +75,7 @@
     <script src="navbar/loadNavbar.js"></script>
     <script src="i18n.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', async function () {
-            // Get language from localStorage or default to 'en'
+        async function updateCollectionPreviews() {
             const lang = localStorage.getItem('lang') || 'en';
             const translations = await fetch(`${lang}.json`).then(r => r.json());
 
@@ -99,7 +98,6 @@
                             if (key && translations[key]) {
                                 span.textContent = translations[key];
                             } else if (h2.textContent.trim()) {
-                                // Fallback to raw h2 text if translation missing
                                 span.textContent = h2.textContent.trim();
                             }
                         }
@@ -114,7 +112,13 @@
                     }
                 }
             }
-        });
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', updateCollectionPreviews);
+
+        // Update previews when language changes
+        window.addEventListener('languageChanged', updateCollectionPreviews);
     </script>
 </body>
 
