@@ -81,11 +81,19 @@ function initNavbar() {
     }
 
     // --- Initialize on page load ---
+    // Initialize UI from stored/browsers settings but don't force another updateTexts
     (async () => {
         const storedLang = localStorage.getItem('lang');
         const browserLang = detectLanguage();
         const langToUse = storedLang || browserLang;
-        await setLanguage(langToUse);
+        // Only set UI elements (flag/code) without forcing updateTexts again
+        if (langFlag && langCode) {
+            const flag = langToUse === 'it' ? "https://flagcdn.com/16x12/it.png" : "https://flagcdn.com/16x12/gb.png";
+            langFlag.src = flag;
+            langFlag.alt = langToUse;
+            langCode.textContent = langToUse.toUpperCase();
+        }
+        currentLang = langToUse;
     })();
 }
 

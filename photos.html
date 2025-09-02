@@ -91,7 +91,7 @@
         }
 
         async function updateCollectionPreviews() {
-            const lang = localStorage.getItem('lang') || 'en';
+            const lang = (window.i18nInfo && window.i18nInfo.lang) || localStorage.getItem('lang') || 'en';
             // Use centralized loader so path logic matches i18n.js
             console.debug('[photos] loading translations for', lang);
             const translations = await loadTranslations(lang);
@@ -116,8 +116,10 @@
                     console.debug('[photos] linked h2 key/text', { link, key, text: h2 ? h2.textContent.trim() : null });
 
                     if (key && translations[key]) {
+                        console.debug('[photos] setting preview text from translations', { link, key, value: translations[key] });
                         span.textContent = translations[key];
                     } else if (h2 && h2.textContent.trim()) {
+                        console.debug('[photos] setting preview text from linked h2 text', { link, text: h2.textContent.trim() });
                         span.textContent = h2.textContent.trim();
                     } else {
                         // last resort: infer from filename (very small fallback)

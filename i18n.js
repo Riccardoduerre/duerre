@@ -13,12 +13,15 @@ function getTranslationPath(lang) {
     return `${lang}.json`;
 }
 
-async function loadTranslations(lang) {
-    // Always fetch fresh translations to reflect language changes immediately
+async function loadTranslations(lang, force = false) {
+    // Use cached translations when available unless force=true
+    if (!force && i18nData[lang] && Object.keys(i18nData[lang]).length) {
+        return i18nData[lang];
+    }
     try {
         const path = getTranslationPath(lang);
-    console.debug('[i18n] loading translations', { lang, path });
-    const response = await fetch(path + `?t=${Date.now()}`); // prevent caching
+        console.debug('[i18n] loading translations', { lang, path, force });
+        const response = await fetch(path + `?t=${Date.now()}`); // prevent caching on actual fetch
         if (!response.ok) throw new Error("Errore nel caricamento delle traduzioni");
         i18nData[lang] = await response.json();
         console.debug('[i18n] loaded keys', Object.keys(i18nData[lang] || {}));
@@ -36,8 +39,8 @@ async function loadTranslations(lang) {
     return i18nData[lang];
 }
 
-async function updateTexts(lang) {
-    const translations = await loadTranslations(lang);
+async function updateTexts(lang, force = false) {
+    const translations = await loadTranslations(lang, force);
     document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (translations[key]) {
@@ -59,7 +62,8 @@ function detectLanguage() {
 document.addEventListener('DOMContentLoaded', async () => {
     const stored = localStorage.getItem('lang');
     const lang = stored || detectLanguage();
-    await updateTexts(lang);
+    // Load translations once on startup (don't force reload)
+    await updateTexts(lang, false);
     // signal other scripts that i18n is ready
     window.i18nReady = true;
     window.dispatchEvent(new Event('i18nReady'));
@@ -67,9 +71,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 window.addEventListener('languageChanged', async () => {
     const lang = localStorage.getItem('lang') || detectLanguage();
-    // clear cached translations for fresh load
-    i18nData[lang] = undefined;
-    await updateTexts(lang);
+    // Force reload translations when language changes
+    await updateTexts(lang, true);
     window.i18nReady = true;
     window.dispatchEvent(new Event('i18nReady'));
 });
