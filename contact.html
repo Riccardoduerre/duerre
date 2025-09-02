@@ -23,9 +23,28 @@
             <p class="text-lg mb-8 leading-relaxed" data-i18n="contact_intro">
                 Have a project in mind or just want to say hello? I'd love to hear from you.
             </p>
-            <p class="text-2xl font-bold uppercase">
-                <a href="mailto:riccardo@duerremedia.com" class="text-white hover:text-gray-300 transition-colors duration-300 underline underline-offset-4">riccardo@duerremedia.com</a>
-            </p>
+            <!-- FormSubmit.co integration; sends to the site email and requires email verification on first use -->
+            <form id="contact-form" class="max-w-xl mx-auto text-left space-y-4" action="https://formsubmit.co/riccardo@duerremedia.com" method="POST" target="_blank">
+                <!-- optional: subject and disable captcha -->
+                <input type="hidden" name="_subject" value="New contact from website">
+                <input type="hidden" name="_captcha" value="false">
+
+                <div>
+                    <label class="sr-only" for="name" data-i18n="name_label">Name</label>
+                    <input id="name" name="name" type="text" data-i18n="name_placeholder" placeholder="Your name" class="w-full p-3 rounded bg-neutral-800 border border-neutral-700" required>
+                </div>
+                <div>
+                    <label class="sr-only" for="email" data-i18n="email_label">Email</label>
+                    <input id="email" name="email" type="email" data-i18n="email_placeholder" placeholder="Your email" class="w-full p-3 rounded bg-neutral-800 border border-neutral-700" required>
+                </div>
+                <div>
+                    <label class="sr-only" for="message" data-i18n="message_label">Message</label>
+                    <textarea id="message" name="message" rows="6" data-i18n="message_placeholder" placeholder="Your message" class="w-full p-3 rounded bg-neutral-800 border border-neutral-700" required></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="px-6 py-3 bg-white text-black rounded font-bold" data-i18n="send_button">Send</button>
+                </div>
+            </form>
         </div>
     </section>
 
