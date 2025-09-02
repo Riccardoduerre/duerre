@@ -101,14 +101,21 @@
                         tempDiv.innerHTML = html;
 
                         // Get h2's data-i18n key
+                        let key = null;
                         const h2 = tempDiv.querySelector('h2[data-i18n]');
                         if (h2) {
-                            const key = h2.getAttribute('data-i18n');
-                            if (key && translations[key]) {
-                                span.textContent = translations[key];
-                            } else if (h2.textContent.trim()) {
-                                span.textContent = h2.textContent.trim();
-                            }
+                            key = h2.getAttribute('data-i18n');
+                        }
+                        // Fallback: if no h2 or no key, try to infer key from link
+                        if (!key) {
+                            if (link.includes('giau-2025')) key = 'Giau';
+                            if (link.includes('wedding-gig')) key = 'wedding_gig';
+                            // Add more mappings as needed
+                        }
+                        if (key && translations[key]) {
+                            span.textContent = translations[key];
+                        } else if (h2 && h2.textContent.trim()) {
+                            span.textContent = h2.textContent.trim();
                         }
 
                         // Get first image for the preview background
