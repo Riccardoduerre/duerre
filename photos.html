@@ -76,7 +76,13 @@
     <script>
         async function updateCollectionPreviews() {
             const lang = localStorage.getItem('lang') || 'en';
-            const translations = await fetch(`${lang}.json`).then(r => r.json());
+            // Use same logic as i18n.js to get translation file path
+            const pathParts = window.location.pathname.split('/').filter(Boolean);
+            let translationsPath = `${lang}.json`;
+            if (pathParts.length > 1) {
+                translationsPath = `../${lang}.json`;
+            }
+            const translations = await fetch(translationsPath + `?t=${Date.now()}`).then(r => r.json());
 
             const previews = document.querySelectorAll('.collection-preview');
 
