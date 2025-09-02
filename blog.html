@@ -9,6 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* clamp preview paragraph to one line */
+        .one-line { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
 </head>
 <body>
     <div id="navbar-container"></div>
@@ -23,7 +27,7 @@
                     <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/DSCN7050.jpg" alt="Blog post preview" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2" data-i18n="blog_post1_title">My First Blog Post Title</h3>
-                        <p class="text-gray-400 text-sm" data-i18n="blog_post1_preview">A short, intriguing preview of my first blog post. Read more about my experience and thoughts.</p>
+                        <p class="text-gray-400 text-sm one-line" data-i18n="blog_post1_preview">A short, intriguing preview of my first blog post. Read more about my experience and thoughts.</p>
                     </div>
                 </a>
 
@@ -31,7 +35,7 @@
                     <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/_DSC2919.jpg" alt="Blog post preview 2" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2" data-i18n="blog_post2_title">The Art of Photography</h3>
-                        <p class="text-gray-400 text-sm" data-i18n="blog_post2_preview">Exploring the techniques and inspiration behind some of my best shots.</p>
+                        <p class="text-gray-400 text-sm one-line" data-i18n="blog_post2_preview">Exploring the techniques and inspiration behind some of my best shots.</p>
                     </div>
                 </a>
             </div>
@@ -60,7 +64,19 @@
                     // Title: prefer data-i18n key on linked page's h1, else use text
                     const h1 = tmp.querySelector('h1') || tmp.querySelector('h2');
                     let titleKey = h1 ? h1.getAttribute('data-i18n') : null;
-                    const titleEl = card.querySelector('h3');
+                    // Ensure only one title element exists in the card
+                    let titleEls = card.querySelectorAll('h3');
+                    let titleEl = titleEls[0];
+                    if (titleEls.length > 1) {
+                        // remove duplicates (keep first)
+                        for (let i = 1; i < titleEls.length; i++) titleEls[i].remove();
+                    }
+                    if (!titleEl) {
+                        titleEl = document.createElement('h3');
+                        titleEl.className = 'text-xl font-bold mb-2';
+                        const contentDiv = card.querySelector('.p-6') || card.querySelector('div');
+                        if (contentDiv) contentDiv.prepend(titleEl);
+                    }
                     if (titleKey && translations[titleKey]) {
                         titleEl.textContent = translations[titleKey];
                     } else if (h1 && h1.textContent.trim()) {

@@ -88,10 +88,39 @@
                     tmp.innerHTML = html;
 
                     // Prefer first image
-                    const firstImg = tmp.querySelector('img');
+                    let firstImg = tmp.querySelector('img');
                     if (firstImg && firstImg.src) {
                         preview.style.backgroundImage = `url('${firstImg.src}')`;
                         continue;
+                    }
+
+                    // If no image, look for internal links and try them (deep search)
+                    const innerLink = tmp.querySelector('a[href]');
+                    if (innerLink && innerLink.getAttribute('href')) {
+                        const innerHref = innerLink.getAttribute('href');
+                        try {
+                            const resp2 = await fetch(innerHref);
+                            if (resp2.ok) {
+                                const html2 = await resp2.text();
+                                const tmp2 = document.createElement('div');
+                                tmp2.innerHTML = html2;
+                                firstImg = tmp2.querySelector('img');
+                                if (firstImg && firstImg.src) {
+                                    preview.style.backgroundImage = `url('${firstImg.src}')`;
+                                    continue;
+                                }
+                                const video2 = tmp2.querySelector('video');
+                                if (video2) {
+                                    const poster2 = video2.getAttribute('poster');
+                                    if (poster2) {
+                                        preview.style.backgroundImage = `url('${poster2}')`;
+                                        continue;
+                                    }
+                                }
+                            }
+                        } catch (e) {
+                            // ignore inner fetch errors
+                        }
                     }
 
                     // If there's a video with poster, use poster
