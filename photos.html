@@ -76,6 +76,9 @@
     <script src="i18n.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function () {
+            // Load translations once
+            const translations = await fetch('en.json').then(r => r.json());
+
             const previews = document.querySelectorAll('.collection-preview');
 
             for (const preview of previews) {
@@ -88,10 +91,13 @@
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = html;
 
-                        // Get first h2 for the title
-                        const h2 = tempDiv.querySelector('h2');
-                        if (h2 && h2.textContent.trim()) {
-                            span.textContent = h2.textContent.trim();
+                        // Get h2's data-i18n key
+                        const h2 = tempDiv.querySelector('h2[data-i18n]');
+                        if (h2) {
+                            const key = h2.getAttribute('data-i18n');
+                            if (key && translations[key]) {
+                                span.textContent = translations[key];
+                            }
                         }
 
                         // Get first image for the preview background
