@@ -46,13 +46,7 @@
 <body class="bg-neutral-900 text-white font-inter">
     <div id="navbar-container"></div>
 
-    <!-- Debug panel -->
-    <div id="i18n-debug" style="position:fixed;right:12px;bottom:12px;z-index:9999;background:rgba(0,0,0,0.7);color:#fff;padding:8px;border-radius:6px;font-size:12px;max-width:320px;">
-        <strong>i18n debug</strong>
-        <div id="i18n-debug-lang">lang: </div>
-        <div id="i18n-debug-path">path: </div>
-        <div id="i18n-debug-keys">keys: </div>
-    </div>
+    <!-- debug panel removed -->
 
     <section id="collections" class="py-20 md:py-32 bg-neutral-900 text-white min-h-screen">
         <div class="container mx-auto px-4 md:px-8 text-center">
@@ -145,25 +139,9 @@
             }
         });
 
-        // Also run when i18n system signals it's ready
-        function updateDebugPanel() {
-            const info = window.i18nInfo || {};
-            document.getElementById('i18n-debug-lang').textContent = 'lang: ' + (info.lang || '');
-            document.getElementById('i18n-debug-path').textContent = 'path: ' + (info.path || '');
-            document.getElementById('i18n-debug-keys').textContent = 'keys: ' + ((info.keys && info.keys.join(', ')) || '');
-        }
-
+        // Run when i18n system signals it's ready
         window.addEventListener('i18nReady', () => {
             updateCollectionPreviews();
-            updateDebugPanel();
-        });
-
-        // If i18n already loaded earlier, show debug immediately
-        if (window.i18nInfo) updateDebugPanel();
-
-        window.addEventListener('languageChanged', () => {
-            updateCollectionPreviews();
-            updateDebugPanel();
         });
 
         // Update previews when language changes

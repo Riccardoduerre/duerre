@@ -43,5 +43,63 @@
     </footer>
     <script src="navbar/loadNavbar.js"></script>
     <script src="i18n.js"></script>
+    <script>
+        async function updateBlogPreviews() {
+            const lang = (window.i18nInfo && window.i18nInfo.lang) || localStorage.getItem('lang') || 'en';
+            const translations = await loadTranslations(lang);
+            const cards = document.querySelectorAll('#blog a');
+            for (const card of cards) {
+                const link = card.getAttribute('href');
+                if (!link) continue;
+                try {
+                    const resp = await fetch(link);
+                    const html = await resp.text();
+                    const tmp = document.createElement('div');
+                    tmp.innerHTML = html;
+
+                    // Title: prefer data-i18n key on linked page's h1, else use text
+                    const h1 = tmp.querySelector('h1') || tmp.querySelector('h2');
+                    let titleKey = h1 ? h1.getAttribute('data-i18n') : null;
+                    const titleEl = card.querySelector('h3');
+                    if (titleKey && translations[titleKey]) {
+                        titleEl.textContent = translations[titleKey];
+                    } else if (h1 && h1.textContent.trim()) {
+                        titleEl.textContent = h1.textContent.trim();
+                    }
+
+                    // Preview paragraph: look for element with data-i18n in linked page
+                    const previewEl = card.querySelector('p');
+                    let previewKey = null;
+                    const linkedPreview = tmp.querySelector('[data-i18n]');
+                    if (linkedPreview) {
+                        // prefer a descriptive preview key (not the title)
+                        previewKey = linkedPreview.getAttribute('data-i18n');
+                    }
+                    if (previewKey && translations[previewKey]) {
+                        previewEl.textContent = translations[previewKey];
+                    } else {
+                        // fallback: attempt to read first paragraph text
+                        const firstP = tmp.querySelector('p');
+                        if (firstP && firstP.textContent.trim()) previewEl.textContent = firstP.textContent.trim();
+                    }
+
+                    // Image: prefer first image in linked post
+                    const img = tmp.querySelector('img');
+                    if (img && img.src) {
+                        const imgEl = card.querySelector('img');
+                        if (imgEl) imgEl.src = img.src;
+                    }
+                } catch (err) {
+                    console.error('[blog] failed to load preview for', link, err);
+                }
+            }
+        }
+
+        window.addEventListener('i18nReady', updateBlogPreviews);
+        window.addEventListener('languageChanged', updateBlogPreviews);
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.i18nReady) updateBlogPreviews();
+        });
+    </script>
 </body>
 </html>
