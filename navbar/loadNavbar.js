@@ -127,7 +127,9 @@ window.addEventListener('navbarLoaded', () => {
         langFlag.alt = lang;
         langCode.textContent = lang.toUpperCase();
         currentLang = lang;
-        if (typeof updateTexts === 'function') updateTexts(lang);
+        // persist selection and notify i18n system
+        try { localStorage.setItem('lang', lang); } catch (e) {}
+        window.dispatchEvent(new Event('languageChanged'));
     }
 
     if (langButton && langDropdown && langFlag && langCode) {
