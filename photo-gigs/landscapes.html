@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giau Pass - August 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div id="navbar-container"></div>
+
+
+    <section id="photos" class="py-20 md:py-32 bg-neutral-900 text-white min-h-screen">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-16 text-center" data-i18n="Giau"></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+                <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00001.jpg" alt="Gallery Image 1" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00002.jpg" alt="Gallery Image 2" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00003.jpg" alt="Gallery Image 3" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00004.jpg" alt="Gallery Image 4" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00005.jpg" alt="Gallery Image 5" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00006.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00007.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00008.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00009.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00010.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00011.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+            <div class="gallery-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
+                <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/Giau/Giau_00012.jpg" alt="Gallery Image 6" class="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105">
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-neutral-900 text-white py-4 text-center text-sm">
+        &copy; 2025 Riccardo Riva. All rights reserved.
+    </footer>
+    <div id="lightbox" class="lightbox">
+        <button class="close">&times;</button>
+        <button class="prev">&lt;</button>
+        <img src="" alt="Full-screen image">
+        <button class="next">&gt;</button>
+    </div>
+    <script src="../navbar/loadNavbar.js"></script>
+    <script src="../i18n.js"></script>
+    <script>
+        // Lightbox functionality
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const prevBtn = lightbox.querySelector('.prev');
+        const nextBtn = lightbox.querySelector('.next');
+        const closeBtn = lightbox.querySelector('.close');
+        let currentIndex = 0;
+
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                showImage(currentIndex);
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+            showImage(currentIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % galleryItems.length;
+            showImage(currentIndex);
+        });
+
+        function showImage(index) {
+            const imgSrc = galleryItems[index].querySelector('img').getAttribute('src');
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+        }
+    </script>
+    <script src="../i18n.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTexts('en'); // Change 'en' to 'it' for Italian
+        });
+    </script>
+</body>
+</html>
