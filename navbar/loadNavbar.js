@@ -110,6 +110,19 @@
                 tmp.innerHTML = footerHtml;
                 document.body.appendChild(tmp.firstElementChild);
             }
+
+            // Trigger translations for the newly injected footer
+            try {
+                const lang = localStorage.getItem('lang') || (typeof detectLanguage === 'function' ? detectLanguage() : 'en');
+                if (typeof updateTexts === 'function') updateTexts(lang, false);
+            } catch (e) { /* ignore */ }
+
+            // Fade the footer in by removing opacity class when present
+            try {
+                const footerEl = document.getElementById('site-footer') || document.querySelector('.site-footer');
+                if (footerEl) requestAnimationFrame(() => footerEl.classList.remove('opacity-0'));
+            } catch (e) {}
+
             window.dispatchEvent(new Event('footerLoaded'));
         }
     })();
