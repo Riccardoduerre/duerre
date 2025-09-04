@@ -80,6 +80,39 @@
         if (container) container.innerHTML = '<!-- navbar load failed -->';
         window.dispatchEvent(new Event('navbarLoaded'));
     })();
+
+    // Also try to load a shared footer.html into #footer-container or append to body
+    (async function tryLoadFooter() {
+        const footerCandidates = [];
+        if (scriptBase) footerCandidates.push(scriptBase + 'footer/footer.html');
+        footerCandidates.push('./footer/footer.html');
+        footerCandidates.push('footer/footer.html');
+        footerCandidates.push('../footer/footer.html');
+        footerCandidates.push('../../footer/footer.html');
+        try {
+            const origin = window.location.origin || (window.location.protocol === 'file:' ? '' : window.location.protocol + '//' + window.location.host);
+            if (origin) footerCandidates.push(origin + '/footer/footer.html');
+        } catch (e) {}
+
+        let footerHtml = null;
+        for (const url of footerCandidates) {
+            try {
+                const response = await fetch(url, { cache: 'no-store' });
+                if (response.ok) { footerHtml = await response.text(); break; }
+            } catch (err) { /* ignore */ }
+        }
+
+        if (footerHtml) {
+            const footerContainer = document.getElementById('footer-container');
+            if (footerContainer) footerContainer.innerHTML = footerHtml;
+            else {
+                const tmp = document.createElement('div');
+                tmp.innerHTML = footerHtml;
+                document.body.appendChild(tmp.firstElementChild);
+            }
+            window.dispatchEvent(new Event('footerLoaded'));
+        }
+    })();
 })();
 
 // --- Sostituire la parte inline di `index.html` che accede direttamente agli elementi della navbar
