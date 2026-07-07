@@ -5,12 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Collections</title>
+    
+    <!-- 1. Load Tailwind Core -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Global Brand Configuration (Forces the premium dark obsidian color site-wide) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neutral: {
+                            900: '#0d0e12'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- 3. Typography & Brand Assets -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/images/Duerre media logo red.png">
+    
+    <!-- 4. Global Custom Styles Override -->
     <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- 5. Preserved Page-Specific Layout Styles -->
     <style>
         .collection-preview {
             background-size: cover;
