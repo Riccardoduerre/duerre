@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/images/Duerre media logo red.png">
     <link rel="stylesheet" href="../css/styles.css">
     <script>
@@ -22,26 +22,18 @@
         }
     </script>
 </head>
-<body class="font-sans bg-[#0d0e12] text-gray-100 min-h-screen flex flex-col justify-between">
+<body class="font-sans bg-[#0d0e12] text-white min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
 
-<!-- Dynamically Loaded Header Component -->
+<!-- Header -->
 <div id="navbar-container" class="w-full"></div>
 
-<!-- Modern Contact Form Container Section -->
+<!-- Contact Form Section -->
 <main class="flex-grow flex items-center justify-center px-4 py-16 mt-8">
-    <div class="w-full max-w-lg bg-[#161820] border border-zinc-800/80 rounded-2xl p-8 md:p-10 shadow-2xl transition-all duration-300">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">Let's Work Together</h1>
-            <p class="text-gray-400 mt-2 font-light text-sm">Send a message directly to riccardo@duerremedia.com</p>
-        </div>
-
-        <!-- Secure Serverless Web3Forms Pipeline -->
+    <div class="w-full max-w-lg bg-[#161820] border border-zinc-800/80 rounded-2xl p-8 md:p-10 shadow-2xl">
+        
         <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
-            
-            <!-- Insert your key from web3forms.com here -->
+            <!-- Web3Forms Access Key Token Injection -->
             <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-            
-            <!-- Bot honey-pot validation -->
             <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
             <div>
@@ -58,22 +50,20 @@
 
             <div>
                 <label for="message" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Message</label>
-                <textarea id="message" name="message" placeholder="Describe your project vision..." required rows="4"
+                <textarea id="message" name="message" placeholder="Your Message..." required rows="4"
                           class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-gray-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all resize-none"></textarea>
             </div>
 
-            <!-- Auto redirect after submission back to your homepage -->
             <input type="hidden" name="redirect" value="https://riccardoduerre.github.io/duerre/">
 
-            <button type="submit" 
-                    class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium rounded-lg py-3 hover:opacity-95 active:scale-[0.99] transition-all shadow-lg shadow-indigo-500/20">
+            <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium rounded-lg py-3 hover:opacity-95 active:scale-[0.99] transition-all shadow-lg shadow-indigo-500/20">
                 Send Message
             </button>
         </form>
     </div>
 </main>
 
-<!-- Dynamically Loaded Footer Component -->
+<!-- Footer -->
 <div id="footer-container" class="w-full"></div>
 
 <!-- Scripts -->
