@@ -7,51 +7,77 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/images/Duerre media logo red.png">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-neutral-900 text-white">
-    <!-- Header and Navigation -->
+<body class="font-sans bg-[#0d0e12] text-gray-100 min-h-screen flex flex-col justify-between">
 
-        <div id="navbar-container"></div>
+<!-- Dynamically Loaded Header Component -->
+<div id="navbar-container" class="w-full"></div>
 
-
-    <!-- Contact Section -->
-    <section class="py-40 md:py-52 bg-neutral-900 text-white">
-        <div class="container mx-auto px-4 md:px-8 max-w-2xl text-center">
-            <h2 class="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-10" data-i18n="Contact">Contact</h2>
-            <p class="text-lg mb-8 leading-relaxed" data-i18n="contact_intro">
-                Have a project in mind or just want to say hello? I'd love to hear from you.
-            </p>
-            <!-- FormSubmit.co integration; sends to the site email and requires email verification on first use -->
-            <form id="contact-form" class="max-w-xl mx-auto text-left space-y-4" action="https://formsubmit.co/riccardo@duerremedia.com" method="POST" target="_blank">
-                <!-- optional: subject and disable captcha -->
-                <input type="hidden" name="_subject" value="New contact from website">
-                <input type="hidden" name="_captcha" value="false">
-
-                <div>
-                    <label class="sr-only" for="name" data-i18n="name_label">Name</label>
-                    <input id="name" name="name" type="text" data-i18n="name_placeholder" placeholder="Your name" class="w-full p-3 rounded bg-neutral-800 border border-neutral-700" required>
-                </div>
-                <div>
-                    <label class="sr-only" for="email" data-i18n="email_label">Email</label>
-                    <input id="email" name="email" type="email" data-i18n="email_placeholder" placeholder="Your email" class="w-full p-3 rounded bg-neutral-800 border border-neutral-700" required>
-                </div>
-                <div>
-                    <label class="sr-only" for="message" data-i18n="message_label">Message</label>
-                    <textarea id="message" name="message" rows="6" data-i18n="message_placeholder" placeholder="Your message" class="w-full p-3 rounded bg-neutral-800 border border-neutral-700" required></textarea>
-                </div>
-                <div>
-                    <button type="submit" class="px-6 py-3 bg-white text-black rounded font-bold" data-i18n="send_button">Send</button>
-                </div>
-            </form>
+<!-- Modern Contact Form Container Section -->
+<main class="flex-grow flex items-center justify-center px-4 py-16 mt-8">
+    <div class="w-full max-w-lg bg-[#161820] border border-zinc-800/80 rounded-2xl p-8 md:p-10 shadow-2xl transition-all duration-300">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">Let's Work Together</h1>
+            <p class="text-gray-400 mt-2 font-light text-sm">Send a message directly to riccardo@duerremedia.com</p>
         </div>
-    </section>
 
-    <!-- Footer (injected) -->
-    <div id="footer-container"></div>
-    <script src="navbar/loadNavbar.js"></script>
-    <script src="i18n.js"></script>
+        <!-- Secure Serverless Web3Forms Pipeline -->
+        <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+            
+            <!-- Insert your key from web3forms.com here -->
+            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+            
+            <!-- Bot honey-pot validation -->
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+            <div>
+                <label for="name" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="John Doe" required 
+                       class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-gray-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all">
+            </div>
+
+            <div>
+                <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com" required 
+                       class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-gray-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all">
+            </div>
+
+            <div>
+                <label for="message" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Message</label>
+                <textarea id="message" name="message" placeholder="Describe your project vision..." required rows="4"
+                          class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-gray-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all resize-none"></textarea>
+            </div>
+
+            <!-- Auto redirect after submission back to your homepage -->
+            <input type="hidden" name="redirect" value="https://riccardoduerre.github.io/duerre/">
+
+            <button type="submit" 
+                    class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium rounded-lg py-3 hover:opacity-95 active:scale-[0.99] transition-all shadow-lg shadow-indigo-500/20">
+                Send Message
+            </button>
+        </form>
+    </div>
+</main>
+
+<!-- Dynamically Loaded Footer Component -->
+<div id="footer-container" class="w-full"></div>
+
+<!-- Scripts -->
+<script src="navbar/loadNavbar.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>
