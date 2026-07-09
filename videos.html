@@ -14,7 +14,7 @@
             theme: {
                 extend: {
                     colors: {
-                        // This forces Tailwind's bg-neutral-900 to output your premium dark hue site-wide!
+                        // This forces Tailwind's bg-theme to output your premium dark hue site-wide!
                         neutral: {
                             900: '#0d0e12'
                         }
@@ -42,7 +42,7 @@
         <div id="navbar-container"></div>
 
 
-    <section id="videos" class="py-20 md:py-32 bg-neutral-900 text-white min-h-screen">
+    <section id="videos" class="py-20 md:py-32 bg-theme text-theme min-h-screen">
         <div class="container mx-auto px-4 md:px-8">
             <h2 class="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-16 text-center" data-i18n="videos_label">Videos</h2>
 
@@ -74,11 +74,11 @@
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
             if (window.scrollY > 50) {
-                header.classList.remove('bg-transparent', 'text-white');
-                header.classList.add('bg-black', 'text-white', 'shadow-md');
+                header.classList.remove('bg-transparent', 'text-theme');
+                header.classList.add('bg-theme', 'text-theme', 'shadow-md');
             } else {
-                header.classList.remove('bg-black', 'text-white', 'shadow-md');
-                header.classList.add('bg-transparent', 'text-white');
+                header.classList.remove('bg-theme', 'text-theme', 'shadow-md');
+                header.classList.add('bg-transparent', 'text-theme');
             }
         });
     </script>
@@ -87,11 +87,11 @@
     window.addEventListener('scroll', function() {
         const header = document.querySelector('header');
         if (window.scrollY > 50) {
-            header.classList.remove('bg-transparent', 'text-white');
-            header.classList.add('bg-black', 'text-white', 'shadow-md');
+            header.classList.remove('bg-transparent', 'text-theme');
+            header.classList.add('bg-theme', 'text-theme', 'shadow-md');
         } else {
-            header.classList.remove('bg-black', 'text-white', 'shadow-md');
-            header.classList.add('bg-transparent', 'text-white');
+            header.classList.remove('bg-theme', 'text-theme', 'shadow-md');
+            header.classList.add('bg-transparent', 'text-theme');
         }
     });
 

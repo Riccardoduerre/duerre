@@ -16,6 +16,13 @@
     --border-color: rgba(255, 255, 255, 0.08);
 }
 
+/* Utility classes for theme support */
+.bg-theme { background-color: var(--bg-color); }
+.text-theme { color: var(--text-color); }
+.bg-theme-surface { background-color: var(--surface-color); }
+.text-theme-muted { color: var(--text-color); opacity: 0.7; }
+.border-theme { border-color: var(--border-color); }
+
 body {
     background-color: var(--bg-color) !important;
     color: var(--text-color) !important;
