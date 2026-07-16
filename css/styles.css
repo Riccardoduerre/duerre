@@ -22,6 +22,9 @@
 .bg-theme-surface { background-color: var(--surface-color); }
 .text-theme-muted { color: var(--text-color); opacity: 0.6; }
 .border-theme { border-color: var(--border-color); }
+.bg-theme-accent { background-color: var(--accent-color); }
+.text-theme-accent { color: var(--accent-color); }
+.border-theme-accent { border-color: var(--accent-color); }
 
 body {
     background-color: var(--bg-color) !important;

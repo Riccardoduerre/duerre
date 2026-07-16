@@ -1,32 +1,33 @@
 // i18n.js
-const i18nData = {}; // Stores loaded translations
-
-function getTranslationPath(lang) {
-    const pathParts = window.location.pathname.split('/').filter(Boolean);
-    if (pathParts.length > 1) {
-        return `../${lang}.json`;
-    }
-    return `${lang}.json`;
-}
+const i18nData = {};
+let currentLang = 'en';
 
 async function loadTranslations(lang, force = false) {
     if (!force && i18nData[lang] && Object.keys(i18nData[lang]).length) {
         return i18nData[lang];
     }
-    try {
-        const path = getTranslationPath(lang);
-        const response = await fetch(path + `?t=${Date.now()}`);
-        if (!response.ok) throw new Error("Errore nel caricamento delle traduzioni");
-        i18nData[lang] = await response.json();
-    } catch (err) {
-        console.error("Errore i18n:", err);
-        i18nData[lang] = {};
+    
+    // Candidates for json file location
+    const candidates = ['./', '../', '../../', './', ''];
+    for (const prefix of candidates) {
+        try {
+            const url = `${prefix}${lang}.json?t=${Date.now()}`;
+            const response = await fetch(url);
+            if (response.ok) {
+                i18nData[lang] = await response.json();
+                return i18nData[lang];
+            }
+        } catch (err) { /* ignore */ }
     }
+    
+    console.error("i18n error: Could not load translations for", lang);
+    i18nData[lang] = {};
     return i18nData[lang];
 }
 
-async function updateTexts(lang, force = false) {
-    const translations = await loadTranslations(lang, force);
+async function updateTexts(lang) {
+    currentLang = lang;
+    const translations = await loadTranslations(lang);
     document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (translations[key]) {
@@ -44,7 +45,7 @@ function detectLanguage() {
     const stored = localStorage.getItem('lang');
     if (stored) return stored;
     const userLang = navigator.language || navigator.userLanguage;
-    return userLang && userLang.startsWith && userLang.startsWith('it') ? 'it' : 'en';
+    return userLang && userLang.startsWith('it') ? 'it' : 'en';
 }
 
 function syncNavbarUI(lang) {
@@ -60,32 +61,40 @@ function syncNavbarUI(lang) {
 
 async function setLanguage(lang) {
     localStorage.setItem('lang', lang);
-    await updateTexts(lang, true);
+    await updateTexts(lang);
     window.dispatchEvent(new Event('languageChanged'));
 }
 
-// Auto-initialize translations on page load and react to language changes
-document.addEventListener('DOMContentLoaded', async () => {
+// Global initialization
+async function initI18n() {
     const lang = detectLanguage();
-    await updateTexts(lang, false);
+    currentLang = lang;
+    await updateTexts(lang);
     window.i18nReady = true;
     window.dispatchEvent(new Event('i18nReady'));
-});
+}
 
-// Sync when navbar loads
-document.addEventListener('navbarLoaded', () => {
-    const lang = detectLanguage();
-    syncNavbarUI(lang);
+document.addEventListener('DOMContentLoaded', initI18n);
 
-    // Set up click listeners for language selector in navbar
+// Handle Navbar initialization
+window.addEventListener('navbarLoaded', () => {
     const langDropdown = document.getElementById("langDropdown");
-    if (langDropdown) {
+    const langButton = document.getElementById("langButton");
+    
+    if (langButton && langDropdown) {
+        langButton.addEventListener("click", () => langDropdown.classList.toggle("hidden"));
         langDropdown.querySelectorAll("li").forEach(item => {
             item.addEventListener("click", async () => {
-                const lang = item.dataset.lang;
-                await setLanguage(lang);
+                await setLanguage(item.dataset.lang);
                 langDropdown.classList.add("hidden");
             });
         });
+        // Click outside to close
+        document.addEventListener("click", e => {
+            if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.add("hidden");
+            }
+        });
     }
+    syncNavbarUI(currentLang);
 });

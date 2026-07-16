@@ -9,20 +9,17 @@
     <!-- 1. Load Tailwind Core -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. Global Brand Configuration (Forces the premium dark obsidian color site-wide) -->
+    <!-- 2. Global Brand Configuration -->
+    <script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        neutral: {
-                            900: '#0d0e12'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ["Plus Jakarta Sans", "sans-serif"], }
                 }
+            }
+        }
+    </script>
             }
         }
     </script>
@@ -53,7 +50,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.4);
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s ease-out;
         }
 
         .collection-preview:hover::after {
@@ -73,21 +70,19 @@
 <body class="font-sans bg-theme text-theme selection:bg-indigo-500 selection:text-theme">
     <div id="navbar-container"></div>
 
-    <!-- debug panel removed -->
-
     <section id="collections" class="py-20 md:py-32 bg-theme text-theme min-h-screen">
         <div class="container mx-auto px-4 md:px-8 text-center">
             <h2 class="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-16" data-i18n="Collections"></h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                 <a href="photo-gigs/giau-2025.html"
-                    class="relative block h-64 rounded-sm  overflow-hidden collection-preview">
+                    class="relative block h-64 rounded-sm overflow-hidden collection-preview">
                     <div class="collection-preview-text">
                         <span class="text-theme text-3xl font-bold uppercase tracking-widest"></span>
                     </div>
                 </a>
                 <a href="photo-gigs/landscapes.html"
-                    class="relative block h-64 rounded-sm  overflow-hidden collection-preview">
+                    class="relative block h-64 rounded-sm overflow-hidden collection-preview">
                     <div class="collection-preview-text">
                         <span class="text-theme text-3xl font-bold uppercase tracking-widest"></span>
                     </div>
@@ -101,20 +96,8 @@
     <script src="navbar/loadNavbar.js"></script>
     <script src="i18n.js"></script>
     <script>
-        function getTranslationPath(lang) {
-            const pathParts = window.location.pathname.split('/').filter(Boolean);
-            if (pathParts.length > 1) {
-                return `../${lang}.json`;
-            }
-            return `${lang}.json`;
-        }
-
         async function updateCollectionPreviews() {
-            const lang = (window.i18nInfo && window.i18nInfo.lang) || localStorage.getItem('lang') || 'en';
-            // Use centralized loader so path logic matches i18n.js
-            console.debug('[photos] loading translations for', lang);
-            const translations = await loadTranslations(lang);
-
+            const translations = await loadTranslations(localStorage.getItem('lang') || 'en');
             const previews = document.querySelectorAll('.collection-preview');
 
             for (const preview of previews) {
@@ -123,69 +106,34 @@
                 if (!link || !span) continue;
 
                 try {
-                    console.debug('[photos] fetching linked page', link);
                     const resp = await fetch(link);
                     const html = await resp.text();
                     const tmp = document.createElement('div');
                     tmp.innerHTML = html;
 
-                    // Prefer data-i18n key on the linked page's h2
                     const h2 = tmp.querySelector('h2');
                     const key = h2 ? h2.getAttribute('data-i18n') : null;
-                    console.debug('[photos] linked h2 key/text', { link, key, text: h2 ? h2.textContent.trim() : null });
 
                     if (key && translations[key]) {
-                        console.debug('[photos] setting preview text from translations', { link, key, value: translations[key] });
                         span.textContent = translations[key];
                     } else if (h2 && h2.textContent.trim()) {
-                        console.debug('[photos] setting preview text from linked h2 text', { link, text: h2.textContent.trim() });
                         span.textContent = h2.textContent.trim();
-                    } else {
-                        // last resort: infer from filename (very small fallback)
-                        if (link.includes('giau-2025')) span.textContent = translations['Giau'] || 'Giau';
-                        else if (link.includes('wedding-gig')) span.textContent = translations['wedding_gig'] || 'Wedding Gig';
                     }
 
-                    // Set preview background from first image in linked page
                     const firstImg = tmp.querySelector('img');
                     if (firstImg && firstImg.src) {
                         preview.style.backgroundImage = `url('${firstImg.src}')`;
                     }
                 } catch (err) {
-                    console.error('Could not fetch collection info for', link, err);
+                    console.error('Could not fetch collection info', err);
                 }
             }
         }
 
-        // Initial load once i18n is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.i18nReady) {
-                updateCollectionPreviews();
-            }
-        });
-
         // Run when i18n system signals it's ready
-        window.addEventListener('i18nReady', () => {
-            updateCollectionPreviews();
-        });
-
-        // Update previews when language changes
+        window.addEventListener('i18nReady', updateCollectionPreviews);
         window.addEventListener('languageChanged', updateCollectionPreviews);
-
-        // Update page texts (h2, etc.) using i18n.js
-        function updatePageTexts() {
-            const lang = localStorage.getItem('lang') || 'en';
-            // Force i18n.js to reload translations by clearing cache
-            if (typeof i18nData !== 'undefined') {
-                i18nData[lang] = undefined;
-            }
-            if (typeof updateTexts === 'function') {
-                updateTexts(lang);
-            }
-        }
-        document.addEventListener('DOMContentLoaded', updatePageTexts);
-        window.addEventListener('languageChanged', updatePageTexts);
     </script>
-<script src="js/theme-toggle.js"></script>
+    <script src="js/theme-toggle.js"></script>
 </body>
 </html>

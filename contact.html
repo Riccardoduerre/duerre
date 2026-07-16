@@ -10,18 +10,15 @@
     
     <!-- 2. Optimized Tailwind Configurations (Moved right under CDN script) -->
     <script>
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        // This forces Tailwind's bg-neutral-900 to output your premium dark hue site-wide!
-                        neutral: {
-                            900: '#0d0e12'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ["Plus Jakarta Sans", "sans-serif"], }
+                }
+            }
+        }
+    </script>
                 }
             }
         }
@@ -70,7 +67,7 @@
 
             <input type="hidden" name="redirect" value="https://riccardoduerre.github.io/duerre/">
 
-            <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-theme font-medium rounded-sm py-3 hover:opacity-95 active:scale-[0.99] transition-all  ">
+            <button type="submit" class="w-full bg-theme-accent text-theme font-medium rounded-sm py-3 hover:opacity-90 active:scale-[0.99] transition-all">
                 Send Message
             </button>
         </form>
