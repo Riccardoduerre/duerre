@@ -11,7 +11,7 @@
     <link rel="icon" type="image/x-icon" href="/images/Duerre media logo red.png">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body>
+<body class="font-sans bg-theme text-theme selection:bg-indigo-500 selection:text-theme">
 
 
         <div id="navbar-container"></div>
@@ -20,7 +20,7 @@
         <div class="container mx-auto px-4 md:px-8 max-w-4xl">
                 <h1 class="text-4xl md:text-5xl font-bold uppercase tracking-widest mb-4" data-i18n="blog_post2_title">My Second Blog Post Title</h1>
             <p class="text-gray-400 mb-8">Published on August 11, 2025</p>
-            <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/DSCN7050.jpg" alt="Post Hero Image" class="w-full rounded-lg shadow-lg mb-8">
+            <img src="https://raw.githubusercontent.com/Riccardoduerre/duerre/main/images/DSCN7050.jpg" alt="Post Hero Image" class="w-full rounded-sm  mb-8">
 
             <div class="text-lg leading-relaxed space-y-6">
                 <p>
@@ -44,9 +44,9 @@
             const header = document.querySelector('header');
             if (window.scrollY > 50) {
                 header.classList.remove('bg-transparent', 'text-theme');
-                header.classList.add('bg-theme', 'text-theme', 'shadow-md');
+                header.classList.add('bg-theme', 'text-theme', '');
             } else {
-                header.classList.remove('bg-theme', 'text-theme', 'shadow-md');
+                header.classList.remove('bg-theme', 'text-theme', '');
                 header.classList.add('bg-transparent', 'text-theme');
             }
         });
@@ -57,9 +57,9 @@
         const header = document.querySelector('header');
         if (window.scrollY > 50) {
             header.classList.remove('bg-transparent', 'text-theme');
-            header.classList.add('bg-theme', 'text-theme', 'shadow-md');
+            header.classList.add('bg-theme', 'text-theme', '');
         } else {
-            header.classList.remove('bg-theme', 'text-theme', 'shadow-md');
+            header.classList.remove('bg-theme', 'text-theme', '');
             header.classList.add('bg-transparent', 'text-theme');
         }
     });

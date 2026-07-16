@@ -1,33 +1,38 @@
 :root {
     /* Palette - Light Theme */
-    --bg-color: #ffffff;
-    --text-color: #0d0e12;
-    --accent-color: #4f46e5; /* Indigo */
-    --surface-color: #f3f4f6;
-    --border-color: rgba(0, 0, 0, 0.1);
+    --bg-color: #FFFFFF;
+    --text-color: #09090B;
+    --accent-color: #5B6A80; /* Muted Steel Blue */
+    --surface-color: #F4F4F5;
+    --border-color: #E4E4E7;
 }
 
 [data-theme='dark'] {
     /* Palette - Dark Theme */
-    --bg-color: #0d0e12;
-    --text-color: #ffffff;
-    --accent-color: #818cf8; /* Light Indigo */
-    --surface-color: #1f2937;
-    --border-color: rgba(255, 255, 255, 0.08);
+    --bg-color: #0A0A0C;
+    --text-color: #FAFAFA;
+    --accent-color: #6C7A8E; /* Muted Steel Blue */
+    --surface-color: #121215;
+    --border-color: #27272A;
 }
 
 /* Utility classes for theme support */
 .bg-theme { background-color: var(--bg-color); }
 .text-theme { color: var(--text-color); }
 .bg-theme-surface { background-color: var(--surface-color); }
-.text-theme-muted { color: var(--text-color); opacity: 0.7; }
+.text-theme-muted { color: var(--text-color); opacity: 0.6; }
 .border-theme { border-color: var(--border-color); }
 
 body {
     background-color: var(--bg-color) !important;
     color: var(--text-color) !important;
     font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif !important;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.6;
+    transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.025em;
 }
 
 /* ==========================================================================
@@ -45,7 +50,7 @@ body {
 }
 
 .hero-overlay {
-    background: linear-gradient(180deg, rgba(13, 14, 18, 0.45) 0%, var(--bg-color) 100%);
+    background: linear-gradient(180deg, rgba(10, 10, 12, 0.4) 0%, var(--bg-color) 100%);
     position: absolute;
     top: 0;
     left: 0;
@@ -67,16 +72,16 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(9, 10, 13, 0.96);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(10, 10, 12, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.2s ease-out;
 }
 
 /* Functional JavaScript layout overrides */
@@ -97,9 +102,9 @@ body {
     max-width: 88%;
     max-height: 82%;
     object-fit: contain;
-    border-radius: 8px;
+    border-radius: 4px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    box-shadow: none;
 }
 
 .lightbox button {
@@ -108,23 +113,23 @@ body {
     transform: translateY(-50%);
     background: none;
     border: none;
-    font-size: 2.5rem;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
-    padding: 1.5rem;
+    padding: 1rem;
     z-index: 10000;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease-out;
 }
 
 .lightbox button:hover {
     color: #fff;
 }
 
-.lightbox .prev { left: 1.5rem; }
-.lightbox .next { right: 1.5rem; }
+.lightbox .prev { left: 1rem; }
+.lightbox .next { right: 1rem; }
 .lightbox .close {
-    top: 1.5rem;
-    right: 1.5rem;
-    font-size: 2.25rem;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
     transform: none;
 }

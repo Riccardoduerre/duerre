@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Riccardo Riva</title>
+    <title>Contact - Riccardo Riva</title>
     
     <!-- 1. Load Tailwind Core -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -43,7 +43,7 @@
 
 <!-- Contact Form Section -->
 <main class="flex-grow flex items-center justify-center px-4 py-16 mt-8">
-    <div class="w-full max-w-lg bg-[#161820] border border-zinc-800/80 rounded-2xl p-8 md:p-10 shadow-2xl">
+    <div class="w-full max-w-lg bg-theme-surface border border-theme rounded-sm p-8 md:p-10 ">
         
         <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
             <!-- Web3Forms Access Key Token Injection -->
@@ -51,26 +51,26 @@
             <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
             <div>
-                <label for="name" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Full Name</label>
+                <label for="name" class="block text-xs font-semibold uppercase tracking-wider text-theme-muted mb-2">Full Name</label>
                 <input type="text" id="name" name="name" placeholder="John Doe" required 
-                       class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-gray-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all">
+                       class="w-full bg-theme border border-theme rounded-sm px-4 py-3 text-theme placeholder:text-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all">
             </div>
 
             <div>
-                <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Email Address</label>
+                <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-theme-muted mb-2">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="john@example.com" required 
-                       class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-gray-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all">
+                       class="w-full bg-theme border border-theme rounded-sm px-4 py-3 text-theme placeholder:text-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all">
             </div>
 
             <div>
-                <label for="message" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Message</label>
+                <label for="message" class="block text-xs font-semibold uppercase tracking-wider text-theme-muted mb-2">Message</label>
                 <textarea id="message" name="message" placeholder="Your Message..." required rows="4"
-                          class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-gray-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all resize-none"></textarea>
+                          class="w-full bg-theme border border-theme rounded-sm px-4 py-3 text-theme placeholder:text-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all resize-none"></textarea>
             </div>
 
             <input type="hidden" name="redirect" value="https://riccardoduerre.github.io/duerre/">
 
-            <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-theme font-medium rounded-lg py-3 hover:opacity-95 active:scale-[0.99] transition-all shadow-lg shadow-indigo-500/20">
+            <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-theme font-medium rounded-sm py-3 hover:opacity-95 active:scale-[0.99] transition-all  ">
                 Send Message
             </button>
         </form>

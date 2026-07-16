@@ -145,11 +145,11 @@ window.addEventListener('navbarLoaded', () => {
     if (header) {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                header.classList.add('bg-black', 'text-white', 'shadow-md');
+                header.classList.add('bg-black', 'text-white', '');
                 header.classList.remove('bg-transparent');
             } else {
                 header.classList.add('bg-transparent', 'text-white');
-                header.classList.remove('bg-black', 'shadow-md');
+                header.classList.remove('bg-black', '');
             }
         });
     }

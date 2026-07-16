@@ -16,10 +16,10 @@ function initNavbar() {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         if (window.scrollY > 50) {
             header.classList.remove('bg-transparent');
-            header.classList.add(isDark ? 'bg-black' : 'bg-white', 'shadow-md', 'text-theme');
+            header.classList.add(isDark ? 'bg-black' : 'bg-white', '', 'text-theme');
         } else {
             header.classList.add('bg-transparent');
-            header.classList.remove(isDark ? 'bg-black' : 'bg-white', 'shadow-md');
+            header.classList.remove(isDark ? 'bg-black' : 'bg-white', '');
         }
     });
 
