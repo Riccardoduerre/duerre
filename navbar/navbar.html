@@ -1,60 +1,84 @@
 <header id="main-header"
-        class="fixed top-0 left-0 w-full z-50 py-6 px-8 flex justify-between items-center bg-transparent text-theme transition-colors duration-300">
+        class="fixed top-0 left-0 w-full z-50 py-6 px-8 flex justify-between items-center bg-transparent text-theme transition-all duration-300">
     <!-- Logo -->
-    <a href="/index.html" class="text-2xl font-bold uppercase tracking-widest">Riccardo Riva</a>
+    <a href="/index.html" class="text-2xl font-bold uppercase tracking-widest hover:opacity-80 transition-opacity">Riccardo Riva</a>
 
     <!-- Mobile Menu Button -->
-    <button id="menu-toggle" class="md:hidden z-50">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+    <button id="menu-toggle" class="md:hidden z-50 focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
     </button>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu Drawer -->
     <nav id="mobile-menu"
-         class="fixed top-0 right-0 w-64 h-full bg-theme-surface border-l border-theme z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col items-center justify-center space-y-8 text-xl uppercase font-medium">
-        <a href="/portfolio.html" data-i18n="Portfolio" class="hover:text-theme-muted">Portfolio</a>
-        <a href="/blog.html" data-i18n="Blog" class="hover:text-theme-muted">Blog</a>
-        <a href="/about.html" data-i18n="About" class="hover:text-theme-muted">About</a>
-        <a href="/contact.html" data-i18n="Contact" class="hover:text-theme-muted">Contact</a>
+         class="fixed top-0 right-0 w-80 h-full bg-theme-surface border-l border-theme z-40 transform translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col p-10 pt-24 space-y-6 text-xl uppercase font-semibold">
+        <a href="/portfolio.html" data-i18n="Portfolio" class="hover:text-indigo-500 transition-colors">Work</a>
+        <a href="/index.html#services" data-i18n="Services" class="hover:text-indigo-500 transition-colors">Services</a>
+        <a href="/about.html" data-i18n="About" class="hover:text-indigo-500 transition-colors">About</a>
+        <a href="/blog.html" data-i18n="Blog" class="hover:text-indigo-500 transition-colors">Blog</a>
+        <a href="/contact.html" data-i18n="Contact" class="py-3 px-6 bg-theme-accent text-white rounded-sm text-center">Contact</a>
+        
+        <div class="pt-8 mt-auto border-t border-theme flex flex-col space-y-6">
+            <!-- Mobile Lang Switch -->
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-theme-muted uppercase tracking-widest">Language</span>
+                <div class="flex space-x-4">
+                    <button class="mobile-lang-btn opacity-50 hover:opacity-100 transition-opacity" data-lang="it">IT</button>
+                    <button class="mobile-lang-btn opacity-50 hover:opacity-100 transition-opacity" data-lang="en">EN</button>
+                </div>
+            </div>
+            <!-- Mobile Theme Toggle -->
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-theme-muted uppercase tracking-widest">Appearance</span>
+                <button id="mobile-theme-toggle" class="p-2 border border-theme rounded-sm">
+                    <!-- Icon injected via JS -->
+                </button>
+            </div>
+        </div>
     </nav>
 
     <!-- Desktop Menu -->
     <nav class="hidden md:block">
-        <ul class="flex space-x-8 text-sm uppercase font-medium">
-            <li><a href="/portfolio.html" class="hover:text-theme-muted" data-i18n="Portfolio">Portfolio</a></li>
-            <li><a href="/blog.html" class="hover:text-theme-muted" data-i18n="Blog">Blog</a></li>
-            <li><a href="/about.html" class="hover:text-theme-muted" data-i18n="About">About</a></li>
-            <li><a href="/contact.html" class="hover:text-theme-muted" data-i18n="Contact">Contact</a></li>
+        <ul class="flex items-center space-x-10 text-xs uppercase font-bold tracking-widest">
+            <li><a href="/portfolio.html" class="hover:text-indigo-500 transition-colors" data-i18n="Portfolio">Work</a></li>
+            <li><a href="/index.html#services" class="hover:text-indigo-500 transition-colors" data-i18n="Services">Services</a></li>
+            <li><a href="/about.html" class="hover:text-indigo-500 transition-colors" data-i18n="About">About</a></li>
+            <li><a href="/blog.html" class="hover:text-indigo-500 transition-colors" data-i18n="Blog">Blog</a></li>
+            <li>
+                <a href="/contact.html" 
+                   class="bg-theme-accent text-white px-6 py-2.5 rounded-sm hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-indigo-500/10" 
+                   data-i18n="Contact">Contact</a>
+            </li>
 
-            <!-- Language Selector -->
-            <li class="relative">
+            <!-- Desktop Language Selector -->
+            <li class="relative ml-4">
                 <button id="langButton"
-                        class="flex items-center space-x-2 text-sm uppercase font-medium hover:text-theme-muted focus:outline-none">
+                        class="flex items-center space-x-2 hover:opacity-70 transition-opacity focus:outline-none border-l border-theme pl-6">
                     <img id="langFlag" src="https://flagcdn.com/16x12/it.png" alt="Italiano" class="w-4 h-3">
                     <span id="langCode">IT</span>
-                    <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                    <svg class="w-3 h-3 transition-transform" id="langArrow" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M5 8l5 5 5-5H5z"/>
                     </svg>
                 </button>
                 <ul id="langDropdown"
-                    class="absolute hidden right-0 mt-2 min-w-[140px] bg-theme-surface border border-theme rounded-sm overflow-hidden whitespace-nowrap z-50">
-                    <li class="px-3 py-1 hover:bg-theme-muted flex items-center space-x-2 cursor-pointer" data-lang="it"
-                        data-flag="https://flagcdn.com/16x12/it.png">
+                    class="absolute hidden right-0 mt-4 min-w-[140px] bg-theme-surface border border-theme rounded-sm shadow-2xl overflow-hidden z-50">
+                    <li class="px-4 py-2 hover:bg-indigo-500 hover:text-white flex items-center space-x-3 cursor-pointer transition-colors" data-lang="it">
                         <img src="https://flagcdn.com/16x12/it.png" alt="Italiano" class="w-4 h-3">
                         <span>Italiano</span>
                     </li>
-                    <li class="px-3 py-1 hover:bg-theme-muted flex items-center space-x-2 cursor-pointer" data-lang="en"
-                        data-flag="https://flagcdn.com/16x12/gb.png">
+                    <li class="px-4 py-2 hover:bg-indigo-500 hover:text-white flex items-center space-x-3 cursor-pointer transition-colors" data-lang="en">
                         <img src="https://flagcdn.com/16x12/gb.png" alt="English" class="w-4 h-3">
                         <span>English</span>
                     </li>
                 </ul>
             </li>
             
-            <!-- Theme Toggle -->
+            <!-- Desktop Theme Toggle -->
             <li>
-                <button id="theme-toggle" class="hover:text-theme-muted focus:outline-none">Toggle Theme</button>
+                <button id="theme-toggle" class="p-2 hover:bg-theme-surface rounded-sm transition-colors focus:outline-none">
+                    <!-- Icon injected via JS -->
+                </button>
             </li>
         </ul>
     </nav>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        // 404.html redirection script for GitHub Pages localized routing
+        (function() {
+            var path = window.location.pathname;
+            var search = window.location.search;
+            var hash = window.location.hash;
+            
+            // Extract language prefix (/en/ or /it/)
+            var langMatch = path.match(/^\/(en|it)(\/|$)/);
+            if (langMatch) {
+                var lang = langMatch[1];
+                localStorage.setItem('lang', lang);
+                path = path.replace(/^\/(en|it)/, '');
+                
+                // If path is empty or just /, default to index.html
+                if (path === '' || path === '/') {
+                    path = '/index.html';
+                }
+            }
+            
+            // Construct the final URL and replace state
+            var finalUrl = window.location.origin + path + search + hash;
+            window.location.replace(finalUrl);
+        })();
+    </script>
+</head>
+<body>
+    <p>Redirecting to localized content...</p>
+</body>
+</html>
