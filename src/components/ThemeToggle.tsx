@@ -15,14 +15,16 @@ export default function ThemeToggle() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  const nextTheme = theme === 'dark' ? 'light' : 'dark';
+
   return (
     <button
       type="button"
       className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-theme-border text-theme-text transition hover:bg-theme-surface"
       onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
-      aria-label="Toggle theme"
+      aria-label={`Switch to ${nextTheme} theme`}
     >
-      {theme === 'dark' ? (
+      {nextTheme === 'dark' ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5">
           <path
             fill="none"
