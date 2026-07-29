@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
 
 const aboutImage = new URL('../assets/images/DSCN7050.JPG', import.meta.url).href;
@@ -19,18 +20,18 @@ export default function About() {
               I specialize in commercial photography, film production and creative guidance for campaigns that need authentic, cinematic imagery.
             </p>
             <div className="mt-12 flex flex-wrap gap-4">
-              <a
-                href={`/${locale}/portfolio`}
+              <Link
+                to={`/${locale}/portfolio`}
                 className="rounded-sm border border-theme-border px-8 py-4 text-xs uppercase tracking-[0.2em] transition hover:bg-theme-surface"
               >
                 {t('portfolio')}
-              </a>
-              <a
-                href={`/${locale}/contact`}
+              </Link>
+              <Link
+                to={`/${locale}/contact`}
                 className="rounded-sm bg-theme-accent px-8 py-4 text-xs uppercase tracking-[0.2em] text-white transition hover:opacity-90"
               >
                 {t('contact')}
-              </a>
+              </Link>
             </div>
           </div>
           <div className="relative overflow-hidden rounded-sm bg-theme-surface">

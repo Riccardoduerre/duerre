@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
 
 const heroImage = new URL('../assets/images/_RIK7376_HDR.jpg', import.meta.url).href;
@@ -29,18 +30,18 @@ export default function Home() {
           <h1 className="text-4xl font-bold uppercase tracking-[0.2em] md:text-6xl">{content.heroTitle}</h1>
           <p className="mt-8 max-w-3xl text-lg leading-relaxed text-theme-muted">{content.heroSubtitle}</p>
           <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a
-              href={`/${locale}/portfolio`}
+            <Link
+              to={`/${locale}/portfolio`}
               className="rounded-sm bg-theme-accent px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white transition hover:opacity-90"
             >
               {content.primary}
-            </a>
-            <a
-              href={`/${locale}/contact`}
+            </Link>
+            <Link
+              to={`/${locale}/contact`}
               className="rounded-sm border border-theme-border px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] transition hover:bg-theme-surface"
             >
               {content.secondary}
-            </a>
+            </Link>
           </div>
         </div>
       </section>
