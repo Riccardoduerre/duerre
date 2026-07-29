@@ -5,12 +5,12 @@ import App from './App';
 import ErrorBoundary from './components/ErrorBoundary';
 import './index.css';
 
-const Router = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? BrowserRouter : HashRouter;
+const Router = import.meta.env.DEV ? BrowserRouter : HashRouter;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
         <App />
       </Router>
     </ErrorBoundary>
