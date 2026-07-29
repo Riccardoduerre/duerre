@@ -1,18 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import ErrorBoundary from './components/ErrorBoundary';
 import './index.css';
 
-const Router = import.meta.env.DEV ? BrowserRouter : HashRouter;
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <Router basename={import.meta.env.BASE_URL}>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <App />
-      </Router>
+      </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>,
 );
