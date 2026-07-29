@@ -11,7 +11,15 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/en" replace />} />
-      <Route path=":locale" element={<LocaleLayout />}>
+      <Route path="/en" element={<LocaleLayout />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="portfolio" element={<Portfolio />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="blog/:slug" element={<BlogPost />} />
+        <Route path="contact" element={<Contact />} />
+      </Route>
+      <Route path="/it" element={<LocaleLayout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="portfolio" element={<Portfolio />} />
