@@ -3,9 +3,12 @@ import react from '@vitejs/plugin-react';
 
 const repoName = 'duerre';
 
+const prodBase = `/${repoName}/`;
+const base = process.env.VITE_BASE ?? (process.env.NODE_ENV === 'production' ? prodBase : '/');
+
 export default defineConfig({
   plugins: [react()],
-  base: process.env.NODE_ENV === 'production' ? `/${repoName}/` : '/',
+  base,
   server: {
     port: 4173,
   },
