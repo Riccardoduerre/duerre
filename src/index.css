@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-color: #FFFFFF;
+    --text-color: #09090B;
+    --surface-color: #F4F4F5;
+    --border-color: #E4E4E7;
+    --accent-color: #5B6A80;
+  }
+
+  .dark {
+    --bg-color: #0A0A0C;
+    --text-color: #FAFAFA;
+    --surface-color: #121215;
+    --border-color: #27272A;
+    --accent-color: #6C7A8E;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-theme-bg text-theme-text font-sans antialiased;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer utilities {
+  .bg-theme-bg {
+    background-color: var(--bg-color);
+  }
+  .text-theme-text {
+    color: var(--text-color);
+  }
+  .bg-theme-surface {
+    background-color: var(--surface-color);
+  }
+  .border-theme-border {
+    border-color: var(--border-color);
+  }
+  .bg-theme-accent {
+    background-color: var(--accent-color);
+  }
+  .text-theme-muted {
+    color: rgba(var(--text-color-rgb), 0.65);
+  }
+}
