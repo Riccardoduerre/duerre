@@ -38,20 +38,23 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-theme-bg/95 shadow-xl backdrop-blur-md border-b border-theme-border transition-all duration-300">
-      <div className="container mx-auto flex items-center justify-between px-6 py-5 md:px-8">
-        <NavLink to={`/${currentLocale}`} className="text-xl font-bold uppercase tracking-[0.3em]">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-theme-border bg-theme-bg/90 backdrop-blur-md shadow-lg shadow-theme/10">
+      <div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-8">
+        <NavLink
+          to={`/${currentLocale}`}
+          className="text-lg font-bold uppercase tracking-[0.35em] text-theme-text"
+        >
           Duerre
         </NavLink>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-7 md:flex">
           {items.map((item) => (
             <NavLink
               key={item.key}
               to={`/${currentLocale}/${item.path}`}
               className={({ isActive }) =>
-                `text-sm font-medium uppercase tracking-[0.2em] transition-colors hover:text-indigo-500 ${
-                  isActive ? 'text-indigo-500' : 'text-theme-text'
+                `text-xs font-semibold uppercase tracking-[0.28em] transition-colors hover:text-theme-accent ${
+                  isActive ? 'text-theme-accent' : 'text-theme-text'
                 }`
               }
             >
@@ -61,7 +64,7 @@ export default function Navbar() {
           <ThemeToggle />
           <button
             type="button"
-            className="rounded-sm border border-theme-border px-3 py-2 text-xs uppercase tracking-[0.2em] transition hover:border-indigo-500"
+            className="rounded-full border border-theme-border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] transition hover:border-theme-accent hover:text-theme-accent"
             onClick={() => changeLocale(currentLocale === 'en' ? 'it' : 'en')}
           >
             {langLabel}
@@ -70,7 +73,7 @@ export default function Navbar() {
 
         <button
           type="button"
-          className="md:hidden rounded-sm border border-theme-border px-3 py-2 text-xs uppercase tracking-[0.2em]"
+          className="rounded-full border border-theme-border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] md:hidden"
           onClick={() => setMobileOpen((current) => !current)}
           aria-label="Toggle menu"
         >
@@ -78,23 +81,23 @@ export default function Navbar() {
         </button>
       </div>
 
-      <div className={`${mobileOpen ? 'max-h-[500px] border-t border-theme-border' : 'max-h-0'} overflow-hidden bg-theme-bg transition-all duration-300 md:hidden`}>
-        <div className="container mx-auto px-6 py-6 space-y-5">
+      <div className={`${mobileOpen ? 'max-h-[520px] border-t border-theme-border' : 'max-h-0'} overflow-hidden bg-theme-bg transition-all duration-300 md:hidden`}>
+        <div className="container mx-auto space-y-5 px-6 py-6">
           {items.map((item) => (
             <NavLink
               key={item.key}
               to={`/${currentLocale}/${item.path}`}
-              className="block text-lg font-semibold uppercase tracking-[0.2em] text-theme-text hover:text-indigo-500"
+              className="block text-base font-semibold uppercase tracking-[0.26em] text-theme-text hover:text-theme-accent"
               onClick={() => setMobileOpen(false)}
             >
               {item.label}
             </NavLink>
           ))}
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-4 pt-2">
             <ThemeToggle />
             <button
               type="button"
-              className="rounded-sm border border-theme-border px-3 py-2 text-xs uppercase tracking-[0.2em]"
+              className="rounded-full border border-theme-border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.24em]"
               onClick={() => changeLocale(currentLocale === 'en' ? 'it' : 'en')}
             >
               {langLabel}

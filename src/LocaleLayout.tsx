@@ -14,11 +14,13 @@ export default function LocaleLayout() {
 
   return (
     <LocaleProvider locale={locale}>
-      <Navbar />
-      <main className="pt-24">
-        <Outlet />
-      </main>
-      <Footer />
+      <div className="min-h-screen bg-theme-bg text-theme-text">
+        <Navbar />
+        <main className="pt-24">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </LocaleProvider>
   );
 }

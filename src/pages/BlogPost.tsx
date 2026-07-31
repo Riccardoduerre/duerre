@@ -14,7 +14,7 @@ export default function BlogPost() {
     return (
       <section className="bg-theme-bg py-24">
         <div className="container mx-auto px-6 md:px-8 text-center">
-          <h1 className="text-4xl font-bold uppercase tracking-[0.2em]">Post not found</h1>
+          <h1 className="text-4xl font-bold uppercase tracking-[0.22em]">Post not found</h1>
           <p className="mt-4 text-theme-muted">The blog post you requested does not exist.</p>
         </div>
       </section>
@@ -24,12 +24,14 @@ export default function BlogPost() {
   return (
     <section className="bg-theme-bg py-24">
       <div className="container mx-auto px-6 md:px-8">
-        <article className="max-w-4xl space-y-8">
+        <article className="mx-auto max-w-4xl space-y-8">
           <div>
-            <h1 className="text-4xl font-bold uppercase tracking-[0.2em]">{post.title[locale]}</h1>
-            <p className="text-theme-muted mt-3">{post.date}</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-theme-accent">{post.date}</p>
+            <h1 className="mt-4 text-4xl font-bold uppercase tracking-[0.22em] md:text-5xl">{post.title[locale]}</h1>
           </div>
-          <img src={post.image} alt={post.title[locale]} className="rounded-sm" />
+          <div className="section-shell overflow-hidden">
+            <img src={post.image} alt={post.title[locale]} className="w-full object-cover" />
+          </div>
           <div className="prose max-w-none text-theme-text" dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content[locale]) }} />
         </article>
       </div>
