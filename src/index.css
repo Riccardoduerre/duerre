@@ -67,6 +67,10 @@
     background-color: var(--accent-color);
   }
 
+  .text-theme-accent {
+    color: var(--accent-color);
+  }
+
   .text-theme-muted {
     color: var(--muted-color);
   }

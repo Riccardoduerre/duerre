@@ -38,7 +38,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-theme-border bg-theme-bg/90 backdrop-blur-md shadow-lg shadow-theme/10">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-theme-border bg-theme-bg/90 backdrop-blur-md shadow-theme">
       <div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-8">
         <NavLink
           to={`/${currentLocale}`}
