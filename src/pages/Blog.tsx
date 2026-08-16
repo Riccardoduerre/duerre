@@ -19,7 +19,12 @@ export default function Blog() {
               to={`/${locale}/blog/${post.slug}`}
               className="group section-shell overflow-hidden transition duration-300 hover:-translate-y-1"
             >
-              <img src={post.image} alt={post.title[locale]} className="h-60 w-full object-cover transition duration-500 group-hover:scale-105" />
+              <img
+                src={post.image}
+                alt={post.title[locale]}
+                className="h-60 w-full object-cover transition duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
               <div className="p-6">
                 <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-theme-accent">{post.date}</p>
                 <h2 className="mt-4 text-2xl font-bold uppercase tracking-[0.18em]">{post.title[locale]}</h2>

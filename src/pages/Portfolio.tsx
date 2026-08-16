@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
-import portfolioProjects from '../data/portfolio';
+import { portfolioProjects } from '../data/portfolio';
 
 export default function Portfolio() {
   const { t, locale } = useLocale();
@@ -13,11 +14,17 @@ export default function Portfolio() {
         </div>
         <div className="grid gap-8 md:grid-cols-2">
           {portfolioProjects.map((project) => (
-            <article
+            <Link
               key={project.id}
-              className="section-shell overflow-hidden transition duration-300 hover:-translate-y-1"
+              to={`/${locale}/portfolio/${project.id}`}
+              className="section-shell overflow-hidden transition duration-300 hover:-translate-y-1 group cursor-pointer"
             >
-              <img src={project.image} alt={project.title[locale]} className="h-80 w-full object-cover" />
+              <img
+                src={project.image}
+                alt={project.title[locale]}
+                className="h-80 w-full object-cover group-hover:scale-105 transition duration-500"
+                loading="lazy"
+              />
               <div className="space-y-4 p-8">
                 <div className="flex items-center justify-between gap-4">
                   <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-theme-accent">{project.category}</p>
@@ -37,12 +44,18 @@ export default function Portfolio() {
                   </p>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
-                  {project.gallery.slice(0, 2).map((image) => (
-                    <img key={image} src={image} alt={project.title[locale]} className="h-40 w-full rounded-2xl object-cover" />
+                  {project.gallery.slice(0, 2).map((image, idx) => (
+                    <img
+                      key={idx}
+                      src={image}
+                      alt={project.title[locale]}
+                      className="h-40 w-full rounded-2xl object-cover"
+                      loading="lazy"
+                    />
                   ))}
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>

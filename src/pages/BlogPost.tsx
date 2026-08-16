@@ -30,7 +30,12 @@ export default function BlogPost() {
             <h1 className="mt-4 text-4xl font-bold uppercase tracking-[0.22em] md:text-5xl">{post.title[locale]}</h1>
           </div>
           <div className="section-shell overflow-hidden">
-            <img src={post.image} alt={post.title[locale]} className="w-full object-cover" />
+            <img
+              src={post.image}
+              alt={post.title[locale]}
+              className="w-full object-cover"
+              loading="lazy"
+            />
           </div>
           <div className="prose max-w-none text-theme-text" dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content[locale]) }} />
         </article>
