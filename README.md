@@ -1,6 +1,6 @@
 # Duerre Media — Portfolio & Blog
 
-Premium commercial photography, videography, and creative direction by Riccardo Riva.
+Commercial photography, video, 3D content, digital marketing, and visual direction by Riccardo Riva.
 
 **Live Site**: [duerremedia.com](https://duerremedia.com)
 
@@ -10,9 +10,10 @@ Premium commercial photography, videography, and creative direction by Riccardo 
 - **Dark/Light Theme** toggle with automatic system preference detection
 - **Responsive Design** optimized for mobile, tablet, and desktop
 - **Portfolio Gallery** with project detail pages and image galleries
+- **Digital Marketing** service page focused on strategy, delivery, and measurement
 - **Blog System** with Markdown support and easy post creation
 - **Contact Form** with email integration (EmailJS)
-- **SEO Optimized** with Open Graph and Twitter Card support
+- **SEO Metadata** with localized page titles/descriptions and Open Graph/Twitter previews
 - **Performance Optimized** with lazy loading and optimized images
 - **Accessible** with semantic HTML and ARIA labels
 
@@ -57,7 +58,7 @@ For detailed setup and deployment instructions, see [SETUP.md](SETUP.md).
 
 ```
 src/
-├── pages/              # Route pages
+├── pages/              # Route pages, including category and digital marketing views
 ├── components/         # Reusable components
 ├── i18n/              # Internationalization
 ├── data/              # Static data (portfolio, blog)
@@ -74,9 +75,9 @@ content/
 ## 🌐 Internationalization
 
 The site supports **English** and **Italian** with:
-- URL-based routing (`/#/en/...` and `/#/it/...`)
+- One route tree; language changes do not change the URL
 - Language switcher in navbar
-- Automatic browser language detection
+- Browser-language detection with Italian as the fallback
 - Persistent language preference
 
 ## 🎨 Customization
@@ -114,7 +115,7 @@ For setup details, see [SETUP.md](SETUP.md).
 npm run deploy:gh-pages
 ```
 
-The site uses hash-based routing (`/#/path`) which works seamlessly on GitHub Pages without server configuration.
+The deploy script publishes to the `gh-pages` branch with a root base path and copies the repository `CNAME`. It is configured for `duerremedia.com`. The site uses flat hash routes such as `/#/portfolio` and `/#/digital-marketing`; language is selected in the app, not encoded in the URL.
 
 ### Custom Domain
 1. Add CNAME file with domain name
@@ -126,8 +127,7 @@ The site uses hash-based routing (`/#/path`) which works seamlessly on GitHub Pa
 - Open Graph meta tags for social sharing
 - Twitter Card support
 - Canonical URLs
-- Bilingual `hreflang` tags
-- Structured metadata
+- Localized page titles and descriptions
 
 ## ♿ Accessibility
 
@@ -139,10 +139,8 @@ The site uses hash-based routing (`/#/path`) which works seamlessly on GitHub Pa
 
 ## 📊 Performance
 
-- **Bundle**: ~77 KB gzipped (JS)
-- **CSS**: ~3.9 KB gzipped
-- **Images**: Lazy loaded, optimized
-- **Core Web Vitals**: Optimized
+- **Images**: Resized WebP derivatives are used by the app; source originals are retained
+- Below-the-fold imagery uses native lazy loading
 
 ## 🐛 Browser Support
 

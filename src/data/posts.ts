@@ -14,8 +14,8 @@ export interface BlogPostData {
   content: LocaleStrings;
 }
 
-const post1Image = new URL('../assets/images/DSCN7050.JPG', import.meta.url).href;
-const post2Image = new URL('../assets/images/_DSC2919.jpg', import.meta.url).href;
+const post1Image = new URL('../assets/images/optimized/DSCN7050.webp', import.meta.url).href;
+const post2Image = new URL('../assets/images/optimized/_DSC2919.webp', import.meta.url).href;
 
 const posts: BlogPostData[] = [
   {

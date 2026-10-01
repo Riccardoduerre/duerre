@@ -4,23 +4,23 @@
 
 @layer base {
   :root {
-    --bg-color: #F8F7F3;
-    --text-color: #111111;
+    --bg-color: #F1F0EA;
+    --text-color: #2B2B2C;
     --surface-color: #FFFFFF;
-    --border-color: #D7D4C9;
-    --accent-color: #2E5D7A;
-    --muted-color: #4B5563;
-    --shadow-color: rgba(17, 17, 17, 0.08);
+    --border-color: #C5C7C4;
+    --accent-color: #00B3FF;
+    --muted-color: #383E42;
+    --shadow-color: rgba(43, 43, 44, 0.08);
   }
 
   .dark {
-    --bg-color: #0F1115;
-    --text-color: #F4F7FA;
-    --surface-color: #161A22;
-    --border-color: #2A3140;
-    --accent-color: #8DB4C9;
-    --muted-color: #AEB7C3;
-    --shadow-color: rgba(0, 0, 0, 0.3);
+    --bg-color: #2B2B2C;
+    --text-color: #F1F0EA;
+    --surface-color: #383E42;
+    --border-color: #97999B;
+    --accent-color: #00B3FF;
+    --muted-color: #C5C7C4;
+    --shadow-color: rgba(0, 0, 0, 0.24);
   }
 
   html {
@@ -32,7 +32,7 @@
     margin: 0;
     min-height: 100vh;
     background:
-      radial-gradient(circle at top left, rgba(46, 93, 122, 0.10), transparent 24%),
+      radial-gradient(circle at top left, rgba(0, 179, 255, 0.12), transparent 24%),
       var(--bg-color);
     color: var(--text-color);
   }

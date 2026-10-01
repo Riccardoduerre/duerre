@@ -5,6 +5,7 @@ import ThemeToggle from './ThemeToggle';
 
 const navItems = [
   { key: 'portfolio', path: 'portfolio' },
+  { key: 'marketing_nav', path: 'digital-marketing' },
   { key: 'about', path: 'about' },
   { key: 'blog', path: 'blog' },
   { key: 'contact', path: 'contact' },
@@ -26,22 +27,15 @@ export default function Navbar() {
 
   const changeLocale = (newLocale: 'en' | 'it') => {
     if (newLocale === currentLocale) return;
-    const segments = location.pathname.split('/').filter(Boolean);
-    if (segments.length === 0) {
-      navigate(`/${newLocale}`);
-      setLocale(newLocale);
-      return;
-    }
-    segments[0] = newLocale;
-    navigate(`/${segments.join('/')}`);
     setLocale(newLocale);
+    navigate(location.pathname || '/');
   };
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-theme-border bg-theme-bg/90 backdrop-blur-md shadow-theme">
       <div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-8">
         <NavLink
-          to={`/${currentLocale}`}
+          to="/"
           className="text-lg font-bold uppercase tracking-[0.35em] text-theme-text"
         >
           Duerre
@@ -51,7 +45,7 @@ export default function Navbar() {
           {items.map((item) => (
             <NavLink
               key={item.key}
-              to={`/${currentLocale}/${item.path}`}
+              to={`/${item.path}`}
               className={({ isActive }) =>
                 `text-xs font-semibold uppercase tracking-[0.28em] transition-colors hover:text-theme-accent ${
                   isActive ? 'text-theme-accent' : 'text-theme-text'
@@ -75,9 +69,10 @@ export default function Navbar() {
           type="button"
           className="rounded-full border border-theme-border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] md:hidden"
           onClick={() => setMobileOpen((current) => !current)}
-          aria-label="Toggle menu"
+          aria-label={mobileOpen ? t('menu_close') : t('menu_open')}
+          aria-expanded={mobileOpen}
         >
-          Menu
+          {mobileOpen ? t('menu_close_label') : t('menu_label')}
         </button>
       </div>
 
@@ -86,7 +81,7 @@ export default function Navbar() {
           {items.map((item) => (
             <NavLink
               key={item.key}
-              to={`/${currentLocale}/${item.path}`}
+              to={`/${item.path}`}
               className="block text-base font-semibold uppercase tracking-[0.26em] text-theme-text hover:text-theme-accent"
               onClick={() => setMobileOpen(false)}
             >

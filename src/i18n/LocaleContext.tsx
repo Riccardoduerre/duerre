@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { Locale, getTranslation } from './index';
+import { Locale, getPreferredLocale, getTranslation } from './index';
 
 interface LocaleContextValue {
   locale: Locale;
@@ -9,12 +9,18 @@ interface LocaleContextValue {
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
-export function LocaleProvider({ locale: initialLocale, children }: { locale: Locale; children: React.ReactNode }) {
-  const [locale, setLocale] = useState<Locale>(initialLocale);
+export function LocaleProvider({ children }: { children: React.ReactNode }) {
+  const [locale, setLocaleState] = useState<Locale>(() => getPreferredLocale());
 
   useEffect(() => {
-    setLocale(initialLocale);
-  }, [initialLocale]);
+    localStorage.setItem('lang', locale);
+    document.documentElement.lang = locale;
+  }, [locale]);
+
+  const setLocale = (nextLocale: Locale) => {
+    setLocaleState(nextLocale);
+    localStorage.setItem('lang', nextLocale);
+  };
 
   const contextValue = useMemo(
     () => ({

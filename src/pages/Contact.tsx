@@ -34,7 +34,7 @@ export default function Contact() {
       formRef.current.reset();
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to send message. Please try again.');
+      setError(err instanceof Error ? err.message : t('contact_form_error'));
       console.error('Email error:', err);
     } finally {
       setLoading(false);
@@ -53,17 +53,17 @@ export default function Contact() {
             </p>
             <div className="mt-10 space-y-4 text-sm uppercase tracking-[0.2em] text-theme-muted">
               <p>
-                <span className="font-bold text-theme-text">Email:</span> riccardo@duerremedia.com
+                <span className="font-bold text-theme-text">{t('contact_email_label')}:</span> {t('contact_email_value')}
               </p>
               <p>
-                <span className="font-bold text-theme-text">Location:</span> Italy / Remote
+                <span className="font-bold text-theme-text">{t('contact_location_label')}:</span> {t('contact_location_value')}
               </p>
             </div>
           </div>
           <form ref={formRef} onSubmit={handleSubmit} className="section-shell space-y-6 p-8">
             {submitted && (
               <div className="rounded-2xl bg-green-100 p-4 text-sm text-green-800" role="alert">
-                ✓ Message sent successfully! I'll get back to you soon.
+                {t('contact_form_success')}
               </div>
             )}
 
@@ -75,13 +75,13 @@ export default function Contact() {
 
             <div>
               <label htmlFor="user_name" className="mb-3 block text-[11px] font-bold uppercase tracking-[0.24em] text-theme-muted">
-                Full Name
+                {t('contact_form_full_name')}
               </label>
               <input
                 id="user_name"
                 name="user_name"
                 type="text"
-                placeholder="Your name"
+                placeholder={t('contact_form_name_placeholder')}
                 required
                 aria-required="true"
                 className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-accent"
@@ -89,13 +89,13 @@ export default function Contact() {
             </div>
             <div>
               <label htmlFor="user_email" className="mb-3 block text-[11px] font-bold uppercase tracking-[0.24em] text-theme-muted">
-                Email Address
+                {t('contact_form_email')}
               </label>
               <input
                 id="user_email"
                 name="user_email"
                 type="email"
-                placeholder="name@example.com"
+                placeholder={t('contact_form_email_placeholder')}
                 required
                 aria-required="true"
                 className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-accent"
@@ -103,13 +103,13 @@ export default function Contact() {
             </div>
             <div>
               <label htmlFor="message" className="mb-3 block text-[11px] font-bold uppercase tracking-[0.24em] text-theme-muted">
-                Message
+                {t('contact_form_message')}
               </label>
               <textarea
                 id="message"
                 name="message"
                 rows={5}
-                placeholder="Tell me about your project"
+                placeholder={t('contact_form_message_placeholder')}
                 required
                 aria-required="true"
                 className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-accent"
@@ -120,7 +120,7 @@ export default function Contact() {
               disabled={loading}
               className="w-full rounded-full bg-theme-accent px-6 py-4 text-[11px] font-bold uppercase tracking-[0.28em] text-white transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Sending...' : 'Send Message'}
+              {loading ? t('contact_form_sending') : t('contact_form_send')}
             </button>
           </form>
         </div>

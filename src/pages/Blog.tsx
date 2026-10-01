@@ -16,7 +16,7 @@ export default function Blog() {
           {posts.map((post) => (
             <Link
               key={post.slug}
-              to={`/${locale}/blog/${post.slug}`}
+              to={`/blog/${post.slug}`}
               className="group section-shell overflow-hidden transition duration-300 hover:-translate-y-1"
             >
               <img

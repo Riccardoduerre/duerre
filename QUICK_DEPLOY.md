@@ -6,25 +6,21 @@
 npm run deploy:gh-pages
 ```
 
-Done! Your site will be live at `https://riccardoduerre.github.io/duerre` (or your custom domain if configured).
+This publishes the current build to the `gh-pages` branch for the configured custom domain, `https://duerremedia.com`.
 
 ---
 
 ## 📋 5-Minute Setup Checklist
 
-### Step 1: Configure EmailJS (3 min)
-- [ ] Go to [emailjs.com](https://www.emailjs.com)
-- [ ] Sign up for free account
-- [ ] Create new "Gmail" service with ID: `service_duerre_prod`
-- [ ] Create email template with ID: `template_contact_riccardo`
-- [ ] Get your **Public Key** from dashboard
-- [ ] Update `src/pages/Contact.tsx` with your public key (replace `OU8uo5N_6Yp0oEWfP`)
+### Step 1: Verify the contact form
+- [ ] Confirm the EmailJS public key, service, and template configured in `src/pages/Contact.tsx` belong to the production account
+- [ ] Submit a real test message and verify delivery; a local build cannot validate external email delivery
 
-### Step 2: Configure GitHub Pages (2 min)
+### Step 2: Confirm GitHub Pages (2 min)
 - [ ] Go to repository Settings → Pages
 - [ ] Set source to `gh-pages` branch
-- [ ] Add custom domain if you have one
-- [ ] Configure DNS if using custom domain
+- [ ] Confirm `duerremedia.com` is configured as the custom domain
+- [ ] Confirm DNS points to GitHub Pages
 
 ### Step 3: Deploy
 - [ ] Run: `npm run deploy:gh-pages`
@@ -36,11 +32,11 @@ Done! Your site will be live at `https://riccardoduerre.github.io/duerre` (or yo
 ## 🔗 URLs After Deployment
 
 ```
-🌐 English Home:    https://duerremedia.com/#/en
-🌐 Italian Home:    https://duerremedia.com/#/it
-🌐 Portfolio:       https://duerremedia.com/#/en/portfolio
-🌐 Blog:            https://duerremedia.com/#/en/blog
-🌐 Contact:         https://duerremedia.com/#/en/contact
+Home:               https://duerremedia.com/#/
+Portfolio:          https://duerremedia.com/#/portfolio
+Digital Marketing:  https://duerremedia.com/#/digital-marketing
+Blog:               https://duerremedia.com/#/blog
+Contact:             https://duerremedia.com/#/contact
 ```
 
 ---
@@ -50,7 +46,7 @@ Done! Your site will be live at `https://riccardoduerre.github.io/duerre` (or yo
 ```bash
 # Check these all work:
 ✓ Site loads without errors
-✓ Language switching works (EN → IT)
+✓ Language switching works (EN ↔ IT) without changing the route
 ✓ Theme toggle works (click moon/sun icon)
 ✓ Portfolio cards clickable, detail pages load
 ✓ Blog posts render correctly
@@ -64,7 +60,7 @@ Done! Your site will be live at `https://riccardoduerre.github.io/duerre` (or yo
 
 ## 📧 Contact Form Testing
 
-1. Go to Contact page: `/#/en/contact`
+1. Go to Contact page: `/#/contact`
 2. Fill out form:
    - Name: Test
    - Email: your-email@test.com
@@ -133,7 +129,7 @@ npm run deploy:gh-pages
 # Edit src/data/portfolio.ts and add entry:
 {
   id: 'unique-id',
-  category: 'Commercial',
+  category: 'photo', // Use 'photo', 'video', or '3d'. Digital Marketing is a separate service page.
   year: '2026',
   image: /* featured image URL */,
   gallery: [/* gallery image URLs */],
@@ -151,11 +147,11 @@ npm run deploy:gh-pages
 ## 🔧 Development Commands
 
 ```bash
-npm install          # Install dependencies
-npm run dev         # Start dev server (localhost:4173)
-npm run build       # Build for production
-npm run preview     # Preview production build
-npm run deploy      # Deploy to GitHub Pages
+npm install             # Install dependencies
+npm run dev             # Start the development server
+npm run build           # Build for production
+npm run preview         # Preview the production build
+npm run deploy:gh-pages # Deploy to the configured GitHub Pages custom domain
 ```
 
 ---

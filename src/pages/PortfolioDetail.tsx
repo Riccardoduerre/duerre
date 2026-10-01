@@ -1,11 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
-import { portfolioProjects } from '../data/portfolio';
+import { portfolioCategoryMeta, portfolioProjects } from '../data/portfolio';
 
 export default function PortfolioDetail() {
   const { id } = useParams();
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
 
   const project = useMemo(() => portfolioProjects.find((p) => p.id === id), [id]);
 
@@ -13,10 +13,10 @@ export default function PortfolioDetail() {
     return (
       <section className="bg-theme-bg py-24">
         <div className="container mx-auto px-6 md:px-8 text-center">
-          <h1 className="text-4xl font-bold uppercase tracking-[0.22em]">Project not found</h1>
-          <p className="mt-4 text-theme-muted">The project you're looking for doesn't exist.</p>
-          <Link to={`/${locale}/portfolio`} className="mt-6 inline-block text-theme-accent hover:underline">
-            ← Back to Portfolio
+          <h1 className="text-4xl font-bold uppercase tracking-[0.22em]">{t('not_found_project')}</h1>
+          <p className="mt-4 text-theme-muted">{t('not_found_project_desc')}</p>
+          <Link to="/portfolio" className="mt-6 inline-block text-theme-accent hover:underline">
+            ← {t('back_to_portfolio')}
           </Link>
         </div>
       </section>
@@ -26,13 +26,13 @@ export default function PortfolioDetail() {
   return (
     <section className="bg-theme-bg py-24">
       <div className="container mx-auto px-6 md:px-8">
-        <Link to={`/${locale}/portfolio`} className="mb-8 inline-block text-sm text-theme-accent hover:underline">
-          ← Back to Portfolio
+        <Link to="/portfolio" className="mb-8 inline-block text-sm text-theme-accent hover:underline">
+          ← {t('back_to_portfolio')}
         </Link>
 
         <article className="mx-auto max-w-5xl">
           <div className="mb-12">
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-theme-accent">{project.category}</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-theme-accent">{portfolioCategoryMeta[project.category].label[locale]}</p>
             <h1 className="mt-4 text-5xl font-bold uppercase tracking-[0.22em]">{project.title[locale]}</h1>
             <p className="mt-6 text-lg text-theme-muted">{project.scope[locale]}</p>
           </div>
@@ -44,16 +44,17 @@ export default function PortfolioDetail() {
                 alt={project.title[locale]}
                 className="w-full h-[400px] object-cover"
                 loading="lazy"
+                decoding="async"
               />
             </div>
 
             <div className="space-y-8">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent mb-2">Client</p>
+                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent mb-2">{t('client_label')}</p>
                 <p className="text-lg font-semibold">{project.client[locale]}</p>
               </div>
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent mb-2">Year</p>
+                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent mb-2">{t('year_label')}</p>
                 <p className="text-lg font-semibold">{project.year}</p>
               </div>
             </div>
@@ -62,13 +63,13 @@ export default function PortfolioDetail() {
           <div className="grid gap-12 lg:grid-cols-2 mb-16">
             <div>
               <h2 className="text-2xl font-bold uppercase tracking-[0.22em] mb-4">
-                {locale === 'en' ? 'Challenge' : 'Sfida'}
+                {t('challenge_label')}
               </h2>
               <p className="text-lg text-theme-muted leading-relaxed">{project.challenge[locale]}</p>
             </div>
             <div>
               <h2 className="text-2xl font-bold uppercase tracking-[0.22em] mb-4">
-                {locale === 'en' ? 'Solution' : 'Soluzione'}
+                {t('solution_label')}
               </h2>
               <p className="text-lg text-theme-muted leading-relaxed">{project.solution[locale]}</p>
             </div>
@@ -76,7 +77,7 @@ export default function PortfolioDetail() {
 
           <div className="section-shell p-12">
             <h2 className="text-2xl font-bold uppercase tracking-[0.22em] mb-4">
-              {locale === 'en' ? 'Results' : 'Risultati'}
+              {t('results_label')}
             </h2>
             <p className="text-xl text-theme-muted leading-relaxed">{project.results[locale]}</p>
           </div>
@@ -84,7 +85,7 @@ export default function PortfolioDetail() {
           {project.gallery.length > 1 && (
             <div className="mt-16">
               <h2 className="text-2xl font-bold uppercase tracking-[0.22em] mb-8">
-                {locale === 'en' ? 'Gallery' : 'Galleria'}
+                {t('gallery_label')}
               </h2>
               <div className="grid gap-4 lg:grid-cols-2">
                 {project.gallery.map((img, idx) => (
@@ -94,6 +95,7 @@ export default function PortfolioDetail() {
                       alt={`${project.title[locale]} - ${idx + 1}`}
                       className="w-full h-64 object-cover"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 ))}

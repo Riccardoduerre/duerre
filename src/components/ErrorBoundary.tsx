@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { getPreferredLocale, getTranslation } from '../i18n';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -22,14 +23,16 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
 
   render() {
     if (this.state.hasError) {
+      const locale = getPreferredLocale();
+
       return (
         this.props.fallback ?? (
           <div className="flex min-h-screen items-center justify-center bg-theme-bg px-6 text-center text-theme-text">
             <div className="max-w-md rounded-sm border border-theme-border bg-theme-surface p-8 shadow-sm">
-              <p className="text-xs uppercase tracking-[0.3em] text-indigo-500">Unexpected error</p>
-              <h1 className="mt-4 text-2xl font-bold uppercase tracking-[0.2em]">The page could not be loaded</h1>
+              <p className="text-xs uppercase tracking-[0.3em] text-theme-accent">{getTranslation('error_unexpected', locale)}</p>
+              <h1 className="mt-4 text-2xl font-bold uppercase tracking-[0.2em]">{getTranslation('error_title', locale)}</h1>
               <p className="mt-4 text-sm text-theme-muted">
-                Please refresh the page or return later. If the issue persists, the site configuration needs attention.
+                {getTranslation('error_message', locale)}
               </p>
             </div>
           </div>

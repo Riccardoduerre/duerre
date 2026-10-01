@@ -63,7 +63,7 @@ echo "🔧 Configuration Check"
 echo "---------------------"
 
 # Check required files
-files=("src/index.css" "src/pages/Contact.tsx" "src/AppRoutes.tsx" "index.html")
+files=("src/index.css" "src/pages/Contact.tsx" "src/pages/DigitalMarketing.tsx" "src/AppRoutes.tsx" "index.html" "public/og-image.webp" "CNAME")
 for file in "${files[@]}"; do
     if [ -f "$file" ]; then
         check_pass "$file exists"
@@ -90,10 +90,11 @@ echo "🔨 Build Test"
 echo "-------------"
 
 echo "Running TypeScript check..."
-if npx tsc --noEmit 2>&1 | grep -q "error"; then
-    check_fail "TypeScript errors found"
-else
+if npx tsc --noEmit; then
     check_pass "TypeScript check passed"
+else
+    check_fail "TypeScript errors found"
+    exit 1
 fi
 
 echo ""
@@ -108,6 +109,7 @@ if npm run build > /dev/null 2>&1; then
     fi
 else
     check_fail "Production build FAILED"
+    exit 1
 fi
 
 echo ""

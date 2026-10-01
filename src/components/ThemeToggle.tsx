@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useLocale } from '../i18n/LocaleContext';
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<'dark' | 'light'>('light');
+  const { t } = useLocale();
 
   useEffect(() => {
     const stored = localStorage.getItem('theme') as 'dark' | 'light' | null;
@@ -16,13 +18,14 @@ export default function ThemeToggle() {
   }, [theme]);
 
   const nextTheme = theme === 'dark' ? 'light' : 'dark';
+  const ariaLabel = theme === 'dark' ? t('theme_switch_to_light') : t('theme_switch_to_dark');
 
   return (
     <button
       type="button"
       className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-theme-border text-theme-text transition hover:bg-theme-surface"
       onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
-      aria-label={`Switch to ${nextTheme} theme`}
+      aria-label={ariaLabel}
     >
       {nextTheme === 'dark' ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5">

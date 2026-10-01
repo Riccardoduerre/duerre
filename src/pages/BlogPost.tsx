@@ -6,7 +6,7 @@ import { renderMarkdown } from '../lib/markdown';
 
 export default function BlogPost() {
   const { slug } = useParams();
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
 
   const post = useMemo(() => posts.find((item) => item.slug === slug), [slug]);
 
@@ -14,8 +14,8 @@ export default function BlogPost() {
     return (
       <section className="bg-theme-bg py-24">
         <div className="container mx-auto px-6 md:px-8 text-center">
-          <h1 className="text-4xl font-bold uppercase tracking-[0.22em]">Post not found</h1>
-          <p className="mt-4 text-theme-muted">The blog post you requested does not exist.</p>
+          <h1 className="text-4xl font-bold uppercase tracking-[0.22em]">{t('not_found_blog')}</h1>
+          <p className="mt-4 text-theme-muted">{t('not_found_blog_desc')}</p>
         </div>
       </section>
     );

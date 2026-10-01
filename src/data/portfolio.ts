@@ -1,24 +1,26 @@
-const alps01 = new URL('../assets/images/Giau/Giau_00001.jpg', import.meta.url).href;
-const alps02 = new URL('../assets/images/Giau/Giau_00002.jpg', import.meta.url).href;
-const alps03 = new URL('../assets/images/Giau/Giau_00003.jpg', import.meta.url).href;
-const alps04 = new URL('../assets/images/Giau/Giau_00004.jpg', import.meta.url).href;
-const alpineGallery = new URL('../assets/images/Giau/Giau_00006.jpg', import.meta.url).href;
-const landscapes01 = new URL('../assets/images/Landscapes/Landscapes_00001.jpg', import.meta.url).href;
-const landscapes02 = new URL('../assets/images/Landscapes/Landscapes_00002.jpg', import.meta.url).href;
-const landscapes03 = new URL('../assets/images/Landscapes/Landscapes_00003.jpg', import.meta.url).href;
-const portraits01 = new URL('../assets/images/_DSC2344.jpg', import.meta.url).href;
-const portraits02 = new URL('../assets/images/_DSC2365.jpg', import.meta.url).href;
-const portraitHero = new URL('../assets/images/DSCN7050.JPG', import.meta.url).href;
-const showreel = new URL('../assets/images/_RIK7376_HDR.jpg', import.meta.url).href;
+const alps01 = new URL('../assets/images/optimized/Giau_00001.webp', import.meta.url).href;
+const alps02 = new URL('../assets/images/optimized/Giau_00002.webp', import.meta.url).href;
+const alps03 = new URL('../assets/images/optimized/Giau_00003.webp', import.meta.url).href;
+const alps04 = new URL('../assets/images/optimized/Giau_00004.webp', import.meta.url).href;
+const alpineGallery = new URL('../assets/images/optimized/Giau_00006.webp', import.meta.url).href;
+const landscapes01 = new URL('../assets/images/optimized/Landscapes_00001.webp', import.meta.url).href;
+const landscapes02 = new URL('../assets/images/optimized/Landscapes_00002.webp', import.meta.url).href;
+const landscapes03 = new URL('../assets/images/optimized/Landscapes_00003.webp', import.meta.url).href;
+const portraits01 = new URL('../assets/images/optimized/_DSC2344.webp', import.meta.url).href;
+const portraits02 = new URL('../assets/images/optimized/_DSC2365.webp', import.meta.url).href;
+const portraitHero = new URL('../assets/images/optimized/DSCN7050.webp', import.meta.url).href;
+const showreel = new URL('../assets/images/optimized/_RIK7376_HDR.webp', import.meta.url).href;
 
 export interface LocaleStrings {
   en: string;
   it: string;
 }
 
+export type PortfolioCategory = 'photo' | 'video' | '3d';
+
 export interface PortfolioProject {
   id: string;
-  category: string;
+  category: PortfolioCategory;
   year: string;
   image: string;
   gallery: string[];
@@ -30,10 +32,83 @@ export interface PortfolioProject {
   results: LocaleStrings;
 }
 
+export interface CategoryDefinition {
+  id: PortfolioCategory;
+  label: LocaleStrings;
+  eyebrow: LocaleStrings;
+  headline: LocaleStrings;
+  description: LocaleStrings;
+  featureList: LocaleStrings[];
+  tags: LocaleStrings[];
+}
+
+export const portfolioCategoryMeta: Record<PortfolioCategory, CategoryDefinition> = {
+  photo: {
+    id: 'photo',
+    label: { en: 'Photography', it: 'Fotografia' },
+    eyebrow: { en: 'Photo studio', it: 'Studio fotografico' },
+    headline: { en: 'Commercial photography', it: 'Fotografia commerciale' },
+    description: {
+      en: 'Editorial campaigns, portraiture, product storytelling, and location-led imagery for premium brands.',
+      it: 'Campagne editoriali, ritratti, storytelling di prodotto e immagini in location per brand premium.',
+    },
+    featureList: [
+      { en: 'Luxury product imagery', it: 'Immagini di prodotto premium' },
+      { en: 'Portrait-led campaigns', it: 'Campagne con ritratto' },
+      { en: 'Atmospheric location work', it: 'Lavoro in location atmosferiche' },
+    ],
+    tags: [
+      { en: 'Campaign stills', it: 'Still di campagna' },
+      { en: 'Editorial', it: 'Editoriale' },
+      { en: 'Portraiture', it: 'Ritratti' },
+    ],
+  },
+  video: {
+    id: 'video',
+    label: { en: 'Video', it: 'Video' },
+    eyebrow: { en: 'Video direction', it: 'Direzione video' },
+    headline: { en: 'Cinematic video production', it: 'Produzione video cinematografica' },
+    description: {
+      en: 'Short-form commercial edits, motion-led brand stories, and polished reels designed to feel premium and intentional.',
+      it: 'Montaggi commerciali brevi, brand stories in movimento e reel accurati pensati per risultare premium e intenzionali.',
+    },
+    featureList: [
+      { en: 'Brand story editing', it: 'Montaggio di brand story' },
+      { en: 'Motion-led campaigns', it: 'Campagne in movimento' },
+      { en: 'Commercial reel production', it: 'Produzione di reel commerciali' },
+    ],
+    tags: [
+      { en: 'Commercial', it: 'Commerciale' },
+      { en: 'Direction', it: 'Regia' },
+      { en: 'Post-production', it: 'Post-produzione' },
+    ],
+  },
+  '3d': {
+    id: '3d',
+    label: { en: '3D', it: '3D' },
+    eyebrow: { en: '3D studio', it: 'Studio 3D' },
+    headline: { en: 'Immersive 3D content', it: 'Contenuti 3D immersivi' },
+    description: {
+      en: 'Product stories, stand-alone environments, and digital scenes built to feel cinematic, tactile, and undeniably premium.',
+      it: 'Storytelling di prodotto, ambientazioni autonome e scene digitali costruite per essere cinematiche, tattili e premium.',
+    },
+    featureList: [
+      { en: 'Luxury product storytelling', it: 'Storytelling di prodotto premium' },
+      { en: 'Immersive motion-led campaigns', it: 'Campagne immersive in movimento' },
+      { en: 'Cinematic 3D environments', it: 'Ambientazioni 3D cinematografiche' },
+    ],
+    tags: [
+      { en: 'Product', it: 'Prodotto' },
+      { en: 'Atmosphere', it: 'Atmosfera' },
+      { en: 'Motion', it: 'Motion' },
+    ],
+  },
+};
+
 export const portfolioProjects: PortfolioProject[] = [
   {
     id: 'alps-brand-campaign',
-    category: 'Commercial',
+    category: 'photo',
     year: '2025',
     image: alpineGallery,
     gallery: [alps01, alps02, alps03, alps04],
@@ -64,7 +139,7 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     id: 'ethereal-landscapes',
-    category: 'Editorial',
+    category: 'photo',
     year: '2025',
     image: landscapes01,
     gallery: [landscapes01, landscapes02, landscapes03],
@@ -95,7 +170,7 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     id: 'urban-character-study',
-    category: 'Portraits',
+    category: 'photo',
     year: '2024',
     image: portraits01,
     gallery: [portraits01, portraits02, portraitHero],
@@ -126,7 +201,7 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     id: 'commercial-showreel',
-    category: 'Video',
+    category: 'video',
     year: '2025',
     image: showreel,
     gallery: [showreel],
@@ -155,6 +230,42 @@ export const portfolioProjects: PortfolioProject[] = [
       it: 'Diversi contratti premium ottenuti nel settore lusso e lifestyle.',
     },
   },
+  {
+    id: 'lumen-atelier',
+    category: '3d',
+    year: '2024',
+    image: showreel,
+    gallery: [showreel, portraits01, landscapes01],
+    title: {
+      en: 'Lumen Atelier',
+      it: 'Lumen Atelier',
+    },
+    client: {
+      en: 'Maison Lumen',
+      it: 'Maison Lumen',
+    },
+    scope: {
+      en: '3D Visual Direction & Product Storytelling',
+      it: 'Direzione visiva 3D e storytelling del prodotto',
+    },
+    challenge: {
+      en: 'Elevating a premium product range into an immersive digital world without losing the tactile precision of the objects.',
+      it: 'Trasformare una gamma premium in un mondo digitale immersivo senza perdere la precisione tattile degli oggetti.',
+    },
+    solution: {
+      en: 'A cinematic set design approach combining soft lighting, atmospheric depth, and motion-aware composition to heighten material perception.',
+      it: 'Un approccio di set design cinematografico con luce morbida, profondità atmosferica e composizione in movimento per valorizzare la percezione del materiale.',
+    },
+    results: {
+      en: 'Used across launch assets, social execution, and retail digital touchpoints with strong engagement and premium positioning.',
+      it: 'Utilizzato per asset di lancio, contenuti social e touchpoint retail digitali con forte engagement e posizionamento premium.',
+    },
+  },
 ];
+
+export function addPortfolioProject(project: PortfolioProject) {
+  portfolioProjects.push(project);
+  return portfolioProjects.length;
+}
 
 export default portfolioProjects;
