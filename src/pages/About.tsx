@@ -30,7 +30,7 @@ export default function About() {
               </Link>
               <Link
                 to="/contact"
-                className="rounded-full bg-theme-accent px-8 py-4 text-[11px] font-bold uppercase tracking-[0.28em] text-white transition hover:opacity-90"
+                className="rounded-full bg-theme-accent px-8 py-4 text-[11px] font-bold uppercase tracking-[0.28em] text-[#2B2B2C] transition hover:opacity-90"
               >
                 {t('contact')}
               </Link>

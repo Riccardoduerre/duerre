@@ -21,6 +21,7 @@ export type PortfolioCategory = 'photo' | 'video' | '3d';
 export interface PortfolioProject {
   id: string;
   category: PortfolioCategory;
+  featured?: boolean;
   year: string;
   image: string;
   gallery: string[];
@@ -109,6 +110,7 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     id: 'alps-brand-campaign',
     category: 'photo',
+    featured: true,
     year: '2025',
     image: alpineGallery,
     gallery: [alps01, alps02, alps03, alps04],
@@ -202,6 +204,7 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     id: 'commercial-showreel',
     category: 'video',
+    featured: true,
     year: '2025',
     image: showreel,
     gallery: [showreel],
@@ -233,6 +236,7 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     id: 'lumen-atelier',
     category: '3d',
+    featured: true,
     year: '2024',
     image: showreel,
     gallery: [showreel, portraits01, landscapes01],
@@ -262,6 +266,12 @@ export const portfolioProjects: PortfolioProject[] = [
     },
   },
 ];
+
+const featuredCategoryOrder: PortfolioCategory[] = ['3d', 'photo', 'video'];
+
+export const featuredPortfolioProjects = featuredCategoryOrder
+  .map((category) => portfolioProjects.find((project) => project.category === category && project.featured))
+  .filter((project): project is PortfolioProject => project !== undefined);
 
 export function addPortfolioProject(project: PortfolioProject) {
   portfolioProjects.push(project);

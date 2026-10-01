@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
 
 // Initialize EmailJS (free tier - 200 emails/month)
@@ -115,10 +116,29 @@ export default function Contact() {
                 className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-accent"
               />
             </div>
+            <div className="flex items-start gap-3">
+              <input
+                id="privacy_acknowledgement"
+                name="privacy_acknowledgement"
+                type="checkbox"
+                required
+                className="mt-1 h-4 w-4 shrink-0 accent-[#00B3FF]"
+              />
+              <div>
+                <label htmlFor="privacy_acknowledgement" className="text-sm leading-relaxed text-theme-muted">
+                  {t('privacy_ack')}
+                </label>
+                <p className="mt-1 text-sm">
+                  <Link to="/privacy" className="font-semibold text-theme-accent underline decoration-theme-border underline-offset-4 hover:decoration-theme-accent">
+                    {t('privacy_link')}
+                  </Link>
+                </p>
+              </div>
+            </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-full bg-theme-accent px-6 py-4 text-[11px] font-bold uppercase tracking-[0.28em] text-white transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-full bg-theme-accent px-6 py-4 text-[11px] font-bold uppercase tracking-[0.28em] text-[#2B2B2C] transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? t('contact_form_sending') : t('contact_form_send')}
             </button>

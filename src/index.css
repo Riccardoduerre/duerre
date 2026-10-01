@@ -9,6 +9,7 @@
     --surface-color: #FFFFFF;
     --border-color: #C5C7C4;
     --accent-color: #00B3FF;
+    --accent-text-color: #383E42;
     --muted-color: #383E42;
     --shadow-color: rgba(43, 43, 44, 0.08);
   }
@@ -19,6 +20,7 @@
     --surface-color: #383E42;
     --border-color: #97999B;
     --accent-color: #00B3FF;
+    --accent-text-color: #00B3FF;
     --muted-color: #C5C7C4;
     --shadow-color: rgba(0, 0, 0, 0.24);
   }
@@ -68,7 +70,7 @@
   }
 
   .text-theme-accent {
-    color: var(--accent-color);
+    color: var(--accent-text-color);
   }
 
   .text-theme-muted {
