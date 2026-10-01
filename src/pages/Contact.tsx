@@ -15,6 +15,7 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [mailFallback, setMailFallback] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ export default function Contact() {
 
     setLoading(true);
     setError('');
+    setMailFallback('');
 
     try {
       await emailjs.sendForm(
@@ -35,7 +37,14 @@ export default function Contact() {
       formRef.current.reset();
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('contact_form_error'));
+      setError(t('contact_form_error'));
+      const values = new FormData(formRef.current);
+      const name = String(values.get('user_name') ?? '');
+      const email = String(values.get('user_email') ?? '');
+      const message = String(values.get('message') ?? '');
+      const subject = `${t('contact_form_send')}: ${name}`;
+      const body = `${t('contact_form_full_name')}: ${name}\n${t('contact_form_email')}: ${email}\n\n${message}`;
+      setMailFallback(`mailto:${t('contact_email_value')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
       console.error('Email error:', err);
     } finally {
       setLoading(false);
@@ -70,7 +79,12 @@ export default function Contact() {
 
             {error && (
               <div className="rounded-2xl bg-red-100 p-4 text-sm text-red-800" role="alert">
-                ✗ {error}
+                <p>✗ {error}</p>
+                {mailFallback && (
+                  <a href={mailFallback} className="mt-2 inline-flex min-h-10 items-center font-semibold underline underline-offset-4">
+                    {t('contact_form_mailto')}
+                  </a>
+                )}
               </div>
             )}
 

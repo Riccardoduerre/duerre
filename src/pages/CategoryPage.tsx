@@ -37,7 +37,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
 
         <div className="mb-16 max-w-4xl">
           <p className="text-xs uppercase tracking-[0.34em] text-theme-accent">{meta.eyebrow[locale]}</p>
-          <h1 className="mt-5 text-4xl font-bold uppercase tracking-[0.22em] md:text-6xl">{meta.headline[locale]}</h1>
+          <h1 className="mt-5 max-w-full break-words text-3xl font-bold uppercase leading-tight tracking-[0.06em] sm:text-4xl sm:tracking-[0.1em] md:text-6xl md:tracking-[0.12em]">{meta.headline[locale]}</h1>
           <p className="mt-6 text-lg leading-relaxed text-theme-muted">{meta.description[locale]}</p>
         </div>
 
@@ -70,7 +70,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
                   <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-theme-accent">{meta.label[locale]}</p>
                   <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-theme-muted">{project.year}</p>
                 </div>
-                <h2 className="text-3xl font-bold uppercase tracking-[0.2em]">{project.title[locale]}</h2>
+                <h2 className="break-words text-2xl font-bold uppercase leading-tight tracking-[0.08em] sm:text-3xl sm:tracking-[0.12em]">{project.title[locale]}</h2>
                 <p className="text-theme-muted leading-relaxed">{project.challenge[locale]}</p>
                 <div className="flex flex-wrap gap-2 pt-2">
                   {meta.tags.map((tag) => (

@@ -35,7 +35,7 @@ function LocalizedLayout() {
     const project = normalizedPath === '/portfolio' ? undefined : portfolioProjects.find((item) => item.id === projectId);
     const blogSlug = normalizedPath.startsWith('/blog/') ? normalizedPath.slice('/blog/'.length) : '';
     const post = posts.find((item) => item.slug === blogSlug);
-    const [titleKey, descriptionKey] = routeMeta[normalizedPath] ?? ['portfolio_heading', 'seo_portfolio'];
+    const [titleKey, descriptionKey] = routeMeta[normalizedPath] ?? ['page_not_found', 'page_not_found_desc'];
     const title = project?.title[locale] ?? post?.title[locale] ?? t(titleKey);
     const pageTitle = normalizedPath === '/' ? title : `${title} | Duerre Media`;
     const description = project?.challenge[locale] ?? post?.excerpt[locale] ?? t(descriptionKey);
@@ -71,10 +71,11 @@ function LocalizedLayout() {
     const defaultAlternate = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
     defaultAlternate?.setAttribute('href', canonicalUrl.href);
 
-    if (socialImage) {
-      document.querySelector('meta[property="og:image"]')?.setAttribute('content', new URL(socialImage, window.location.origin).href);
-      document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', new URL(socialImage, window.location.origin).href);
-    }
+    const socialImageUrl = socialImage
+      ? new URL(socialImage, window.location.origin).href
+      : new URL('/og-image.webp', window.location.origin).href;
+    document.querySelector('meta[property="og:image"]')?.setAttribute('content', socialImageUrl);
+    document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', socialImageUrl);
     document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', pageTitle);
     document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description);
   }, [locale, pathname, t]);

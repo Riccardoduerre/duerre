@@ -10,6 +10,7 @@ import Contact from './pages/Contact';
 import CategoryPage from './pages/CategoryPage';
 import DigitalMarketing from './pages/DigitalMarketing';
 import Privacy from './pages/Privacy';
+import NotFound from './pages/NotFound';
 
 export default function AppRoutes() {
   return (
@@ -28,9 +29,8 @@ export default function AppRoutes() {
         <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="contact" element={<Contact />} />
         <Route path="privacy" element={<Privacy />} />
-        <Route path="/:locale" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

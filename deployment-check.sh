@@ -63,7 +63,7 @@ echo "🔧 Configuration Check"
 echo "---------------------"
 
 # Check required files
-files=("src/index.css" "src/pages/Contact.tsx" "src/pages/DigitalMarketing.tsx" "src/AppRoutes.tsx" "index.html" "public/og-image.webp" "CNAME")
+files=("src/index.css" "src/pages/Contact.tsx" "src/pages/DigitalMarketing.tsx" "src/pages/NotFound.tsx" "src/AppRoutes.tsx" "index.html" "public/og-image.webp" "CNAME")
 for file in "${files[@]}"; do
     if [ -f "$file" ]; then
         check_pass "$file exists"
@@ -112,7 +112,7 @@ else
     exit 1
 fi
 
-generated_files=("dist/portfolio/index.html" "dist/photo/index.html" "dist/video/index.html" "dist/3d/index.html" "dist/digital-marketing/index.html" "dist/sitemap.xml" "dist/robots.txt")
+generated_files=("dist/404.html" "dist/portfolio/index.html" "dist/photo/index.html" "dist/video/index.html" "dist/3d/index.html" "dist/digital-marketing/index.html" "dist/sitemap.xml" "dist/robots.txt")
 for file in "${generated_files[@]}"; do
     if [ -f "$file" ]; then
         check_pass "$file generated"
