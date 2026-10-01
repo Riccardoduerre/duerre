@@ -32,11 +32,12 @@ This publishes the current build to the `gh-pages` branch for the configured cus
 ## 🔗 URLs After Deployment
 
 ```
-Home:               https://duerremedia.com/#/
-Portfolio:          https://duerremedia.com/#/portfolio
-Digital Marketing:  https://duerremedia.com/#/digital-marketing
-Blog:               https://duerremedia.com/#/blog
-Contact:             https://duerremedia.com/#/contact
+Italian home:       https://duerremedia.com/?lang=it
+English portfolio:  https://duerremedia.com/portfolio?lang=en
+Italian portfolio:  https://duerremedia.com/portfolio?lang=it
+Digital Marketing:  https://duerremedia.com/digital-marketing?lang=en
+Blog:               https://duerremedia.com/blog?lang=en
+Contact:            https://duerremedia.com/contact?lang=en
 ```
 
 ---
@@ -46,7 +47,7 @@ Contact:             https://duerremedia.com/#/contact
 ```bash
 # Check these all work:
 ✓ Site loads without errors
-✓ Language switching works (EN ↔ IT) without changing the route
+✓ Language switching works (EN ↔ IT) without changing the page path
 ✓ Theme toggle works (click moon/sun icon)
 ✓ Portfolio cards clickable, detail pages load
 ✓ Blog posts render correctly
@@ -60,7 +61,7 @@ Contact:             https://duerremedia.com/#/contact
 
 ## 📧 Contact Form Testing
 
-1. Go to Contact page: `/#/contact`
+1. Go to Contact page: `/contact?lang=en` or `/contact?lang=it`
 2. Fill out form:
    - Name: Test
    - Email: your-email@test.com
@@ -128,12 +129,12 @@ npm run deploy:gh-pages
 ```bash
 # Edit src/data/portfolio.ts and add entry:
 {
-  id: 'unique-id',
-  category: 'photo', // Use 'photo', 'video', or '3d'. Digital Marketing is a separate service page.
-  year: '2026',
-  image: /* featured image URL */,
-  gallery: [/* gallery image URLs */],
-  title: { en: 'Project Title', it: 'Titolo Progetto' },
+Italian home:       https://duerremedia.com/?lang=it
+English portfolio:  https://duerremedia.com/portfolio?lang=en
+Italian portfolio:  https://duerremedia.com/portfolio?lang=it
+Digital Marketing:  https://duerremedia.com/digital-marketing?lang=en
+Blog:               https://duerremedia.com/blog?lang=en
+Contact:            https://duerremedia.com/contact?lang=en
   client: { en: '...', it: '...' },
   // ... other fields
 }
@@ -150,12 +151,11 @@ npm run deploy:gh-pages
 npm install             # Install dependencies
 npm run dev             # Start the development server
 npm run build           # Build for production
-npm run preview         # Preview the production build
 npm run deploy:gh-pages # Deploy to the configured GitHub Pages custom domain
 ```
 
 ---
-
+1. Go to Contact page: `/contact?lang=en` or `/contact?lang=it`
 ## 📱 Test Checklist (Before Launch)
 
 - [ ] Desktop Chrome
@@ -168,12 +168,11 @@ npm run deploy:gh-pages # Deploy to the configured GitHub Pages custom domain
 - [ ] Images load
 - [ ] No broken links
 - [ ] Theme toggle works
-- [ ] Language switch works
 - [ ] Lighthouse score 80+
 
 ---
 
-## 🎉 You're Done!
+✓ Language switching works (EN ↔ IT) without changing the page path
 
 Your site is live and ready to showcase your portfolio to the world.
 

@@ -28,7 +28,7 @@ export default function Navbar() {
   const changeLocale = (newLocale: 'en' | 'it') => {
     if (newLocale === currentLocale) return;
     setLocale(newLocale);
-    navigate(location.pathname || '/');
+    navigate({ pathname: location.pathname, search: `?lang=${newLocale}` }, { replace: true });
   };
 
   return (

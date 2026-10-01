@@ -23,7 +23,7 @@ npm run build
 npm run preview
 ```
 
-The application uses one hash-routed site for both English and Italian. Language selection is stored in the browser; Italian is used when browser-language detection is unavailable. Routes include `/`, `/portfolio`, `/photo`, `/video`, `/3d`, `/digital-marketing`, `/about`, `/blog`, and `/contact`.
+The application uses one shared route tree for both English and Italian. Language selection is stored in the browser and shareable as `?lang=en` or `?lang=it`; Italian is the fallback when browser-language detection is unavailable. Routes include `/`, `/portfolio`, `/photo`, `/video`, `/3d`, `/digital-marketing`, `/about`, `/blog`, `/contact`, and `/privacy`.
 
 ## Contact Form
 
@@ -31,7 +31,7 @@ The form uses EmailJS. Before launch, confirm the public key, service ID, and te
 
 ## Deployment
 
-The deploy script builds with a root base path, publishes `dist/` to the `gh-pages` branch, and copies `CNAME`. It is configured for the custom domain `duerremedia.com`; the project-path GitHub Pages URL is not supported by this configuration.
+The deploy script builds with a root base path, generates static HTTP-200 route shells and a localized sitemap, publishes `dist/` to the `gh-pages` branch, and copies `CNAME`. It is configured for the custom domain `duerremedia.com`; the project-path GitHub Pages URL is not supported by this configuration.
 
 1. In repository Settings → Pages, select the `gh-pages` branch as the publishing source.
 2. Confirm `duerremedia.com` is configured in Pages and its DNS points to GitHub Pages.

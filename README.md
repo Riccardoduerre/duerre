@@ -75,7 +75,7 @@ content/
 ## 🌐 Internationalization
 
 The site supports **English** and **Italian** with:
-- One route tree; language changes do not change the URL
+- One route tree with flat paths; locale is a query parameter (`?lang=en` or `?lang=it`), not a prefixed duplicate route
 - Language switcher in navbar
 - Browser-language detection with Italian as the fallback
 - Persistent language preference
@@ -115,7 +115,7 @@ For setup details, see [SETUP.md](SETUP.md).
 npm run deploy:gh-pages
 ```
 
-The deploy script publishes to the `gh-pages` branch with a root base path and copies the repository `CNAME`. It is configured for `duerremedia.com`. The site uses flat hash routes such as `/#/portfolio` and `/#/digital-marketing`; language is selected in the app, not encoded in the URL.
+The deploy script publishes to the `gh-pages` branch with a root base path, generates static route shells and a localized sitemap, and copies the repository `CNAME`. It is configured for `duerremedia.com`. Paths stay flat (for example `/portfolio` and `/digital-marketing`); locale is selected with a query parameter, not a prefixed duplicate route.
 
 ### Custom Domain
 1. Add CNAME file with domain name

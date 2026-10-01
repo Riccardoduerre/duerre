@@ -11,6 +11,12 @@ function LocalizedLayout() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    const normalizedPath = pathname.replace(/\/+$/, '') || '/';
+    const browserUrl = new URL(window.location.href);
+    if (browserUrl.searchParams.get('lang') !== locale) {
+      browserUrl.searchParams.set('lang', locale);
+      window.history.replaceState(window.history.state, '', browserUrl);
+    }
     const routeMeta: Record<string, [string, string]> = {
       '/': ['home_title', 'seo_home'],
       '/portfolio': ['portfolio_heading', 'seo_portfolio'],
@@ -23,17 +29,19 @@ function LocalizedLayout() {
       '/3d': ['service_3_title', 'seo_3d'],
       '/privacy': ['privacy_title', 'seo_privacy'],
     };
-    const projectId = pathname.startsWith('/portfolio/') && pathname !== '/portfolio/archive'
-      ? pathname.slice('/portfolio/'.length)
+    const projectId = normalizedPath.startsWith('/portfolio/')
+      ? normalizedPath.slice('/portfolio/'.length)
       : '';
-    const project = portfolioProjects.find((item) => item.id === projectId);
-    const blogSlug = pathname.startsWith('/blog/') ? pathname.slice('/blog/'.length) : '';
+    const project = normalizedPath === '/portfolio' ? undefined : portfolioProjects.find((item) => item.id === projectId);
+    const blogSlug = normalizedPath.startsWith('/blog/') ? normalizedPath.slice('/blog/'.length) : '';
     const post = posts.find((item) => item.slug === blogSlug);
-    const [titleKey, descriptionKey] = routeMeta[pathname] ?? ['portfolio_heading', 'seo_portfolio'];
+    const [titleKey, descriptionKey] = routeMeta[normalizedPath] ?? ['portfolio_heading', 'seo_portfolio'];
     const title = project?.title[locale] ?? post?.title[locale] ?? t(titleKey);
-    const pageTitle = pathname === '/' ? title : `${title} | Duerre Media`;
+    const pageTitle = normalizedPath === '/' ? title : `${title} | Duerre Media`;
     const description = project?.challenge[locale] ?? post?.excerpt[locale] ?? t(descriptionKey);
     const socialImage = project?.image ?? post?.image;
+    const canonicalUrl = new URL(normalizedPath === '/' ? '/' : `${normalizedPath}/`, window.location.origin);
+    canonicalUrl.searchParams.set('lang', locale);
 
     document.title = pageTitle;
     document.documentElement.lang = locale;
@@ -42,6 +50,27 @@ function LocalizedLayout() {
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
     document.querySelector('meta[property="og:locale"]')?.setAttribute('content', locale === 'it' ? 'it_IT' : 'en_US');
     document.querySelector('meta[property="og:type"]')?.setAttribute('content', post ? 'article' : 'website');
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl.href);
+    document.querySelector('meta[name="twitter:url"]')?.setAttribute('content', canonicalUrl.href);
+    const canonical = document.querySelector('link[rel="canonical"]');
+    canonical?.setAttribute('href', canonicalUrl.href);
+
+    for (const language of ['en', 'it'] as const) {
+      const alternateUrl = new URL(canonicalUrl);
+      alternateUrl.searchParams.set('lang', language);
+      let alternate = document.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${language}"]`);
+      if (!alternate) {
+        alternate = document.createElement('link');
+        alternate.rel = 'alternate';
+        alternate.hreflang = language;
+        document.head.append(alternate);
+      }
+      alternate.href = alternateUrl.href;
+    }
+
+    const defaultAlternate = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
+    defaultAlternate?.setAttribute('href', canonicalUrl.href);
+
     if (socialImage) {
       document.querySelector('meta[property="og:image"]')?.setAttribute('content', new URL(socialImage, window.location.origin).href);
       document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', new URL(socialImage, window.location.origin).href);

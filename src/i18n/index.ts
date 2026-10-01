@@ -299,6 +299,13 @@ export const translations: Record<Locale, TranslationKeys> = {
 
 export function getPreferredLocale(): Locale {
   try {
+    const urlLocale = new URLSearchParams(window.location.search).get('lang');
+    if (urlLocale === 'en' || urlLocale === 'it') return urlLocale;
+  } catch {
+    // Ignore unavailable browser URL APIs and use stored/browser preferences.
+  }
+
+  try {
     const stored = localStorage.getItem('lang');
     if (stored === 'en' || stored === 'it') return stored;
   } catch {
