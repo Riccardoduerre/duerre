@@ -27,7 +27,7 @@ The application uses one shared route tree for both English and Italian. Languag
 
 ## Contact Form
 
-The form uses EmailJS. Before launch, confirm the public key, service ID, and template ID in `src/pages/Contact.tsx` match the production EmailJS account, then submit a real test message and confirm delivery. The production build cannot verify the external EmailJS configuration. Public keys are visible by design; private keys must never be placed in frontend code.
+The production form uses EmailJS with service ID `service_k40isq9` and template ID `template_ipjxcbm`; its public key is configured in `src/pages/Contact.tsx`. The EmailJS template should use `{{user_name}}`, `{{user_email}}`, and `{{message}}`, with Reply-To set to `{{user_email}}` if replies should go directly to the sender. Submit a test through `/contact` and confirm delivery in the connected inbox; a successful build alone cannot verify EmailJS delivery. Public keys are visible by design; private keys must never be placed in frontend code.
 
 ## Deployment
 
