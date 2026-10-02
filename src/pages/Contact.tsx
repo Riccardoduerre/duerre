@@ -6,7 +6,7 @@ import { useLocale } from '../i18n/LocaleContext';
 // Initialize EmailJS (free tier - 200 emails/month)
 // Public Key for this specific project
 emailjs.init({
-  publicKey: 'OU8uo5N_6Yp0oEWfP',
+  publicKey: 'fUaHuXVCiN713hf1m',
 });
 
 export default function Contact() {
@@ -27,10 +27,10 @@ export default function Contact() {
 
     try {
       await emailjs.sendForm(
-        'service_duerre_prod',
-        'template_contact_riccardo',
+        'service_k40isq9',
+        'template_ipjxcbm',
         formRef.current,
-        'OU8uo5N_6Yp0oEWfP'
+        'fUaHuXVCiN713hf1m'
       );
 
       setSubmitted(true);

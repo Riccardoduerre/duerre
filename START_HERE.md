@@ -65,8 +65,8 @@ Your Duerre portfolio website is **100% complete** and ready to launch.
 ```
 Go to: emailjs.com
 - Sign up (free)
-- Create service: service_duerre_prod
-- Create template: template_contact_riccardo
+- Create or select service: service_k40isq9
+- Create or select template: template_ipjxcbm
 - Get Public Key
 - Update src/pages/Contact.tsx with your key
 ```

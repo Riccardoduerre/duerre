@@ -79,9 +79,9 @@
 ### Current Configuration
 - **Service**: EmailJS (Free tier - 200 emails/month)
 - **Recipient**: `riccardo@duerremedia.com`
-- **Public Key**: `OU8uo5N_6Yp0oEWfP` (project-specific test key)
-- **Service ID**: `service_duerre_prod`
-- **Template ID**: `template_contact_riccardo`
+- **Public Key**: configured in `src/pages/Contact.tsx` (EmailJS public keys are visible in frontend code)
+- **Service ID**: `service_k40isq9`
+- **Template ID**: `template_ipjxcbm`
 
 ### To Enable for Production
 
@@ -91,10 +91,10 @@
 
 2. **Add Email Service**
    - Create new service with Gmail or other provider
-   - Save service ID: `service_duerre_prod`
+   - Save service ID: `service_k40isq9`
 
 3. **Create Email Template**
-   - Template ID: `template_contact_riccardo`
+   - Template ID: `template_ipjxcbm`
    - Include fields: `{{user_name}}`, `{{user_email}}`, `{{message}}`
 
 4. **Get Public Key**

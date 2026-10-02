@@ -134,12 +134,11 @@ I added missing functionality:
 ```
 1. Go to https://www.emailjs.com
 2. Sign up for FREE account
-3. Create service: service_duerre_prod (Gmail or other)
-4. Create template: template_contact_riccardo
+3. Create or select service: service_k40isq9 (Gmail or other)
+4. Create or select template: template_ipjxcbm
 5. Get Public Key from dashboard
 6. Update src/pages/Contact.tsx:
-   Replace: OU8uo5N_6Yp0oEWfP
-   With: your-public-key
+   Confirm the EmailJS public key matches the one in your EmailJS dashboard
 7. Test contact form locally
 ```
 
@@ -192,8 +191,8 @@ After deployment, verify:
 
 ### EmailJS Configuration
 ```
-Service ID: service_duerre_prod
-Template ID: template_contact_riccardo
+Service ID: service_k40isq9
+Template ID: template_ipjxcbm
 Public Key: (get from your EmailJS account)
 Recipient Email: riccardo@duerremedia.com
 ```

@@ -102,8 +102,8 @@ Edit `src/data/portfolio.ts` with new project data including:
 The contact form sends emails using **EmailJS** (free tier).
 
 **Configuration**:
-- Service ID: `service_duerre_prod`
-- Template ID: `template_contact_riccardo`
+- Service ID: `service_k40isq9`
+- Template ID: `template_ipjxcbm`
 - Recipient: `riccardo@duerremedia.com`
 
 For setup details, see [SETUP.md](SETUP.md).

@@ -70,8 +70,8 @@ Contact:            https://duerremedia.com/contact?lang=en
 4. Check your email (check spam folder)
 5. If no email arrives, check:
    - EmailJS account is active
-   - Service ID matches `service_duerre_prod`
-   - Template ID matches `template_contact_riccardo`
+   - Service ID matches `service_k40isq9`
+   - Template ID matches `template_ipjxcbm`
    - Public key in code matches your account
 
 ---
