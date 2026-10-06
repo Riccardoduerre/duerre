@@ -9,6 +9,7 @@
     "dev": "vite",
     "build": "tsc && vite build && node scripts/copy-404.js",
     "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
     "deploy:gh-pages": "VITE_BASE=/ npm run build && gh-pages -d dist"
   },
   "dependencies": {

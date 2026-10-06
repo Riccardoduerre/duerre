@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
 import ThemeToggle from './ThemeToggle';
@@ -19,6 +19,11 @@ export default function Navbar() {
 
   const currentLocale = locale;
   const langLabel = currentLocale === 'en' ? 'IT' : 'EN';
+  const langAriaLabel = currentLocale === 'en' ? 'Passa alla lingua italiana' : 'Switch to English language';
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   const items = useMemo(
     () => navItems.map((item) => ({ ...item, label: t(item.key) })),
@@ -37,6 +42,7 @@ export default function Navbar() {
         <NavLink
           to="/"
           className="text-lg font-bold uppercase tracking-[0.35em] text-theme-text"
+          onClick={() => setMobileOpen(false)}
         >
           Duerre
         </NavLink>
@@ -60,6 +66,7 @@ export default function Navbar() {
             type="button"
             className="rounded-full border border-theme-border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] transition hover:border-theme-mad hover:text-theme-mad"
             onClick={() => changeLocale(currentLocale === 'en' ? 'it' : 'en')}
+            aria-label={langAriaLabel}
           >
             {langLabel}
           </button>
@@ -87,7 +94,11 @@ export default function Navbar() {
             <NavLink
               key={item.key}
               to={`/${item.path}`}
-              className="block text-base font-semibold uppercase tracking-[0.26em] text-theme-text hover:text-theme-mad"
+              className={({ isActive }) =>
+                `block text-base font-semibold uppercase tracking-[0.26em] transition-colors hover:text-theme-mad ${
+                  isActive ? 'text-theme-accent' : 'text-theme-text'
+                }`
+              }
               onClick={() => setMobileOpen(false)}
             >
               {item.label}
@@ -99,6 +110,7 @@ export default function Navbar() {
               type="button"
               className="rounded-full border border-theme-border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.24em]"
               onClick={() => changeLocale(currentLocale === 'en' ? 'it' : 'en')}
+              aria-label={langAriaLabel}
             >
               {langLabel}
             </button>

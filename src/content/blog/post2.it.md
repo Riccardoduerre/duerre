@@ -14,6 +14,6 @@ Il bilanciamento del bianco merita la stessa attenzione. Una parete colorata vic
 
 ## Adatta lo scatto alla scena
 
-Una finestra può offrire luce morbida e direzionale; all'aperto, una nuvola può funzionare come diffusore. In pieno sole, cerca ombra aperta o usa una superficie di rimbalzo per controllare il contrasto. Se il soggetto si muove, scegli un tempo di scatto che lo mantenga nitido prima di abbassare gli ISO.
+Una finestra può offrire luce morbida e direzionale; all'aperto, una nuvola può funzionare come diffusore. In pieno sole, cerca ombra aperta o usa una superficie di rimbalzo per controllare il contrasto. Se il soggetto si muove, scegli un tempo di scatto che lo mantenga nitido prima di alzare gli ISO.
 
 Non esiste un'impostazione corretta in assoluto. Parti dall'effetto che cerchi, leggi la luce disponibile e cambia una variabile alla volta. Così puoi capire quale scelta ha davvero migliorato l'immagine.

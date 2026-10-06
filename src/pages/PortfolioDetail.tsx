@@ -8,6 +8,11 @@ export default function PortfolioDetail() {
   const { locale, t } = useLocale();
 
   const project = useMemo(() => portfolioProjects.find((p) => p.id === id), [id]);
+  const heroImage = project ? project.image || project.gallery[0] : '';
+  const galleryImages = useMemo(() => {
+    if (!project) return [];
+    return project.gallery.filter((img) => img !== heroImage);
+  }, [project, heroImage]);
 
   if (!project) {
     return (
@@ -42,7 +47,7 @@ export default function PortfolioDetail() {
           <div className="grid gap-8 lg:grid-cols-[2fr_1fr] mb-16">
             <div className="section-shell overflow-hidden">
               <img
-                src={project.gallery[0]}
+                src={heroImage}
                 alt={project.title[locale]}
                 className="w-full h-[400px] object-cover"
                 loading="eager"
@@ -84,13 +89,13 @@ export default function PortfolioDetail() {
             <p className="text-xl text-theme-muted leading-relaxed">{project.results[locale]}</p>
           </div>
 
-          {project.gallery.length > 1 && (
+          {galleryImages.length > 0 && (
             <div className="mt-16">
               <h2 className="text-2xl font-bold uppercase tracking-[0.22em] mb-8">
                 {t('gallery_label')}
               </h2>
               <div className="grid gap-4 lg:grid-cols-2">
-                {project.gallery.map((img, idx) => (
+                {galleryImages.map((img, idx) => (
                   <div key={idx} className="section-shell overflow-hidden">
                     <img
                       src={img}

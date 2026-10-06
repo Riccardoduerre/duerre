@@ -72,13 +72,13 @@ export default function Contact() {
           </div>
           <form ref={formRef} onSubmit={handleSubmit} className="section-shell space-y-6 p-8">
             {submitted && (
-              <div className="rounded-2xl bg-green-100 p-4 text-sm text-green-800" role="alert">
+              <div className="rounded-2xl border border-green-200 bg-green-100 p-4 text-sm text-green-800 dark:border-green-800/60 dark:bg-green-950/40 dark:text-green-300" role="alert">
                 {t('contact_form_success')}
               </div>
             )}
 
             {error && (
-              <div className="rounded-2xl bg-red-100 p-4 text-sm text-red-800" role="alert">
+              <div className="rounded-2xl border border-red-200 bg-red-100 p-4 text-sm text-red-800 dark:border-red-800/60 dark:bg-red-950/40 dark:text-red-300" role="alert">
                 <p>✗ {error}</p>
                 {mailFallback && (
                   <a href={mailFallback} className="mt-2 inline-flex min-h-10 items-center font-semibold underline underline-offset-4">
@@ -136,7 +136,7 @@ export default function Contact() {
                 name="privacy_acknowledgement"
                 type="checkbox"
                 required
-                className="mt-1 h-4 w-4 shrink-0 accent-[var(--mad-color)]"
+                className="mt-1 h-4 w-4 shrink-0 accent-theme-mad"
               />
               <div>
                 <label htmlFor="privacy_acknowledgement" className="text-sm leading-relaxed text-theme-muted">

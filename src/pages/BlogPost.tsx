@@ -16,6 +16,9 @@ export default function BlogPost() {
         <div className="container mx-auto px-6 md:px-8 text-center">
           <h1 className="text-4xl font-bold uppercase tracking-[0.22em]">{t('not_found_blog')}</h1>
           <p className="mt-4 text-theme-muted">{t('not_found_blog_desc')}</p>
+          <Link to="/blog" className="mt-6 inline-block text-theme-accent hover:underline">
+            ← {t('blog')}
+          </Link>
         </div>
       </section>
     );

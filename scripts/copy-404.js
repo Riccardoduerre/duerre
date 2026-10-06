@@ -15,7 +15,6 @@ const escapeHtml = (value) => value
   .replaceAll('>', '&gt;')
   .replaceAll('"', '&quot;');
 
-await copyFile(indexFile, path.join(distDir, '404.html'));
 
 const vite = await createServer({
   configFile: path.join(rootDir, 'vite.config.ts'),
@@ -102,6 +101,8 @@ function updateLink(html, rel, relationValue, href) {
   return html.replace(matcher, (tag) => tag.replace(/href="[^"]*"/, `href="${escapeHtml(href)}"`));
 }
 
+const baseHtml = await readFile(indexFile, 'utf8');
+
 for (const route of routes) {
   const project = portfolioProjects.find((item) => `/portfolio/${item.id}` === route);
   const post = posts.find((item) => `/blog/${item.slug}` === route);
@@ -111,7 +112,7 @@ for (const route of routes) {
   const description = project?.challenge.it ?? post?.excerpt.it ?? translations.it[descriptionKey];
   const canonicalUrl = localizedUrl(route, 'it');
   const englishUrl = localizedUrl(route, 'en');
-  let html = await readFile(indexFile, 'utf8');
+  let html = baseHtml;
 
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(pageTitle)}</title>`);
   html = updateMeta(html, 'name', 'title', pageTitle);

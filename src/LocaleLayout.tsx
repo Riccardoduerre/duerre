@@ -69,8 +69,10 @@ function LocalizedLayout() {
       alternate.href = alternateUrl.href;
     }
 
+    const defaultUrl = new URL(normalizedPath === '/' ? '/' : `${normalizedPath}/`, window.location.origin);
+    defaultUrl.searchParams.set('lang', 'it');
     const defaultAlternate = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
-    defaultAlternate?.setAttribute('href', canonicalUrl.href);
+    defaultAlternate?.setAttribute('href', defaultUrl.href);
 
     const socialImageUrl = socialImage
       ? new URL(socialImage, window.location.origin).href

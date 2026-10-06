@@ -8,12 +8,10 @@ interface CategoryPageProps {
 
 export default function CategoryPage({ category }: CategoryPageProps) {
   const params = useParams();
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
   const activeCategory = (category || params.category) as PortfolioCategory | undefined;
   const meta = activeCategory ? portfolioCategoryMeta[activeCategory] : undefined;
   const items = activeCategory ? portfolioProjects.filter((project) => project.category === activeCategory) : [];
-
-  const { t } = useLocale();
 
   if (!meta) {
     return (
