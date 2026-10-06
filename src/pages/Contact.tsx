@@ -19,6 +19,17 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [mailFallback, setMailFallback] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(t('contact_email_value'));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    } catch {
+      // Fallback
+    }
+  };
 
   const intentOptions: { key: ProjectIntent; labelKey: string }[] = [
     { key: 'photo', labelKey: 'contact_intent_photo' },
@@ -91,12 +102,35 @@ export default function Contact() {
                 <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent">
                   {t('contact_email_label')}
                 </p>
-                <a
-                  href={`mailto:${t('contact_email_value')}`}
-                  className="mt-2 inline-block text-lg font-medium text-theme-text transition hover:text-theme-mad"
-                >
-                  {t('contact_email_value')}
-                </a>
+                <div className="mt-2 flex flex-wrap items-center gap-3">
+                  <a
+                    href={`mailto:${t('contact_email_value')}`}
+                    className="text-lg font-medium text-theme-text transition hover:text-theme-mad"
+                  >
+                    {t('contact_email_value')}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    aria-label={t('copy_email')}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-theme-border bg-theme-surface px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-theme-muted transition hover:border-theme-mad hover:text-theme-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad"
+                  >
+                    {copied ? (
+                      <>
+                        <span className="text-emerald-500">✓</span>
+                        <span className="text-emerald-600 dark:text-emerald-400">{t('email_copied')}</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                        </svg>
+                        <span>{t('copy_email')}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div>
@@ -110,10 +144,10 @@ export default function Contact() {
 
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent">
-                  Studio Direct
+                  {t('studio_direct_label')}
                 </p>
                 <p className="mt-2 text-sm text-theme-muted">
-                  Milan · Brescia · Remote Creative Direction Worldwide
+                  {t('studio_direct_desc')}
                 </p>
               </div>
             </div>

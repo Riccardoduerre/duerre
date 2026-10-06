@@ -25,10 +25,44 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [mobileOpen]);
+
   const items = useMemo(
     () => navItems.map((item) => ({ ...item, label: t(item.key) })),
     [t],
   );
+
+  const isItemActive = (itemPath: string) => {
+    const currentPath = location.pathname.replace(/\/+$/, '') || '/';
+    if (itemPath === 'portfolio') {
+      return (
+        currentPath === '/portfolio' ||
+        currentPath.startsWith('/portfolio/') ||
+        currentPath === '/photo' ||
+        currentPath === '/video' ||
+        currentPath === '/3d'
+      );
+    }
+    if (itemPath === 'blog') {
+      return currentPath === '/blog' || currentPath.startsWith('/blog/');
+    }
+    return currentPath === `/${itemPath}`;
+  };
 
   const changeLocale = (newLocale: 'en' | 'it') => {
     if (newLocale === currentLocale) return;
@@ -64,21 +98,22 @@ export default function Navbar() {
         </div>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {items.map((item) => (
-            <NavLink
-              key={item.key}
-              to={`/${item.path}`}
-              className={({ isActive }) =>
-                `relative text-xs font-semibold uppercase tracking-[0.24em] transition-all hover:text-theme-mad ${
-                  isActive
+          {items.map((item) => {
+            const active = isItemActive(item.path);
+            return (
+              <NavLink
+                key={item.key}
+                to={`/${item.path}`}
+                className={`relative text-xs font-semibold uppercase tracking-[0.24em] transition-all hover:text-theme-mad ${
+                  active
                     ? 'text-theme-accent after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-0.5 after:bg-theme-accent'
                     : 'text-theme-text'
-                }`
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+                }`}
+              >
+                {item.label}
+              </NavLink>
+            );
+          })}
           <div className="flex items-center gap-3 border-l border-theme-border pl-6">
             <ThemeToggle />
             <button
@@ -123,20 +158,21 @@ export default function Navbar() {
           </div>
 
           <div className="space-y-4 border-b border-theme-border pb-6">
-            {items.map((item) => (
-              <NavLink
-                key={item.key}
-                to={`/${item.path}`}
-                className={({ isActive }) =>
-                  `block text-lg font-bold uppercase tracking-[0.24em] transition-colors hover:text-theme-mad ${
-                    isActive ? 'text-theme-accent' : 'text-theme-text'
-                  }`
-                }
-                onClick={() => setMobileOpen(false)}
-              >
-                {item.label}
-              </NavLink>
-            ))}
+            {items.map((item) => {
+              const active = isItemActive(item.path);
+              return (
+                <NavLink
+                  key={item.key}
+                  to={`/${item.path}`}
+                  className={`block text-lg font-bold uppercase tracking-[0.24em] transition-colors hover:text-theme-mad ${
+                    active ? 'text-theme-accent' : 'text-theme-text'
+                  }`}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {item.label}
+                </NavLink>
+              );
+            })}
           </div>
 
           <div className="flex items-center justify-between gap-4 pt-2">

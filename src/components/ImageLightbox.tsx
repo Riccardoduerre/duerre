@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
 
 interface ImageLightboxProps {
@@ -19,6 +19,8 @@ export default function ImageLightbox({
   title,
 }: ImageLightboxProps) {
   const { t } = useLocale();
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
   const handlePrev = useCallback(() => {
     if (images.length <= 1) return;
@@ -29,6 +31,27 @@ export default function ImageLightbox({
     if (images.length <= 1) return;
     onIndexChange(currentIndex === images.length - 1 ? 0 : currentIndex + 1);
   }, [currentIndex, images.length, onIndexChange]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || touchStartY === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    const deltaY = e.changedTouches[0].clientY - touchStartY;
+    // Check if horizontal swipe is dominant and greater than 45px
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 45) {
+      if (deltaX < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -90,10 +113,12 @@ export default function ImageLightbox({
         </button>
       </div>
 
-      {/* Main Image Stage */}
+      {/* Main Image Stage with Touch Swipe */}
       <div
-        className="relative flex flex-1 items-center justify-center overflow-hidden"
+        className="relative flex flex-1 items-center justify-center overflow-hidden touch-pan-y"
         onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         {images.length > 1 && (
           <button
@@ -113,6 +138,7 @@ export default function ImageLightbox({
           src={currentImage}
           alt={title ? `${title} - ${currentIndex + 1}` : `Frame ${currentIndex + 1}`}
           className="max-h-[82vh] max-w-[92vw] select-none object-contain shadow-2xl animate-subtle-zoom transition-all duration-300"
+          draggable={false}
         />
 
         {images.length > 1 && (

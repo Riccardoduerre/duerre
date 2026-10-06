@@ -11,6 +11,7 @@ function LocalizedLayout() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     const normalizedPath = pathname.replace(/\/+$/, '') || '/';
     const browserUrl = new URL(window.location.href);
     if (browserUrl.searchParams.get('lang') !== locale) {

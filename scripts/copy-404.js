@@ -1,4 +1,4 @@
-import { access, copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { access, copyFile, mkdir, readFile, writeFile, readdir } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -102,6 +102,19 @@ function updateLink(html, rel, relationValue, href) {
 }
 
 const baseHtml = await readFile(indexFile, 'utf8');
+const distAssets = await readdir(path.join(distDir, 'assets')).catch(() => []);
+
+function resolveAssetUrl(imageRef) {
+  if (!imageRef) return `${siteUrl}/og-image.webp`;
+  if (imageRef.startsWith('http') && !imageRef.startsWith('file:')) return imageRef;
+  const cleaned = imageRef.replace(/^file:\/\//, '');
+  const parsed = path.parse(cleaned);
+  const matched = distAssets.find((file) => file.startsWith(parsed.name) && file.endsWith(parsed.ext));
+  if (matched) {
+    return `${siteUrl}/assets/${matched}`;
+  }
+  return `${siteUrl}/og-image.webp`;
+}
 
 for (const route of routes) {
   const project = portfolioProjects.find((item) => `/portfolio/${item.id}` === route);
@@ -112,8 +125,9 @@ for (const route of routes) {
   const description = project?.challenge.it ?? post?.excerpt.it ?? translations.it[descriptionKey];
   const canonicalUrl = localizedUrl(route, 'it');
   const englishUrl = localizedUrl(route, 'en');
-  let html = baseHtml;
+  const socialImageUrl = resolveAssetUrl(project?.image ?? post?.image);
 
+  let html = baseHtml;
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(pageTitle)}</title>`);
   html = updateMeta(html, 'name', 'title', pageTitle);
   html = updateMeta(html, 'name', 'description', description);
@@ -122,9 +136,11 @@ for (const route of routes) {
   html = updateMeta(html, 'property', 'og:url', canonicalUrl);
   html = updateMeta(html, 'property', 'og:locale', 'it_IT');
   html = updateMeta(html, 'property', 'og:type', post ? 'article' : 'website');
+  html = updateMeta(html, 'property', 'og:image', socialImageUrl);
   html = updateMeta(html, 'name', 'twitter:title', pageTitle);
   html = updateMeta(html, 'name', 'twitter:description', description);
   html = updateMeta(html, 'name', 'twitter:url', canonicalUrl);
+  html = updateMeta(html, 'name', 'twitter:image', socialImageUrl);
   html = updateLink(html, 'canonical', null, canonicalUrl);
   html = updateLink(html, 'alternate', 'it', canonicalUrl);
   html = updateLink(html, 'alternate', 'en', englishUrl);

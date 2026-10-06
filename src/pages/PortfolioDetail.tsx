@@ -106,7 +106,7 @@ export default function PortfolioDetail() {
                     {t('portfolio_results_prefix')}
                   </span>
                   <span className="mt-1 block text-xs font-semibold text-theme-accent sm:text-sm">
-                    Verified Commercial Work
+                    {t('verified_work')}
                   </span>
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default function PortfolioDetail() {
             {/* Challenge & Solution Narrative Columns */}
             <div className="mb-16 grid gap-10 md:grid-cols-2 md:gap-14">
               <div className="rounded-2xl border border-theme-border bg-theme-surface p-8 sm:p-10">
-                <span className="text-[10px] font-mono tracking-widest text-theme-accent">01 / SITUATION</span>
+                <span className="text-[10px] font-mono tracking-widest text-theme-accent">{t('phase_situation')}</span>
                 <h2 className="mt-3 text-xl font-bold uppercase tracking-[0.1em] text-theme-text sm:text-2xl">
                   {t('challenge_label')}
                 </h2>
@@ -154,7 +154,7 @@ export default function PortfolioDetail() {
               </div>
 
               <div className="rounded-2xl border border-theme-border bg-theme-surface p-8 sm:p-10">
-                <span className="text-[10px] font-mono tracking-widest text-theme-accent">02 / DIRECTION</span>
+                <span className="text-[10px] font-mono tracking-widest text-theme-accent">{t('phase_direction')}</span>
                 <h2 className="mt-3 text-xl font-bold uppercase tracking-[0.1em] text-theme-text sm:text-2xl">
                   {t('solution_label')}
                 </h2>
@@ -167,7 +167,7 @@ export default function PortfolioDetail() {
             {/* Impact / Results Banner */}
             <div className="portfolio-card relative mb-20 overflow-hidden rounded-2xl p-8 sm:p-12">
               <div className="absolute inset-x-8 top-0 h-px bg-theme-accent" />
-              <span className="text-[10px] font-mono tracking-widest text-theme-accent">03 / COMMERCIAL OUTCOME</span>
+              <span className="text-[10px] font-mono tracking-widest text-theme-accent">{t('phase_outcome')}</span>
               <h2 className="mt-2 text-xl font-bold uppercase tracking-[0.1em] text-theme-text sm:text-2xl">
                 {t('results_label')}
               </h2>
