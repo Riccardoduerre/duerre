@@ -19,7 +19,7 @@ export default function DigitalMarketing() {
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-theme-muted">{t('dm_intro')}</p>
             <Link
               to="/contact"
-              className="mt-10 inline-flex rounded-sm bg-theme-accent px-7 py-4 text-xs font-bold uppercase tracking-[0.2em] text-[#2B2B2C] transition hover:brightness-95"
+              className="mt-10 inline-flex rounded-full bg-theme-mad px-7 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:brightness-110"
             >
               {t('dm_cta')}
             </Link>
@@ -68,15 +68,15 @@ export default function DigitalMarketing() {
         </div>
       </section>
 
-      <section className="bg-[#383E42] py-16 text-[#F1F0EA] md:py-20">
+      <section className="border-y border-theme-border bg-theme-surface py-16 text-theme-text md:py-20">
         <div className="container mx-auto flex flex-col gap-8 px-6 md:flex-row md:items-end md:justify-between md:px-8">
           <div className="max-w-3xl">
             <h2 className="text-3xl font-bold uppercase tracking-[0.12em] md:text-5xl">{t('dm_final_title')}</h2>
-            <p className="mt-5 text-lg leading-relaxed text-[#C5C7C4]">{t('dm_final_desc')}</p>
+            <p className="mt-5 text-lg leading-relaxed text-theme-muted">{t('dm_final_desc')}</p>
           </div>
           <Link
             to="/contact"
-            className="inline-flex shrink-0 rounded-sm bg-[#00B3FF] px-7 py-4 text-xs font-bold uppercase tracking-[0.2em] text-[#2B2B2C] transition hover:brightness-95"
+            className="inline-flex shrink-0 rounded-full bg-theme-mad px-7 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:brightness-110"
           >
             {t('dm_final_cta')}
           </Link>

@@ -47,7 +47,7 @@ export default function Navbar() {
               key={item.key}
               to={`/${item.path}`}
               className={({ isActive }) =>
-                `text-xs font-semibold uppercase tracking-[0.28em] transition-colors hover:text-theme-accent ${
+                `text-xs font-semibold uppercase tracking-[0.28em] transition-colors hover:text-theme-mad ${
                   isActive ? 'text-theme-accent' : 'text-theme-text'
                 }`
               }
@@ -58,7 +58,7 @@ export default function Navbar() {
           <ThemeToggle />
           <button
             type="button"
-            className="rounded-full border border-theme-border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] transition hover:border-theme-accent hover:text-theme-accent"
+            className="rounded-full border border-theme-border px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] transition hover:border-theme-mad hover:text-theme-mad"
             onClick={() => changeLocale(currentLocale === 'en' ? 'it' : 'en')}
           >
             {langLabel}
@@ -71,18 +71,23 @@ export default function Navbar() {
           onClick={() => setMobileOpen((current) => !current)}
           aria-label={mobileOpen ? t('menu_close') : t('menu_open')}
           aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
         >
           {mobileOpen ? t('menu_close_label') : t('menu_label')}
         </button>
       </div>
 
-      <div className={`${mobileOpen ? 'max-h-[520px] border-t border-theme-border' : 'max-h-0'} overflow-hidden bg-theme-bg transition-all duration-300 md:hidden`}>
+      <div
+        id="mobile-navigation"
+        aria-hidden={!mobileOpen}
+        className={`${mobileOpen ? 'visible max-h-[520px] border-t border-theme-border' : 'invisible max-h-0'} overflow-hidden bg-theme-bg transition-all duration-300 md:hidden`}
+      >
         <div className="container mx-auto space-y-5 px-6 py-6">
           {items.map((item) => (
             <NavLink
               key={item.key}
               to={`/${item.path}`}
-              className="block text-base font-semibold uppercase tracking-[0.26em] text-theme-text hover:text-theme-accent"
+              className="block text-base font-semibold uppercase tracking-[0.26em] text-theme-text hover:text-theme-mad"
               onClick={() => setMobileOpen(false)}
             >
               {item.label}

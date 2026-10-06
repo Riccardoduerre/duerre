@@ -21,7 +21,7 @@ function LocalizedLayout() {
       '/': ['home_title', 'seo_home'],
       '/portfolio': ['portfolio_heading', 'seo_portfolio'],
       '/about': ['about_title', 'seo_about'],
-      '/blog': ['blog', 'seo_blog'],
+      '/blog': ['blog_title', 'seo_blog'],
       '/contact': ['contact', 'seo_contact'],
       '/digital-marketing': ['dm_title', 'seo_marketing'],
       '/photo': ['service_1_title', 'seo_photo'],
@@ -46,6 +46,7 @@ function LocalizedLayout() {
     document.title = pageTitle;
     document.documentElement.lang = locale;
     document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+    document.querySelector('meta[name="title"]')?.setAttribute('content', pageTitle);
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', pageTitle);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
     document.querySelector('meta[property="og:locale"]')?.setAttribute('content', locale === 'it' ? 'it_IT' : 'en_US');
@@ -82,8 +83,14 @@ function LocalizedLayout() {
 
   return (
     <div className="min-h-screen bg-theme-bg text-theme-text">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-theme-surface focus:px-4 focus:py-3 focus:text-theme-text focus:shadow-theme"
+      >
+        {t('skip_to_content')}
+      </a>
       <Navbar />
-      <main className="pt-24">
+      <main id="main-content" className="pt-24">
         <Outlet />
       </main>
       <Footer />

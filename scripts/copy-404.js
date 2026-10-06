@@ -85,7 +85,7 @@ const routeMeta = {
   '/video': ['service_2_title', 'seo_video'],
   '/3d': ['service_3_title', 'seo_3d'],
   '/digital-marketing': ['dm_title', 'seo_marketing'],
-  '/blog': ['blog', 'seo_blog'],
+  '/blog': ['blog_title', 'seo_blog'],
   '/contact': ['contact', 'seo_contact'],
   '/privacy': ['privacy_title', 'seo_privacy'],
 };
@@ -114,11 +114,13 @@ for (const route of routes) {
   let html = await readFile(indexFile, 'utf8');
 
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(pageTitle)}</title>`);
+  html = updateMeta(html, 'name', 'title', pageTitle);
   html = updateMeta(html, 'name', 'description', description);
   html = updateMeta(html, 'property', 'og:title', pageTitle);
   html = updateMeta(html, 'property', 'og:description', description);
   html = updateMeta(html, 'property', 'og:url', canonicalUrl);
   html = updateMeta(html, 'property', 'og:locale', 'it_IT');
+  html = updateMeta(html, 'property', 'og:type', post ? 'article' : 'website');
   html = updateMeta(html, 'name', 'twitter:title', pageTitle);
   html = updateMeta(html, 'name', 'twitter:description', description);
   html = updateMeta(html, 'name', 'twitter:url', canonicalUrl);

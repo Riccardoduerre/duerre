@@ -21,14 +21,14 @@ const posts: BlogPostData[] = [
   {
     slug: 'post1',
     title: {
-      en: 'My First Blog Post Title',
-      it: 'Il mio primo post sul blog',
+      en: 'Build a Cohesive Visual Story for a Brand',
+      it: 'Costruire una storia visiva coerente per un brand',
     },
-    date: 'August 11, 2025',
+    date: '2025-08-11',
     image: post1Image,
     excerpt: {
-      en: 'A short introduction to the first blog post, rendered from Markdown.',
-      it: 'Una breve introduzione al primo post del blog, renderizzata da Markdown.',
+      en: 'A practical framework for turning a brand message into a considered, versatile photography series.',
+      it: 'Un metodo pratico per trasformare il messaggio di un brand in una serie fotografica coerente e versatile.',
     },
     content: {
       en: post1En,
@@ -38,14 +38,14 @@ const posts: BlogPostData[] = [
   {
     slug: 'post2',
     title: {
-      en: 'The Art of Photography',
-      it: 'L’arte della fotografia',
+      en: 'How to Read Natural Light in a Scene',
+      it: 'Come leggere la luce naturale in una scena',
     },
-    date: 'September 8, 2025',
+    date: '2025-09-08',
     image: post2Image,
     excerpt: {
-      en: 'Exploring photography techniques and creative inspiration in a second post.',
-      it: 'Esplorando tecniche fotografiche e ispirazione creativa in un secondo post.',
+      en: 'Learn to read direction, softness, and contrast before choosing exposure settings.',
+      it: 'Impara a valutare direzione, morbidezza e contrasto prima di scegliere l’esposizione.',
     },
     content: {
       en: post2En,

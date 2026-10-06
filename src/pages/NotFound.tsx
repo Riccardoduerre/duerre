@@ -16,7 +16,7 @@ export default function NotFound() {
         </p>
         <Link
           to="/"
-          className="mt-8 inline-flex min-h-11 items-center border-b border-theme-accent text-sm font-semibold text-theme-text transition hover:text-theme-accent"
+          className="mt-8 inline-flex min-h-11 items-center border-b border-theme-accent text-sm font-semibold text-theme-text transition hover:border-theme-mad hover:text-theme-mad"
         >
           {t('page_not_found_home')} <span aria-hidden="true" className="ml-3">→</span>
         </Link>

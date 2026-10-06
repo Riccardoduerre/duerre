@@ -11,6 +11,7 @@ export default {
           surface: 'var(--surface-color)',
           border: 'var(--border-color)',
           accent: 'var(--accent-color)',
+          mad: 'var(--mad-color)',
         },
       },
       fontFamily: {

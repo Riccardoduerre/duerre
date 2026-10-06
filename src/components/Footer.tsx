@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="container mx-auto px-6 md:px-8 text-center">
         <p className="text-sm">{rights}</p>
         <p className="mt-3 text-sm">{t('footer_stack')}</p>
-        <Link to="/privacy" className="mt-4 inline-flex text-sm font-medium text-theme-accent underline decoration-theme-border underline-offset-4 hover:decoration-theme-accent">
+        <Link to="/privacy" className="mt-4 inline-flex text-sm font-medium text-theme-accent underline decoration-theme-border underline-offset-4 hover:text-theme-mad hover:decoration-theme-mad">
           {t('privacy_title')}
         </Link>
       </div>

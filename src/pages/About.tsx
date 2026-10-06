@@ -24,13 +24,13 @@ export default function About() {
             <div className="mt-12 flex flex-wrap gap-4">
               <Link
                 to="/portfolio"
-                className="rounded-full border border-theme-border px-8 py-4 text-[11px] font-bold uppercase tracking-[0.28em] transition hover:border-theme-accent"
+                className="rounded-full border border-theme-border px-8 py-4 text-[11px] font-bold uppercase tracking-[0.28em] transition hover:border-theme-mad hover:text-theme-mad"
               >
                 {t('portfolio')}
               </Link>
               <Link
                 to="/contact"
-                className="rounded-full bg-theme-accent px-8 py-4 text-[11px] font-bold uppercase tracking-[0.28em] text-[#2B2B2C] transition hover:opacity-90"
+                className="rounded-full bg-theme-mad px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:brightness-110"
               >
                 {t('contact')}
               </Link>

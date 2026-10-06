@@ -29,7 +29,7 @@ export default function Privacy() {
               <p className="mt-3 leading-relaxed text-theme-muted">{t(body)}</p>
               {title === 'privacy_service_title' && (
                 <a
-                  className="mt-2 inline-flex text-sm font-semibold text-theme-accent underline decoration-theme-border underline-offset-4 hover:decoration-theme-accent"
+                  className="mt-2 inline-flex text-sm font-semibold text-theme-accent underline decoration-theme-border underline-offset-4 hover:text-theme-mad hover:decoration-theme-mad"
                   href="https://www.emailjs.com/legal/privacy-policy/"
                   target="_blank"
                   rel="noreferrer"

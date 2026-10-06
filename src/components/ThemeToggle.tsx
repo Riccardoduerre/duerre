@@ -2,19 +2,24 @@ import { useEffect, useState } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('light');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark' || stored === 'light') return stored;
+    } catch {
+      // Use system preference when browser storage is unavailable.
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
   const { t } = useLocale();
 
   useEffect(() => {
-    const stored = localStorage.getItem('theme') as 'dark' | 'light' | null;
-    const preferred = stored ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    setTheme(preferred);
-    document.documentElement.classList.toggle('dark', preferred === 'dark');
-  }, []);
-
-  useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem('theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      // Keep the selected theme for this session when storage is unavailable.
+    }
   }, [theme]);
 
   const nextTheme = theme === 'dark' ? 'light' : 'dark';

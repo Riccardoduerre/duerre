@@ -99,7 +99,7 @@ export default function Contact() {
                 placeholder={t('contact_form_name_placeholder')}
                 required
                 aria-required="true"
-                className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-accent"
+                className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-mad"
               />
             </div>
             <div>
@@ -113,7 +113,7 @@ export default function Contact() {
                 placeholder={t('contact_form_email_placeholder')}
                 required
                 aria-required="true"
-                className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-accent"
+                className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-mad"
               />
             </div>
             <div>
@@ -127,7 +127,7 @@ export default function Contact() {
                 placeholder={t('contact_form_message_placeholder')}
                 required
                 aria-required="true"
-                className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-accent"
+                className="w-full rounded-2xl border border-theme-border bg-theme-bg px-4 py-4 text-theme-text outline-none transition focus:border-theme-mad"
               />
             </div>
             <div className="flex items-start gap-3">
@@ -136,14 +136,14 @@ export default function Contact() {
                 name="privacy_acknowledgement"
                 type="checkbox"
                 required
-                className="mt-1 h-4 w-4 shrink-0 accent-[#00B3FF]"
+                className="mt-1 h-4 w-4 shrink-0 accent-[var(--mad-color)]"
               />
               <div>
                 <label htmlFor="privacy_acknowledgement" className="text-sm leading-relaxed text-theme-muted">
                   {t('privacy_ack')}
                 </label>
                 <p className="mt-1 text-sm">
-                  <Link to="/privacy" className="font-semibold text-theme-accent underline decoration-theme-border underline-offset-4 hover:decoration-theme-accent">
+                  <Link to="/privacy" className="font-semibold text-theme-accent underline decoration-theme-border underline-offset-4 hover:text-theme-mad hover:decoration-theme-mad">
                     {t('privacy_link')}
                   </Link>
                 </p>
@@ -152,7 +152,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-full bg-theme-accent px-6 py-4 text-[11px] font-bold uppercase tracking-[0.28em] text-[#2B2B2C] transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-full bg-theme-mad px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading ? t('contact_form_sending') : t('contact_form_send')}
             </button>

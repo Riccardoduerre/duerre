@@ -33,7 +33,9 @@ export default function PortfolioDetail() {
         <article className="mx-auto max-w-5xl">
           <div className="mb-12">
             <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-theme-accent">{portfolioCategoryMeta[project.category].label[locale]}</p>
-            <h1 className="mt-4 text-5xl font-bold uppercase tracking-[0.22em]">{project.title[locale]}</h1>
+            <h1 className="mt-4 break-words text-3xl font-bold uppercase leading-tight tracking-[0.08em] sm:text-4xl sm:tracking-[0.1em] md:text-5xl md:tracking-[0.12em]">
+              {project.title[locale]}
+            </h1>
             <p className="mt-6 text-lg text-theme-muted">{project.scope[locale]}</p>
           </div>
 
@@ -43,7 +45,7 @@ export default function PortfolioDetail() {
                 src={project.gallery[0]}
                 alt={project.title[locale]}
                 className="w-full h-[400px] object-cover"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
               />
             </div>
