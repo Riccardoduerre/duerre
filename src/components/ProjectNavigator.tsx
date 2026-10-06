@@ -93,3 +93,4 @@ export default function ProjectNavigator({ currentId }: ProjectNavigatorProps) {
     </nav>
   );
 }
+
