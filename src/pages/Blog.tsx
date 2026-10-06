@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
-import posts, { sortPostsByDateDesc } from '../data/posts';
+import posts, { sortPostsByDateDesc, formatBlogDate } from '../data/posts';
 
 export default function Blog() {
   const { t, locale } = useLocale();
@@ -50,9 +50,7 @@ export default function Blog() {
                 <div className="flex flex-1 flex-col p-8 sm:p-10">
                   <div className="flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-theme-accent">
                     <time dateTime={post.date}>
-                      {new Intl.DateTimeFormat(locale === 'it' ? 'it-IT' : 'en-US', {
-                        dateStyle: 'long',
-                      }).format(new Date(`${post.date}T12:00:00`))}
+                      {formatBlogDate(post.date)}
                     </time>
                     <span className="text-theme-border">·</span>
                     <span>{readingTimeText}</span>

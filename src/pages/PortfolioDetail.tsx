@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
-import { portfolioCategoryMeta, portfolioProjects } from '../data/portfolio';
+import { portfolioCategoryMeta, portfolioProjects, formatProjectDate } from '../data/portfolio';
 import ImageLightbox from '../components/ImageLightbox';
 import ProjectNavigator from '../components/ProjectNavigator';
 
@@ -64,7 +64,7 @@ export default function PortfolioDetail() {
               <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.24em] text-theme-accent">
                 <span>{meta.label[locale]}</span>
                 <span className="text-theme-border">/</span>
-                <span className="font-mono text-theme-muted">{project.year}</span>
+                <span className="font-mono text-theme-muted">{formatProjectDate(project)}</span>
               </div>
 
               <h1 className="mt-4 break-words text-3xl font-black uppercase leading-[1.08] tracking-[0.04em] sm:text-5xl md:text-6xl">
@@ -87,10 +87,10 @@ export default function PortfolioDetail() {
                 </div>
                 <div>
                   <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-theme-muted">
-                    {t('year_label')}
+                    {t('date_label')}
                   </span>
                   <span className="mt-1 block font-mono text-sm font-bold text-theme-text sm:text-base">
-                    {project.year}
+                    {formatProjectDate(project)}
                   </span>
                 </div>
                 <div>

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
-import { portfolioCategoryMeta, portfolioProjects, sortProjectsByDateDesc, type PortfolioCategory } from '../data/portfolio';
+import { portfolioCategoryMeta, portfolioProjects, sortProjectsByDateDesc, formatProjectDate, type PortfolioCategory } from '../data/portfolio';
 
 interface CategoryPageProps {
   category: PortfolioCategory;
@@ -97,7 +97,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
                 </span>
 
                 <span className="absolute right-4 bottom-3 font-mono text-xs font-semibold text-white/80">
-                  {project.year}
+                  {formatProjectDate(project)}
                 </span>
               </div>
 

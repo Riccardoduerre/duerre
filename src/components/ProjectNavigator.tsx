@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
-import { portfolioProjects, portfolioCategoryMeta } from '../data/portfolio';
+import { portfolioProjects, portfolioCategoryMeta, formatProjectDate } from '../data/portfolio';
 
 interface ProjectNavigatorProps {
   currentId: string;
@@ -58,7 +58,7 @@ export default function ProjectNavigator({ currentId }: ProjectNavigatorProps) {
               {prevProject.title[locale]}
             </h3>
             <p className="mt-0.5 truncate text-xs text-theme-muted">
-              {portfolioCategoryMeta[prevProject.category].label[locale]} · {prevProject.year}
+              {portfolioCategoryMeta[prevProject.category].label[locale]} · {formatProjectDate(prevProject)}
             </p>
           </div>
         </Link>
@@ -76,7 +76,7 @@ export default function ProjectNavigator({ currentId }: ProjectNavigatorProps) {
               {nextProject.title[locale]}
             </h3>
             <p className="mt-0.5 truncate text-xs text-theme-muted">
-              {portfolioCategoryMeta[nextProject.category].label[locale]} · {nextProject.year}
+              {portfolioCategoryMeta[nextProject.category].label[locale]} · {formatProjectDate(nextProject)}
             </p>
           </div>
           <div className="h-20 w-24 shrink-0 overflow-hidden rounded-xl bg-theme-bg md:h-24 md:w-32">

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
-import { portfolioProjects, portfolioCategoryMeta, sortProjectsByDateDesc, type PortfolioCategory } from '../data/portfolio';
+import { portfolioProjects, portfolioCategoryMeta, sortProjectsByDateDesc, formatProjectDate, type PortfolioCategory } from '../data/portfolio';
 
 type FilterType = 'all' | PortfolioCategory;
 
@@ -95,7 +95,7 @@ export default function Portfolio() {
                   </span>
 
                   <span className="absolute right-4 bottom-3 font-mono text-xs font-semibold text-white/80">
-                    {project.year}
+                    {formatProjectDate(project)}
                   </span>
                 </Link>
 

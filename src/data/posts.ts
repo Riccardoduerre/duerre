@@ -67,4 +67,6 @@ const rawPosts: BlogPostData[] = [
 
 export const posts: BlogPostData[] = sortPostsByDateDesc(rawPosts);
 
+export { formatBlogDate } from '../lib/date';
+
 export default posts;

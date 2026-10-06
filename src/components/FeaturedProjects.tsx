@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
-import { featuredPortfolioProjects, portfolioCategoryMeta, type PortfolioCategory } from '../data/portfolio';
+import { featuredPortfolioProjects, portfolioCategoryMeta, formatProjectDate, type PortfolioCategory } from '../data/portfolio';
 
 const categoryPaths: Record<PortfolioCategory, string> = {
   '3d': '/3d',
@@ -74,7 +74,7 @@ export default function FeaturedProjects({ pageHeading = false }: FeaturedProjec
                 >
                   <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.2em]">
                     <span className="text-theme-accent">{meta.eyebrow[locale]}</span>
-                    <span className="font-mono text-theme-muted">{project.year}</span>
+                    <span className="font-mono text-theme-muted">{formatProjectDate(project)}</span>
                   </div>
 
                   <h2 className="mt-4 max-w-xl break-words text-2xl font-black leading-tight tracking-[0.04em] sm:text-3xl lg:text-4xl">

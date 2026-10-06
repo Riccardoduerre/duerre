@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
-import posts from '../data/posts';
+import posts, { formatBlogDate } from '../data/posts';
 import { renderMarkdown } from '../lib/markdown';
 
 export default function BlogPost() {
@@ -46,9 +46,7 @@ export default function BlogPost() {
           <header className="mb-12">
             <div className="flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-theme-accent">
               <time dateTime={post.date}>
-                {new Intl.DateTimeFormat(locale === 'it' ? 'it-IT' : 'en-US', {
-                  dateStyle: 'long',
-                }).format(new Date(`${post.date}T12:00:00`))}
+                {formatBlogDate(post.date)}
               </time>
               <span className="text-theme-border">·</span>
               <span>{readingTimeText}</span>

@@ -314,4 +314,6 @@ export function addPortfolioProject(project: PortfolioProject) {
   return portfolioProjects.length;
 }
 
+export { formatProjectDate } from '../lib/date';
+
 export default portfolioProjects;
