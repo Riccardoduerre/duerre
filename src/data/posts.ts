@@ -17,24 +17,18 @@ export interface BlogPostData {
 const post1Image = new URL('../assets/images/optimized/DSCN7050.webp', import.meta.url).href;
 const post2Image = new URL('../assets/images/optimized/_DSC2919.webp', import.meta.url).href;
 
-const posts: BlogPostData[] = [
-  {
-    slug: 'post1',
-    title: {
-      en: 'Build a Cohesive Visual Story for a Brand',
-      it: 'Costruire una storia visiva coerente per un brand',
-    },
-    date: '2025-08-11',
-    image: post1Image,
-    excerpt: {
-      en: 'A practical framework for turning a brand message into a considered, versatile photography series.',
-      it: 'Un metodo pratico per trasformare il messaggio di un brand in una serie fotografica coerente e versatile.',
-    },
-    content: {
-      en: post1En,
-      it: post1It,
-    },
-  },
+export function sortPostsByDateDesc(postList: BlogPostData[]): BlogPostData[] {
+  return [...postList].sort((a, b) => {
+    const timeA = new Date(a.date).getTime();
+    const timeB = new Date(b.date).getTime();
+    if (!isNaN(timeA) && !isNaN(timeB) && timeA !== timeB) {
+      return timeB - timeA;
+    }
+    return b.date.localeCompare(a.date);
+  });
+}
+
+const rawPosts: BlogPostData[] = [
   {
     slug: 'post2',
     title: {
@@ -52,6 +46,25 @@ const posts: BlogPostData[] = [
       it: post2It,
     },
   },
+  {
+    slug: 'post1',
+    title: {
+      en: 'Build a Cohesive Visual Story for a Brand',
+      it: 'Costruire una storia visiva coerente per un brand',
+    },
+    date: '2025-08-11',
+    image: post1Image,
+    excerpt: {
+      en: 'A practical framework for turning a brand message into a considered, versatile photography series.',
+      it: 'Un metodo pratico per trasformare il messaggio di un brand in una serie fotografica coerente e versatile.',
+    },
+    content: {
+      en: post1En,
+      it: post1It,
+    },
+  },
 ];
+
+export const posts: BlogPostData[] = sortPostsByDateDesc(rawPosts);
 
 export default posts;

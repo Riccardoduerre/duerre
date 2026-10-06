@@ -1,6 +1,7 @@
+import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
-import { portfolioCategoryMeta, portfolioProjects, type PortfolioCategory } from '../data/portfolio';
+import { portfolioCategoryMeta, portfolioProjects, sortProjectsByDateDesc, type PortfolioCategory } from '../data/portfolio';
 
 interface CategoryPageProps {
   category: PortfolioCategory;
@@ -11,7 +12,10 @@ export default function CategoryPage({ category }: CategoryPageProps) {
   const { locale, t } = useLocale();
   const activeCategory = (category || params.category) as PortfolioCategory | undefined;
   const meta = activeCategory ? portfolioCategoryMeta[activeCategory] : undefined;
-  const items = activeCategory ? portfolioProjects.filter((project) => project.category === activeCategory) : [];
+  const items = useMemo(() => {
+    if (!activeCategory) return [];
+    return sortProjectsByDateDesc(portfolioProjects.filter((project) => project.category === activeCategory));
+  }, [activeCategory]);
 
   if (!meta) {
     return (

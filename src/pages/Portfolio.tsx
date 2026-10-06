@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
-import { portfolioProjects, portfolioCategoryMeta, type PortfolioCategory } from '../data/portfolio';
+import { portfolioProjects, portfolioCategoryMeta, sortProjectsByDateDesc, type PortfolioCategory } from '../data/portfolio';
 
 type FilterType = 'all' | PortfolioCategory;
 
@@ -17,8 +17,10 @@ export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
 
   const filteredProjects = useMemo(() => {
-    if (activeFilter === 'all') return portfolioProjects;
-    return portfolioProjects.filter((p) => p.category === activeFilter);
+    const list = activeFilter === 'all'
+      ? portfolioProjects
+      : portfolioProjects.filter((p) => p.category === activeFilter);
+    return sortProjectsByDateDesc(list);
   }, [activeFilter]);
 
   return (

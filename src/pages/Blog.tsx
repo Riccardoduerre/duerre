@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
-import posts from '../data/posts';
+import posts, { sortPostsByDateDesc } from '../data/posts';
 
 export default function Blog() {
   const { t, locale } = useLocale();
+  const sortedPosts = useMemo(() => sortPostsByDateDesc(posts), []);
 
   return (
     <section className="bg-theme-bg pt-8 pb-20 sm:pt-12 sm:pb-28">
@@ -21,7 +23,7 @@ export default function Blog() {
         </div>
 
         <div className="grid gap-10 md:grid-cols-2 lg:gap-12">
-          {posts.map((post) => {
+          {sortedPosts.map((post) => {
             const wordCount = post.content[locale]?.split(/\s+/).length || 500;
             const readMin = Math.max(1, Math.ceil(wordCount / 200));
             const readingTimeText = t('reading_time').replace('{{min}}', String(readMin));

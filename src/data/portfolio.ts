@@ -23,6 +23,7 @@ export interface PortfolioProject {
   category: PortfolioCategory;
   featured?: boolean;
   year: string;
+  date?: string; // Format: 'YYYY-MM-DD' or 'YYYY-MM' for exact chronological ordering
   image: string;
   gallery: string[];
   title: LocaleStrings;
@@ -106,12 +107,73 @@ export const portfolioCategoryMeta: Record<PortfolioCategory, CategoryDefinition
   },
 };
 
-export const portfolioProjects: PortfolioProject[] = [
+export function getProjectDateValue(project: PortfolioProject): number {
+  if (project.date) {
+    const timestamp = new Date(project.date).getTime();
+    if (!isNaN(timestamp)) return timestamp;
+  }
+  if (project.year) {
+    const parsedYear = parseInt(project.year, 10);
+    if (!isNaN(parsedYear)) {
+      return new Date(`${parsedYear}-01-01T00:00:00Z`).getTime();
+    }
+  }
+  return 0;
+}
+
+export function sortProjectsByDateDesc(projects: PortfolioProject[]): PortfolioProject[] {
+  return [...projects].sort((a, b) => {
+    const timeA = getProjectDateValue(a);
+    const timeB = getProjectDateValue(b);
+    if (timeA !== timeB) {
+      return timeB - timeA;
+    }
+    const strA = a.date || a.year || '';
+    const strB = b.date || b.year || '';
+    return strB.localeCompare(strA);
+  });
+}
+
+const rawPortfolioProjects: PortfolioProject[] = [
+  {
+    id: 'commercial-showreel',
+    category: 'video',
+    featured: true,
+    year: '2025',
+    date: '2025-11-01',
+    image: showreel,
+    gallery: [showreel],
+    title: {
+      en: 'Commercial Showreel',
+      it: 'Showreel Commerciale',
+    },
+    client: {
+      en: 'Duerre Media Production',
+      it: 'Duerre Media',
+    },
+    scope: {
+      en: 'Video Production & Direction',
+      it: 'Produzione e Regia Video',
+    },
+    challenge: {
+      en: 'Condensing a wide range of brand work into cinematic short-form edits with strong pacing and emotional relevance.',
+      it: 'Condensare una vasta gamma di lavori brand in edit brevi e cinematici con forte ritmo ed efficacia emotiva.',
+    },
+    solution: {
+      en: 'Dynamic camera work, strong color grading, and custom sound design built to make every second feel premium and deliberate.',
+      it: 'Movimenti di macchina dinamici, color grading marcato e sound design su misura per far sentire ogni secondo premium e intenzionale.',
+    },
+    results: {
+      en: 'Multiple premium contracts secured across luxury and lifestyle sectors.',
+      it: 'Diversi contratti premium ottenuti nel settore lusso e lifestyle.',
+    },
+  },
   {
     id: 'alps-brand-campaign',
     category: 'photo',
     featured: true,
     year: '2025',
+    date: '2025-07-15',
     image: alpineGallery,
     gallery: [alps01, alps02, alps03, alps04],
     title: {
@@ -143,6 +205,7 @@ export const portfolioProjects: PortfolioProject[] = [
     id: 'ethereal-landscapes',
     category: 'photo',
     year: '2025',
+    date: '2025-03-22',
     image: landscapes01,
     gallery: [landscapes01, landscapes02, landscapes03],
     title: {
@@ -171,73 +234,11 @@ export const portfolioProjects: PortfolioProject[] = [
     },
   },
   {
-    id: 'urban-character-study',
-    category: 'photo',
-    year: '2024',
-    image: portraits01,
-    gallery: [portraits01, portraits02, portraitHero],
-    title: {
-      en: 'Urban Character Study',
-      it: 'Studio di Carattere Urbano',
-    },
-    client: {
-      en: 'Studio Riva Editorial',
-      it: 'Editoriale Studio Riva',
-    },
-    scope: {
-      en: 'Portrait & Editorial Photography',
-      it: 'Fotografia di Ritratto ed Editoriale',
-    },
-    challenge: {
-      en: 'Create a portrait campaign that feels intimate and expressive while keeping the architectural environment present.',
-      it: 'Creare una campagna di ritratti intima ed espressiva mantenendo presente l’ambiente architettonico.',
-    },
-    solution: {
-      en: 'Low-key light, shallow depth-of-field, and tactile location choices to bring the subjects’ gaze forward without losing the mood of the street.',
-      it: 'Luce bassa, profondità di campo ridotta e scelte di location pregne di texture per far emergere lo sguardo dei soggetti senza perdere l’umore della strada.',
-    },
-    results: {
-      en: 'Featured in three major Italian photography publications and exhibited in Venice Modern Art Gallery.',
-      it: 'Pubblicato in tre importanti riviste di fotografia italiane ed esposto nella galleria d’arte moderna di Venezia.',
-    },
-  },
-  {
-    id: 'commercial-showreel',
-    category: 'video',
-    featured: true,
-    year: '2025',
-    image: showreel,
-    gallery: [showreel],
-    title: {
-      en: 'Commercial Showreel',
-      it: 'Showreel Commerciale',
-    },
-    client: {
-      en: 'Duerre Media Production',
-      it: 'Duerre Media',
-    },
-    scope: {
-      en: 'Video Production & Direction',
-      it: 'Produzione e Regia Video',
-    },
-    challenge: {
-      en: 'Condensing a wide range of brand work into cinematic short-form edits with strong pacing and emotional relevance.',
-      it: 'Condensare una vasta gamma di lavori brand in edit brevi e cinematici con forte ritmo ed efficacia emotiva.',
-    },
-    solution: {
-      en: 'Dynamic camera work, strong color grading, and custom sound design built to make every second feel premium and deliberate.',
-      it: 'Movimenti di macchina dinamici, color grading marcato e sound design su misura per far sentire ogni secondo premium e intenzionale.',
-    },
-    results: {
-      en: 'Multiple premium contracts secured across luxury and lifestyle sectors.',
-      it: 'Diversi contratti premium ottenuti nel settore lusso e lifestyle.',
-    },
-  },
-  {
     id: 'lumen-atelier',
     category: '3d',
     featured: true,
     year: '2024',
+    date: '2024-10-10',
     image: showreel,
     gallery: [showreel, portraits01, landscapes01],
     title: {
@@ -265,7 +266,41 @@ export const portfolioProjects: PortfolioProject[] = [
       it: 'Utilizzato per asset di lancio, contenuti social e touchpoint retail digitali con forte engagement e posizionamento premium.',
     },
   },
+  {
+    id: 'urban-character-study',
+    category: 'photo',
+    year: '2024',
+    date: '2024-05-18',
+    image: portraits01,
+    gallery: [portraits01, portraits02, portraitHero],
+    title: {
+      en: 'Urban Character Study',
+      it: 'Studio di Carattere Urbano',
+    },
+    client: {
+      en: 'Studio Riva Editorial',
+      it: 'Editoriale Studio Riva',
+    },
+    scope: {
+      en: 'Portrait & Editorial Photography',
+      it: 'Fotografia di Ritratto ed Editoriale',
+    },
+    challenge: {
+      en: 'Create a portrait campaign that feels intimate and expressive while keeping the architectural environment present.',
+      it: 'Creare una campagna di ritratti intima ed espressiva mantenendo presente l’ambiente architettonico.',
+    },
+    solution: {
+      en: 'Low-key light, shallow depth-of-field, and tactile location choices to bring the subjects’ gaze forward without losing the mood of the street.',
+      it: 'Luce bassa, profondità di campo ridotta e scelte di location pregne di texture per far emergere lo sguardo dei soggetti senza perdere l’umore della strada.',
+    },
+    results: {
+      en: 'Featured in three major Italian photography publications and exhibited in Venice Modern Art Gallery.',
+      it: 'Pubblicato in tre importanti riviste di fotografia italiane ed esposto nella galleria d’arte moderna di Venezia.',
+    },
+  },
 ];
+
+export const portfolioProjects: PortfolioProject[] = sortProjectsByDateDesc(rawPortfolioProjects);
 
 const featuredCategoryOrder: PortfolioCategory[] = ['3d', 'photo', 'video'];
 
@@ -274,7 +309,8 @@ export const featuredPortfolioProjects = featuredCategoryOrder
   .filter((project): project is PortfolioProject => project !== undefined);
 
 export function addPortfolioProject(project: PortfolioProject) {
-  portfolioProjects.push(project);
+  rawPortfolioProjects.push(project);
+  portfolioProjects.splice(0, portfolioProjects.length, ...sortProjectsByDateDesc(rawPortfolioProjects));
   return portfolioProjects.length;
 }
 
