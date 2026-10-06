@@ -43,3 +43,4 @@ export function formatBlogDate(dateStr: string): string {
   const year = d.getFullYear();
   return `${day}.${month}.${year}`;
 }
+
