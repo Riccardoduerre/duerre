@@ -64,11 +64,6 @@ export default function FeaturedProjects({ pageHeading = false }: FeaturedProjec
                   <span className="absolute left-4 top-4 inline-flex min-h-9 items-center rounded-full border border-white/20 bg-black/60 px-3.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur-md sm:left-6 sm:top-6">
                     {meta.label[locale]}
                   </span>
-
-                  {/* Project Index */}
-                  <span className="absolute right-4 bottom-4 font-mono text-2xl font-black text-white/30 sm:right-6 sm:bottom-6 sm:text-3xl">
-                    0{index + 1}
-                  </span>
                 </Link>
 
                 {/* Editorial Details */}

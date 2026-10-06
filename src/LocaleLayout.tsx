@@ -93,7 +93,7 @@ function LocalizedLayout() {
         {t('skip_to_content')}
       </a>
       <Navbar />
-      <main id="main-content" className="pt-24">
+      <main id="main-content" className="pt-16 sm:pt-20">
         <Outlet />
       </main>
       <Footer />

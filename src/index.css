@@ -57,6 +57,10 @@
   img {
     display: block;
   }
+
+  h1, h2, h3 {
+    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

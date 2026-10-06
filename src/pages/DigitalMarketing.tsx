@@ -10,7 +10,7 @@ export default function DigitalMarketing() {
   return (
     <div className="bg-theme-bg">
       {/* Hero Section */}
-      <section className="py-20 md:py-28">
+      <section className="pt-8 pb-20 md:pt-12 md:pb-28">
         <div className="container mx-auto grid gap-16 px-6 md:px-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div>
             <div className="flex items-center gap-3">
@@ -46,10 +46,7 @@ export default function DigitalMarketing() {
             </span>
             <ol className="mt-6 space-y-6">
               {process.map((step) => (
-                <li key={step} className="flex items-start gap-4 border-b border-theme-border pb-6 last:border-0 last:pb-0">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-theme-accent font-mono text-xs font-bold text-theme-accent">
-                    0{step}
-                  </span>
+                <li key={step} className="border-b border-theme-border pb-6 last:border-0 last:pb-0">
                   <div>
                     <h3 className="text-base font-bold uppercase tracking-[0.08em] text-theme-text">
                       {t(`dm_process_${step}_title`)}
@@ -84,10 +81,7 @@ export default function DigitalMarketing() {
                 className="portfolio-card relative overflow-hidden rounded-2xl p-8 sm:p-10 transition duration-300 hover:border-theme-mad"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold tracking-widest text-theme-accent">
-                    0{service}
-                  </span>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-theme-muted">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-theme-accent">
                     Capabilities
                   </span>
                 </div>

@@ -6,7 +6,7 @@ export default function Blog() {
   const { t, locale } = useLocale();
 
   return (
-    <section className="bg-theme-bg py-24 sm:py-28">
+    <section className="bg-theme-bg pt-8 pb-20 sm:pt-12 sm:pb-28">
       <div className="container mx-auto px-6 md:px-8">
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-theme-accent">

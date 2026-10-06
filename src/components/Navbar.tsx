@@ -14,12 +14,24 @@ const navItems = [
 export default function Navbar() {
   const { locale, setLocale, t } = useLocale();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   const currentLocale = locale;
   const langLabel = currentLocale === 'en' ? 'IT' : 'EN';
   const langAriaLabel = currentLocale === 'en' ? 'Passa alla lingua italiana' : 'Switch to English language';
+
+  const isHome = location.pathname === '/' || location.pathname === '';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -70,32 +82,40 @@ export default function Navbar() {
     navigate({ pathname: location.pathname, search: `?lang=${newLocale}` }, { replace: true });
   };
 
-  return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-theme-border/80 bg-theme-bg/85 backdrop-blur-xl shadow-theme transition-all">
-      <div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-8">
-        <div className="flex items-center gap-6">
-          <NavLink
-            to="/"
-            className="group flex flex-col"
-            onClick={() => setMobileOpen(false)}
-          >
-            <span className="text-lg font-black tracking-[0.32em] text-theme-text transition group-hover:text-theme-mad">
-              DUERRE
-            </span>
-            <span className="text-[9px] font-medium tracking-[0.28em] text-theme-muted">
-              RICCARDO RIVA
-            </span>
-          </NavLink>
+  // When on the homepage hero, make navbar reactive to the dark background image
+  const isOverDarkHero = isHome && !isScrolled && !mobileOpen;
 
-          {/* Live Studio Availability Badge (Desktop) */}
-          <div className="hidden items-center gap-2 rounded-full border border-theme-border bg-theme-surface/70 px-3 py-1 text-[10px] font-medium tracking-wider text-theme-muted xl:inline-flex">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            <span>{t('studio_available')}</span>
-          </div>
-        </div>
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
+        isOverDarkHero
+          ? 'border-white/15 bg-black/25 backdrop-blur-md text-white'
+          : 'border-theme-border/80 bg-theme-bg/95 backdrop-blur-xl shadow-theme text-theme-text'
+      }`}
+    >
+      <div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-8">
+        <NavLink
+          to="/"
+          className="group flex flex-col"
+          onClick={() => setMobileOpen(false)}
+        >
+          <span
+            className={`text-lg font-black tracking-[0.32em] transition ${
+              isOverDarkHero
+                ? 'text-white group-hover:text-white/80'
+                : 'text-theme-text group-hover:text-theme-mad'
+            }`}
+          >
+            DUERRE
+          </span>
+          <span
+            className={`text-[9px] font-medium tracking-[0.28em] transition ${
+              isOverDarkHero ? 'text-white/70' : 'text-theme-muted'
+            }`}
+          >
+            RICCARDO RIVA
+          </span>
+        </NavLink>
 
         <nav className="hidden items-center gap-8 md:flex">
           {items.map((item) => {
@@ -104,21 +124,39 @@ export default function Navbar() {
               <NavLink
                 key={item.key}
                 to={`/${item.path}`}
-                className={`relative text-xs font-semibold uppercase tracking-[0.24em] transition-all hover:text-theme-mad ${
-                  active
+                className={`relative text-xs font-semibold uppercase tracking-[0.24em] transition-all ${
+                  isOverDarkHero
+                    ? active
+                      ? 'text-white after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-0.5 after:bg-white'
+                      : 'text-white/80 hover:text-white'
+                    : active
                     ? 'text-theme-accent after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-0.5 after:bg-theme-accent'
-                    : 'text-theme-text'
+                    : 'text-theme-text hover:text-theme-mad'
                 }`}
               >
                 {item.label}
               </NavLink>
             );
           })}
-          <div className="flex items-center gap-3 border-l border-theme-border pl-6">
-            <ThemeToggle />
+          <div
+            className={`flex items-center gap-3 border-l pl-6 transition-colors ${
+              isOverDarkHero ? 'border-white/20' : 'border-theme-border'
+            }`}
+          >
+            <ThemeToggle
+              className={
+                isOverDarkHero
+                  ? 'border-white/20 text-white hover:bg-white/10'
+                  : 'border-theme-border text-theme-text hover:bg-theme-surface'
+              }
+            />
             <button
               type="button"
-              className="rounded-full border border-theme-border px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.2em] transition hover:border-theme-mad hover:text-theme-mad focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad"
+              className={`rounded-full border px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.2em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad ${
+                isOverDarkHero
+                  ? 'border-white/20 text-white hover:border-white/40 hover:bg-white/10'
+                  : 'border-theme-border text-theme-text hover:border-theme-mad hover:text-theme-mad'
+              }`}
               onClick={() => changeLocale(currentLocale === 'en' ? 'it' : 'en')}
               aria-label={langAriaLabel}
             >
@@ -129,7 +167,11 @@ export default function Navbar() {
 
         <button
           type="button"
-          className="inline-flex items-center gap-2 rounded-full border border-theme-border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.24em] transition hover:border-theme-mad hover:text-theme-mad md:hidden"
+          className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.24em] transition md:hidden ${
+            isOverDarkHero
+              ? 'border-white/20 text-white hover:border-white/40 hover:bg-white/10'
+              : 'border-theme-border text-theme-text hover:border-theme-mad hover:text-theme-mad'
+          }`}
           onClick={() => setMobileOpen((current) => !current)}
           aria-label={mobileOpen ? t('menu_close') : t('menu_open')}
           aria-expanded={mobileOpen}
@@ -149,14 +191,6 @@ export default function Navbar() {
         } overflow-hidden bg-theme-bg/95 backdrop-blur-2xl transition-all duration-300 md:hidden`}
       >
         <div className="container mx-auto space-y-6 px-6 py-8">
-          <div className="flex items-center gap-2 rounded-full border border-theme-border bg-theme-surface/70 px-3.5 py-1.5 text-[10px] font-medium tracking-wider text-theme-muted">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            <span>{t('studio_available')}</span>
-          </div>
-
           <div className="space-y-4 border-b border-theme-border pb-6">
             {items.map((item) => {
               const active = isItemActive(item.path);

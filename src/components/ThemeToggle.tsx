@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ className = '' }: { className?: string }) {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     try {
       const stored = localStorage.getItem('theme');
@@ -28,7 +28,9 @@ export default function ThemeToggle() {
   return (
     <button
       type="button"
-      className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-theme-border text-theme-text transition hover:bg-theme-surface"
+      className={`inline-flex h-10 w-10 items-center justify-center rounded-sm border transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad ${
+        className || 'border-theme-border text-theme-text hover:bg-theme-surface'
+      }`}
       onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
       aria-label={ariaLabel}
     >

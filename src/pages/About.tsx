@@ -23,7 +23,7 @@ export default function About() {
   const { locale, t } = useLocale();
 
   return (
-    <div className="bg-theme-bg py-16 md:py-24">
+    <div className="bg-theme-bg pt-8 pb-20 md:pt-12 md:pb-28">
       <div className="container mx-auto px-6 md:px-8">
         {/* Main Monograph Spread */}
         <section className="mb-24 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center xl:gap-20">
@@ -43,12 +43,6 @@ export default function About() {
             <div className="mt-8 space-y-6 text-base leading-relaxed text-theme-muted sm:text-lg">
               <p>{t('about_intro_1')}</p>
               <p>{t('about_intro_2')}</p>
-            </div>
-
-            {/* Quick Status Pill */}
-            <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-theme-border bg-theme-surface px-4 py-2 text-xs font-medium text-theme-muted">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              <span>{t('studio_available')}</span>
             </div>
 
             <div className="mt-10 flex flex-wrap gap-4">
@@ -104,10 +98,7 @@ export default function About() {
                 key={num}
                 className="portfolio-card rounded-2xl p-8 transition duration-300 hover:border-theme-mad"
               >
-                <span className="font-mono text-xs font-bold tracking-widest text-theme-accent">
-                  0{num}
-                </span>
-                <h3 className="mt-4 text-xl font-bold uppercase tracking-[0.08em] text-theme-text">
+                <h3 className="text-xl font-bold uppercase tracking-[0.08em] text-theme-text">
                   {t(`about_principle_${num}_title`)}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-theme-muted">

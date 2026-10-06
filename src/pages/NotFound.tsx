@@ -5,7 +5,7 @@ export default function NotFound() {
   const { t } = useLocale();
 
   return (
-    <section className="flex min-h-[60vh] items-center bg-theme-bg py-24 sm:py-32">
+    <section className="flex min-h-[60vh] items-center bg-theme-bg pt-12 pb-24 sm:pt-16 sm:pb-32">
       <div className="container mx-auto max-w-4xl px-6 md:px-8 text-center sm:text-left">
         <span className="inline-block text-xs font-mono font-bold uppercase tracking-[0.3em] text-theme-accent">
           Error 404

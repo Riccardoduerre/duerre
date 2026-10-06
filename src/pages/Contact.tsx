@@ -76,20 +76,16 @@ export default function Contact() {
   };
 
   return (
-    <section className="bg-theme-bg py-24 sm:py-28">
+    <section className="bg-theme-bg pt-8 pb-20 sm:pt-12 sm:pb-28">
       <div className="container mx-auto px-6 md:px-8">
         <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           {/* Left Column: Studio Editorial Monograph */}
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-theme-border bg-theme-surface/80 px-3.5 py-1.5 text-xs text-theme-muted backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
-              </span>
-              <span>{t('contact_response_time')}</span>
-            </div>
+            <span className="text-xs font-semibold uppercase tracking-[0.28em] text-theme-accent">
+              Duerre Media
+            </span>
 
-            <h1 className="mt-6 text-4xl font-bold uppercase tracking-[0.2em] md:text-6xl">
+            <h1 className="mt-4 text-4xl font-bold uppercase tracking-[0.2em] md:text-6xl">
               {t('contact')}
             </h1>
 
@@ -196,7 +192,6 @@ export default function Contact() {
                 role="alert"
               >
                 <p className="font-semibold">{t('contact_form_success')}</p>
-                <p className="mt-1 text-xs opacity-90">{t('contact_response_time')}</p>
               </div>
             )}
 

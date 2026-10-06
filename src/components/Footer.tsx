@@ -63,8 +63,7 @@ export default function Footer() {
             Commercial Photography, Cinema, 3D Worlds & Digital Strategy.
           </p>
           {milanTime && (
-            <div className="mt-5 flex items-center gap-2 text-xs font-mono text-theme-muted">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+            <div className="mt-5 text-xs font-mono text-theme-muted">
               <span>{milanTime} CET · Milan, Italy</span>
             </div>
           )}

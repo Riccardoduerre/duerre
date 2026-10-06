@@ -27,7 +27,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
   }
 
   return (
-    <section className="bg-theme-bg py-16 md:py-24">
+    <section className="bg-theme-bg pt-8 pb-20 md:pt-12 md:pb-28">
       <div className="container mx-auto px-6 md:px-8">
         <Link
           to="/portfolio"
@@ -152,7 +152,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
                   : `Commission a ${meta.label[locale]} Project`}
               </h3>
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-theme-muted">
-                {t('contact_response_time')}
+                {t('footer_cta_desc')}
               </p>
             </div>
             <Link

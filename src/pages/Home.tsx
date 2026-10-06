@@ -22,7 +22,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/85" />
 
         {/* Top Eyebrow Badge */}
-        <div className="relative z-10 container mx-auto px-6 pt-12 md:px-8">
+        <div className="relative z-10 container mx-auto px-6 pt-6 md:px-8 md:pt-8">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-4 text-[11px] font-mono tracking-widest text-white/75">
             <span className="uppercase">Riccardo Riva — Visual Direction</span>
             <span>Studio: Italy / Available Worldwide</span>
@@ -30,7 +30,7 @@ export default function Home() {
         </div>
 
         {/* Hero Center Statement */}
-        <div className="relative z-10 container mx-auto px-6 py-12 text-center md:px-8 md:py-16">
+        <div className="relative z-10 container mx-auto px-6 py-10 text-center md:px-8 md:py-14">
           <span className="mb-4 inline-block text-xs font-bold uppercase tracking-[0.3em] text-white/80 sm:mb-6 sm:text-sm">
             Commercial Photography · Cinema · 3D CGI
           </span>
@@ -64,8 +64,7 @@ export default function Home() {
               to="/photo"
               className="group p-4 text-center transition hover:bg-white/5 md:py-6"
             >
-              <span className="block font-mono text-[10px] tracking-widest text-white/50">01</span>
-              <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
+              <span className="block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
                 {t('service_1_title')}
               </span>
             </Link>
@@ -73,8 +72,7 @@ export default function Home() {
               to="/video"
               className="group p-4 text-center transition hover:bg-white/5 md:py-6"
             >
-              <span className="block font-mono text-[10px] tracking-widest text-white/50">02</span>
-              <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
+              <span className="block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
                 {t('service_2_title')}
               </span>
             </Link>
@@ -82,8 +80,7 @@ export default function Home() {
               to="/3d"
               className="group p-4 text-center transition hover:bg-white/5 md:py-6"
             >
-              <span className="block font-mono text-[10px] tracking-widest text-white/50">03</span>
-              <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
+              <span className="block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
                 {t('service_3_title')}
               </span>
             </Link>
@@ -91,8 +88,7 @@ export default function Home() {
               to="/digital-marketing"
               className="group p-4 text-center transition hover:bg-white/5 md:py-6"
             >
-              <span className="block font-mono text-[10px] tracking-widest text-white/50">04</span>
-              <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
+              <span className="block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
                 {t('marketing_nav')}
               </span>
             </Link>

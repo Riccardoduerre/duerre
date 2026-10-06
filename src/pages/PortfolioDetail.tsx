@@ -47,7 +47,7 @@ export default function PortfolioDetail() {
 
   return (
     <>
-      <section className="bg-theme-bg py-16 md:py-24">
+      <section className="bg-theme-bg pt-8 pb-20 md:pt-12 md:pb-28">
         <div className="container mx-auto px-6 md:px-8">
           {/* Back breadcrumb */}
           <Link

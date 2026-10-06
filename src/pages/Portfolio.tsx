@@ -22,7 +22,7 @@ export default function Portfolio() {
   }, [activeFilter]);
 
   return (
-    <div className="bg-theme-bg py-16 md:py-24">
+    <div className="bg-theme-bg pt-8 pb-20 md:pt-12 md:pb-28">
       <div className="container mx-auto px-6 md:px-8">
         {/* Header */}
         <header className="mb-12 max-w-4xl md:mb-16">
