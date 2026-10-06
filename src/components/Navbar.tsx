@@ -82,15 +82,107 @@ export default function Navbar() {
     navigate({ pathname: location.pathname, search: `?lang=${newLocale}` }, { replace: true });
   };
 
-  // When on the homepage hero, make navbar reactive to the dark background image
-  const isOverDarkHero = isHome && !isScrolled && !mobileOpen;
+  const [isOverDark, setIsOverDark] = useState(false);
+
+  useEffect(() => {
+    const checkDarkBackdrop = () => {
+      const navbarHeight = 72;
+
+      // 1. Check all elements explicitly tagged with data-navbar-theme="dark"
+      const darkSections = document.querySelectorAll<HTMLElement>('[data-navbar-theme="dark"]');
+      for (const section of darkSections) {
+        const rect = section.getBoundingClientRect();
+        // Section overlaps the top navbar area
+        if (rect.top <= navbarHeight && rect.bottom > 10) {
+          setIsOverDark(true);
+          return;
+        }
+      }
+
+      // 2. Check elements directly underneath the navbar (left, center, and right)
+      try {
+        const checkPoints = [
+          { x: window.innerWidth * 0.2, y: 36 },
+          { x: window.innerWidth * 0.5, y: 36 },
+          { x: window.innerWidth * 0.8, y: 36 },
+        ];
+
+        for (const pt of checkPoints) {
+          const elementsAtPoint = document.elementsFromPoint(pt.x, pt.y);
+          for (const el of elementsAtPoint) {
+            // Ignore the header itself and anything inside it
+            if (el.closest('header')) continue;
+
+            // Direct match with image or dark theme tag
+            if (
+              el.tagName === 'IMG' ||
+              el.closest('img') ||
+              el.closest('[data-navbar-theme="dark"]')
+            ) {
+              setIsOverDark(true);
+              return;
+            }
+
+            // Check computed background color luminance
+            if (
+              el.tagName === 'SECTION' ||
+              el.tagName === 'ARTICLE' ||
+              el.tagName === 'MAIN' ||
+              el.tagName === 'DIV'
+            ) {
+              const bg = window.getComputedStyle(el).backgroundColor;
+              const rgbMatch = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+              if (rgbMatch) {
+                const [, r, g, b] = rgbMatch.map(Number);
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                if (luminance < 0.35) {
+                  setIsOverDark(true);
+                  return;
+                }
+                if (bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+                  break;
+                }
+              }
+            }
+          }
+        }
+      } catch {
+        // Fallback gracefully
+      }
+
+      setIsOverDark(false);
+    };
+
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          checkDarkBackdrop();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // Run check immediately and on scroll/resize
+    checkDarkBackdrop();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [location.pathname]);
+
+  const activeOverDark = isOverDark && !mobileOpen;
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
-        isOverDarkHero
-          ? 'border-white/15 bg-black/25 backdrop-blur-md text-white'
-          : 'border-theme-border/80 bg-theme-bg/95 backdrop-blur-xl shadow-theme text-theme-text'
+        activeOverDark
+          ? 'border-white/15 bg-black/25 backdrop-blur-md text-white shadow-lg shadow-black/10'
+          : 'border-theme-border/80 bg-theme-bg/90 backdrop-blur-xl shadow-theme text-theme-text'
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-8">
@@ -101,7 +193,7 @@ export default function Navbar() {
         >
           <span
             className={`text-lg font-black tracking-[0.32em] transition ${
-              isOverDarkHero
+              activeOverDark
                 ? 'text-white group-hover:text-white/80'
                 : 'text-theme-text group-hover:text-theme-mad'
             }`}
@@ -110,7 +202,7 @@ export default function Navbar() {
           </span>
           <span
             className={`text-[9px] font-medium tracking-[0.28em] transition ${
-              isOverDarkHero ? 'text-white/70' : 'text-theme-muted'
+              activeOverDark ? 'text-white/70' : 'text-theme-muted'
             }`}
           >
             RICCARDO RIVA
@@ -125,10 +217,10 @@ export default function Navbar() {
                 key={item.key}
                 to={`/${item.path}`}
                 className={`relative text-xs font-semibold uppercase tracking-[0.24em] transition-all ${
-                  isOverDarkHero
+                  activeOverDark
                     ? active
                       ? 'text-white after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-0.5 after:bg-white'
-                      : 'text-white/80 hover:text-white'
+                      : 'text-white/85 hover:text-white'
                     : active
                     ? 'text-theme-accent after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-0.5 after:bg-theme-accent'
                     : 'text-theme-text hover:text-theme-mad'
@@ -140,12 +232,12 @@ export default function Navbar() {
           })}
           <div
             className={`flex items-center gap-3 border-l pl-6 transition-colors ${
-              isOverDarkHero ? 'border-white/20' : 'border-theme-border'
+              activeOverDark ? 'border-white/20' : 'border-theme-border'
             }`}
           >
             <ThemeToggle
               className={
-                isOverDarkHero
+                activeOverDark
                   ? 'border-white/20 text-white hover:bg-white/10'
                   : 'border-theme-border text-theme-text hover:bg-theme-surface'
               }
@@ -153,7 +245,7 @@ export default function Navbar() {
             <button
               type="button"
               className={`rounded-full border px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.2em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad ${
-                isOverDarkHero
+                activeOverDark
                   ? 'border-white/20 text-white hover:border-white/40 hover:bg-white/10'
                   : 'border-theme-border text-theme-text hover:border-theme-mad hover:text-theme-mad'
               }`}
@@ -168,7 +260,7 @@ export default function Navbar() {
         <button
           type="button"
           className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.24em] transition md:hidden ${
-            isOverDarkHero
+            activeOverDark
               ? 'border-white/20 text-white hover:border-white/40 hover:bg-white/10'
               : 'border-theme-border text-theme-text hover:border-theme-mad hover:text-theme-mad'
           }`}

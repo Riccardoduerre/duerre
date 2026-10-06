@@ -46,6 +46,7 @@ export default function FeaturedProjects({ pageHeading = false }: FeaturedProjec
                 {/* Image Showcase */}
                 <Link
                   to={`/portfolio/${project.id}`}
+                  data-navbar-theme="dark"
                   aria-label={`${t('view_project')}: ${project.title[locale]}`}
                   className={`relative block aspect-[5/4] min-w-0 overflow-hidden bg-theme-bg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-theme-mad sm:aspect-[16/10] lg:aspect-auto lg:min-h-[460px] ${
                     isReversed ? 'lg:order-2' : 'lg:order-1'

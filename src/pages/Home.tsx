@@ -9,7 +9,10 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative min-h-[calc(100svh-5.5rem)] overflow-hidden text-white flex flex-col justify-between">
+      <section
+        data-navbar-theme="dark"
+        className="relative min-h-screen overflow-hidden text-white flex flex-col justify-between"
+      >
         <img
           src={heroImage}
           alt=""
@@ -22,7 +25,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/85" />
 
         {/* Top Eyebrow Badge */}
-        <div className="relative z-10 container mx-auto px-6 pt-6 md:px-8 md:pt-8">
+        <div className="relative z-10 container mx-auto px-6 pt-24 md:px-8 md:pt-28">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-4 text-[11px] font-mono tracking-widest text-white/75">
             <span className="uppercase">Riccardo Riva — Visual Direction</span>
             <span>Studio: Italy / Available Worldwide</span>

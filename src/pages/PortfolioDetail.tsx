@@ -113,7 +113,7 @@ export default function PortfolioDetail() {
             </header>
 
             {/* Hero Cover Frame (Clickable for Lightbox) */}
-            <div className="mb-16">
+            <div className="mb-16" data-navbar-theme="dark">
               <button
                 type="button"
                 onClick={() => openLightbox(0)}
