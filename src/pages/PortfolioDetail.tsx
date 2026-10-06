@@ -1,11 +1,16 @@
 import { useParams, Link } from 'react-router-dom';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
 import { portfolioCategoryMeta, portfolioProjects } from '../data/portfolio';
+import ImageLightbox from '../components/ImageLightbox';
+import ProjectNavigator from '../components/ProjectNavigator';
 
 export default function PortfolioDetail() {
   const { id } = useParams();
   const { locale, t } = useLocale();
+
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const project = useMemo(() => portfolioProjects.find((p) => p.id === id), [id]);
   const heroImage = project ? project.image || project.gallery[0] : '';
@@ -14,10 +19,20 @@ export default function PortfolioDetail() {
     return project.gallery.filter((img) => img !== heroImage);
   }, [project, heroImage]);
 
+  const allImages = useMemo(() => {
+    if (!project) return [];
+    return [heroImage, ...galleryImages].filter(Boolean);
+  }, [project, heroImage, galleryImages]);
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
   if (!project) {
     return (
       <section className="bg-theme-bg py-24">
-        <div className="container mx-auto px-6 md:px-8 text-center">
+        <div className="container mx-auto px-6 text-center md:px-8">
           <h1 className="text-4xl font-bold uppercase tracking-[0.22em]">{t('not_found_project')}</h1>
           <p className="mt-4 text-theme-muted">{t('not_found_project_desc')}</p>
           <Link to="/portfolio" className="mt-6 inline-block text-theme-accent hover:underline">
@@ -28,89 +43,193 @@ export default function PortfolioDetail() {
     );
   }
 
+  const meta = portfolioCategoryMeta[project.category];
+
   return (
-    <section className="bg-theme-bg py-24">
-      <div className="container mx-auto px-6 md:px-8">
-        <Link to="/portfolio" className="mb-8 inline-block text-sm text-theme-accent hover:underline">
-          ← {t('back_to_portfolio')}
-        </Link>
+    <>
+      <section className="bg-theme-bg py-16 md:py-24">
+        <div className="container mx-auto px-6 md:px-8">
+          {/* Back breadcrumb */}
+          <Link
+            to="/portfolio"
+            className="group mb-10 inline-flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-theme-accent hover:text-theme-mad"
+          >
+            <span className="transition-transform group-hover:-translate-x-1">←</span>
+            <span className="ml-2">{t('back_to_portfolio')}</span>
+          </Link>
 
-        <article className="mx-auto max-w-5xl">
-          <div className="mb-12">
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-theme-accent">{portfolioCategoryMeta[project.category].label[locale]}</p>
-            <h1 className="mt-4 break-words text-3xl font-bold uppercase leading-tight tracking-[0.08em] sm:text-4xl sm:tracking-[0.1em] md:text-5xl md:tracking-[0.12em]">
-              {project.title[locale]}
-            </h1>
-            <p className="mt-6 text-lg text-theme-muted">{project.scope[locale]}</p>
-          </div>
-
-          <div className="grid gap-8 lg:grid-cols-[2fr_1fr] mb-16">
-            <div className="section-shell overflow-hidden">
-              <img
-                src={heroImage}
-                alt={project.title[locale]}
-                className="w-full h-[400px] object-cover"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-
-            <div className="space-y-8">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent mb-2">{t('client_label')}</p>
-                <p className="text-lg font-semibold">{project.client[locale]}</p>
+          <article className="mx-auto max-w-6xl">
+            {/* Header & Meta Bar */}
+            <header className="mb-12 border-b border-theme-border pb-12">
+              <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.24em] text-theme-accent">
+                <span>{meta.label[locale]}</span>
+                <span className="text-theme-border">/</span>
+                <span className="font-mono text-theme-muted">{project.year}</span>
               </div>
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent mb-2">{t('year_label')}</p>
-                <p className="text-lg font-semibold">{project.year}</p>
+
+              <h1 className="mt-4 break-words text-3xl font-black uppercase leading-[1.08] tracking-[0.04em] sm:text-5xl md:text-6xl">
+                {project.title[locale]}
+              </h1>
+
+              <p className="mt-6 max-w-3xl text-lg leading-relaxed text-theme-muted sm:text-xl">
+                {project.scope[locale]}
+              </p>
+
+              {/* Quick Specs Grid */}
+              <div className="mt-10 grid grid-cols-2 gap-6 rounded-2xl border border-theme-border bg-theme-surface p-6 sm:grid-cols-4 sm:p-8">
+                <div>
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-theme-muted">
+                    {t('client_label')}
+                  </span>
+                  <span className="mt-1 block text-sm font-bold text-theme-text sm:text-base">
+                    {project.client[locale]}
+                  </span>
+                </div>
+                <div>
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-theme-muted">
+                    {t('year_label')}
+                  </span>
+                  <span className="mt-1 block font-mono text-sm font-bold text-theme-text sm:text-base">
+                    {project.year}
+                  </span>
+                </div>
+                <div>
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-theme-muted">
+                    {t('portfolio_scope_prefix')}
+                  </span>
+                  <span className="mt-1 block text-sm font-bold text-theme-text sm:text-base">
+                    {meta.eyebrow[locale]}
+                  </span>
+                </div>
+                <div>
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-theme-muted">
+                    {t('portfolio_results_prefix')}
+                  </span>
+                  <span className="mt-1 block text-xs font-semibold text-theme-accent sm:text-sm">
+                    Verified Commercial Work
+                  </span>
+                </div>
+              </div>
+            </header>
+
+            {/* Hero Cover Frame (Clickable for Lightbox) */}
+            <div className="mb-16">
+              <button
+                type="button"
+                onClick={() => openLightbox(0)}
+                aria-label={t('click_to_expand')}
+                className="group relative block w-full overflow-hidden rounded-2xl border border-theme-border bg-theme-surface text-left shadow-theme cursor-zoom-in focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad"
+              >
+                <img
+                  src={heroImage}
+                  alt={project.title[locale]}
+                  className="h-[420px] w-full object-cover transition duration-700 ease-out group-hover:scale-[1.02] sm:h-[540px] md:h-[620px]"
+                  loading="eager"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                
+                <span className="absolute bottom-5 right-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/70 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md opacity-90 transition group-hover:opacity-100">
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    <line x1="11" y1="8" x2="11" y2="14" />
+                    <line x1="8" y1="11" x2="14" y2="11" />
+                  </svg>
+                  <span>{t('click_to_expand')}</span>
+                </span>
+              </button>
+            </div>
+
+            {/* Challenge & Solution Narrative Columns */}
+            <div className="mb-16 grid gap-10 md:grid-cols-2 md:gap-14">
+              <div className="rounded-2xl border border-theme-border bg-theme-surface p-8 sm:p-10">
+                <span className="text-[10px] font-mono tracking-widest text-theme-accent">01 / SITUATION</span>
+                <h2 className="mt-3 text-xl font-bold uppercase tracking-[0.1em] text-theme-text sm:text-2xl">
+                  {t('challenge_label')}
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-theme-muted sm:text-lg">
+                  {project.challenge[locale]}
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-theme-border bg-theme-surface p-8 sm:p-10">
+                <span className="text-[10px] font-mono tracking-widest text-theme-accent">02 / DIRECTION</span>
+                <h2 className="mt-3 text-xl font-bold uppercase tracking-[0.1em] text-theme-text sm:text-2xl">
+                  {t('solution_label')}
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-theme-muted sm:text-lg">
+                  {project.solution[locale]}
+                </p>
               </div>
             </div>
-          </div>
 
-          <div className="grid gap-12 lg:grid-cols-2 mb-16">
-            <div>
-              <h2 className="text-2xl font-bold uppercase tracking-[0.22em] mb-4">
-                {t('challenge_label')}
+            {/* Impact / Results Banner */}
+            <div className="portfolio-card relative mb-20 overflow-hidden rounded-2xl p-8 sm:p-12">
+              <div className="absolute inset-x-8 top-0 h-px bg-theme-accent" />
+              <span className="text-[10px] font-mono tracking-widest text-theme-accent">03 / COMMERCIAL OUTCOME</span>
+              <h2 className="mt-2 text-xl font-bold uppercase tracking-[0.1em] text-theme-text sm:text-2xl">
+                {t('results_label')}
               </h2>
-              <p className="text-lg text-theme-muted leading-relaxed">{project.challenge[locale]}</p>
+              <p className="mt-4 max-w-3xl text-lg font-medium leading-relaxed text-theme-muted sm:text-xl">
+                {project.results[locale]}
+              </p>
             </div>
-            <div>
-              <h2 className="text-2xl font-bold uppercase tracking-[0.22em] mb-4">
-                {t('solution_label')}
-              </h2>
-              <p className="text-lg text-theme-muted leading-relaxed">{project.solution[locale]}</p>
-            </div>
-          </div>
 
-          <div className="section-shell p-12">
-            <h2 className="text-2xl font-bold uppercase tracking-[0.22em] mb-4">
-              {t('results_label')}
-            </h2>
-            <p className="text-xl text-theme-muted leading-relaxed">{project.results[locale]}</p>
-          </div>
+            {/* Secondary Curated Gallery (with Lightbox click triggers) */}
+            {galleryImages.length > 0 && (
+              <section className="mb-20">
+                <div className="mb-8 flex items-center justify-between">
+                  <h2 className="text-xl font-bold uppercase tracking-[0.16em]">
+                    {t('gallery_label')}
+                  </h2>
+                  <span className="text-xs font-mono text-theme-muted">
+                    {t('gallery_lightbox_hint')}
+                  </span>
+                </div>
 
-          {galleryImages.length > 0 && (
-            <div className="mt-16">
-              <h2 className="text-2xl font-bold uppercase tracking-[0.22em] mb-8">
-                {t('gallery_label')}
-              </h2>
-              <div className="grid gap-4 lg:grid-cols-2">
-                {galleryImages.map((img, idx) => (
-                  <div key={idx} className="section-shell overflow-hidden">
-                    <img
-                      src={img}
-                      alt={`${project.title[locale]} - ${idx + 1}`}
-                      className="w-full h-64 object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </article>
-      </div>
-    </section>
+                <div className="grid gap-6 sm:grid-cols-2">
+                  {galleryImages.map((img, idx) => (
+                    <button
+                      key={img}
+                      type="button"
+                      onClick={() => openLightbox(idx + 1)}
+                      aria-label={`${project.title[locale]} - ${idx + 2}`}
+                      className="portfolio-card group relative block overflow-hidden rounded-2xl text-left cursor-zoom-in focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad"
+                    >
+                      <img
+                        src={img}
+                        alt={`${project.title[locale]} - ${idx + 2}`}
+                        className="aspect-[4/3] w-full object-cover transition duration-700 ease-out group-hover:scale-105 sm:aspect-[16/11]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
+                        <span className="rounded-full bg-black/70 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+                          {t('click_to_expand')} ↗
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Bottom Next/Prev Pagination */}
+            <ProjectNavigator currentId={project.id} />
+          </article>
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      <ImageLightbox
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        images={allImages}
+        currentIndex={lightboxIndex}
+        onIndexChange={setLightboxIndex}
+        title={project.title[locale]}
+      />
+    </>
   );
 }

@@ -182,4 +182,31 @@
   .section-shell {
     @apply rounded-2xl border border-theme-border bg-theme-surface shadow-theme;
   }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes subtleZoom {
+    from {
+      transform: scale(0.96);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-subtle-zoom {
+    animation: subtleZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
 }
+

@@ -9,31 +9,92 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative min-h-[calc(100svh-6rem)] overflow-hidden text-white">
-        <img src={heroImage} alt="" aria-hidden="true" loading="eager" decoding="async" fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/45 to-black/60" />
-        <div className="relative mx-auto flex min-h-[calc(100svh-6rem)] max-w-6xl flex-col items-center justify-center px-6 py-16 text-center sm:py-20">
-          <span className="mb-5 text-xs font-semibold uppercase tracking-[0.16em] text-white/85 sm:mb-6 sm:text-sm">
-            Riccardo Riva
+      <section className="relative min-h-[calc(100svh-5.5rem)] overflow-hidden text-white flex flex-col justify-between">
+        <img
+          src={heroImage}
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover object-center scale-105 animate-subtle-zoom"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/85" />
+
+        {/* Top Eyebrow Badge */}
+        <div className="relative z-10 container mx-auto px-6 pt-12 md:px-8">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-4 text-[11px] font-mono tracking-widest text-white/75">
+            <span className="uppercase">Riccardo Riva — Visual Direction</span>
+            <span>Studio: Italy / Available Worldwide</span>
+          </div>
+        </div>
+
+        {/* Hero Center Statement */}
+        <div className="relative z-10 container mx-auto px-6 py-12 text-center md:px-8 md:py-16">
+          <span className="mb-4 inline-block text-xs font-bold uppercase tracking-[0.3em] text-white/80 sm:mb-6 sm:text-sm">
+            Commercial Photography · Cinema · 3D CGI
           </span>
-          <h1 className="max-w-5xl break-words text-3xl font-bold uppercase leading-[1.12] tracking-[0.06em] sm:text-4xl sm:tracking-[0.08em] lg:text-6xl">
+          <h1 className="mx-auto max-w-5xl break-words text-3xl font-black uppercase leading-[1.08] tracking-[0.04em] sm:text-5xl sm:tracking-[0.06em] lg:text-7xl">
             {t('hero_headline')}
           </h1>
-          <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/90 sm:mt-8 sm:text-lg">
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/85 sm:mt-8 sm:text-lg">
             {t('hero_subheadline')}
           </p>
-          <div className="mt-8 flex w-full max-w-sm flex-col items-center gap-3 sm:mt-10 sm:w-auto sm:max-w-none sm:flex-row sm:gap-4">
+
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:mt-10 sm:flex-row">
             <Link
               to="/portfolio"
-              className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-theme-mad px-5 py-3 text-center text-xs font-semibold uppercase tracking-[0.1em] text-white transition hover:brightness-110 sm:w-auto sm:px-7"
+              className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-theme-mad px-8 py-3.5 text-center text-xs font-bold uppercase tracking-[0.16em] text-white shadow-xl transition hover:brightness-110 sm:w-auto"
             >
-              {t('hero_cta_primary')}
+              {t('hero_cta_primary')} <span aria-hidden="true" className="ml-2">↓</span>
             </Link>
             <Link
               to="/contact"
-              className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-white/50 bg-black/20 px-5 py-3 text-center text-xs font-semibold uppercase tracking-[0.1em] text-white backdrop-blur-sm transition hover:border-theme-mad hover:bg-theme-mad sm:w-auto sm:px-7"
+              className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-white/40 bg-black/30 px-8 py-3.5 text-center text-xs font-bold uppercase tracking-[0.16em] text-white backdrop-blur-md transition hover:border-theme-mad hover:bg-theme-mad sm:w-auto"
             >
               {t('hero_cta_secondary')}
+            </Link>
+          </div>
+        </div>
+
+        {/* Discipline Ticker Bar */}
+        <div className="relative z-10 border-t border-white/15 bg-black/40 backdrop-blur-md">
+          <div className="container mx-auto grid grid-cols-2 divide-x divide-white/15 md:grid-cols-4">
+            <Link
+              to="/photo"
+              className="group p-4 text-center transition hover:bg-white/5 md:py-6"
+            >
+              <span className="block font-mono text-[10px] tracking-widest text-white/50">01</span>
+              <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
+                {t('service_1_title')}
+              </span>
+            </Link>
+            <Link
+              to="/video"
+              className="group p-4 text-center transition hover:bg-white/5 md:py-6"
+            >
+              <span className="block font-mono text-[10px] tracking-widest text-white/50">02</span>
+              <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
+                {t('service_2_title')}
+              </span>
+            </Link>
+            <Link
+              to="/3d"
+              className="group p-4 text-center transition hover:bg-white/5 md:py-6"
+            >
+              <span className="block font-mono text-[10px] tracking-widest text-white/50">03</span>
+              <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
+                {t('service_3_title')}
+              </span>
+            </Link>
+            <Link
+              to="/digital-marketing"
+              className="group p-4 text-center transition hover:bg-white/5 md:py-6"
+            >
+              <span className="block font-mono text-[10px] tracking-widest text-white/50">04</span>
+              <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-white group-hover:text-theme-mad">
+                {t('marketing_nav')}
+              </span>
             </Link>
           </div>
         </div>
