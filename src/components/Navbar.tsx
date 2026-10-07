@@ -164,12 +164,14 @@ export default function Navbar() {
       }
     };
 
-    // Run check immediately and on scroll/resize
+    // Run check immediately and after paint on route transition
     checkDarkBackdrop();
+    const rafId = window.requestAnimationFrame(checkDarkBackdrop);
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
 
     return () => {
+      window.cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };

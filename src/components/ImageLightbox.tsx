@@ -160,7 +160,7 @@ export default function ImageLightbox({
         className="flex items-center justify-center pt-3 text-center text-[11px] font-mono tracking-widest text-white/50"
         onClick={(e) => e.stopPropagation()}
       >
-        <span>{t('gallery_lightbox_hint')}</span>
+        <span>{t('lightbox_controls_hint')}</span>
       </div>
     </div>
   );

@@ -1,31 +1,8 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocale } from '../i18n/LocaleContext';
 
 export default function Footer() {
   const { t } = useLocale();
-  const [milanTime, setMilanTime] = useState<string>('');
-
-  useEffect(() => {
-    const updateTime = () => {
-      try {
-        const formatted = new Intl.DateTimeFormat('en-GB', {
-          timeZone: 'Europe/Rome',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false,
-        }).format(new Date());
-        setMilanTime(formatted);
-      } catch {
-        setMilanTime('');
-      }
-    };
-    updateTime();
-    const timer = setInterval(updateTime, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
   const rights = t('footer_rights').replace('{{year}}', String(new Date().getFullYear()));
 
   return (
@@ -62,11 +39,6 @@ export default function Footer() {
           <p className="mt-3 text-xs leading-relaxed text-theme-muted">
             Commercial Photography, Cinema, 3D Worlds & Digital Strategy.
           </p>
-          {milanTime && (
-            <div className="mt-5 text-xs font-mono text-theme-muted">
-              <span>{milanTime} CET · Milan, Italy</span>
-            </div>
-          )}
         </div>
 
         <div>
@@ -104,7 +76,7 @@ export default function Footer() {
           <ul className="mt-4 space-y-2.5 text-xs tracking-wider">
             <li>
               <Link to="/about" className="transition hover:text-theme-mad">
-                {t('about_title')}
+                {t('about_studio')}
               </Link>
             </li>
             <li>

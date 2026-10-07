@@ -167,6 +167,7 @@ export default function Contact() {
                     <button
                       key={opt.key}
                       type="button"
+                      aria-pressed={isSelected}
                       onClick={() => setSelectedIntent(opt.key)}
                       className={`rounded-full px-4 py-2 text-xs font-semibold tracking-wider transition ${
                         isSelected
@@ -295,9 +296,32 @@ export default function Contact() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-full bg-theme-mad px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-theme-mad px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {loading ? t('contact_form_sending') : t('contact_form_send')}
+              {loading && (
+                <svg
+                  className="h-4 w-4 animate-spin text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+              )}
+              <span>{loading ? t('contact_form_sending') : t('contact_form_send')}</span>
             </button>
           </form>
         </div>
