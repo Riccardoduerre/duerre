@@ -15,7 +15,7 @@ if (fs.existsSync(dir)) {
 
 fs.mkdirSync(dir, { recursive: true });
 
-const indexContent = `import { PortfolioProject } from '../../../data/portfolio';
+const indexContent = `import type { PortfolioProject } from '../../../data/portfolio';
 const defaultImage = new URL('../../../assets/images/optimized/default.webp', import.meta.url).href;
 
 export const project: PortfolioProject = {
