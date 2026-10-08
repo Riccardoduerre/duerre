@@ -16,22 +16,30 @@ export default function Navbar({ lang, currentPath }: NavbarProps) {
     return translations[lang]?.[key] || key;
   };
 
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
   const getLocalizedPath = (path: string) => {
-    return `/${lang}${path === '' ? '' : `/${path}`}`;
+    return `${base}/${lang}${path === '' ? '' : `/${path}`}`;
   };
 
   const isItemActive = (path: string) => {
     const targetPath = getLocalizedPath(path);
-    if (targetPath === `/${lang}` || targetPath === `/${lang}/`) {
-      return currentPath === targetPath || currentPath === `/${lang}`;
+    if (targetPath === `${base}/${lang}` || targetPath === `${base}/${lang}/`) {
+      return currentPath === targetPath || currentPath === `${base}/${lang}`;
     }
     return currentPath.startsWith(targetPath);
   };
 
   const changeLocalePath = () => {
     const newLang = lang === 'en' ? 'it' : 'en';
-    const newPath = currentPath.replace(/^\/(en|it)/, `/${newLang}`);
-    return newPath || `/${newLang}`;
+    // currentPath might or might not include base when matched, but we can just use Astro's current url.
+    // simpler: just strip base if present, replace lang, add base back
+    let pathWithoutBase = currentPath;
+    if (base && pathWithoutBase.startsWith(base)) {
+      pathWithoutBase = pathWithoutBase.substring(base.length);
+    }
+    const newPath = pathWithoutBase.replace(/^\/(en|it)/, `/${newLang}`);
+    return `${base}${newPath || `/${newLang}`}`;
   };
 
   const items = [
@@ -126,7 +134,7 @@ export default function Navbar({ lang, currentPath }: NavbarProps) {
     >
       <div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-8">
         <a
-          href={`/${lang}`}
+          href={`${base}/${lang}`}
           className="group flex flex-col"
           onClick={() => setMobileOpen(false)}
         >

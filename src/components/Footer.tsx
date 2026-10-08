@@ -9,7 +9,8 @@ export default function Footer({ lang }: FooterProps) {
     return translations[lang]?.[key] || key;
   };
   
-  const getLocalizedPath = (path: string) => `/${lang}/${path}`;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const getLocalizedPath = (path: string) => `${base}/${lang}/${path}`;
   const rights = t('footer_rights').replace('{{year}}', String(new Date().getFullYear()));
 
   return (

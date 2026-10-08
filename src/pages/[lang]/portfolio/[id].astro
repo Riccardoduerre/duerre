@@ -16,7 +16,8 @@ export function getStaticPaths() {
 
 const { lang, id } = Astro.params;
 const project = portfolioProjects.find(p => p.id === id);
-if (!project) return Astro.redirect(`/${lang}/portfolio`);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+if (!project) return Astro.redirect(`${base}/${lang}/portfolio`);
 const pageTitle = `${project.title[lang as 'en'|'it']} | Duerre Media`;
 ---
 
