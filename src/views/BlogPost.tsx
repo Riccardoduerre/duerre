@@ -103,13 +103,13 @@ function BlogPostContent({ slug }: { slug: string }) {
           <nav className="mt-16 border-t border-theme-border pt-12 flex flex-col sm:flex-row justify-between gap-8">
             {prevPost ? (
               <Link to={`/blog/${prevPost.slug}`} className="group flex-1">
-                <span className="block text-xs font-bold uppercase tracking-[0.2em] text-theme-accent mb-2 transition-colors group-hover:text-theme-mad">← {t('prev_project') || 'Previous'}</span>
+                <span className="block text-xs font-bold uppercase tracking-[0.2em] text-theme-accent mb-2 transition-colors group-hover:text-theme-mad">← {t('prev_post') || 'Previous Post'}</span>
                 <span className="block text-lg font-semibold tracking-tight text-theme-text">{prevPost.title[locale]}</span>
               </Link>
             ) : <div className="flex-1" />}
             {nextPost ? (
               <Link to={`/blog/${nextPost.slug}`} className="group flex-1 text-right">
-                <span className="block text-xs font-bold uppercase tracking-[0.2em] text-theme-accent mb-2 transition-colors group-hover:text-theme-mad">{t('next_project') || 'Next'} →</span>
+                <span className="block text-xs font-bold uppercase tracking-[0.2em] text-theme-accent mb-2 transition-colors group-hover:text-theme-mad">{t('next_post') || 'Next Post'} →</span>
                 <span className="block text-lg font-semibold tracking-tight text-theme-text">{nextPost.title[locale]}</span>
               </Link>
             ) : <div className="flex-1" />}

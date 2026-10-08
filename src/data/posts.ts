@@ -44,6 +44,8 @@ function parseFrontmatter(raw: string) {
   return { meta, content };
 }
 
+const imageModules = import.meta.glob('../assets/images/optimized/*.webp', { eager: true }) as Record<string, { default: string }>;
+
 const rawPosts: BlogPostData[] = Object.keys(enModules).map(enKey => {
   const slug = enKey.split('/')[3];
   const itKey = `../content/blog/${slug}/it.md`;
@@ -54,11 +56,20 @@ const rawPosts: BlogPostData[] = Object.keys(enModules).map(enKey => {
   const enParsed = parseFrontmatter(enRaw);
   const itParsed = parseFrontmatter(itRaw);
   
+  let imageUrl = enParsed.meta.image || '';
+  if (imageUrl.includes('../assets/images/optimized/')) {
+    const filename = imageUrl.split('/').pop();
+    const resolvedImage = imageModules[`../assets/images/optimized/${filename}`];
+    if (resolvedImage) {
+      imageUrl = resolvedImage.default;
+    }
+  }
+  
   return {
     slug,
     title: { en: enParsed.meta.title || slug, it: itParsed.meta.title || slug },
     date: enParsed.meta.date || '2026-01-01',
-    image: enParsed.meta.image || '',
+    image: imageUrl,
     excerpt: { en: enParsed.meta.excerpt || '', it: itParsed.meta.excerpt || '' },
     content: {
       en: enParsed.content,
