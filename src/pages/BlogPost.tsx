@@ -8,7 +8,10 @@ export default function BlogPost() {
   const { slug } = useParams();
   const { locale, t } = useLocale();
 
-  const post = useMemo(() => posts.find((item) => item.slug === slug), [slug]);
+  const post = useMemo(
+    () => posts.find((item) => item.slug === slug || item.aliases?.includes(slug || '')),
+    [slug],
+  );
 
   if (!post) {
     return (

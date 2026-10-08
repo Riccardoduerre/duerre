@@ -50,6 +50,7 @@ try {
     ...routes,
     ...portfolioProjects.map((project) => `/portfolio/${project.id}`),
     ...posts.map((post) => `/blog/${post.slug}`),
+    ...posts.flatMap((post) => (post.aliases || []).map((alias) => `/blog/${alias}`)),
   ];
 } finally {
   await vite.close();
@@ -118,7 +119,9 @@ function resolveAssetUrl(imageRef) {
 
 for (const route of routes) {
   const project = portfolioProjects.find((item) => `/portfolio/${item.id}` === route);
-  const post = posts.find((item) => `/blog/${item.slug}` === route);
+  const post = posts.find(
+    (item) => `/blog/${item.slug}` === route || (item.aliases || []).some((a) => `/blog/${a}` === route)
+  );
   const [titleKey, descriptionKey] = routeMeta[route] ?? ['portfolio_heading', 'seo_portfolio'];
   const title = project?.title.it ?? post?.title.it ?? translations.it[titleKey];
   const pageTitle = route === '/' ? title : `${title} | Duerre Media`;
