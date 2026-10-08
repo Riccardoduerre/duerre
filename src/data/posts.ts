@@ -44,7 +44,7 @@ function parseFrontmatter(raw: string) {
   return { meta, content };
 }
 
-const imageModules = import.meta.glob('../assets/images/optimized/*.webp', { eager: true }) as Record<string, { default: string }>;
+const imageModules = import.meta.glob('../assets/images/optimized/*.webp', { query: '?url', eager: true }) as Record<string, { default: string }>;
 
 const rawPosts: BlogPostData[] = Object.keys(enModules).map(enKey => {
   const slug = enKey.split('/')[3];
