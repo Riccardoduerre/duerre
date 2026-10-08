@@ -17,12 +17,29 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
-    try {
-      localStorage.setItem('theme', theme);
-    } catch {
-      // Keep the selected theme for this session when storage is unavailable.
-    }
   }, [theme]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      // If there is a manually saved preference, do not override it.
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    };
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  const handleToggle = () => {
+    setTheme((current) => {
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      try {
+        localStorage.setItem('theme', newTheme);
+      } catch {}
+      return newTheme;
+    });
+  };
 
   const nextTheme = theme === 'dark' ? 'light' : 'dark';
   const ariaLabel = theme === 'dark' ? t('theme_switch_to_light') : t('theme_switch_to_dark');
@@ -33,7 +50,7 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
       className={`inline-flex h-10 w-10 items-center justify-center rounded-sm border transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad ${
         className || 'border-theme-border text-theme-text hover:bg-theme-surface'
       }`}
-      onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+      onClick={handleToggle}
       aria-label={ariaLabel}
     >
       {nextTheme === 'dark' ? (
