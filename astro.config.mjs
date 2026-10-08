@@ -5,8 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://riccardoduerre.github.io',
-  base: '/duerre/',
+  site: 'https://duerre.com', // Using custom domain
   integrations: [
     react(),
     tailwind(),
