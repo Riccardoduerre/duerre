@@ -175,7 +175,7 @@ function CategoryPageContent({ category }: CategoryPageProps) {
 export default function CategoryPage(props: any) {
   return (
     <ViewWrapper lang={props.lang}>
-      <CategoryPageContent {...props} />
+      <CategoryPageContent category={props.id as any} />
     </ViewWrapper>
   );
 }

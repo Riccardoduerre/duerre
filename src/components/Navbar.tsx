@@ -43,10 +43,10 @@ export default function Navbar({ lang, currentPath }: NavbarProps) {
   };
 
   const items = [
-    { key: 'portfolio', path: 'portfolio', label: t('nav_portfolio') },
-    { key: 'about', path: 'about', label: t('nav_about') },
-    { key: 'contact', path: 'contact', label: t('nav_contact') },
-    { key: 'blog', path: 'blog', label: t('nav_blog') },
+    { key: 'portfolio', path: 'portfolio', label: t('portfolio') },
+    { key: 'about', path: 'about', label: t('about') },
+    { key: 'contact', path: 'contact', label: t('contact') },
+    { key: 'blog', path: 'blog', label: t('blog') },
   ];
 
   useEffect(() => {
