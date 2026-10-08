@@ -445,3 +445,4 @@ export function getPreferredLocale(): Locale {
 export function getTranslation(key: string, locale: Locale) {
   return translations[locale]?.[key] ?? translations.en[key] ?? key;
 }
+export type LocaleStrings = Record<'en' | 'it', string>;

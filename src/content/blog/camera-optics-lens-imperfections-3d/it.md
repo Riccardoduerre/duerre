@@ -1,3 +1,9 @@
+---
+title: "Superare l’aspetto asettico del 3D: emulare le imperfezioni ottiche reali"
+date: 2026-05-04
+image: ../../assets/images/optimized/Giau_00006.webp
+excerpt: "Come aberrazione cromatica, diffrazione, vignettatura ottica e grana del sensore infondono vita tangibile nei render sintetici."
+---
 I motori di calcolo tridimensionali generano immagini con perfezione matematica: le linee sono infinitamente nitide, gli obiettivi sono privi di difetti e i sensori non presentano rumore elettronico. Paradossalmente, è proprio questa perfezione assoluta a tradire la natura sintetica del render 3D. L'occhio umano è abituato da oltre un secolo a decodificare immagini filtrate attraverso lenti di cristallo e sensori fisici.
 
 ## Aberrazione cromatica: la dispersione della luce

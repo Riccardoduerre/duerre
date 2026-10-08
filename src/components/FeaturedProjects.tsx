@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Link';
 import { useLocale } from '../i18n/LocaleContext';
 import { featuredPortfolioProjects, portfolioCategoryMeta, formatProjectDate, type PortfolioCategory } from '../data/portfolio';
 

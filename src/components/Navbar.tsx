@@ -1,119 +1,59 @@
-import { useEffect, useMemo, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useLocale } from '../i18n/LocaleContext';
+import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
+import { translations } from '../i18n/index';
+import { LocaleProvider } from '../i18n/LocaleContext';
 
-const navItems = [
-  { key: 'portfolio', path: 'portfolio' },
-  { key: 'marketing_nav', path: 'digital-marketing' },
-  { key: 'about', path: 'about' },
-  { key: 'blog', path: 'blog' },
-  { key: 'contact', path: 'contact' },
-];
+interface NavbarProps {
+  lang: 'en' | 'it';
+  currentPath: string;
+}
 
-export default function Navbar() {
-  const { locale, setLocale, t } = useLocale();
+export default function Navbar({ lang, currentPath }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const currentLocale = locale;
-  const langLabel = currentLocale === 'en' ? 'IT' : 'EN';
-  const langAriaLabel = currentLocale === 'en' ? 'Passa alla lingua italiana' : 'Switch to English language';
-
-  const isHome = location.pathname === '/' || location.pathname === '';
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    if (!mobileOpen) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileOpen(false);
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [mobileOpen]);
-
-  const items = useMemo(
-    () => navItems.map((item) => ({ ...item, label: t(item.key) })),
-    [t],
-  );
-
-  const isItemActive = (itemPath: string) => {
-    const currentPath = location.pathname.replace(/\/+$/, '') || '/';
-    if (itemPath === 'portfolio') {
-      return (
-        currentPath === '/portfolio' ||
-        currentPath.startsWith('/portfolio/') ||
-        currentPath === '/photo' ||
-        currentPath === '/video' ||
-        currentPath === '/3d'
-      );
-    }
-    if (itemPath === 'blog') {
-      return currentPath === '/blog' || currentPath.startsWith('/blog/');
-    }
-    return currentPath === `/${itemPath}`;
-  };
-
-  const changeLocale = (newLocale: 'en' | 'it') => {
-    if (newLocale === currentLocale) return;
-    setLocale(newLocale);
-    navigate({ pathname: location.pathname, search: `?lang=${newLocale}` }, { replace: true });
-  };
-
   const [isOverDark, setIsOverDark] = useState(false);
+
+  const t = (key: keyof typeof translations.en) => {
+    return translations[lang]?.[key] || key;
+  };
+
+  const getLocalizedPath = (path: string) => {
+    return `/${lang}${path === '' ? '' : `/${path}`}`;
+  };
+
+  const isItemActive = (path: string) => {
+    const targetPath = getLocalizedPath(path);
+    if (targetPath === `/${lang}` || targetPath === `/${lang}/`) {
+      return currentPath === targetPath || currentPath === `/${lang}`;
+    }
+    return currentPath.startsWith(targetPath);
+  };
+
+  const changeLocalePath = () => {
+    const newLang = lang === 'en' ? 'it' : 'en';
+    const newPath = currentPath.replace(/^\/(en|it)/, `/${newLang}`);
+    return newPath || `/${newLang}`;
+  };
+
+  const items = [
+    { key: 'portfolio', path: 'portfolio', label: t('nav_portfolio') },
+    { key: 'about', path: 'about', label: t('nav_about') },
+    { key: 'contact', path: 'contact', label: t('nav_contact') },
+    { key: 'blog', path: 'blog', label: t('nav_blog') },
+  ];
 
   useEffect(() => {
     const checkDarkBackdrop = () => {
-      const navbarHeight = 72;
+      const header = document.querySelector('header');
+      if (!header) return;
 
-      // 1. Check all elements explicitly tagged with data-navbar-theme="dark"
-      const darkSections = document.querySelectorAll<HTMLElement>('[data-navbar-theme="dark"]');
-      for (const section of darkSections) {
-        const rect = section.getBoundingClientRect();
-        // Section overlaps the top navbar area
-        if (rect.top <= navbarHeight && rect.bottom > 10) {
-          setIsOverDark(true);
-          return;
-        }
-      }
+      const headerRect = header.getBoundingClientRect();
+      const x = headerRect.left + headerRect.width / 2;
+      const y = headerRect.bottom - 10;
 
-      // 2. Check elements directly underneath the navbar (left, center, and right)
       try {
-        const checkPoints = [
-          { x: window.innerWidth * 0.2, y: 36 },
-          { x: window.innerWidth * 0.5, y: 36 },
-          { x: window.innerWidth * 0.8, y: 36 },
-        ];
-
-        for (const pt of checkPoints) {
-          const elementsAtPoint = document.elementsFromPoint(pt.x, pt.y);
-          for (const el of elementsAtPoint) {
-            // Ignore the header itself and anything inside it
-            if (el.closest('header')) continue;
-
-            // Direct match with image or dark theme tag
+        const elements = document.elementsFromPoint(x, y);
+        for (const el of elements) {
+          if (el !== header && !header.contains(el)) {
             if (
               el.tagName === 'IMG' ||
               el.closest('img') ||
@@ -123,7 +63,6 @@ export default function Navbar() {
               return;
             }
 
-            // Check computed background color luminance
             if (
               el.tagName === 'SECTION' ||
               el.tagName === 'ARTICLE' ||
@@ -146,9 +85,7 @@ export default function Navbar() {
             }
           }
         }
-      } catch {
-        // Fallback gracefully
-      }
+      } catch {}
 
       setIsOverDark(false);
     };
@@ -164,7 +101,6 @@ export default function Navbar() {
       }
     };
 
-    // Run check immediately and after paint on route transition
     checkDarkBackdrop();
     const rafId = window.requestAnimationFrame(checkDarkBackdrop);
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -175,21 +111,22 @@ export default function Navbar() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [location.pathname]);
+  }, [currentPath]);
 
   const activeOverDark = isOverDark && !mobileOpen;
 
   return (
+    <LocaleProvider initialLocale={lang}>
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         activeOverDark
-          ? 'border-white/15 bg-black/25 backdrop-blur-md text-white shadow-lg shadow-black/10'
-          : 'border-theme-border/80 bg-theme-bg/90 backdrop-blur-xl shadow-theme text-theme-text'
+          ? 'bg-black/25 backdrop-blur-md text-white shadow-lg shadow-black/10'
+          : 'bg-theme-bg/90 backdrop-blur-xl text-theme-text'
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-8">
-        <NavLink
-          to="/"
+        <a
+          href={`/${lang}`}
           className="group flex flex-col"
           onClick={() => setMobileOpen(false)}
         >
@@ -209,15 +146,15 @@ export default function Navbar() {
           >
             RICCARDO RIVA
           </span>
-        </NavLink>
+        </a>
 
         <nav className="hidden items-center gap-8 md:flex">
           {items.map((item) => {
             const active = isItemActive(item.path);
             return (
-              <NavLink
+              <a
                 key={item.key}
-                to={`/${item.path}`}
+                href={getLocalizedPath(item.path)}
                 className={`relative text-xs font-semibold uppercase tracking-[0.24em] transition-all ${
                   activeOverDark
                     ? active
@@ -229,7 +166,7 @@ export default function Navbar() {
                 }`}
               >
                 {item.label}
-              </NavLink>
+              </a>
             );
           })}
           <div
@@ -244,18 +181,16 @@ export default function Navbar() {
                   : 'border-theme-border text-theme-text hover:bg-theme-surface'
               }
             />
-            <button
-              type="button"
+            <a
+              href={changeLocalePath()}
               className={`rounded-full border px-3.5 py-2 text-xs font-bold uppercase tracking-[0.2em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad ${
                 activeOverDark
                   ? 'border-white/20 text-white hover:border-white/40 hover:bg-white/10'
                   : 'border-theme-border text-theme-text hover:border-theme-mad hover:text-theme-mad'
               }`}
-              onClick={() => changeLocale(currentLocale === 'en' ? 'it' : 'en')}
-              aria-label={langAriaLabel}
             >
-              {langLabel}
-            </button>
+              {lang === 'en' ? 'IT' : 'EN'}
+            </a>
           </div>
         </nav>
 
@@ -267,16 +202,12 @@ export default function Navbar() {
               : 'border-theme-border text-theme-text hover:border-theme-mad hover:text-theme-mad'
           }`}
           onClick={() => setMobileOpen((current) => !current)}
-          aria-label={mobileOpen ? t('menu_close') : t('menu_open')}
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-navigation"
         >
           <span>{mobileOpen ? t('menu_close_label') : t('menu_label')}</span>
           <span className="text-xs">{mobileOpen ? '✕' : '☰'}</span>
         </button>
       </div>
 
-      {/* Editorial Mobile Navigation Drawer */}
       <div
         id="mobile-navigation"
         aria-hidden={!mobileOpen}
@@ -289,16 +220,16 @@ export default function Navbar() {
             {items.map((item) => {
               const active = isItemActive(item.path);
               return (
-                <NavLink
+                <a
                   key={item.key}
-                  to={`/${item.path}`}
+                  href={getLocalizedPath(item.path)}
                   className={`block text-lg font-bold uppercase tracking-[0.24em] transition-colors hover:text-theme-mad ${
                     active ? 'text-theme-accent' : 'text-theme-text'
                   }`}
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
-                </NavLink>
+                </a>
               );
             })}
           </div>
@@ -306,14 +237,12 @@ export default function Navbar() {
           <div className="flex items-center justify-between gap-4 pt-2">
             <div className="flex items-center gap-3">
               <ThemeToggle />
-              <button
-                type="button"
+              <a
+                href={changeLocalePath()}
                 className="rounded-full border border-theme-border px-3.5 py-2 text-xs font-bold uppercase tracking-[0.2em]"
-                onClick={() => changeLocale(currentLocale === 'en' ? 'it' : 'en')}
-                aria-label={langAriaLabel}
               >
-                {langLabel}
-              </button>
+                {lang === 'en' ? 'IT' : 'EN'}
+              </a>
             </div>
             <a
               href={`mailto:${t('contact_email_value')}`}
@@ -325,5 +254,6 @@ export default function Navbar() {
         </div>
       </div>
     </header>
+    </LocaleProvider>
   );
 }

@@ -1,3 +1,9 @@
+---
+title: "Elevare il B-Roll: trasformare le coperture in pilastri narrativi"
+date: 2026-04-06
+image: ../../assets/images/optimized/_RIK7376_HDR.webp
+excerpt: "Allontanarsi dai riempitivi visivi: come texture tattili, match cut deliberati e dettagli d’atmosfera approfondiscono il ritmo dello spot."
+---
 La definizione stessa di "B-Roll" è storicamente riduttiva: suggerisce materiale secondario girato per mascherare tagli nel parlato o riempire vuoti di montaggio. Nella produzione commerciale di pregio, tuttavia, le inquadrature di dettaglio e d'atmosfera non sono riempitivi: costituiscono il tessuto sensoriale che racconta maestria artigianale, qualità materica ed emozione.
 
 ## Oltre il dettaglio generico

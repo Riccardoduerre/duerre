@@ -1,3 +1,9 @@
+---
+title: "Bump, Normal e Displacement: scegliere l’architettura corretta della profondità"
+date: 2026-06-15
+image: ../../assets/images/optimized/_DSC2919.webp
+excerpt: "Bilanciare memoria di calcolo e fedeltà visiva: quando i vettori normali bastano e quando la tassellazione geometrica è indispensabile."
+---
 Nella produzione 3D contemporanea, modellare manualmente ogni rugosità, trama tessile o fessura minerale nella geometria poligonale è impraticabile per limiti di calcolo. Gli artisti 3D ricorrono alle texture per simulare o generare profondità. Comprendere le differenze architetturali tra mappe Bump, Normal e Displacement è fondamentale per ottimizzare i tempi di calcolo senza rinunciare al massimo impatto visivo.
 
 ## Mappe Bump: la prima simulazione in scala di grigi

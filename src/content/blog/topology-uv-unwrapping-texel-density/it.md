@@ -1,3 +1,9 @@
+---
+title: "Topologia pulita e densità texel: fondamenta degli asset 3D commerciali"
+date: 2026-03-23
+image: ../../assets/images/optimized/Landscapes_00003.webp
+excerpt: "Perché la modellazione a soli quad previene artefatti di shading con la subdivision, e come una densità texel uniforme garantisce texture nitide."
+---
 Nella visualizzazione 3D professionale, né un'illuminazione ricercata né materiali complessi possono mascherare una geometria costruita con superficialità. Un modello con topologia disordinata e una mappatura UV approssimativa mostrerà ombre deformate, artefatti di shading e una risoluzione delle texture incoerente.
 
 ## I principi della topologia a soli quadrilateri (All-Quad)

@@ -1,8 +1,15 @@
-import { Link } from 'react-router-dom';
-import { useLocale } from '../i18n/LocaleContext';
+import { translations } from '../i18n/index';
 
-export default function Footer() {
-  const { t } = useLocale();
+interface FooterProps {
+  lang: 'en' | 'it';
+}
+
+export default function Footer({ lang }: FooterProps) {
+  const t = (key: keyof typeof translations.en) => {
+    return translations[lang]?.[key] || key;
+  };
+  
+  const getLocalizedPath = (path: string) => `/${lang}/${path}`;
   const rights = t('footer_rights').replace('{{year}}', String(new Date().getFullYear()));
 
   return (
@@ -19,12 +26,12 @@ export default function Footer() {
               {t('footer_cta_desc')}
             </p>
           </div>
-          <Link
-            to="/contact"
+          <a
+            href={getLocalizedPath('contact')}
             className="inline-flex min-h-12 items-center justify-center rounded-full bg-theme-mad px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad"
           >
             {t('contact')} <span aria-hidden="true" className="ml-2">→</span>
-          </Link>
+          </a>
         </div>
       </div>
 
@@ -34,7 +41,6 @@ export default function Footer() {
           <span className="text-sm font-black uppercase tracking-[0.3em] text-theme-text">
             Duerre Media
           </span>
-          
         </div>
 
         <div>
@@ -43,24 +49,24 @@ export default function Footer() {
           </h3>
           <ul className="mt-4 space-y-2.5 text-xs tracking-wider">
             <li>
-              <Link to="/photo" className="transition hover:text-theme-mad">
+              <a href={getLocalizedPath('photo')} className="transition hover:text-theme-mad">
                 {t('service_1_title')}
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/video" className="transition hover:text-theme-mad">
+              <a href={getLocalizedPath('video')} className="transition hover:text-theme-mad">
                 {t('service_2_title')}
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/3d" className="transition hover:text-theme-mad">
+              <a href={getLocalizedPath('3d')} className="transition hover:text-theme-mad">
                 {t('service_3_title')}
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/digital-marketing" className="transition hover:text-theme-mad">
+              <a href={getLocalizedPath('digital-marketing')} className="transition hover:text-theme-mad">
                 {t('marketing_nav')}
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
@@ -71,19 +77,19 @@ export default function Footer() {
           </h3>
           <ul className="mt-4 space-y-2.5 text-xs tracking-wider">
             <li>
-              <Link to="/about" className="transition hover:text-theme-mad">
+              <a href={getLocalizedPath('about')} className="transition hover:text-theme-mad">
                 {t('about_studio')}
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/blog" className="transition hover:text-theme-mad">
+              <a href={getLocalizedPath('blog')} className="transition hover:text-theme-mad">
                 {t('blog')}
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/privacy" className="transition hover:text-theme-mad">
+              <a href={getLocalizedPath('privacy')} className="transition hover:text-theme-mad">
                 {t('privacy_title')}
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
@@ -114,4 +120,3 @@ export default function Footer() {
     </footer>
   );
 }
-

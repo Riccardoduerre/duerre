@@ -1,3 +1,9 @@
+---
+title: "Compositing di render multipass: Beauty pass, AOV e Cryptomatte"
+date: 2026-02-09
+image: ../../assets/images/optimized/Giau_00001.webp
+excerpt: "Scomporre l’equazione di rendering in pass separati di diffusione, riflessione ed emissione per un controllo chirurgico in post."
+---
 Calcolare un'immagine 3D finale come un unico file "Beauty" appiattito può andare bene per un test rapido, ma nelle produzioni commerciali di vertice azzera la flessibilità in fase di consegna. Se il cliente o il direttore creativo richiede riflessi leggermente più discreti o ombre più calde, ricalcolare una scena complessa può richiedere ore. Il rendering multipass con AOV (Arbitrary Output Variables) garantisce controllo assoluto sul risultato finale.
 
 ## Scomporre l'equazione di rendering

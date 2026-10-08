@@ -1,3 +1,9 @@
+---
+title: "Il potere del negative fill: sottrarre luce per costruire contrasto"
+date: 2026-06-01
+image: ../../assets/images/optimized/_DSC2365.webp
+excerpt: "Perché i migliori fotografi portano pannelli neri invece di riflettori argentati negli shooting commerciali all’aperto con cielo coperto."
+---
 Nei primi approcci alla fotografia si tende quasi sempre ad aggiungere: quando una scena appare spenta, l'istinto immediato è accendere flash, montare riflettori e introdurre nuove sorgenti. Eppure, nella ritrattistica editoriale e nelle campagne a luce naturale di alto profilo, lo strumento più raffinato opera per sottrazione: il **Negative Fill**.
 
 ## L'appiattimento della luce ambiente diffusa

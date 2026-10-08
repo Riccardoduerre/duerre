@@ -1,3 +1,9 @@
+---
+title: "Armonia cromatica e split toning: creare palette visive coerenti"
+date: 2026-04-20
+image: ../../assets/images/optimized/Giau_00002.webp
+excerpt: "Applicare la teoria dei colori complementari su luci e ombre proteggendo rigorosamente i toni autentici dell’incarnato."
+---
 Il color grading viene spesso scambiato per l'applicazione frettolosa di filtri e LUT preimpostate. Nella direzione visiva di alto profilo, il colore è invece una disciplina rigorosa: consiste nel rimuovere le tinte parassite per costruire un dialogo coerente tra luci, mezzi toni e ombre.
 
 ## I principi dell'armonia cromatica

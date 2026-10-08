@@ -1,4 +1,4 @@
-import { PortfolioProject } from '../../../data/portfolio';
+import type { PortfolioProject } from '../../../data/portfolio';
 const alpineGallery = new URL('../../../assets/images/optimized/Giau_00006.webp', import.meta.url).href;
 const alps01 = new URL('../../../assets/images/optimized/Giau_00001.webp', import.meta.url).href;
 const alps02 = new URL('../../../assets/images/optimized/Giau_00002.webp', import.meta.url).href;

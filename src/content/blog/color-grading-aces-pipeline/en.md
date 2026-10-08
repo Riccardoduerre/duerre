@@ -1,3 +1,9 @@
+---
+title: "The ACES Color Pipeline: Color Space Management for Commercial Films"
+date: 2026-02-23
+image: ../../assets/images/optimized/Landscapes_00001.webp
+excerpt: "Standardizing mixed camera sources into an unconstrained wide gamut workspace to maintain highlight integrity and smooth roll-off."
+---
 In modern multi-camera commercial shoots, footage originates from diverse camera manufacturers: an ARRI Alexa as A-camera, a Sony FX6 on a gimbal, and drone shots captured on a DJI ProRes system. Each sensor possesses unique color science, gamma curves, and color gamut boundaries. The Academy Color Encoding System (ACES) was engineered to solve this fragmentation.
 
 ## The Architecture of ACES

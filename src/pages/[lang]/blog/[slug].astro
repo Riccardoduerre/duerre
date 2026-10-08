@@ -1,0 +1,29 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { translations } from '../../../i18n/index';
+import BlogPost from '../../../views/BlogPost';
+import posts from '../../../data/posts';
+
+export function getStaticPaths() {
+  const paths = [];
+  for (const lang of ['en', 'it']) {
+    for (const post of posts) {
+      paths.push({ params: { lang, slug: post.slug } });
+    }
+  }
+  return paths;
+}
+
+const { lang, slug } = Astro.params;
+const post = posts.find(p => p.slug === slug);
+if (!post) return Astro.redirect(`/${lang}/blog`);
+const pageTitle = `${post.title[lang as 'en'|'it']} | Duerre Media`;
+---
+
+<Layout 
+  title={pageTitle} 
+  description={post.excerpt[lang as 'en'|'it']}
+  image={post.image}
+>
+  <BlogPost client:load lang={lang as 'en' | 'it'} slug={slug} />
+</Layout>

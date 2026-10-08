@@ -1,0 +1,29 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { translations } from '../../../i18n/index';
+import PortfolioDetail from '../../../views/PortfolioDetail';
+import { portfolioProjects } from '../../../data/portfolio';
+
+export function getStaticPaths() {
+  const paths = [];
+  for (const lang of ['en', 'it']) {
+    for (const project of portfolioProjects) {
+      paths.push({ params: { lang, id: project.id } });
+    }
+  }
+  return paths;
+}
+
+const { lang, id } = Astro.params;
+const project = portfolioProjects.find(p => p.id === id);
+if (!project) return Astro.redirect(`/${lang}/portfolio`);
+const pageTitle = `${project.title[lang as 'en'|'it']} | Duerre Media`;
+---
+
+<Layout 
+  title={pageTitle} 
+  description={project.challenge[lang as 'en'|'it']}
+  image={project.image}
+>
+  <PortfolioDetail client:load lang={lang as 'en'|'it'} id={id} />
+</Layout>

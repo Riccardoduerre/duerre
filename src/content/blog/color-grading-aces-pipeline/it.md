@@ -1,3 +1,9 @@
+---
+title: "La pipeline colore ACES: gestione dello spazio colore per film commerciali"
+date: 2026-02-23
+image: ../../assets/images/optimized/Landscapes_00001.webp
+excerpt: "Standardizzare sorgenti camera miste in uno spazio wide gamut non vincolato per mantenere l’integrità delle alte luci."
+---
 Nelle produzioni commerciali moderne con setup multicamera, il materiale video proviene frequentemente da sensori eterogenei: una cinepresa ARRI per le scene principali, una camera Sony su gimbal per i movimenti dinamici e un drone DJI in formato ProRes per i campi lunghi. Ogni produttore adotta una propria color science, curve gamma proprietarie e spazi colore differenti. L'Academy Color Encoding System (ACES) è nato per superare questa frammentazione.
 
 ## L'architettura del sistema ACES

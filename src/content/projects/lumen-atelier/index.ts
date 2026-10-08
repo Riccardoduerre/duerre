@@ -1,4 +1,4 @@
-import { PortfolioProject } from '../../../data/portfolio';
+import type { PortfolioProject } from '../../../data/portfolio';
 const showreel = new URL('../../../assets/images/optimized/_RIK7376_HDR.webp', import.meta.url).href;
 const portraits01 = new URL('../../../assets/images/optimized/_DSC2344.webp', import.meta.url).href;
 const landscapes01 = new URL('../../../assets/images/optimized/Landscapes_00001.webp', import.meta.url).href;

@@ -1,3 +1,9 @@
+---
+title: "Physically Based Rendering: padroneggiare la pipeline Roughness-Metallic"
+date: 2026-09-07
+image: ../../assets/images/optimized/Giau_00004.webp
+excerpt: "Demistificare la microfacet theory, la riflettanza dielettrica di Fresnel e perché le mappe di roughness sono la vera anima del realismo 3D."
+---
 Nella moderna direzione visiva 3D, il fotorealismo non si ottiene con shader arbitrari o regolazioni a occhio. Il Physically Based Rendering (PBR) fonda la resa visiva su modelli fisici e matematici che riproducono fedelmente l'interazione tra fotoni e materia.
 
 ## Microfacet Theory e geometria superficiale

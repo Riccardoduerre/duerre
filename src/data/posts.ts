@@ -23,27 +23,46 @@ export function sortPostsByDateDesc(postList: BlogPostData[]): BlogPostData[] {
   });
 }
 
-const metaModules = import.meta.glob('../content/blog/*/index.ts', { eager: true }) as Record<string, { meta: any }>;
 const enModules = import.meta.glob('../content/blog/*/en.md', { query: '?raw', eager: true }) as Record<string, { default: string }>;
 const itModules = import.meta.glob('../content/blog/*/it.md', { query: '?raw', eager: true }) as Record<string, { default: string }>;
 
-const rawPosts: BlogPostData[] = Object.keys(metaModules).map(key => {
-  const slug = key.split('/')[3];
-  const meta = metaModules[key].meta;
-  
-  const enKey = `../content/blog/${slug}/en.md`;
+function parseFrontmatter(raw: string) {
+  const match = raw.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return { meta: {}, content: raw };
+  const yaml = match[1];
+  const content = raw.slice(match[0].length).trim();
+  const meta: any = {};
+  yaml.split('\n').forEach(line => {
+    const colon = line.indexOf(':');
+    if (colon > -1) {
+      const key = line.slice(0, colon).trim();
+      let val = line.slice(colon + 1).trim();
+      if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+      meta[key] = val;
+    }
+  });
+  return { meta, content };
+}
+
+const rawPosts: BlogPostData[] = Object.keys(enModules).map(enKey => {
+  const slug = enKey.split('/')[3];
   const itKey = `../content/blog/${slug}/it.md`;
+  
+  const enRaw = enModules[enKey]?.default || '';
+  const itRaw = itModules[itKey]?.default || '';
+  
+  const enParsed = parseFrontmatter(enRaw);
+  const itParsed = parseFrontmatter(itRaw);
   
   return {
     slug,
-    title: meta.title,
-    date: meta.date,
-    image: meta.image,
-    excerpt: meta.excerpt,
-    aliases: meta.aliases,
+    title: { en: enParsed.meta.title || slug, it: itParsed.meta.title || slug },
+    date: enParsed.meta.date || '2026-01-01',
+    image: enParsed.meta.image || '',
+    excerpt: { en: enParsed.meta.excerpt || '', it: itParsed.meta.excerpt || '' },
     content: {
-      en: enModules[enKey]?.default || '',
-      it: itModules[itKey]?.default || ''
+      en: enParsed.content,
+      it: itParsed.content
     }
   };
 });

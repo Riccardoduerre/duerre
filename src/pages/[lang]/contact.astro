@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { translations } from '../../i18n/index';
+import Contact from '../../views/Contact';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'it' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const t = (key: keyof typeof translations.en) => translations[lang as 'en' | 'it']?.[key] || key;
+---
+
+<Layout 
+  title={t('seo_contact')} 
+  description={t('seo_contact')}
+>
+  <Contact client:load lang={lang as 'en' | 'it'} />
+</Layout>

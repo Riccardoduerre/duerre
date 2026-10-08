@@ -1,3 +1,9 @@
+---
+title: "The Power of Negative Fill: Subtracting Light to Build Contrast"
+date: 2026-06-01
+image: ../../assets/images/optimized/_DSC2365.webp
+excerpt: "Why great photographers bring black solids rather than silver reflectors to overcast outdoor commercial shoots."
+---
 In photography education, the initial instinct is almost always additive: when a scene looks dull, inexperienced creators immediately seek to add light using strobes, reflectors, or speedlights. Yet in high-end editorial and natural light commercial work, the most transformative tool is subtractive: **Negative Fill**.
 
 ## The Problem with Ambient Light Pollution

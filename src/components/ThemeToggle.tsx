@@ -3,6 +3,7 @@ import { useLocale } from '../i18n/LocaleContext';
 
 export default function ThemeToggle({ className = '' }: { className?: string }) {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window === 'undefined') return 'light';
     try {
       const stored = localStorage.getItem('theme');
       if (stored === 'dark' || stored === 'light') return stored;
@@ -11,6 +12,7 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
     }
     return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
+  
   const { t } = useLocale();
 
   useEffect(() => {

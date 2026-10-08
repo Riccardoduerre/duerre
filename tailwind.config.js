@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  content: ['./index.html', './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'class',
   theme: {
     extend: {
@@ -9,7 +9,7 @@ export default {
           bg: 'var(--bg-color)',
           text: 'var(--text-color)',
           surface: 'var(--surface-color)',
-          border: 'var(--border-color)',
+          border: 'var(--border-color)', // Even though we drop borders, keeping the variable might be good for subtle things
           accent: 'var(--accent-color)',
           mad: 'var(--mad-color)',
           'mad-text': 'var(--mad-text-color)',
@@ -18,7 +18,7 @@ export default {
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-        display: ['Outfit', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
       },
     },
   },
