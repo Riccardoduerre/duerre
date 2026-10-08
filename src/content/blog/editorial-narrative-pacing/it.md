@@ -10,7 +10,7 @@ Una sequenza editoriale d'eccellenza opera come uno spartito musicale, alternand
 2. **L'azione contestuale (Piano medio):** Il soggetto ripreso nell'interazione con l'ambiente, con gli strumenti o con il prodotto. Esprime funzionalità, ergonomia e presenza tangibile.
 3. **Il dettaglio intimo (Macro):** Un primo piano ravvicinato su elementi tattili: la tensione di una cucitura, la trama di un tessuto tecnico bagnato dalla pioggia, le dita che toccano la roccia.
 
-Alternando Campo Lungo $\rightarrow$ Dettaglio $\rightarrow$ Piano Medio $\rightarrow$ Campo Lungo, si concede respiro allo sguardo. Ogni inquadratura completa quella precedente e introduce la successiva.
+Alternando Campo Lungo → Dettaglio → Piano Medio → Campo Lungo, si concede respiro allo sguardo. Ogni inquadratura completa quella precedente e introduce la successiva.
 
 ## Continuità cromatica e direttrici visive
 

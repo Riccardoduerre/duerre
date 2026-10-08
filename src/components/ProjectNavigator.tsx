@@ -51,7 +51,7 @@ export default function ProjectNavigator({ currentId }: ProjectNavigatorProps) {
             />
           </div>
           <div className="min-w-0 flex-1">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-theme-accent">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-theme-accent">
               ← {t('prev_project')}
             </span>
             <h3 className="mt-1 truncate text-base font-semibold sm:text-lg">
@@ -69,7 +69,7 @@ export default function ProjectNavigator({ currentId }: ProjectNavigatorProps) {
           className="portfolio-card group flex items-center justify-between gap-5 overflow-hidden rounded-2xl p-4 transition md:p-6"
         >
           <div className="min-w-0 flex-1 text-left sm:text-right">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-theme-accent">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-theme-accent">
               {t('next_project')} →
             </span>
             <h3 className="mt-1 truncate text-base font-semibold sm:text-lg">

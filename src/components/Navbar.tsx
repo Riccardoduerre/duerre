@@ -246,7 +246,7 @@ export default function Navbar() {
             />
             <button
               type="button"
-              className={`rounded-full border px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.2em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad ${
+              className={`rounded-full border px-3.5 py-2 text-xs font-bold uppercase tracking-[0.2em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad ${
                 activeOverDark
                   ? 'border-white/20 text-white hover:border-white/40 hover:bg-white/10'
                   : 'border-theme-border text-theme-text hover:border-theme-mad hover:text-theme-mad'
@@ -261,7 +261,7 @@ export default function Navbar() {
 
         <button
           type="button"
-          className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.24em] transition md:hidden ${
+          className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-[0.24em] transition md:hidden ${
             activeOverDark
               ? 'border-white/20 text-white hover:border-white/40 hover:bg-white/10'
               : 'border-theme-border text-theme-text hover:border-theme-mad hover:text-theme-mad'
@@ -308,7 +308,7 @@ export default function Navbar() {
               <ThemeToggle />
               <button
                 type="button"
-                className="rounded-full border border-theme-border px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.2em]"
+                className="rounded-full border border-theme-border px-3.5 py-2 text-xs font-bold uppercase tracking-[0.2em]"
                 onClick={() => changeLocale(currentLocale === 'en' ? 'it' : 'en')}
                 aria-label={langAriaLabel}
               >

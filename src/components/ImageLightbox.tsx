@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useRef } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
 
 interface ImageLightboxProps {
@@ -19,6 +19,7 @@ export default function ImageLightbox({
   title,
 }: ImageLightboxProps) {
   const { t } = useLocale();
+  const lightboxRef = useRef<HTMLDivElement>(null);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
@@ -56,16 +57,39 @@ export default function ImageLightbox({
   useEffect(() => {
     if (!isOpen) return;
 
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    let focusableElements: NodeListOf<HTMLElement> | [] = [];
+    if (lightboxRef.current) {
+      focusableElements = lightboxRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusableElements.length) {
+        // Delay focus slightly to let render complete
+        setTimeout(() => focusableElements[0].focus(), 10);
+      }
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft') handlePrev();
       if (e.key === 'ArrowRight') handleNext();
+      
+      if (e.key === 'Tab' && focusableElements.length) {
+        const first = focusableElements[0];
+        const last = focusableElements[focusableElements.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
-
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
@@ -78,6 +102,7 @@ export default function ImageLightbox({
 
   return (
     <div
+      ref={lightboxRef}
       role="dialog"
       aria-modal="true"
       aria-label={title || t('gallery_label')}
@@ -157,7 +182,7 @@ export default function ImageLightbox({
 
       {/* Bottom hint */}
       <div
-        className="flex items-center justify-center pt-3 text-center text-[11px] font-mono tracking-widest text-white/50"
+        className="flex items-center justify-center pt-3 text-center text-xs font-mono tracking-widest text-white/50"
         onClick={(e) => e.stopPropagation()}
       >
         <span>{t('lightbox_controls_hint')}</span>

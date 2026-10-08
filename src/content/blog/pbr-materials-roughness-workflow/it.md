@@ -14,8 +14,8 @@ La mappa di **Roughness** governa la dispersione statistica di queste microfacce
 
 Uno degli errori più diffusi nella texturizzazione 3D è considerare il parametro **Metallic** come un regolatore di lucentezza. In fisica, la materia si divide in due grandi famiglie:
 
-1. **Dielettrici (Non-metalli):** Plastica, legno, pelle, roccia, vetro. Il loro colore diffuso deriva dall'assorbimento e dalla rifrazione interna della luce (Base Color). I riflessi speculari sono sempre bianchi e la riflettanza perpendicolare ($F_0$) è compresa tra il 2% e il 5% (convenzionalmente 0.04).
-2. **Conduttori (Metalli):** Oro, argento, ferro, rame, alluminio. I metalli non hanno dispersione diffusa interna: l'interazione avviene sulla superficie. I loro riflessi speculari assumono il colore della mappa Base Color e la loro riflettanza $F_0$ raggiunge valori compresi tra il 70% e il 95%.
+1. **Dielettrici (Non-metalli):** Plastica, legno, pelle, roccia, vetro. Il loro colore diffuso deriva dall'assorbimento e dalla rifrazione interna della luce (Base Color). I riflessi speculari sono sempre bianchi e la riflettanza perpendicolare (F0) è compresa tra il 2% e il 5% (convenzionalmente 0.04).
+2. **Conduttori (Metalli):** Oro, argento, ferro, rame, alluminio. I metalli non hanno dispersione diffusa interna: l'interazione avviene sulla superficie. I loro riflessi speculari assumono il colore della mappa Base Color e la loro riflettanza F0 raggiunge valori compresi tra il 70% e il 95%.
 
 In una pipeline PBR corretta, il canale Metallic deve essere trattato in modo quasi esclusivamente binario: 0.0 per i dielettrici, 1.0 per i metalli puri. I valori intermedi in scala di grigi devono apparire solo nei pixel di transizione tra superfici o dove sono presenti sporcizia e ossidazioni.
 

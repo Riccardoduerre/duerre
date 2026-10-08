@@ -6,7 +6,7 @@ The term "shutter angle" originates in the mechanical film cameras of early cine
 
 Because the disc was open for exactly half of each rotational cycle, the exposure time was precisely half the duration of a single frame:
 
-$$\text{Shutter Speed} = \frac{1}{2 \times \text{Frame Rate}}$$
+> **Shutter speed = 1 ÷ (2 × frame rate)**
 
 At a cinematic standard of 24 frames per second (fps), a 180-degree shutter corresponds to an exposure time of 1/48th of a second (or 1/50s on digital sensors). This specific amount of motion blur matches the natural visual persistence of the human retina, rendering rapid movements fluid without visual stutter.
 

@@ -11,10 +11,8 @@ export default function Footer() {
       <div className="border-b border-theme-border py-16 md:py-24">
         <div className="container mx-auto flex flex-col items-start justify-between gap-8 px-6 md:flex-row md:items-end md:px-8">
           <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-[0.28em] text-theme-accent">
-              Riccardo Riva — Visual Direction
-            </span>
-            <h2 className="mt-4 text-3xl font-black uppercase leading-tight tracking-[0.06em] text-theme-text sm:text-4xl md:text-5xl">
+            
+            <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-theme-text sm:text-4xl md:text-5xl">
               {t('footer_cta_title')}
             </h2>
             <p className="mt-4 text-base leading-relaxed text-theme-muted sm:text-lg">
@@ -36,9 +34,7 @@ export default function Footer() {
           <span className="text-sm font-black uppercase tracking-[0.3em] text-theme-text">
             Duerre Media
           </span>
-          <p className="mt-3 text-xs leading-relaxed text-theme-muted">
-            Commercial Photography, Cinema, 3D Worlds & Digital Strategy.
-          </p>
+          
         </div>
 
         <div>

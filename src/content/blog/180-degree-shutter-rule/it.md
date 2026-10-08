@@ -6,7 +6,7 @@ Il concetto di "angolo di otturazione" affonda le sue radici nelle cineprese mec
 
 Essendo aperto per esattamente metà di ogni ciclo di rotazione, il tempo di esposizione corrispondeva alla metà esatta della durata del fotogramma:
 
-$$\text{Tempo di scatto} = \frac{1}{2 \times \text{Frame Rate}}$$
+> **Tempo di scatto = 1 ÷ (2 × frame rate)**
 
 Alla frequenza cinematografica standard di 24 fotogrammi al secondo (fps), un angolo di 180 gradi equivale a un tempo di esposizione di 1/48 di secondo (o 1/50s sui sensori digitali). Questo specifico livello di sfocatura da movimento replica la persistenza visiva della retina umana, rendendo le azioni fluide ed eliminando scatti artificiali.
 

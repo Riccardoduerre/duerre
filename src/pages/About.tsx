@@ -36,7 +36,7 @@ export default function About() {
               <span className="font-mono text-xs text-theme-muted">Riccardo Riva</span>
             </div>
 
-            <h1 className="mt-4 break-words text-3xl font-black uppercase leading-[1.08] tracking-[0.04em] sm:text-5xl md:text-6xl">
+            <h1 className="mt-4 break-words text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
               {t('about_title')}
             </h1>
 
@@ -71,7 +71,7 @@ export default function About() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 text-white">
-              <span className="block font-mono text-[10px] tracking-widest text-white/70">
+              <span className="block font-mono text-xs tracking-widest text-white/70">
                 PORTRAIT · RICCARDO RIVA
               </span>
               <p className="mt-1 text-sm font-semibold tracking-wider">
@@ -87,7 +87,7 @@ export default function About() {
             <span className="text-xs font-bold uppercase tracking-[0.26em] text-theme-accent">
               Philosophy
             </span>
-            <h2 className="mt-2 text-3xl font-black uppercase tracking-[0.06em] sm:text-4xl">
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
               {t('about_philosophy_title')}
             </h2>
           </div>
@@ -115,7 +115,7 @@ export default function About() {
             <span className="text-xs font-bold uppercase tracking-[0.26em] text-theme-accent">
               Commercial Provenance
             </span>
-            <h2 className="mt-2 text-3xl font-black uppercase tracking-[0.06em] sm:text-4xl">
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
               {t('about_clients_title')}
             </h2>
           </div>
@@ -140,7 +140,7 @@ export default function About() {
             <span className="text-xs font-bold uppercase tracking-[0.26em] text-theme-accent">
               Technical Standards
             </span>
-            <h2 className="mt-2 text-3xl font-black uppercase tracking-[0.06em] sm:text-4xl">
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
               {t('about_capabilities_title')}
             </h2>
             <p className="mt-3 text-base text-theme-muted">

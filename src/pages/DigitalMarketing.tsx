@@ -81,7 +81,7 @@ export default function DigitalMarketing() {
                 className="portfolio-card relative overflow-hidden rounded-2xl p-8 sm:p-10 transition duration-300 hover:border-theme-mad"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-theme-accent">
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-theme-accent">
                     Capabilities
                   </span>
                 </div>

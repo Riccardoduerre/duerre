@@ -10,7 +10,7 @@ A master editorial sequence functions like musical composition, alternating betw
 2. **The Contextual Interaction (Meso Scale):** A mid-shot capturing the subject interacting with tools, gear, or architecture. Establishes utility, physical movement, and authentic human presence.
 3. **The Intimate Detail (Micro Scale):** A close-up or macro shot focusing strictly on tactile textures: stitching under tension, raindrops on coated fabric, fingertips gripping alpine granite.
 
-By alternating Wide $\rightarrow$ Detail $\rightarrow$ Mid $\rightarrow$ Wide, the sequence creates visual breathing room. Each frame answers questions raised by the previous image while posing new ones for the next.
+By alternating Wide → Detail → Mid → Wide, the sequence creates visual breathing room. Each frame answers questions raised by the previous image while posing new ones for the next.
 
 ## Chromatic Flow and Spacial Continuity
 

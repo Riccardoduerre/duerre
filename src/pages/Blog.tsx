@@ -14,7 +14,7 @@ export default function Blog() {
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-theme-accent">
             {t('blog')}
           </p>
-          <h1 className="mt-4 text-3xl font-bold uppercase tracking-[0.2em] sm:text-4xl md:text-5xl">
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
             {t('blog_title')}
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-theme-muted sm:text-lg">

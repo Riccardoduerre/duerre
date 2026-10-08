@@ -12,21 +12,23 @@
     --accent-text-color: #7A5826;
     --accent-ink-color: #FFFFFF;
     --mad-color: #6A00F4;
+    --mad-text-color: #6A00F4;
     --muted-color: #625E57;
     --shadow-color: rgba(43, 35, 24, 0.08);
     --ambient-color: rgba(122, 88, 38, 0.05);
   }
 
   .dark {
-    --bg-color: #0F172A;
+    --bg-color: #14120F;
     --text-color: #F8F7F4;
-    --surface-color: #172033;
-    --border-color: #334155;
+    --surface-color: #1D1A16;
+    --border-color: #2E2A24;
     --accent-color: #C5A059;
     --accent-text-color: #C5A059;
-    --accent-ink-color: #0F172A;
+    --accent-ink-color: #14120F;
     --mad-color: #7B2CBF;
-    --muted-color: #C1C8D4;
+    --mad-text-color: #B794F6;
+    --muted-color: #B9B2A6;
     --shadow-color: rgba(0, 0, 0, 0.28);
     --ambient-color: rgba(197, 160, 89, 0.07);
   }
@@ -160,7 +162,7 @@
   }
 
   .text-theme-mad {
-    color: var(--mad-color);
+    color: var(--mad-text-color);
   }
 
   .border-theme-mad {

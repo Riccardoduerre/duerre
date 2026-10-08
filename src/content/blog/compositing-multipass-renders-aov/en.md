@@ -4,7 +4,7 @@ Rendering a final 3D image as a single, flattened "Beauty" file is acceptable fo
 
 The final beauty render is the mathematical summation of distinct physical components of the rendering equation:
 
-$$\text{Beauty} = \text{Diffuse Direct} + \text{Diffuse Indirect} + \text{Specular Direct} + \text{Specular Indirect} + \text{Emission} + \text{Transmission}$$
+> **Beauty = Diffuse Direct + Diffuse Indirect + Specular Direct + Specular Indirect + Emission + Transmission**
 
 By rendering these components as separate 32-bit OpenEXR layers (AOVs):
 - **Diffuse Direct:** Light striking the matte base color directly from light fixtures.

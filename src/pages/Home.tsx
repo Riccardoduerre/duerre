@@ -22,25 +22,17 @@ export default function Home() {
           fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover object-center scale-105 animate-subtle-zoom"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/85" />
-
-        {/* Top Eyebrow Badge */}
-        <div className="relative z-10 container mx-auto px-6 pt-24 md:px-8 md:pt-28">
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-4 text-[11px] font-mono tracking-widest text-white/75">
-            <span className="uppercase">Riccardo Riva — Visual Direction</span>
-            <span>Studio: Italy / Available Worldwide</span>
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/80" />
 
         {/* Hero Center Statement */}
-        <div className="relative z-10 container mx-auto px-6 py-10 text-center md:px-8 md:py-14">
+        <div className="relative z-10 container mx-auto px-6 pt-32 pb-10 text-center md:px-8 md:pt-40 md:pb-14">
           <span className="mb-4 inline-block text-xs font-bold uppercase tracking-[0.3em] text-white/80 sm:mb-6 sm:text-sm">
             Commercial Photography · Cinema · 3D CGI
           </span>
-          <h1 className="mx-auto max-w-5xl break-words text-3xl font-black uppercase leading-[1.08] tracking-[0.04em] sm:text-5xl sm:tracking-[0.06em] lg:text-7xl">
+          <h1 className="mx-auto max-w-5xl break-words text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-7xl [text-shadow:0_2px_16px_rgba(0,0,0,0.5)]">
             {t('hero_headline')}
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/85 sm:mt-8 sm:text-lg">
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/90 sm:mt-8 sm:text-xl drop-shadow-md">
             {t('hero_subheadline')}
           </p>
 
@@ -105,7 +97,7 @@ export default function Home() {
         <div className="container mx-auto grid gap-10 px-6 md:px-8 lg:grid-cols-[1fr_0.75fr] lg:items-center lg:gap-16">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-theme-accent">{t('marketing_home_eyebrow')}</p>
-            <h2 className="mt-4 max-w-3xl break-words text-2xl font-bold uppercase leading-tight tracking-[0.06em] sm:text-3xl md:text-4xl">
+            <h2 className="mt-4 max-w-3xl break-words text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-5xl">
               {t('marketing_home_title')}
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-theme-muted sm:text-lg">
@@ -122,8 +114,7 @@ export default function Home() {
           <ol className="border-l border-theme-border pl-5 sm:pl-7">
             {[1, 2, 3].map((step) => (
               <li key={step} className="border-b border-theme-border py-4 first:pt-0 last:border-0 last:pb-0">
-                <span className="text-xs font-semibold tracking-[0.12em] text-theme-accent">0{step}</span>
-                <p className="mt-1 text-sm font-bold uppercase leading-snug tracking-[0.06em] sm:text-base">
+                <p className="mt-1 text-base font-semibold leading-snug tracking-tight sm:text-lg">
                   {t(`dm_process_${step}_title`)}
                 </p>
               </li>

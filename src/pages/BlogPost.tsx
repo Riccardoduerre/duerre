@@ -34,6 +34,10 @@ export default function BlogPost() {
   const readMin = Math.max(1, Math.ceil(wordCount / 200));
   const readingTimeText = t('reading_time').replace('{{min}}', String(readMin));
 
+  const currentIndex = posts.findIndex((item) => item.slug === post.slug);
+  const nextPost = currentIndex > 0 ? posts[currentIndex - 1] : null; // Newer post
+  const prevPost = currentIndex !== -1 && currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null; // Older post
+
   return (
     <article className="bg-theme-bg pt-8 pb-20 sm:pt-12 sm:pb-28">
       <div className="container mx-auto px-6 md:px-8">
@@ -94,8 +98,25 @@ export default function BlogPost() {
               {t('contact')} →
             </Link>
           </div>
+        
+          {/* Post Navigation */}
+          <nav className="mt-16 border-t border-theme-border pt-12 flex flex-col sm:flex-row justify-between gap-8">
+            {prevPost ? (
+              <Link to={`/blog/${prevPost.slug}`} className="group flex-1">
+                <span className="block text-xs font-bold uppercase tracking-[0.2em] text-theme-accent mb-2 transition-colors group-hover:text-theme-mad">← {t('prev_project') || 'Previous'}</span>
+                <span className="block text-lg font-semibold tracking-tight text-theme-text">{prevPost.title[locale]}</span>
+              </Link>
+            ) : <div className="flex-1" />}
+            {nextPost ? (
+              <Link to={`/blog/${nextPost.slug}`} className="group flex-1 text-right">
+                <span className="block text-xs font-bold uppercase tracking-[0.2em] text-theme-accent mb-2 transition-colors group-hover:text-theme-mad">{t('next_project') || 'Next'} →</span>
+                <span className="block text-lg font-semibold tracking-tight text-theme-text">{nextPost.title[locale]}</span>
+              </Link>
+            ) : <div className="flex-1" />}
+          </nav>
         </div>
       </div>
     </article>
   );
 }
+

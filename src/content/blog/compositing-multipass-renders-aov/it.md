@@ -4,7 +4,7 @@ Calcolare un'immagine 3D finale come un unico file "Beauty" appiattito può anda
 
 L'immagine finale completa non è altro che la somma matematica di componenti fisiche distinte:
 
-$$\text{Beauty} = \text{Diffusione Diretta} + \text{Diffusione Indiretta} + \text{Riflessione Diretta} + \text{Riflessione Indiretta} + \text{Emissione} + \text{Trasparenza}$$
+> **Beauty = Diffusione Diretta + Diffusione Indiretta + Riflessione Diretta + Riflessione Indiretta + Emissione + Trasparenza**
 
 Calcolando queste componenti come livelli separati in file OpenEXR a 32 bit:
 - **Diffuse Direct:** La luce che colpisce direttamente la superficie dalle sorgenti.

@@ -12,6 +12,7 @@ export default {
           border: 'var(--border-color)',
           accent: 'var(--accent-color)',
           mad: 'var(--mad-color)',
+          'mad-text': 'var(--mad-text-color)',
           muted: 'var(--muted-color)',
         },
       },

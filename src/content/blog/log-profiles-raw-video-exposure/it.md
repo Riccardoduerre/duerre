@@ -15,7 +15,7 @@ I False Color mappano specifiche fasce di luminosità IRE in colori a tinta unit
 - **Viola (da 0 a 4 IRE):** Neri chiusi e assenza di segnale.
 - **Blu (da 20 a 30 IRE):** Dettagli nelle ombre profonde.
 - **Verde (da 38 a 42 IRE):** Grigio medio al 18%, punto di riferimento per le principali curve Log.
-- **Rosa / Grigio chiaro (da 50 a 60 IRE):** Incarnato naturale per tonalità caucasiche e mediterranee.
+- **Rosa / Grigio chiaro (da 50 a 60 IRE):** Fascia tipica dell'incarnato (da adattare al soggetto e alla curva Log della camera).
 - **Giallo / Arancio (da 70 a 80 IRE):** Alte luci con dettaglio conservato.
 - **Rosso (da 98 a 100 IRE):** Clipping del sensore e perdita irreparabile di dati.
 

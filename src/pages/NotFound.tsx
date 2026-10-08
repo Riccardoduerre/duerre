@@ -10,7 +10,7 @@ export default function NotFound() {
         <span className="inline-block text-xs font-mono font-bold uppercase tracking-[0.3em] text-theme-accent">
           Error 404
         </span>
-        <h1 className="mt-4 break-words text-4xl font-black uppercase leading-tight tracking-[0.1em] sm:text-6xl">
+        <h1 className="mt-4 break-words text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
           {t('page_not_found')}
         </h1>
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-theme-muted sm:text-lg">

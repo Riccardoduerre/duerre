@@ -26,9 +26,9 @@ export default function FeaturedProjects({ pageHeading = false }: FeaturedProjec
       {pageHeading && (
         <header className="bg-theme-bg py-12 sm:py-16">
           <div className="container mx-auto px-6 md:px-8">
-            <h1 className="max-w-4xl break-words text-3xl font-bold uppercase leading-tight tracking-[0.08em] sm:text-5xl">
+            <h2 className="max-w-4xl break-words text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
               {t('portfolio_heading')}
-            </h1>
+            </h2>
           </div>
         </header>
       )}
@@ -62,7 +62,7 @@ export default function FeaturedProjects({ pageHeading = false }: FeaturedProjec
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                   
                   {/* Category Pill */}
-                  <span className="absolute left-4 top-4 inline-flex min-h-9 items-center rounded-full border border-white/20 bg-black/60 px-3.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur-md sm:left-6 sm:top-6">
+                  <span className="absolute left-4 top-4 inline-flex min-h-9 items-center rounded-full border border-white/20 bg-black/60 px-3.5 text-xs font-bold uppercase tracking-[0.16em] text-white backdrop-blur-md sm:left-6 sm:top-6">
                     {meta.label[locale]}
                   </span>
                 </Link>
@@ -73,7 +73,7 @@ export default function FeaturedProjects({ pageHeading = false }: FeaturedProjec
                     isReversed ? 'lg:order-1' : 'lg:order-2'
                   }`}
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.2em]">
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-xs font-semibold uppercase tracking-[0.2em]">
                     <span className="text-theme-accent">{meta.eyebrow[locale]}</span>
                     <span className="font-mono text-theme-muted">{formatProjectDate(project)}</span>
                   </div>
@@ -95,7 +95,7 @@ export default function FeaturedProjects({ pageHeading = false }: FeaturedProjec
                     {meta.tags.map((tag) => (
                       <span
                         key={tag[locale]}
-                        className="rounded-full border border-theme-border bg-theme-bg/80 px-3 py-1.5 text-[10px] font-medium tracking-[0.04em] text-theme-muted"
+                        className="rounded-full border border-theme-border bg-theme-bg/80 px-3 py-1.5 text-xs font-medium tracking-[0.04em] text-theme-muted"
                       >
                         {tag[locale]}
                       </span>

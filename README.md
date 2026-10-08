@@ -85,17 +85,8 @@ The site supports **English** and **Italian** with:
 ### Colors & Theme
 Edit CSS variables in `src/index.css` to customize the color scheme.
 
-### Add Blog Posts
-1. Create markdown files in `src/content/blog/`
-   - `post-slug.en.md` (English)
-   - `post-slug.it.md` (Italian)
-2. Add entry to `src/data/posts.ts`
-
-### Add Portfolio Projects
-Edit `src/data/portfolio.ts` with new project data including:
-- Title, client, scope, challenge, solution, results
-- Featured image and gallery images
-- Category and year
+### Add Blog Posts & Portfolio Projects
+Please refer to [CONTENT.md](CONTENT.md) for instructions on how to use the drop-in content system.
 
 ## 📧 Contact Form
 

@@ -43,6 +43,13 @@ export default function Contact() {
     e.preventDefault();
     if (!formRef.current) return;
 
+    const values = new FormData(formRef.current);
+    if (values.get('website_url')) {
+      // Silently succeed for bots
+      setSubmitted(true);
+      return;
+    }
+
     setLoading(true);
     setError('');
     setMailFallback('');
@@ -95,7 +102,7 @@ export default function Contact() {
 
             <div className="mt-12 space-y-6 border-t border-theme-border pt-8">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent">
+                <p className="text-xs font-bold uppercase tracking-[0.24em] text-theme-accent">
                   {t('contact_email_label')}
                 </p>
                 <div className="mt-2 flex flex-wrap items-center gap-3">
@@ -109,7 +116,7 @@ export default function Contact() {
                     type="button"
                     onClick={handleCopyEmail}
                     aria-label={t('copy_email')}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-theme-border bg-theme-surface px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-theme-muted transition hover:border-theme-mad hover:text-theme-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-theme-border bg-theme-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-theme-muted transition hover:border-theme-mad hover:text-theme-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-theme-mad"
                   >
                     {copied ? (
                       <>
@@ -130,7 +137,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent">
+                <p className="text-xs font-bold uppercase tracking-[0.24em] text-theme-accent">
                   {t('contact_location_label')}
                 </p>
                 <p className="mt-2 text-base text-theme-muted">
@@ -139,7 +146,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-theme-accent">
+                <p className="text-xs font-bold uppercase tracking-[0.24em] text-theme-accent">
                   {t('studio_direct_label')}
                 </p>
                 <p className="mt-2 text-sm text-theme-muted">
@@ -157,7 +164,7 @@ export default function Contact() {
           >
             {/* Intent Selector Chips */}
             <div>
-              <label className="mb-3 block text-[11px] font-bold uppercase tracking-[0.24em] text-theme-muted">
+              <label className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-theme-muted">
                 {t('contact_intent_label')}
               </label>
               <div className="flex flex-wrap gap-2">
@@ -213,10 +220,15 @@ export default function Contact() {
               </div>
             )}
 
+            <div className="absolute left-[-9999px] top-[-9999px]" aria-hidden="true">
+              <label htmlFor="website_url">Do not fill this field out if you are human:</label>
+              <input type="text" id="website_url" name="website_url" tabIndex={-1} autoComplete="off" />
+            </div>
+
             <div>
               <label
                 htmlFor="user_name"
-                className="mb-3 block text-[11px] font-bold uppercase tracking-[0.24em] text-theme-muted"
+                className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-theme-muted"
               >
                 {t('contact_form_full_name')}
               </label>
@@ -234,7 +246,7 @@ export default function Contact() {
             <div>
               <label
                 htmlFor="user_email"
-                className="mb-3 block text-[11px] font-bold uppercase tracking-[0.24em] text-theme-muted"
+                className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-theme-muted"
               >
                 {t('contact_form_email')}
               </label>
@@ -252,7 +264,7 @@ export default function Contact() {
             <div>
               <label
                 htmlFor="message"
-                className="mb-3 block text-[11px] font-bold uppercase tracking-[0.24em] text-theme-muted"
+                className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-theme-muted"
               >
                 {t('contact_form_message')}
               </label>
@@ -296,7 +308,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-theme-mad px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-theme-mad px-6 py-4 text-xs font-semibold uppercase tracking-[0.28em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading && (
                 <svg

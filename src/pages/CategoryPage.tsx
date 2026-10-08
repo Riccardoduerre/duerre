@@ -49,11 +49,11 @@ export default function CategoryPage({ category }: CategoryPageProps) {
             </span>
             <span className="text-theme-border">/</span>
             <span className="font-mono text-xs text-theme-muted">
-              {items.length} {locale === 'it' ? 'Progetti' : 'Projects'}
+              {items.length} {t('category_projects_count')}
             </span>
           </div>
 
-          <h1 className="mt-4 break-words text-3xl font-black uppercase leading-[1.08] tracking-[0.04em] sm:text-5xl md:text-6xl">
+          <h1 className="mt-4 break-words text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
             {meta.headline[locale]}
           </h1>
 
@@ -66,7 +66,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
             {meta.featureList.map((feature) => (
               <span
                 key={feature[locale]}
-                className="rounded-full border border-theme-border bg-theme-surface px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-theme-text shadow-sm"
+                className="rounded-full border border-theme-border bg-theme-surface px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-theme-text shadow-sm"
               >
                 {feature[locale]}
               </span>
@@ -92,7 +92,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-75" />
                 
-                <span className="absolute left-4 top-4 inline-flex min-h-8 items-center rounded-full border border-white/20 bg-black/60 px-3 text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md">
+                <span className="absolute left-4 top-4 inline-flex min-h-8 items-center rounded-full border border-white/20 bg-black/60 px-3 text-xs font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md">
                   {meta.label[locale]}
                 </span>
 
@@ -103,7 +103,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
 
               <div className="flex flex-1 flex-col justify-between p-6 sm:p-8">
                 <div>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-theme-accent">
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-theme-accent">
                     {project.client[locale]}
                   </span>
 
@@ -121,7 +121,7 @@ export default function CategoryPage({ category }: CategoryPageProps) {
                     {meta.tags.map((tag) => (
                       <span
                         key={tag[locale]}
-                        className="rounded-full border border-theme-border bg-theme-bg/80 px-2.5 py-1 text-[10px] font-medium text-theme-muted"
+                        className="rounded-full border border-theme-border bg-theme-bg/80 px-2.5 py-1 text-xs font-medium text-theme-muted"
                       >
                         {tag[locale]}
                       </span>

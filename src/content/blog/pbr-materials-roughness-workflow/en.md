@@ -14,8 +14,8 @@ The **Roughness map** (or glossiness inverse) is a greyscale value between 0.0 a
 
 One of the most frequent errors in 3D material design is treating the **Metallic** channel as a slider for shininess. In physics, materials are divided into two distinct categories:
 
-1. **Dielectrics (Non-Metals):** Plastics, wood, skin, stone, glass, water. Their diffuse color comes from internal light absorption and re-emission (the Base Color map). Their specular reflections are always monochromatic white, and their base reflectance at normal angles ($F_0$) is consistently low—between 2% and 5% (typically 0.04).
-2. **Conductors (Metals):** Gold, silver, iron, aluminum, brass. Metals have zero internal diffuse scattering—all light interaction occurs at the surface. Their specular reflections are tinted by their Base Color map, and their $F_0$ reflectance ranges from 70% to 95%.
+1. **Dielectrics (Non-Metals):** Plastics, wood, skin, stone, glass, water. Their diffuse color comes from internal light absorption and re-emission (the Base Color map). Their specular reflections are always monochromatic white, and their base reflectance at normal angles (F0) is consistently low—between 2% and 5% (typically 0.04).
+2. **Conductors (Metals):** Gold, silver, iron, aluminum, brass. Metals have zero internal diffuse scattering—all light interaction occurs at the surface. Their specular reflections are tinted by their Base Color map, and their F0 reflectance ranges from 70% to 95%.
 
 Therefore, in a clean PBR pipeline, the Metallic map should almost always be strictly binary: 0.0 for non-metals, 1.0 for raw metals. Greyscale values should only exist on boundary pixels representing transitions, dust, or oxidized patina.
 

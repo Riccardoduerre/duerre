@@ -34,11 +34,11 @@ export default function Portfolio() {
             </span>
             <span className="text-theme-border">/</span>
             <span className="font-mono text-xs text-theme-muted">
-              {filteredProjects.length} {locale === 'it' ? 'Progetti' : 'Selected Works'}
+              {filteredProjects.length} {t('projects_count_label')}
             </span>
           </div>
 
-          <h1 className="mt-4 break-words text-4xl font-black uppercase leading-tight tracking-[0.06em] sm:text-5xl md:text-6xl">
+          <h1 className="mt-4 break-words text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
             {t('portfolio_heading')}
           </h1>
 
@@ -90,7 +90,7 @@ export default function Portfolio() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
                   
-                  <span className="absolute left-4 top-4 inline-flex min-h-8 items-center rounded-full border border-white/20 bg-black/60 px-3 text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md">
+                  <span className="absolute left-4 top-4 inline-flex min-h-8 items-center rounded-full border border-white/20 bg-black/60 px-3 text-xs font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md">
                     {meta.label[locale]}
                   </span>
 
@@ -101,7 +101,7 @@ export default function Portfolio() {
 
                 <div className="flex flex-1 flex-col justify-between p-6">
                   <div>
-                    <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em]">
+                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.18em]">
                       <span className="text-theme-accent">{project.client[locale]}</span>
                     </div>
 
@@ -117,7 +117,7 @@ export default function Portfolio() {
                   </div>
 
                   <div className="mt-6 flex items-center justify-between border-t border-theme-border/70 pt-4">
-                    <span className="text-[10px] font-medium tracking-wider text-theme-muted">
+                    <span className="text-xs font-medium tracking-wider text-theme-muted">
                       {meta.tags[0]?.[locale]}
                     </span>
                     <Link
@@ -141,7 +141,7 @@ export default function Portfolio() {
                 {t('explore_label')}
               </span>
               <h2 className="mt-2 text-2xl font-bold uppercase tracking-[0.06em]">
-                {locale === 'it' ? 'Esplora per disciplina' : 'Explore by Discipline'}
+                {t('explore_discipline')}
               </h2>
             </div>
             <div className="flex flex-wrap gap-4">

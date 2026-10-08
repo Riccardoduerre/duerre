@@ -15,7 +15,7 @@ False Color assigns discrete, standardized chromatic colors to specific IRE brig
 - **Purple (0 to 4 IRE):** Crushed, clipped blacks.
 - **Blue (20 to 30 IRE):** Deep shadow detail.
 - **Green (38 to 42 IRE):** 18% Middle Grey standard target for most modern Log curves.
-- **Pink / Light Grey (50 to 60 IRE):** Natural Caucasian and Mediterranean skin tones.
+- **Pink / Light Grey (50 to 60 IRE):** Typical skin-tone range (adjust for the subject and the camera's Log curve).
 - **Yellow / Orange (70 to 80 IRE):** Bright highlight details.
 - **Red (98 to 100 IRE):** Sensor clipping and total data loss.
 
