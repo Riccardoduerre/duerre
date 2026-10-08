@@ -15,25 +15,27 @@ if (fs.existsSync(dir)) {
 
 fs.mkdirSync(dir, { recursive: true });
 
-const indexContent = `import { LocaleStrings } from '../../../data/posts';
-const image = new URL('../../../assets/images/optimized/default.webp', import.meta.url).href;
+const date = new Date().toISOString().split('T')[0];
 
-export const meta = {
-  title: {
-    en: "New Post Title",
-    it: "Titolo del Nuovo Post"
-  } as LocaleStrings,
-  date: new Date().toISOString().split('T')[0],
-  image,
-  excerpt: {
-    en: "English excerpt here.",
-    it: "Estratto italiano qui."
-  } as LocaleStrings
-};
+const enContent = `---
+title: "New Post Title"
+date: ${date}
+image: ../../assets/images/optimized/default.webp
+excerpt: "English excerpt here."
+---
+# English Content
 `;
 
-fs.writeFileSync(path.join(dir, 'index.ts'), indexContent);
-fs.writeFileSync(path.join(dir, 'en.md'), '# English Content\n');
-fs.writeFileSync(path.join(dir, 'it.md'), '# Contenuto in Italiano\n');
+const itContent = `---
+title: "Titolo del Nuovo Post"
+date: ${date}
+image: ../../assets/images/optimized/default.webp
+excerpt: "Estratto italiano qui."
+---
+# Contenuto in Italiano
+`;
 
-console.log(`Created new post scaffolding in ${dir}`);
+fs.writeFileSync(path.join(dir, 'en.md'), enContent);
+fs.writeFileSync(path.join(dir, 'it.md'), itContent);
+
+console.log(\`Created new post scaffolding in \${dir}\`);
