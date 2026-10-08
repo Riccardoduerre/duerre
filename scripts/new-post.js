@@ -38,4 +38,4 @@ excerpt: "Estratto italiano qui."
 fs.writeFileSync(path.join(dir, 'en.md'), enContent);
 fs.writeFileSync(path.join(dir, 'it.md'), itContent);
 
-console.log(\`Created new post scaffolding in \${dir}\`);
+console.log(`Created new post scaffolding in ${dir}`);
