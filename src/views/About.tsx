@@ -2,7 +2,8 @@ import ViewWrapper from '../components/ViewWrapper';
 import { Link } from '../components/Link';
 import { useLocale } from '../i18n/LocaleContext';
 
-const aboutImage = new URL('../assets/images/optimized/DSCN7050.webp', import.meta.url).href;
+import aboutImg from '../assets/images/optimized/DSCN7050.webp';
+const aboutImage = typeof aboutImg === 'string' ? aboutImg : (aboutImg as any).src;
 
 const clients = [
   'Alps Apparel Co.',

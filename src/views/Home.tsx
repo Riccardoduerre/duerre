@@ -4,7 +4,8 @@ import { useLocale, LocaleProvider } from '../i18n/LocaleContext';
 
 import { FadeIn } from '../components/FadeIn';
 
-const heroImage = new URL('../assets/images/optimized/_RIK7376_HDR.webp', import.meta.url).href;
+import heroImg from '../assets/images/optimized/_RIK7376_HDR.webp';
+const heroImage = typeof heroImg === 'string' ? heroImg : (heroImg as any).src;
 
 function HomeContent() {
   const { t } = useLocale();
