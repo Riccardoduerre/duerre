@@ -1,9 +1,14 @@
 import type { PortfolioProject } from '../../../data/portfolio';
-const alpineGallery = new URL('../../../assets/images/optimized/Giau_00006.webp', import.meta.url).href;
-const alps01 = new URL('../../../assets/images/optimized/Giau_00001.webp', import.meta.url).href;
-const alps02 = new URL('../../../assets/images/optimized/Giau_00002.webp', import.meta.url).href;
-const alps03 = new URL('../../../assets/images/optimized/Giau_00003.webp', import.meta.url).href;
-const alps04 = new URL('../../../assets/images/optimized/Giau_00004.webp', import.meta.url).href;
+import alpineGalleryImg from '../../../assets/images/optimized/Giau_00006.webp';
+const alpineGallery = typeof alpineGalleryImg === 'string' ? alpineGalleryImg : (alpineGalleryImg as any).src;
+import alps01Img from '../../../assets/images/optimized/Giau_00001.webp';
+const alps01 = typeof alps01Img === 'string' ? alps01Img : (alps01Img as any).src;
+import alps02Img from '../../../assets/images/optimized/Giau_00002.webp';
+const alps02 = typeof alps02Img === 'string' ? alps02Img : (alps02Img as any).src;
+import alps03Img from '../../../assets/images/optimized/Giau_00003.webp';
+const alps03 = typeof alps03Img === 'string' ? alps03Img : (alps03Img as any).src;
+import alps04Img from '../../../assets/images/optimized/Giau_00004.webp';
+const alps04 = typeof alps04Img === 'string' ? alps04Img : (alps04Img as any).src;
 
 export const project: PortfolioProject = {
   id: 'alps-brand-campaign',

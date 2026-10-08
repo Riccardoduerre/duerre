@@ -1,5 +1,7 @@
 import type { PortfolioProject } from '../../../data/portfolio';
-const showreel = new URL('../../../assets/images/optimized/_RIK7376_HDR.webp', import.meta.url).href;
+import showreelImg from '../../../assets/images/optimized/_RIK7376_HDR.webp';
+
+const showreel = typeof showreelImg === 'string' ? showreelImg : (showreelImg as any).src;
 
 export const project: PortfolioProject = {
   id: 'commercial-showreel',

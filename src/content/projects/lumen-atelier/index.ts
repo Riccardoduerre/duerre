@@ -1,7 +1,10 @@
 import type { PortfolioProject } from '../../../data/portfolio';
-const showreel = new URL('../../../assets/images/optimized/_RIK7376_HDR.webp', import.meta.url).href;
-const portraits01 = new URL('../../../assets/images/optimized/_DSC2344.webp', import.meta.url).href;
-const landscapes01 = new URL('../../../assets/images/optimized/Landscapes_00001.webp', import.meta.url).href;
+import showreelImg from '../../../assets/images/optimized/_RIK7376_HDR.webp';
+const showreel = typeof showreelImg === 'string' ? showreelImg : (showreelImg as any).src;
+import portraits01Img from '../../../assets/images/optimized/_DSC2344.webp';
+const portraits01 = typeof portraits01Img === 'string' ? portraits01Img : (portraits01Img as any).src;
+import landscapes01Img from '../../../assets/images/optimized/Landscapes_00001.webp';
+const landscapes01 = typeof landscapes01Img === 'string' ? landscapes01Img : (landscapes01Img as any).src;
 
 export const project: PortfolioProject = {
   id: 'lumen-atelier',

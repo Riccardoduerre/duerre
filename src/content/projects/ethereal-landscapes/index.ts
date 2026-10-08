@@ -1,7 +1,10 @@
 import type { PortfolioProject } from '../../../data/portfolio';
-const landscapes01 = new URL('../../../assets/images/optimized/Landscapes_00001.webp', import.meta.url).href;
-const landscapes02 = new URL('../../../assets/images/optimized/Landscapes_00002.webp', import.meta.url).href;
-const landscapes03 = new URL('../../../assets/images/optimized/Landscapes_00003.webp', import.meta.url).href;
+import landscapes01Img from '../../../assets/images/optimized/Landscapes_00001.webp';
+const landscapes01 = typeof landscapes01Img === 'string' ? landscapes01Img : (landscapes01Img as any).src;
+import landscapes02Img from '../../../assets/images/optimized/Landscapes_00002.webp';
+const landscapes02 = typeof landscapes02Img === 'string' ? landscapes02Img : (landscapes02Img as any).src;
+import landscapes03Img from '../../../assets/images/optimized/Landscapes_00003.webp';
+const landscapes03 = typeof landscapes03Img === 'string' ? landscapes03Img : (landscapes03Img as any).src;
 
 export const project: PortfolioProject = {
   id: 'ethereal-landscapes',

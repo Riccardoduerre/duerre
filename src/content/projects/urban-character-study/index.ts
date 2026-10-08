@@ -1,7 +1,10 @@
 import type { PortfolioProject } from '../../../data/portfolio';
-const portraits01 = new URL('../../../assets/images/optimized/_DSC2344.webp', import.meta.url).href;
-const portraits02 = new URL('../../../assets/images/optimized/_DSC2365.webp', import.meta.url).href;
-const portraitHero = new URL('../../../assets/images/optimized/DSCN7050.webp', import.meta.url).href;
+import portraits01Img from '../../../assets/images/optimized/_DSC2344.webp';
+const portraits01 = typeof portraits01Img === 'string' ? portraits01Img : (portraits01Img as any).src;
+import portraits02Img from '../../../assets/images/optimized/_DSC2365.webp';
+const portraits02 = typeof portraits02Img === 'string' ? portraits02Img : (portraits02Img as any).src;
+import portraitHeroImg from '../../../assets/images/optimized/DSCN7050.webp';
+const portraitHero = typeof portraitHeroImg === 'string' ? portraitHeroImg : (portraitHeroImg as any).src;
 
 export const project: PortfolioProject = {
   id: 'urban-character-study',
