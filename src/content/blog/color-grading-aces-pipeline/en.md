@@ -1,7 +1,7 @@
 ---
 title: "The ACES Color Pipeline: Color Space Management for Commercial Films"
 pubDate: 2026-02-23
-coverImage: ../../../assets/images/optimized/Landscapes_00001.webp
+coverImage: ../../../assets/blog/Landscapes_00001.webp
 description: "Standardizing mixed camera sources into an unconstrained wide gamut workspace to maintain highlight integrity and smooth roll-off."
 tags: []
 ---

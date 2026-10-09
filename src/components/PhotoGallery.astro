@@ -1,19 +1,24 @@
 ---
-import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { Picture, getImage } from 'astro:assets';
 
 interface Props {
-  images: { image: any; alt: string; caption?: string }[];
+  images: { image: ImageMetadata; alt: string; caption?: string }[];
 }
 
 const { images } = Astro.props;
+// Lightbox gets a single optimized large rendition instead of the full-resolution original.
+const lightboxSources = await Promise.all(
+  images.map((img) => getImage({ src: img.image, width: Math.min(img.image.width, 2400), format: 'webp' })),
+);
 ---
 
-<div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+<div class="columns-1 sm:columns-2 lg:columns-3 gap-6">
   {images.map((img, index) => (
     <figure 
-      class="break-inside-avoid group relative cursor-zoom-in overflow-hidden rounded-xl bg-surface border border-line/60 transition duration-500 hover:border-accent/60 hover:shadow-2xl"
+      class="mb-6 last:mb-0 break-inside-avoid group relative cursor-zoom-in overflow-hidden rounded-xl bg-surface border border-line/60 transition duration-500 hover:border-accent/60 hover:shadow-2xl"
       data-gallery-item
-      data-img-src={typeof img.image === 'string' ? img.image : img.image.src}
+      data-img-src={lightboxSources[index].src}
       data-alt={img.alt}
       data-caption={img.caption || ''}
       data-index={index}
@@ -22,7 +27,7 @@ const { images } = Astro.props;
       aria-label={`View photo: ${img.alt}`}
     >
       <div class="overflow-hidden">
-        <Image 
+        <Picture formats={['avif', 'webp']} 
           src={img.image} 
           alt={img.alt} 
           class="w-full object-cover transition duration-700 ease-out group-hover:scale-105"
@@ -40,7 +45,7 @@ const { images } = Astro.props;
 </div>
 
 <!-- Native Zero-Bundle Image Lightbox Modal -->
-<dialog id="photo-lightbox" class="fixed inset-0 m-auto max-w-[96vw] max-h-[96vh] bg-transparent p-0 border-0 outline-none select-none z-50 backdrop:bg-black/90 backdrop:backdrop-blur-md">
+<dialog id="photo-lightbox" class="fixed inset-0 m-auto max-w-[96vw] max-h-[96vh] bg-transparent p-0 border-0 outline-hidden select-none z-50 backdrop:bg-black/90 backdrop:backdrop-blur-md">
   <div class="relative flex flex-col items-center justify-center p-4">
     <button 
       id="lightbox-close" 

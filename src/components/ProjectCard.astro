@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import type { Project } from '../lib/content';
 import { splitId } from '../lib/content';
 import { localePath } from '../i18n';
@@ -14,7 +14,7 @@ const { slug, lang } = splitId(project.id);
 
 <a href={localePath(lang, `/projects/${slug}/`)} class="group block">
   <div class="relative overflow-hidden rounded-xl bg-surface aspect-[4/3] media-zoom">
-    <Image 
+    <Picture formats={['avif', 'webp']} 
       src={project.data.cover} 
       alt={project.data.coverAlt} 
       class="object-cover w-full h-full"

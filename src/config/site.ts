@@ -20,6 +20,3 @@ export function contactFormMode(): 'web3forms' | 'formspree' | 'mailto' {
   if (CONTACT_FORM.action.includes('formspree.io/f/')) return 'formspree';
   return 'mailto';
 }
-
-export const siteConfig = SITE; // for backwards compatibility in case I missed any
-

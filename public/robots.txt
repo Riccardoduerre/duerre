@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://duerremedia.com/sitemap-index.xml
-Sitemap: https://duerremedia.com/sitemap.xml
 
+Sitemap: https://duerremedia.com/sitemap-index.xml

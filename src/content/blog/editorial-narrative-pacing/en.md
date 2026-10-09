@@ -1,7 +1,7 @@
 ---
 title: "Editorial Pacing: Sequencing Still Frames for Lasting Brand Impact"
 pubDate: 2026-01-26
-coverImage: ../../../assets/images/optimized/DSCN7050.webp
+coverImage: ../../../assets/blog/DSCN7050.webp
 description: "How pairing wide atmospheric scenes with intimate macro details creates a visual cadence that guides the viewer’s eye through a campaign."
 tags: []
 ---

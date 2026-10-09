@@ -26,7 +26,14 @@ jobs:
           node-version: "22"
           cache: "npm"
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm ci
+      # AVIF/WebP encoding is the slowest build step; reuse Astro's optimized-image cache.
+      - name: Restore Astro image cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.astro
+          key: astro-assets-${{ hashFiles('src/**/*.{jpg,jpeg,png,webp,JPG}', 'src/**/*.astro') }}
+          restore-keys: astro-assets-
       - name: Build
         run: npm run build
       - name: Setup Pages

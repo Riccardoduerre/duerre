@@ -1,7 +1,7 @@
 ---
 title: "Illuminating 3D Worlds: HDRIs Paired with Controlled Accent Lights"
 pubDate: 2026-07-27
-coverImage: ../../../assets/images/optimized/Landscapes_00002.webp
+coverImage: ../../../assets/blog/Landscapes_00002.webp
 description: "Why relying solely on an environment map makes renders muddy, and how adding directional rim lights carves tangible volume."
 tags: []
 ---

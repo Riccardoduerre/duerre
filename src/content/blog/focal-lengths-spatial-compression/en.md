@@ -1,7 +1,7 @@
 ---
 title: "Focal Lengths and Spatial Compression: Beyond Field of View"
 pubDate: 2026-07-13
-coverImage: ../../../assets/images/optimized/Landscapes_00001.webp
+coverImage: ../../../assets/blog/Landscapes_00001.webp
 description: "How camera-to-subject distance alters perspective geometry and why a 24mm feels intimate while an 85mm isolates prestige."
 tags: []
 ---

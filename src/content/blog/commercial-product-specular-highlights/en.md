@@ -1,7 +1,7 @@
 ---
 title: "Lighting Specular Surfaces: Scrims, Gradients and Reflection Control"
 pubDate: 2026-03-09
-coverImage: ../../../assets/images/optimized/_DSC2344.webp
+coverImage: ../../../assets/blog/_DSC2344.webp
 description: "You don’t light metallic and glossy objects directly—you light the surfaces they reflect. Master large diffusion gradients."
 tags: []
 ---

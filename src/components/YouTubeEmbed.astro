@@ -25,7 +25,7 @@ const embedSrc = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`
     <button 
       type="button" 
       aria-label={`Play ${title}`}
-      class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-ink/90 text-bg flex items-center justify-center shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:bg-accent group-hover:text-ink focus:outline-none focus:ring-4 focus:ring-accent"
+      class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-ink/90 text-bg flex items-center justify-center shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:bg-accent group-hover:text-ink focus:outline-hidden focus:ring-4 focus:ring-accent"
     >
       <svg class="w-6 h-6 md:w-8 md:h-8 translate-x-0.5 fill-current" viewBox="0 0 24 24">
         <path d="M8 5v14l11-7z" />
@@ -38,26 +38,16 @@ const embedSrc = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`
   document.querySelectorAll('.youtube-facade').forEach((facade) => {
     if (facade.dataset.bound) return;
     facade.dataset.bound = 'true';
-    const loadVideo = () => {
-      const src = facade.dataset.embedSrc;
-      const title = facade.dataset.title;
-      facade.innerHTML = `
-        <iframe
-          class="absolute inset-0 w-full h-full"
-          src="${src}"
-          title="${title}"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
-      `;
-    };
-    facade.addEventListener('click', loadVideo, { once: true });
-    facade.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        loadVideo();
-      }
+    // The inner <button> handles Enter/Space natively; clicks bubble up to the facade.
+    facade.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.className = 'absolute inset-0 w-full h-full';
+      iframe.src = facade.dataset.embedSrc;
+      iframe.title = facade.dataset.title;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      facade.replaceChildren(iframe);
+      iframe.focus();
     }, { once: true });
   });
 </script>

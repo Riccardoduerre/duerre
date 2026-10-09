@@ -1,17 +1,25 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../config/site';
+import { type Locale, LOCALES, DEFAULT_LOCALE, switchLocalePath } from '../i18n';
 
 interface Props {
   title: string;
   description: string;
   image?: string;
+  lang: Locale;
   type?: 'website' | 'article' | 'creativework';
 }
 
-const { title, description, image = SITE.defaultOgImage, type = 'website' } = Astro.props;
+const { title, description, lang, image = SITE.defaultOgImage, type = 'website' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || SITE.url);
 const imageURL = new URL(image, Astro.site || SITE.url);
+const alternates = LOCALES.map((locale) => ({
+  locale,
+  href: new URL(switchLocalePath(Astro.url.pathname, locale), Astro.site || SITE.url).href,
+}));
+// Open Graph has no CreativeWork type; case studies are published as articles.
+const ogType = type === 'website' ? 'website' : 'article';
 
 const primarySchemaType = type === 'article' ? 'Article' : type === 'creativework' ? 'CreativeWork' : 'WebPage';
 
@@ -63,9 +71,9 @@ const jsonLd = {
 <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
-<!-- Performance & Preconnect -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Language alternates -->
+{alternates.map(({ locale, href }) => <link rel="alternate" hreflang={locale} href={href} />)}
+<link rel="alternate" hreflang="x-default" href={alternates.find((a) => a.locale === DEFAULT_LOCALE)!.href} />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -74,7 +82,8 @@ const jsonLd = {
 <meta name="author" content={SITE.author} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content={type} />
+<meta property="og:type" content={ogType} />
+<meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_US'} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
@@ -82,11 +91,11 @@ const jsonLd = {
 <meta property="og:site_name" content={SITE.name} />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={imageURL} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
 
 <!-- JSON-LD Structured Data (Organization, WebSite, CreativeWork) -->
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

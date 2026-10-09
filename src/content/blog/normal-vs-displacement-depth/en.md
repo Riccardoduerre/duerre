@@ -1,7 +1,7 @@
 ---
 title: "Bump, Normal and Displacement: Choosing the Correct Depth Architecture"
 pubDate: 2026-06-15
-coverImage: ../../../assets/images/optimized/_DSC2919.webp
+coverImage: ../../../assets/blog/_DSC2919.webp
 description: "Balancing render memory and visual accuracy: when normal vectors suffice versus when micro-polygon tessellation is non-negotiable."
 tags: []
 ---

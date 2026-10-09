@@ -1,7 +1,7 @@
 ---
 title: "Bump, Normal e Displacement: scegliere l’architettura corretta della profondità"
 pubDate: 2026-06-15
-coverImage: ../../../assets/images/optimized/_DSC2919.webp
+coverImage: ../../../assets/blog/_DSC2919.webp
 description: "Bilanciare memoria di calcolo e fedeltà visiva: quando i vettori normali bastano e quando la tassellazione geometrica è indispensabile."
 tags: []
 ---

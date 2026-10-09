@@ -1,158 +1,74 @@
-# Duerre Media — Portfolio & Blog
+# Duerre Media — Portfolio & Journal
 
-Commercial photography, video, 3D content, digital marketing, and visual direction by Riccardo Riva.
+Photography, film and 3D work by Riccardo Riva. Live at [duerremedia.com](https://duerremedia.com).
 
-**Live Site**: [duerremedia.com](https://duerremedia.com)
+Static [Astro](https://astro.build) site styled with Tailwind CSS v4 and `@tailwindcss/typography`, bilingual (English at `/`, Italian at `/it/`), deployed to GitHub Pages.
 
-## 🎯 Features
-
-- **Bilingual** (English & Italian) with language switcher
-- **Dark/Light Theme** toggle with automatic system preference detection
-- **Responsive Design** optimized for mobile, tablet, and desktop
-- **Portfolio Gallery** with project detail pages and image galleries
-- **Digital Marketing** service page focused on strategy, delivery, and measurement
-- **Blog System** with Markdown support and easy post creation
-- **Contact Form** with email integration (EmailJS)
-- **SEO Metadata** with localized page titles/descriptions and Open Graph/Twitter previews
-- **Performance Optimized** with lazy loading and optimized images
-- **Accessible** with semantic HTML and ARIA labels
-
-## 🚀 Quick Start
+## Commands
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Deploy to GitHub Pages
-npm run deploy:gh-pages
+npm run dev          # local dev server (drafts are visible)
+npm run build        # static build into dist/ (drafts excluded)
+npm run preview      # serve dist/ locally
+npm run typecheck
+npm run new-post -- <slug>
+npm run new-project -- <slug>
 ```
 
-## 📝 Setup Instructions
+Node 22+ is required.
 
-For detailed setup and deployment instructions, see [SETUP.md](SETUP.md).
+## Content
 
-### Key Steps:
-1. Install dependencies: `npm install`
-2. Configure EmailJS for contact form (see SETUP.md)
-3. Test locally: `npm run dev`
-4. Deploy: `npm run deploy:gh-pages`
+All content lives in `src/content/` and is validated against the Zod schemas in `src/content.config.ts`; a build fails with a clear message if frontmatter is wrong.
 
-## 🛠 Tech Stack
+Every entry is a folder with one file per locale: `en.md` and `it.md` (`.mdx` also works).
 
-- **React 18** - UI framework
-- **React Router v6** - Client-side routing
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **Vite** - Build tool & dev server
-- **Marked** - Markdown rendering
-- **EmailJS** - Contact form emails
-- **GitHub Pages** - Hosting
+### Projects — `src/content/projects/<slug>/`
 
-## 📂 Project Structure
+Images are co-located with the Markdown and referenced relatively:
 
-```
-src/
-├── pages/              # Route pages, including category and digital marketing views
-├── components/         # Reusable components
-├── i18n/              # Internationalization
-├── data/              # Static data (portfolio, blog)
-├── lib/               # Utilities
-└── assets/            # Images & media
-
-scripts/
-└── copy-404.js        # GitHub Pages SPA routing
-
-content/
-└── blog/              # Markdown blog posts
+```yaml
+cover: "./cover.webp"
+coverAlt: "…"
+youtubeId: "dQw4w9WgXcQ"   # optional, the 11-character ID, not the URL
+gallery:
+  - image: "./gallery-01.webp"
+    alt: "…"
+    caption: "…"            # optional
 ```
 
-## 🌐 Internationalization
+`category` is one of `photo`, `video`, `3d`. Set `featured: true` to show a project on the home page.
 
-The site supports **English** and **Italian** with:
-- One route tree with flat paths; locale is a query parameter (`?lang=en` or `?lang=it`), not a prefixed duplicate route
-- Language switcher in navbar
-- Browser-language detection with Italian as the fallback
-- Persistent language preference
+### Blog — `src/content/blog/<slug>/`
 
-## 🎨 Customization
+Required: `title`, `description`, `pubDate`, `coverImage`. Shared covers live in `src/assets/blog/`.
 
-### Colors & Theme
-Edit CSS variables in `src/index.css` to customize the color scheme.
+### Drafts
 
-### Add Blog Posts & Portfolio Projects
-Please refer to [CONTENT.md](CONTENT.md) for instructions on how to use the drop-in content system.
+Both scaffold scripts create entries with `draft: true`. Drafts appear in `npm run dev` only; set `draft: false` to publish.
 
-## 📧 Contact Form
+## Images
 
-The contact form sends emails using **EmailJS** (free tier).
+Source images go through Astro's `<Picture>` at build time, producing AVIF and WebP at several widths with intrinsic dimensions (no layout shift). Commit reasonably sized sources (≈2000–2400 px on the long edge); there's no need to pre-optimize.
 
-**Configuration**:
-- Service ID: `service_k40isq9`
-- Template ID: `template_ipjxcbm`
-- Recipient: `riccardo@duerremedia.com`
+- `src/assets/blog/` — blog covers (also the About portrait)
+- `src/assets/site/` — home page hero and studio photos
+- `src/assets/brand/` — logo and favicon sources
+- `legacy-site-backup/` — the pre-Astro site, including full-size originals
 
-For setup details, see [SETUP.md](SETUP.md).
+## Styling
 
-## 🚢 Deployment
+Theme tokens (colors, fonts, animations) are defined with `@theme` in `src/styles/global.css`; there is no `tailwind.config.js`. Colors come from the `--c-*` RGB variables, which switch between the dark (default) and light palettes via `data-theme` on `<html>`.
 
-### GitHub Pages (Recommended)
-```bash
-npm run deploy:gh-pages
-```
+## Contact form
 
-The deploy script publishes to the `gh-pages` branch with a root base path, generates static route shells and a localized sitemap, and copies the repository `CNAME`. It is configured for `duerremedia.com`. Paths stay flat (for example `/portfolio` and `/digital-marketing`); locale is selected with a query parameter, not a prefixed duplicate route.
+Configured in `src/config/site.ts`. With an empty Web3Forms `accessKey` the contact page falls back to a `mailto:` link; add a key (or a Formspree endpoint as `action`) to enable the form.
 
-### Custom Domain
-1. Add CNAME file with domain name
-2. Configure DNS records pointing to GitHub Pages
-3. Enable custom domain in GitHub repository settings
+## Deployment
 
-## 🔍 SEO
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it with GitHub Pages Actions. In the repository settings, Pages must use **GitHub Actions** as its source. `public/CNAME` sets the custom domain `duerremedia.com`.
 
-- Open Graph meta tags for social sharing
-- Twitter Card support
-- Canonical URLs
-- Localized page titles and descriptions
-
-## ♿ Accessibility
-
-- Semantic HTML structure
-- ARIA labels on form controls
-- Color contrast compliance
-- Keyboard navigation support
-- Image alt text
-
-## 📊 Performance
-
-- **Images**: Resized WebP derivatives are used by the app; source originals are retained
-- Below-the-fold imagery uses native lazy loading
-
-## 🐛 Browser Support
-
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-- Mobile browsers (iOS Safari, Chrome Android)
-
-## 🔒 Security
-
-- No sensitive data in frontend code
-- EmailJS rate limiting recommended
-- Regular dependency updates: `npm audit`
-- CAPTCHA recommended for production
-
-## 📄 License
+## License
 
 © 2026 Riccardo Riva. All rights reserved.
-
----
-
-**Built with React, Vite, Tailwind CSS, and ❤️**
-
-*For detailed documentation, see [SETUP.md](SETUP.md)*

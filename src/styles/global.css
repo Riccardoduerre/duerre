@@ -5,11 +5,98 @@
 @import '@fontsource/playfair-display/600.css';
 @import '@fontsource/playfair-display/700.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme {
+  --color-bg: rgb(var(--c-bg));
+  --color-surface: rgb(var(--c-surface));
+  --color-line: rgb(var(--c-line));
+  --color-ink: rgb(var(--c-ink));
+  --color-muted: rgb(var(--c-muted));
+  --color-accent: rgb(var(--c-accent));
+
+  --font-sans: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+
+  --animate-subtle-zoom: subtleZoom 16s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @keyframes subtleZoom {
+    0% {
+      transform: scale(1.08);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Typography modifier: maps prose colors onto the studio palette in both themes. */
+@utility prose-studio {
+  --tw-prose-body: var(--color-ink);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-lead: var(--color-muted);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-counters: var(--color-muted);
+  --tw-prose-bullets: var(--color-muted);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-line);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-code: var(--color-ink);
+  --tw-prose-pre-code: var(--color-bg);
+  --tw-prose-pre-bg: var(--color-ink);
+  --tw-prose-th-borders: var(--color-line);
+  --tw-prose-td-borders: var(--color-line);
+  --tw-prose-invert-body: var(--color-ink);
+  --tw-prose-invert-headings: var(--color-ink);
+  --tw-prose-invert-lead: var(--color-muted);
+  --tw-prose-invert-links: var(--color-accent);
+  --tw-prose-invert-bold: var(--color-ink);
+  --tw-prose-invert-counters: var(--color-muted);
+  --tw-prose-invert-bullets: var(--color-muted);
+  --tw-prose-invert-hr: var(--color-line);
+  --tw-prose-invert-quotes: var(--color-ink);
+  --tw-prose-invert-quote-borders: var(--color-line);
+  --tw-prose-invert-captions: var(--color-muted);
+  --tw-prose-invert-code: var(--color-ink);
+  --tw-prose-invert-pre-code: var(--color-bg);
+  --tw-prose-invert-pre-bg: var(--color-ink);
+  --tw-prose-invert-th-borders: var(--color-line);
+  --tw-prose-invert-td-borders: var(--color-line);
+}
+
+/* Shared button base, declared as a utility so component classes can @apply it. */
+@utility btn {
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 text-xs font-semibold uppercase tracking-[0.16em] transition duration-300;
+}
 
 @layer base {
+  /* Tailwind v4 resets buttons to cursor: default; keep the v3 pointer behaviour. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* <Picture> wraps <img>; let the img lay out as a direct child of its container. */
+  picture {
+    display: contents;
+  }
+
   :root {
     color-scheme: dark;
     --c-bg: 10 10 11;
@@ -87,9 +174,6 @@
     @apply text-[0.7rem] font-semibold uppercase tracking-widest text-accent;
   }
 
-  .btn {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 text-xs font-semibold uppercase tracking-[0.16em] transition duration-300;
-  }
   .btn-primary {
     @apply btn bg-ink text-bg hover:bg-accent;
   }
@@ -102,7 +186,7 @@
   }
 
   .field {
-    @apply w-full rounded-lg border border-line bg-surface px-4 py-3.5 text-ink placeholder:text-muted/60 transition focus:border-accent focus:outline-none;
+    @apply w-full rounded-lg border border-line bg-surface px-4 py-3.5 text-ink placeholder:text-muted/60 transition focus:border-accent focus:outline-hidden;
   }
 
   .media-zoom img {
@@ -121,9 +205,9 @@
   }
 
   .glass-card {
-    background: rgba(var(--c-surface), 0.7);
+    background: rgb(var(--c-surface) / 0.7);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(var(--c-line), 0.7);
+    border: 1px solid rgb(var(--c-line) / 0.7);
   }
 }
 

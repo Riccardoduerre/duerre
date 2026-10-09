@@ -1,7 +1,7 @@
 ---
 title: "Armonia cromatica e split toning: creare palette visive coerenti"
 pubDate: 2026-04-20
-coverImage: ../../../assets/images/optimized/Giau_00002.webp
+coverImage: ../../../assets/blog/Giau_00002.webp
 description: "Applicare la teoria dei colori complementari su luci e ombre proteggendo rigorosamente i toni autentici dell’incarnato."
 tags: []
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Elevating B-Roll: Transforming Cutaways into Narrative Pillars"
 pubDate: 2026-04-06
-coverImage: ../../../assets/images/optimized/_RIK7376_HDR.webp
+coverImage: ../../../assets/blog/_RIK7376_HDR.webp
 description: "Moving away from visual filler: how tactile textures, deliberate match cuts, and atmospheric details deepen commercial pacing."
 tags: []
 ---

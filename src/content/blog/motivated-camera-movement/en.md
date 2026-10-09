@@ -1,7 +1,7 @@
 ---
 title: "Motivated Camera Movement: Parallax, Pacing and Kinetic Intent"
 pubDate: 2026-06-29
-coverImage: ../../../assets/images/optimized/Giau_00003.webp
+coverImage: ../../../assets/blog/Giau_00003.webp
 description: "Ditching arbitrary camera moves for intentional blocking where foreground parallax accentuates subject psychology."
 tags: []
 ---

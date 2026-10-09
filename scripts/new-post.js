@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 
 const slug = process.argv[2];
-if (!slug) {
-  console.error('Please provide a slug for the new post: npm run new-post -- <slug>');
+if (!slug || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
+  console.error('Usage: npm run new-post -- <kebab-case-slug>');
   process.exit(1);
 }
 
@@ -17,25 +17,19 @@ fs.mkdirSync(dir, { recursive: true });
 
 const date = new Date().toISOString().split('T')[0];
 
-const enContent = `---
-title: "New Post Title"
-date: ${date}
-image: ../../assets/images/optimized/default.webp
-excerpt: "English excerpt here."
+// Starts as a draft (visible in `npm run dev`, excluded from builds) with a shared placeholder cover.
+const frontmatter = (title, description) => `---
+title: "${title}"
+pubDate: ${date}
+coverImage: ../../../assets/blog/_RIK7376_HDR.webp
+coverAlt: ""
+description: "${description}"
+tags: []
+draft: true
 ---
-# English Content
 `;
 
-const itContent = `---
-title: "Titolo del Nuovo Post"
-date: ${date}
-image: ../../assets/images/optimized/default.webp
-excerpt: "Estratto italiano qui."
----
-# Contenuto in Italiano
-`;
+fs.writeFileSync(path.join(dir, 'en.md'), `${frontmatter('New Post Title', 'English summary.')}\nEnglish content.\n`);
+fs.writeFileSync(path.join(dir, 'it.md'), `${frontmatter('Titolo del Nuovo Post', 'Sommario in italiano.')}\nContenuto in italiano.\n`);
 
-fs.writeFileSync(path.join(dir, 'en.md'), enContent);
-fs.writeFileSync(path.join(dir, 'it.md'), itContent);
-
-console.log(`Created new post scaffolding in ${dir}`);
+console.log(`Created draft post in ${dir} — set draft: false to publish.`);

@@ -17,26 +17,13 @@ const { title, description, lang, image, type = 'website' } = Astro.props;
 
 <html lang={lang}>
   <head>
-    <BaseHead title={title} description={description} image={image} type={type} />
+    <BaseHead title={title} description={description} lang={lang} image={image} type={type} />
     <script is:inline>
       document.documentElement.classList.add('js');
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      return 'light';
-    }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'dark';
-      })();
-      if (theme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
+      const stored = localStorage.getItem('theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersLight ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
     </script>
   </head>
   <body>

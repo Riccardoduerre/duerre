@@ -1,7 +1,7 @@
 ---
 title: "Compositing Multipass Renders: Beauty Passes, AOVs and Cryptomatte"
 pubDate: 2026-02-09
-coverImage: ../../../assets/images/optimized/Giau_00001.webp
+coverImage: ../../../assets/blog/Giau_00001.webp
 description: "Breaking down the CGI render equation into separate diffuse, specular, and emissive passes for surgical control in post."
 tags: []
 ---

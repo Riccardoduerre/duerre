@@ -1,7 +1,7 @@
 ---
 title: "Lunghezze focali e compressione spaziale: oltre l’angolo di campo"
 pubDate: 2026-07-13
-coverImage: ../../../assets/images/optimized/Landscapes_00001.webp
+coverImage: ../../../assets/blog/Landscapes_00001.webp
 description: "Come la distanza tra camera e soggetto altera la geometria prospettica e perché un 24mm appare intimo mentre un 85mm isola il prestigio."
 tags: []
 ---

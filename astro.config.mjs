@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
@@ -32,9 +32,8 @@ export default defineConfig({
     '/it/portfolio/lumen-atelier': '/it/projects/lumen-atelier',
     '/it/portfolio/urban-character-study': '/it/projects/urban-character-study',
   },
-  integrations: [
-    tailwind(),
-    sitemap(),
-    mdx(),
-  ]
+  integrations: [sitemap(), mdx()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

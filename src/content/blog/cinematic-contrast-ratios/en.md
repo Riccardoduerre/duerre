@@ -1,7 +1,7 @@
 ---
 title: "Key-to-Fill Contrast Ratios: Designing Emotional Light in Video"
 pubDate: 2026-05-18
-coverImage: ../../../assets/images/optimized/DSCN7050.webp
+coverImage: ../../../assets/blog/DSCN7050.webp
 description: "Transitioning from flat corporate 2:1 lighting to dramatic 8:1 cinematic ratios using book lights and ambient feathering."
 tags: []
 ---

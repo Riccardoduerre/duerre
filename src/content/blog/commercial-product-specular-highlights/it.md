@@ -1,7 +1,7 @@
 ---
 title: "Illuminare superfici speculari: scrim, gradienti e controllo dei riflessi"
 pubDate: 2026-03-09
-coverImage: ../../../assets/images/optimized/_DSC2344.webp
+coverImage: ../../../assets/blog/_DSC2344.webp
 description: "Gli oggetti metallici e lucidi non si illuminano direttamente: si illumina ciò che riflettono. Padroneggiare i gradienti di diffusione."
 tags: []
 ---

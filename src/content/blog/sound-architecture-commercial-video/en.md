@@ -1,7 +1,7 @@
 ---
 title: "Audio Architecture: Sound Design, Foley and Dynamic Weight in Video"
 pubDate: 2026-01-12
-coverImage: ../../../assets/images/optimized/_DSC2919.webp
+coverImage: ../../../assets/blog/_DSC2919.webp
 description: "Audiences forgive average image resolution, but they never forgive poor audio. How layered room tone and subtle foley elevate visual impact."
 tags: []
 ---

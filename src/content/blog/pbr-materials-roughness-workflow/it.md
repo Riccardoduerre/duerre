@@ -1,7 +1,7 @@
 ---
 title: "Physically Based Rendering: padroneggiare la pipeline Roughness-Metallic"
 pubDate: 2026-09-07
-coverImage: ../../../assets/images/optimized/Giau_00004.webp
+coverImage: ../../../assets/blog/Giau_00004.webp
 description: "Demistificare la microfacet theory, la riflettanza dielettrica di Fresnel e perché le mappe di roughness sono la vera anima del realismo 3D."
 tags: []
 ---

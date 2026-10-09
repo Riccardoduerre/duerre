@@ -1,7 +1,7 @@
 ---
 title: "Topologia pulita e densità texel: fondamenta degli asset 3D commerciali"
 pubDate: 2026-03-23
-coverImage: ../../../assets/images/optimized/Landscapes_00003.webp
+coverImage: ../../../assets/blog/Landscapes_00003.webp
 description: "Perché la modellazione a soli quad previene artefatti di shading con la subdivision, e come una densità texel uniforme garantisce texture nitide."
 tags: []
 ---
