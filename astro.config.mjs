@@ -35,7 +35,6 @@ export default defineConfig({
     '/about.html': '/about',
     '/contact.html': '/contact',
     '/blog.html': '/blog',
-    '/index.html': '/',
   },
   integrations: [sitemap(), mdx()],
   vite: {
