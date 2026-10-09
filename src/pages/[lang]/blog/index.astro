@@ -11,6 +11,7 @@ export async function getStaticPaths() {
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 const posts = await getPosts(lang);
+const allTags = Array.from(new Set(posts.flatMap(p => p.data.tags || []))).sort();
 ---
 
 <BaseLayout 
@@ -19,13 +20,65 @@ const posts = await getPosts(lang);
   lang={lang}
 >
   <div class="px-6 py-24 md:py-32 max-w-7xl mx-auto">
-    <div class="max-w-3xl mb-16">
+    <div class="max-w-3xl mb-12">
       <h1 class="text-4xl md:text-5xl font-bold mb-6">{t('nav_blog')}</h1>
       <p class="text-xl text-muted">Process, behind the scenes, and thoughts on visual arts.</p>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-      {posts.map(post => <PostPreview post={post} />)}
+    {allTags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-12 items-center" id="blog-filters">
+        <button 
+          type="button" 
+          data-tag="all" 
+          class="blog-filter-pill active px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-ink text-bg"
+        >
+          {t('all_articles')}
+        </button>
+        {allTags.map(tag => (
+          <button 
+            type="button" 
+            data-tag={tag} 
+            class="blog-filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink"
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+    )}
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12" id="blog-grid">
+      {posts.map(post => (
+        <div class="blog-item transition-opacity duration-300" data-tags={(post.data.tags || []).join(',')}>
+          <PostPreview post={post} />
+        </div>
+      ))}
     </div>
   </div>
+
+  <script is:inline>
+    const filterButtons = document.querySelectorAll('.blog-filter-pill');
+    const blogItems = document.querySelectorAll('.blog-item');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const selectedTag = btn.dataset.tag;
+
+        filterButtons.forEach((b) => {
+          b.classList.remove('bg-ink', 'text-bg');
+          b.classList.add('bg-surface', 'text-muted', 'border', 'border-line');
+        });
+        btn.classList.add('bg-ink', 'text-bg');
+        btn.classList.remove('bg-surface', 'text-muted', 'border', 'border-line');
+
+        blogItems.forEach((item) => {
+          const tags = (item.dataset.tags || '').split(',');
+          if (selectedTag === 'all' || tags.includes(selectedTag)) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
 </BaseLayout>

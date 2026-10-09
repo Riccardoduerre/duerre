@@ -14,7 +14,9 @@ const otherLang = lang === 'en' ? 'it' : 'en';
 
 <header class="sticky top-0 z-50 w-full border-b border-line/50 bg-bg/80 backdrop-blur">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-    <a href={localePath(lang, '/')} class="text-xl font-bold tracking-tight">Duerre Media</a>
+    <a href={localePath(lang, '/')} class="text-xl font-bold tracking-tight hover:text-accent transition-colors">Duerre Media</a>
+    
+    <!-- Desktop Navigation -->
     <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
       <a href={localePath(lang, '/projects/')} class="hover:text-accent transition-colors">{t('nav_projects')}</a>
       <a href={localePath(lang, '/about/')} class="hover:text-accent transition-colors">{t('nav_about')}</a>
@@ -26,5 +28,48 @@ const otherLang = lang === 'en' ? 'it' : 'en';
         <ThemeToggle lang={lang} />
       </div>
     </nav>
+
+    <!-- Mobile Hamburger Button & Theme Toggle -->
+    <div class="flex items-center gap-3 md:hidden">
+      <a href={switchLocalePath(currentPath, otherLang)} class="text-xs font-bold uppercase hover:text-accent px-1">{otherLang}</a>
+      <ThemeToggle lang={lang} />
+      <button 
+        id="mobile-menu-toggle" 
+        type="button" 
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        class="p-2 rounded-lg text-ink hover:bg-surface focus:outline-none"
+      >
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path id="menu-icon-bars" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-line bg-surface/95 backdrop-blur px-6 py-6 space-y-4 text-base font-medium">
+    <a href={localePath(lang, '/projects/')} class="block py-2 hover:text-accent transition-colors">{t('nav_projects')}</a>
+    <a href={localePath(lang, '/about/')} class="block py-2 hover:text-accent transition-colors">{t('nav_about')}</a>
+    <a href={localePath(lang, '/blog/')} class="block py-2 hover:text-accent transition-colors">{t('nav_blog')}</a>
+    <a href={localePath(lang, '/contact/')} class="block py-2 hover:text-accent transition-colors">{t('nav_contact')}</a>
   </div>
 </header>
+
+<script is:inline>
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const barsIcon = document.getElementById('menu-icon-bars');
+  const closeIcon = document.getElementById('menu-icon-close');
+
+  if (toggleBtn && mobileMenu && barsIcon && closeIcon) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+      mobileMenu.classList.toggle('hidden');
+      barsIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+    });
+  }
+</script>

@@ -1,5 +1,6 @@
 ---
 import { type Locale, useTranslations, localePath } from '../i18n';
+import { SITE } from '../config/site';
 
 interface Props {
   lang: Locale;
@@ -28,7 +29,18 @@ const year = new Date().getFullYear();
       <div>
         <h3 class="font-semibold mb-4 text-accent uppercase tracking-wider text-xs">{t('social_label')}</h3>
         <ul class="space-y-3 flex flex-col">
-          <li><a href="#" class="hover:text-accent transition-colors">Instagram</a></li>
+          {SITE.social.map((item) => (
+            <li>
+              <a 
+                href={item.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="hover:text-accent transition-colors"
+              >
+                {item.name}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

@@ -7,6 +7,13 @@ export default defineConfig({
   site: 'https://duerremedia.com',
   base: '/',
   output: 'static',
+  redirects: {
+    '/about': '/en/about',
+    '/projects': '/en/projects',
+    '/blog': '/en/blog',
+    '/contact': '/en/contact',
+    '/portfolio': '/en/projects',
+  },
   integrations: [
     tailwind(),
     sitemap(),

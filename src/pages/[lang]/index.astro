@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import PostPreview from '../../components/PostPreview.astro';
 import { getProjects, getPosts } from '../../lib/content';
 import { LOCALES, useTranslations, type Locale } from '../../i18n';
+import studioImg from '../../assets/images/_DSC2344.jpg';
 
 export async function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -62,9 +64,14 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
       <p class="text-muted leading-relaxed mb-8">{t('studio_blurb')}</p>
       <a href={`/${lang}/about/`} class="link-underline text-sm font-semibold">{t('nav_about')} →</a>
     </div>
-    <div class="aspect-square bg-surface rounded-xl overflow-hidden relative">
-      <!-- Optional: Add a studio or self portrait here -->
-      <div class="absolute inset-0 bg-gradient-to-tr from-surface to-bg opacity-50"></div>
+    <div class="aspect-square bg-surface rounded-xl overflow-hidden relative media-zoom">
+      <Image 
+        src={studioImg} 
+        alt="Riccardo Riva - Duerre Media Studio" 
+        class="w-full h-full object-cover"
+        widths={[400, 800, 1200]}
+        sizes="(max-width: 768px) 100vw, 50vw"
+      />
     </div>
   </section>
 
