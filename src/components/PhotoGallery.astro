@@ -1,31 +1,17 @@
 ---
 import type { ImageMetadata } from 'astro';
-import { Picture, getImage } from 'astro:assets';
+import { Picture } from 'astro:assets';
 
 interface Props {
   images: { image: ImageMetadata; alt: string; caption?: string }[];
 }
 
 const { images } = Astro.props;
-// Lightbox gets a single optimized large rendition instead of the full-resolution original.
-const lightboxSources = await Promise.all(
-  images.map((img) => getImage({ src: img.image, width: Math.min(img.image.width, 2400), format: 'webp' })),
-);
 ---
 
 <div class="columns-1 sm:columns-2 lg:columns-3 gap-6">
-  {images.map((img, index) => (
-    <figure 
-      class="mb-6 last:mb-0 break-inside-avoid group relative cursor-zoom-in overflow-hidden rounded-xl bg-surface border border-line/60 transition duration-500 hover:border-accent/60 hover:shadow-2xl"
-      data-gallery-item
-      data-img-src={lightboxSources[index].src}
-      data-alt={img.alt}
-      data-caption={img.caption || ''}
-      data-index={index}
-      tabindex="0"
-      role="button"
-      aria-label={`View photo: ${img.alt}`}
-    >
+  {images.map((img) => (
+    <figure class="mb-6 last:mb-0 break-inside-avoid group relative overflow-hidden rounded-xl bg-surface border border-line/60 transition duration-500 hover:border-accent/60 hover:shadow-2xl">
       <div class="overflow-hidden">
         <Picture formats={['avif', 'webp']} 
           src={img.image} 
@@ -35,86 +21,11 @@ const lightboxSources = await Promise.all(
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
       </div>
-      <div class="absolute inset-0 bg-black/25 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-end p-4">
-        {img.caption && (
-          <span class="text-xs text-white/90 font-medium drop-shadow-md line-clamp-1">{img.caption}</span>
-        )}
-      </div>
+      {img.caption && (
+        <figcaption class="p-3 text-xs text-muted border-t border-line/40 bg-surface/80">
+          {img.caption}
+        </figcaption>
+      )}
     </figure>
   ))}
 </div>
-
-<!-- Native Zero-Bundle Image Lightbox Modal -->
-<dialog id="photo-lightbox" class="fixed inset-0 m-auto max-w-[96vw] max-h-[96vh] bg-transparent p-0 border-0 outline-hidden select-none z-50 backdrop:bg-black/90 backdrop:backdrop-blur-md">
-  <div class="relative flex flex-col items-center justify-center p-4">
-    <button 
-      id="lightbox-close" 
-      type="button" 
-      class="absolute -top-3 -right-3 md:top-2 md:right-2 z-10 w-10 h-10 rounded-full bg-black/80 text-white border border-white/20 flex items-center justify-center hover:bg-accent transition cursor-pointer text-lg shadow-xl"
-      aria-label="Close lightbox"
-    >
-      ✕
-    </button>
-    <div class="relative overflow-hidden rounded-xl bg-black/40 border border-white/10 shadow-2xl flex flex-col items-center">
-      <img id="lightbox-img" src="" alt="" class="max-h-[82vh] max-w-[90vw] object-contain rounded-lg" />
-      <div id="lightbox-caption" class="w-full p-3 text-center text-xs text-white/80 bg-black/70 backdrop-blur-sm"></div>
-    </div>
-  </div>
-</dialog>
-
-<script is:inline>
-  const dialog = document.getElementById('photo-lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxCaption = document.getElementById('lightbox-caption');
-  const closeBtn = document.getElementById('lightbox-close');
-  const items = Array.from(document.querySelectorAll('[data-gallery-item]'));
-  let currentIndex = 0;
-
-  function showIndex(idx) {
-    if (idx < 0) idx = items.length - 1;
-    if (idx >= items.length) idx = 0;
-    currentIndex = idx;
-    const item = items[currentIndex];
-    if (!item || !lightboxImg || !lightboxCaption) return;
-    lightboxImg.src = item.dataset.imgSrc || '';
-    lightboxImg.alt = item.dataset.alt || '';
-    const caption = item.dataset.caption;
-    if (caption) {
-      lightboxCaption.textContent = caption;
-      lightboxCaption.classList.remove('hidden');
-    } else {
-      lightboxCaption.classList.add('hidden');
-    }
-  }
-
-  if (dialog && lightboxImg && lightboxCaption) {
-    items.forEach((item, index) => {
-      const openModal = () => {
-        showIndex(index);
-        dialog.showModal();
-      };
-
-      item.addEventListener('click', openModal);
-      item.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openModal();
-        }
-      });
-    });
-
-    closeBtn?.addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', (e) => {
-      if (e.target === dialog) dialog.close();
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (!dialog.open) return;
-      if (e.key === 'ArrowRight') {
-        showIndex(currentIndex + 1);
-      } else if (e.key === 'ArrowLeft') {
-        showIndex(currentIndex - 1);
-      }
-    });
-  }
-</script>

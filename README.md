@@ -2,7 +2,7 @@
 
 Photography, film and 3D work by Riccardo Riva. Live at [duerremedia.com](https://duerremedia.com).
 
-Static [Astro](https://astro.build) site styled with Tailwind CSS v4 and `@tailwindcss/typography`, bilingual (English at `/`, Italian at `/it/`), deployed to GitHub Pages.
+Static [Astro](https://astro.build) site styled with Tailwind CSS v4 and `@tailwindcss/typography`, bilingual (English at `/`, Italian at `/it/`), zero client-side JavaScript, deployed to GitHub Pages.
 
 ## Commands
 
@@ -16,7 +16,7 @@ npm run new-post -- <slug>
 npm run new-project -- <slug>
 ```
 
-Node 22+ is required.
+Node 24 is used in GitHub Actions (Node 22+ supported locally).
 
 ## Content
 
@@ -55,11 +55,10 @@ Source images go through Astro's `<Picture>` at build time, producing AVIF and W
 - `src/assets/blog/` — blog covers (also the About portrait)
 - `src/assets/site/` — home page hero and studio photos
 - `src/assets/brand/` — logo and favicon sources
-- `legacy-site-backup/` — the pre-Astro site, including full-size originals
-
+ 
 ## Styling
-
-Theme tokens (colors, fonts, animations) are defined with `@theme` in `src/styles/global.css`; there is no `tailwind.config.js`. Colors come from the `--c-*` RGB variables, which switch between the dark (default) and light palettes via `data-theme` on `<html>`.
+ 
+Theme tokens (colors, fonts, animations) are defined with `@theme` in `src/styles/global.css`; there is no `tailwind.config.js`. Colors come from the `--c-*` RGB variables, which switch automatically based on system preference (`prefers-color-scheme`) without requiring any client JavaScript.
 
 ## Contact form
 

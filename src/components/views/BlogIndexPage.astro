@@ -25,61 +25,13 @@ const allTags = Array.from(new Set(posts.flatMap(p => p.data.tags || []))).sort(
       <p class="text-xl text-muted">{t('blog_intro')}</p>
     </div>
 
-    {allTags.length > 0 && (
-      <div class="flex flex-wrap gap-2 mb-12 items-center" id="blog-filters">
-        <button 
-          type="button" 
-          data-tag="all" 
-          class="blog-filter-pill active px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-ink text-bg"
-        >
-          {t('all_articles')}
-        </button>
-        {allTags.map(tag => (
-          <button 
-            type="button" 
-            data-tag={tag} 
-            class="blog-filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink"
-          >
-            {tag}
-          </button>
-        ))}
-      </div>
-    )}
-
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12" id="blog-grid">
       {posts.map(post => (
-        <div class="blog-item transition-opacity duration-300" data-tags={(post.data.tags || []).join(',')}>
+        <div class="blog-item">
           <PostPreview post={post} />
         </div>
       ))}
     </div>
   </div>
-
-  <script is:inline>
-    const filterButtons = document.querySelectorAll('.blog-filter-pill');
-    const blogItems = document.querySelectorAll('.blog-item');
-
-    filterButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const selectedTag = btn.dataset.tag;
-
-        filterButtons.forEach((b) => {
-          b.classList.remove('bg-ink', 'text-bg');
-          b.classList.add('bg-surface', 'text-muted', 'border', 'border-line');
-        });
-        btn.classList.add('bg-ink', 'text-bg');
-        btn.classList.remove('bg-surface', 'text-muted', 'border', 'border-line');
-
-        blogItems.forEach((item) => {
-          const tags = (item.dataset.tags || '').split(',');
-          if (selectedTag === 'all' || tags.includes(selectedTag)) {
-            item.classList.remove('hidden');
-          } else {
-            item.classList.add('hidden');
-          }
-        });
-      });
-    });
-  </script>
 </BaseLayout>
 

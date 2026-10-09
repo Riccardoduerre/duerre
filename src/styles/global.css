@@ -8,7 +8,7 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
-@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+@custom-variant dark (@media (prefers-color-scheme: dark));
 
 @theme {
   --color-bg: rgb(var(--c-bg));
@@ -108,7 +108,7 @@
   }
 
   @media (prefers-color-scheme: light) {
-    :root:not([data-theme='dark']) {
+    :root {
       color-scheme: light;
       --c-bg: 246 245 242;
       --c-surface: 255 255 255;
@@ -117,16 +117,6 @@
       --c-muted: 92 89 83;
       --c-accent: 138 100 36;
     }
-  }
-
-  :root[data-theme='light'] {
-    color-scheme: light;
-    --c-bg: 246 245 242;
-    --c-surface: 255 255 255;
-    --c-line: 226 223 216;
-    --c-ink: 20 20 20;
-    --c-muted: 92 89 83;
-    --c-accent: 138 100 36;
   }
 
   html {
@@ -224,9 +214,6 @@ dialog::backdrop {
   backdrop-filter: blur(6px);
 }
 
-html:not(.js) .js-only {
-  display: none !important;
-}
 
 @media (prefers-reduced-motion: reduce) {
   html {
