@@ -9,15 +9,88 @@ const { images } = Astro.props;
 ---
 
 <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-  {images.map((img) => (
-    <figure class="break-inside-avoid">
-      <Image 
-        src={img.image} 
-        alt={img.alt} 
-        class="w-full rounded-lg bg-surface"
-        widths={[400, 800, 1200, 1800]} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-      />
-      {img.caption && <figcaption class="text-xs text-muted mt-2 text-center">{img.caption}</figcaption>}
+  {images.map((img, index) => (
+    <figure 
+      class="break-inside-avoid group relative cursor-zoom-in overflow-hidden rounded-xl bg-surface border border-line/60 transition duration-500 hover:border-accent/60 hover:shadow-2xl"
+      data-gallery-item
+      data-img-src={typeof img.image === 'string' ? img.image : img.image.src}
+      data-alt={img.alt}
+      data-caption={img.caption || ''}
+      data-index={index}
+      tabindex="0"
+      role="button"
+      aria-label={`View photo: ${img.alt}`}
+    >
+      <div class="overflow-hidden">
+        <Image 
+          src={img.image} 
+          alt={img.alt} 
+          class="w-full object-cover transition duration-700 ease-out group-hover:scale-105"
+          widths={[400, 800, 1200, 1800]} 
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
+      </div>
+      <div class="absolute inset-0 bg-black/25 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-end p-4">
+        {img.caption && (
+          <span class="text-xs text-white/90 font-medium drop-shadow-md line-clamp-1">{img.caption}</span>
+        )}
+      </div>
     </figure>
   ))}
 </div>
+
+<!-- Native Zero-Bundle Image Lightbox Modal -->
+<dialog id="photo-lightbox" class="fixed inset-0 m-auto max-w-[96vw] max-h-[96vh] bg-transparent p-0 border-0 outline-none select-none z-50">
+  <div class="relative flex flex-col items-center justify-center p-4">
+    <button 
+      id="lightbox-close" 
+      type="button" 
+      class="absolute -top-3 -right-3 md:top-2 md:right-2 z-10 w-10 h-10 rounded-full bg-black/80 text-white border border-white/20 flex items-center justify-center hover:bg-accent transition"
+      aria-label="Close lightbox"
+    >
+      ✕
+    </button>
+    <div class="relative overflow-hidden rounded-xl bg-black/40 border border-white/10 shadow-2xl">
+      <img id="lightbox-img" src="" alt="" class="max-h-[82vh] max-w-[90vw] object-contain rounded-lg" />
+      <div id="lightbox-caption" class="p-3 text-center text-xs text-white/80 bg-black/70 backdrop-blur-sm"></div>
+    </div>
+  </div>
+</dialog>
+
+<script is:inline>
+  const dialog = document.getElementById('photo-lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const closeBtn = document.getElementById('lightbox-close');
+  const items = document.querySelectorAll('[data-gallery-item]');
+
+  if (dialog && lightboxImg && lightboxCaption) {
+    items.forEach((item) => {
+      const openModal = () => {
+        lightboxImg.src = item.dataset.imgSrc || '';
+        lightboxImg.alt = item.dataset.alt || '';
+        const caption = item.dataset.caption;
+        if (caption) {
+          lightboxCaption.textContent = caption;
+          lightboxCaption.classList.remove('hidden');
+        } else {
+          lightboxCaption.classList.add('hidden');
+        }
+        dialog.showModal();
+      };
+
+      item.addEventListener('click', openModal);
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openModal();
+        }
+      });
+    });
+
+    closeBtn?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  }
+</script>

@@ -1,6 +1,9 @@
 @import '@fontsource/plus-jakarta-sans/400.css';
 @import '@fontsource/plus-jakarta-sans/600.css';
 @import '@fontsource/plus-jakarta-sans/700.css';
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/600.css';
+@import '@fontsource/playfair-display/700.css';
 
 @tailwind base;
 @tailwind components;
@@ -109,6 +112,24 @@
   .group:focus-visible .media-zoom img {
     transform: scale(1.04);
   }
+
+  .portfolio-card {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  }
+  .portfolio-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .glass-card {
+    background: rgba(var(--c-surface), 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(var(--c-line), 0.7);
+  }
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(12px);
 }
 
 [popover] {

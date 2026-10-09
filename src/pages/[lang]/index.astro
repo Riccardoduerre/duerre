@@ -1,10 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
 import PostPreview from '../../components/PostPreview.astro';
-import { getProjects, getPosts } from '../../lib/content';
+import { getProjects, getPosts, splitId } from '../../lib/content';
 import { LOCALES, useTranslations, type Locale } from '../../i18n';
+import heroImg from '../../assets/images/_RIK7376_HDR.jpg';
 import studioImg from '../../assets/images/_DSC2344.jpg';
 
 export async function getStaticPaths() {
@@ -15,9 +15,9 @@ const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 
 const allProjects = await getProjects(lang);
-const featuredProjects = allProjects.filter(p => p.data.featured).slice(0, 4);
+const featuredProjects = allProjects.filter(p => p.data.featured);
 if (featuredProjects.length === 0) {
-    featuredProjects.push(...allProjects.slice(0, 4));
+  featuredProjects.push(...allProjects.slice(0, 4));
 }
 
 const latestPosts = (await getPosts(lang)).slice(0, 3);
@@ -27,63 +27,240 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
   title={`Duerre Media | ${t('hero_eyebrow')}`} 
   description={t('studio_blurb')} 
   lang={lang}
+  image={heroImg.src}
 >
-  <section class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
-    <p class="eyebrow mb-6">{t('hero_eyebrow')}</p>
-    <h1 class="text-4xl md:text-6xl font-bold leading-tight max-w-4xl">
-      Riccardo Riva is a director and photographer based in Italy, focusing on high-end visual production.
-    </h1>
-    <div class="mt-12 flex gap-4">
-      <a href={`/${lang}/contact/`} class="btn-primary">{t('nav_cta')}</a>
-      <a href={`/${lang}/projects/`} class="btn-ghost">{t('all_projects_link')}</a>
-    </div>
-  </section>
-
-  <section class="py-16 md:py-24 px-6 bg-surface">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex items-end justify-between mb-12">
-        <div>
-          <p class="eyebrow mb-3">{t('selected_works')}</p>
-          <h2 class="text-3xl md:text-4xl font-bold">{t('projects_title')}</h2>
-        </div>
-        <a href={`/${lang}/projects/`} class="link-underline text-sm font-semibold hidden sm:block">{t('all_projects_link')}</a>
-      </div>
-      <div class="grid sm:grid-cols-2 gap-8 md:gap-12">
-        {featuredProjects.map(project => <ProjectCard project={project} />)}
-      </div>
-      <div class="mt-12 sm:hidden">
-        <a href={`/${lang}/projects/`} class="btn-ghost w-full">{t('all_projects_link')}</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-16 md:py-24 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-    <div>
-      <p class="eyebrow mb-3">{t('studio_eyebrow')}</p>
-      <h2 class="text-3xl md:text-4xl font-bold mb-6">Small by design, hands-on from concept to final grade.</h2>
-      <p class="text-muted leading-relaxed mb-8">{t('studio_blurb')}</p>
-      <a href={`/${lang}/about/`} class="link-underline text-sm font-semibold">{t('nav_about')} →</a>
-    </div>
-    <div class="aspect-square bg-surface rounded-xl overflow-hidden relative media-zoom">
+  <!-- Full-Screen Cinematic Hero -->
+  <section class="relative min-h-[92vh] flex flex-col justify-between overflow-hidden text-white -mt-20 pt-24 border-b border-line/40">
+    <!-- Background Hero Image with Slow Cinematic Zoom -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
       <Image 
-        src={studioImg} 
-        alt="Riccardo Riva - Duerre Media Studio" 
-        class="w-full h-full object-cover"
-        widths={[400, 800, 1200]}
-        sizes="(max-width: 768px) 100vw, 50vw"
+        src={heroImg} 
+        alt="Duerre Media Cinematic Showcase" 
+        class="h-full w-full object-cover object-center animate-subtle-zoom"
+        widths={[800, 1400, 2000]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
       />
+      <!-- Dramatic Vignette & Gradient Overlays -->
+      <div class="absolute inset-0 bg-gradient-to-t from-bg via-black/45 to-black/85"></div>
+      <div class="absolute inset-0 bg-black/20"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-16 md:pt-40 md:pb-24 flex-1 flex flex-col justify-center items-center text-center">
+      <span class="inline-block text-xs md:text-sm font-semibold uppercase tracking-[0.25em] text-accent mb-6 animate-fade-in">
+        {t('hero_eyebrow')}
+      </span>
+      <h1 class="font-display max-w-5xl text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight drop-shadow-xl animate-fade-in">
+        {t('hero_headline')}
+      </h1>
+      <p class="mt-8 max-w-2xl text-base sm:text-xl text-white/85 leading-relaxed drop-shadow-md animate-fade-in">
+        {t('hero_subheadline')}
+      </p>
+
+      <div class="mt-10 flex flex-col sm:flex-row items-center gap-4 animate-fade-in">
+        <a href="#featured-work" class="btn-primary px-8 py-3.5 shadow-2xl">
+          {t('hero_cta_primary')} <span class="ml-2 font-normal">↓</span>
+        </a>
+        <a href={`/${lang}/contact/`} class="btn-ghost border-white/30 text-white backdrop-blur-md bg-white/5 hover:border-white px-8 py-3.5">
+          {t('hero_cta_secondary')}
+        </a>
+      </div>
+    </div>
+
+    <!-- Pinned 4-Discipline Ticker Bar -->
+    <div class="relative z-10 border-t border-white/15 bg-black/50 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 text-center">
+        <a href={`/${lang}/projects/`} class="group py-5 px-4 transition hover:bg-white/5">
+          <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
+            {t('service_1_title')}
+          </span>
+        </a>
+        <a href={`/${lang}/projects/`} class="group py-5 px-4 transition hover:bg-white/5">
+          <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
+            {t('service_2_title')}
+          </span>
+        </a>
+        <a href={`/${lang}/projects/`} class="group py-5 px-4 transition hover:bg-white/5">
+          <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
+            {t('service_3_title')}
+          </span>
+        </a>
+        <a href={`/${lang}/about/`} class="group py-5 px-4 transition hover:bg-white/5">
+          <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
+            {t('service_4_title')}
+          </span>
+        </a>
+      </div>
     </div>
   </section>
 
-  {latestPosts.length > 0 && (
-    <section class="py-16 md:py-24 px-6 bg-surface border-t border-line">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex items-end justify-between mb-12">
+  <!-- Editorial Featured Projects Showcase -->
+  <section id="featured-work" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-line">
+      <div>
+        <p class="eyebrow mb-2">{t('selected_works')}</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight">{t('projects_title')}</h2>
+      </div>
+      <a href={`/${lang}/projects/`} class="link-underline text-sm font-semibold mt-4 md:mt-0 inline-flex items-center gap-1">
+        {t('all_projects_link')} →
+      </a>
+    </div>
+
+    <!-- Alternating Editorial Cards -->
+    <div class="space-y-16 md:space-y-24">
+      {featuredProjects.map((project, index) => {
+        const isReversed = index % 2 === 1;
+        const { slug } = splitId(project.id);
+
+        return (
+          <article class="portfolio-card group rounded-2xl overflow-hidden border border-line bg-surface/40 hover:border-accent/50 transition-all duration-500">
+            <div class={`grid lg:grid-cols-12 items-center`}>
+              <!-- Media Column -->
+              <div class={`lg:col-span-7 relative aspect-[16/10] overflow-hidden bg-surface media-zoom ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
+                <a href={`/${lang}/projects/${slug}/`} aria-label={`${t('view_project')}: ${project.data.title}`} class="block h-full w-full">
+                  <Image 
+                    src={project.data.cover} 
+                    alt={project.data.coverAlt} 
+                    class="h-full w-full object-cover"
+                    widths={[600, 1000, 1400]}
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  <span class="absolute top-5 left-5 px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-black/70 backdrop-blur-md text-white border border-white/15">
+                    {t(`category_${project.data.category}`)}
+                  </span>
+                </a>
+              </div>
+
+              <!-- Editorial Details Column -->
+              <div class={`lg:col-span-5 p-8 sm:p-12 lg:p-14 flex flex-col justify-center ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
+                <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-muted mb-4">
+                  <span class="text-accent">{project.data.client}</span>
+                  <span class="font-mono">{project.data.year}</span>
+                </div>
+
+                <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4 group-hover:text-accent transition-colors">
+                  <a href={`/${lang}/projects/${slug}/`}>
+                    {project.data.title}
+                  </a>
+                </h3>
+
+                <p class="text-muted text-sm sm:text-base leading-relaxed mb-6">
+                  {project.data.description}
+                </p>
+
+                <div class="flex items-center gap-4 pt-4 border-t border-line/60">
+                  <a href={`/${lang}/projects/${slug}/`} class="btn-primary text-xs py-3 px-6">
+                    {t('view_project')} <span class="ml-1">→</span>
+                  </a>
+                  <a href={`/${lang}/projects/`} class="text-xs font-semibold uppercase tracking-wider text-muted hover:text-accent transition-colors">
+                    {t('all_projects_link')}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Studio Narrative & Creative Direction -->
+  <section class="py-24 md:py-32 bg-surface/60 border-y border-line">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div>
+        <p class="eyebrow mb-3">{t('studio_eyebrow')}</p>
+        <h2 class="font-display text-3xl md:text-5xl font-bold mb-8 leading-tight">
+          Small by design. Precision from initial storyboard to final master.
+        </h2>
+        <p class="text-muted leading-relaxed text-base md:text-lg mb-8">
+          {t('studio_blurb')}
+        </p>
+        <div class="grid grid-cols-2 gap-6 pt-6 border-t border-line/60 mb-8">
           <div>
-            <p class="eyebrow mb-3">{t('nav_blog')}</p>
-            <h2 class="text-3xl md:text-4xl font-bold">{t('latest_articles')}</h2>
+            <h4 class="text-xs uppercase tracking-wider font-semibold text-accent mb-2">Discipline</h4>
+            <p class="text-sm text-ink">Commercial Stills, Cinema, 3D CGI</p>
           </div>
-          <a href={`/${lang}/blog/`} class="link-underline text-sm font-semibold hidden sm:block">{t('all_articles')}</a>
+          <div>
+            <h4 class="text-xs uppercase tracking-wider font-semibold text-accent mb-2">Location</h4>
+            <p class="text-sm text-ink">Italy / Available Worldwide</p>
+          </div>
+        </div>
+        <a href={`/${lang}/about/`} class="btn-ghost">
+          {t('nav_about')} →
+        </a>
+      </div>
+
+      <div class="relative aspect-square rounded-2xl overflow-hidden bg-surface border border-line media-zoom shadow-2xl">
+        <Image 
+          src={studioImg} 
+          alt="Riccardo Riva - Duerre Media Studio" 
+          class="w-full h-full object-cover"
+          widths={[500, 900, 1200]}
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+        <div class="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white text-xs">
+          <span class="font-bold uppercase tracking-wider text-accent block mb-0.5">Riccardo Riva</span>
+          <span class="text-white/80">Director & Creative Producer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Production Pipeline / 3-Step Process -->
+  <section class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <p class="eyebrow mb-3">Workflow</p>
+      <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight mb-6">
+        Engineered for High-End Commercial Output
+      </h2>
+      <p class="text-muted text-base md:text-lg">
+        Every campaign is built on technical discipline, narrative clarity, and calibrated color science.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="p-8 rounded-2xl bg-surface border border-line hover:border-accent/40 transition-colors">
+        <span class="font-mono text-xs text-accent font-semibold uppercase tracking-widest block mb-4">01 / Concept</span>
+        <h3 class="text-xl font-semibold mb-3">Art Direction & Pre-Vis</h3>
+        <p class="text-muted text-sm leading-relaxed">
+          Detailed moodboards, lighting setups, 3D pre-visualization, and shot lists tailored to the brand's identity.
+        </p>
+      </div>
+
+      <div class="p-8 rounded-2xl bg-surface border border-line hover:border-accent/40 transition-colors">
+        <span class="font-mono text-xs text-accent font-semibold uppercase tracking-widest block mb-4">02 / Execution</span>
+        <h3 class="text-xl font-semibold mb-3">Precision Production</h3>
+        <p class="text-muted text-sm leading-relaxed">
+          State-of-the-art camera packages, controlled studio or remote location lighting, and GPU-accelerated CGI rendering.
+        </p>
+      </div>
+
+      <div class="p-8 rounded-2xl bg-surface border border-line hover:border-accent/40 transition-colors">
+        <span class="font-mono text-xs text-accent font-semibold uppercase tracking-widest block mb-4">03 / Finishing</span>
+        <h3 class="text-xl font-semibold mb-3">ACES Color & Delivery</h3>
+        <p class="text-muted text-sm leading-relaxed">
+          Calibrated color grading in DaVinci Resolve, clean retouches, high-dynamic-range exports, and multi-format delivery.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- From the Journal (Editorial Articles) -->
+  {latestPosts.length > 0 && (
+    <section class="py-24 md:py-32 px-6 bg-surface/50 border-t border-line">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-line">
+          <div>
+            <p class="eyebrow mb-2">{t('nav_blog')}</p>
+            <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight">{t('latest_articles')}</h2>
+          </div>
+          <a href={`/${lang}/blog/`} class="link-underline text-sm font-semibold mt-4 md:mt-0 inline-flex items-center gap-1">
+            {t('all_articles')} →
+          </a>
         </div>
         <div class="grid md:grid-cols-3 gap-8">
           {latestPosts.map(post => <PostPreview post={post} />)}
