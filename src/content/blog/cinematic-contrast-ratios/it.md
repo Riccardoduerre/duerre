@@ -3,7 +3,7 @@ title: "Rapporti di contrasto Key-to-Fill: disegnare la luce emotiva nel video"
 pubDate: 2026-05-18
 coverImage: ../../../assets/blog/DSCN7050.webp
 description: "Passare da un’illuminazione piatta 2:1 a rapporti cinematografici 8:1 usando book light e sfumature ambientali controllate."
-tags: []
+tags: ["Illuminazione", "Cinematografia", "Teoria"]
 ---
 Nel linguaggio cinematografico, l'atmosfera di un'inquadratura è determinata in primo luogo dal rapporto di contrasto: la relazione matematica tra le superfici maggiormente illuminate del soggetto (Key light) e quelle in ombra (Fill light). Padroneggiare questo rapporto è ciò che distingue un video promozionale piatto da una narrazione visiva coinvolgente.
 

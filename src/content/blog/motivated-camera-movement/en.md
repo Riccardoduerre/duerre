@@ -3,7 +3,7 @@ title: "Motivated Camera Movement: Parallax, Pacing and Kinetic Intent"
 pubDate: 2026-06-29
 coverImage: ../../../assets/blog/Giau_00003.webp
 description: "Ditching arbitrary camera moves for intentional blocking where foreground parallax accentuates subject psychology."
-tags: []
+tags: ["Cinematography", "Direction", "Filmmaking"]
 ---
 Modern gimbals, sliders, and camera drones have made buttery-smooth camera movement accessible to any creator. Paradoxically, this ease of mobility has led to an epidemic of unmotivated motion: camera moves that drift aimlessly across a scene without emotional justification or narrative focus.
 

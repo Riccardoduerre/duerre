@@ -1,9 +1,10 @@
 ---
+featured: true
 title: "Esporre curve Log e video RAW: il metodo dei False Color"
 pubDate: 2026-08-10
 coverImage: ../../../assets/blog/_DSC2344.webp
 description: "Smettere di tirare a indovinare sui profili flat. Come mappare il grigio medio a IRE specifici garantisce ombre pulite e toni pelle ricchi."
-tags: []
+tags: ["Cinematografia", "Color Grading", "Workflow"]
 ---
 Registrare con profili gamma logaritmici (come Sony S-Log3, Canon C-Log2 o ARRI LogC) è la prassi standard nelle produzioni commerciali per preservare l'intera estensione dinamica del sensore. Tuttavia, valutare a occhio un'immagine Log piatta e desaturata su un monitor da campo espone al rischio concreto di una cronica sottoesposizione.
 

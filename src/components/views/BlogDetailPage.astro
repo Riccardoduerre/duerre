@@ -2,7 +2,8 @@
 import { render } from 'astro:content';
 import { Picture } from 'astro:assets';
 import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
-import { splitId, formatDate, readingMinutes, type Post } from '../../lib/content';
+import PostPreview from '../PostPreview.astro';
+import { splitId, formatDate, readingMinutes, getPosts, type Post } from '../../lib/content';
 import { useTranslations, localePath, type Locale } from '../../i18n';
 
 interface Props {
@@ -16,72 +17,169 @@ const { lang, post, prev, next } = Astro.props;
 const { Content } = await render(post);
 const t = useTranslations(lang);
 const mins = readingMinutes(post.body);
+
+// Find related articles by matching tags
+const allPosts = await getPosts(lang);
+const relatedPosts = allPosts
+  .filter(p => p.id !== post.id && (p.data.tags || []).some(tag => (post.data.tags || []).includes(tag)))
+  .slice(0, 2);
 ---
 
 <BlogPostLayout 
-  title={`${post.data.title} | Duerre Media`} 
+  title={`${post.data.title} | Duerremedia`} 
   description={post.data.description} 
   lang={lang}
   image={post.data.coverImage.src}
 >
-  <header class="mb-12 text-center">
-    <div class="flex items-center justify-center gap-x-4 text-sm text-muted mb-6">
+  <!-- Reading Progress Bar -->
+  <div id="reading-progress" class="fixed top-0 left-0 h-[3px] bg-accent z-50 transition-all duration-75 w-0 pointer-events-none"></div>
+
+  <!-- Breadcrumbs & Back Link -->
+  <div class="mb-10 flex items-center justify-between text-xs font-mono uppercase tracking-wider text-muted">
+    <a href={localePath(lang, '/blog/')} class="hover:text-ink transition-colors flex items-center gap-1">
+      ← {t('nav_blog')}
+    </a>
+    <button 
+      id="copy-link-btn" 
+      type="button" 
+      class="hover:text-accent transition-colors flex items-center gap-1 cursor-pointer"
+      data-copied-text={t('link_copied')}
+    >
+      <span id="copy-btn-label">{t('copy_link')}</span>
+    </button>
+  </div>
+
+  <header class="mb-12">
+    <div class="flex items-center gap-x-3 text-xs font-mono text-muted mb-6">
       <time datetime={post.data.pubDate.toISOString()}>
         {formatDate(post.data.pubDate, lang)}
       </time>
-      <span>&bull;</span>
+      <span>·</span>
       <span>{mins} min read</span>
     </div>
-    <h1 class="text-3xl md:text-5xl font-bold mb-6">{post.data.title}</h1>
+
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 text-ink leading-tight">
+      {post.data.title}
+    </h1>
+
+    <p class="text-base sm:text-lg text-muted leading-relaxed mb-6">
+      {post.data.description}
+    </p>
     
     {post.data.tags.length > 0 && (
-      <div class="flex flex-wrap justify-center gap-2 mt-6">
+      <div class="flex flex-wrap gap-2 pt-2 border-t border-line/60">
         {post.data.tags.map(tag => (
-          <span class="px-3 py-1 bg-surface border border-line rounded-full text-xs text-muted">{tag}</span>
+          <span class="px-2.5 py-0.5 bg-surface border border-line rounded-full text-[11px] font-mono uppercase tracking-wider text-muted">
+            {tag}
+          </span>
         ))}
       </div>
     )}
   </header>
 
-  <div class="mb-16 aspect-[16/9] rounded-xl overflow-hidden bg-surface">
-    <Picture formats={['avif', 'webp']} 
+  <!-- Cover Image -->
+  <div class="mb-14 aspect-[16/9] rounded-2xl overflow-hidden bg-surface border border-line shadow-2xl">
+    <Picture 
+      formats={['avif', 'webp']} 
       src={post.data.coverImage} 
       alt={post.data.coverAlt || post.data.title} 
       class="w-full h-full object-cover"
       width={1200}
       height={675}
+      loading="eager"
     />
   </div>
 
-  <div class="prose prose-studio prose-invert max-w-none">
+  <!-- Editorial Markdown Body -->
+  <div class="prose prose-studio max-w-none">
     <Content />
   </div>
 
+  <!-- Author Bio Card -->
+  <div class="mt-16 p-6 sm:p-8 rounded-2xl bg-surface/70 border border-line flex flex-col sm:flex-row items-start sm:items-center gap-6">
+    <div class="w-14 h-14 rounded-full bg-line overflow-hidden shrink-0 border border-line">
+      <img src="/favicon.png" alt="Riccardo Riva" class="w-full h-full object-cover" />
+    </div>
+    <div class="text-sm">
+      <h3 class="font-bold text-ink mb-1">Riccardo Riva</h3>
+      <p class="text-muted text-xs leading-relaxed">
+        {lang === 'it' 
+          ? 'Direttore visivo, fotografo commerciale e 3D artist presso Duerremedia. Specializzato in color science ACES, cinematografia e rendering.' 
+          : 'Visual director, commercial photographer, and 3D artist at Duerremedia. Specializing in ACES color science, cinematic pacing, and CGI.'}
+      </p>
+    </div>
+  </div>
+
+  <!-- Related Reading (if any) -->
+  {relatedPosts.length > 0 && (
+    <div class="mt-20 pt-12 border-t border-line">
+      <h3 class="text-xs font-mono uppercase tracking-[0.2em] text-accent mb-8">{t('related_posts')}</h3>
+      <div class="grid sm:grid-cols-2 gap-8">
+        {relatedPosts.map(p => <PostPreview post={p} />)}
+      </div>
+    </div>
+  )}
+
   <!-- Previous / Next Article Navigation -->
   {(prev || next) && (
-    <nav aria-label="Article pagination" class="grid grid-cols-2 gap-6 py-12 border-t border-line my-12">
+    <nav aria-label="Article pagination" class="grid grid-cols-2 gap-6 py-12 border-t border-line mt-16">
       <div>
         {prev && (
           <a href={localePath(lang, `/blog/${splitId(prev.id).slug}/`)} class="group block text-left">
-            <span class="text-xs text-muted uppercase tracking-wider block mb-1">← {t('prev_post')}</span>
-            <span class="text-base md:text-lg font-semibold group-hover:text-accent transition-colors">{prev.data.title}</span>
+            <span class="text-[11px] font-mono text-muted uppercase tracking-wider block mb-1">← {t('prev_post')}</span>
+            <span class="text-sm sm:text-base font-semibold group-hover:text-accent transition-colors">{prev.data.title}</span>
           </a>
         )}
       </div>
       <div>
         {next && (
           <a href={localePath(lang, `/blog/${splitId(next.id).slug}/`)} class="group block text-right">
-            <span class="text-xs text-muted uppercase tracking-wider block mb-1">{t('next_post')} →</span>
-            <span class="text-base md:text-lg font-semibold group-hover:text-accent transition-colors">{next.data.title}</span>
+            <span class="text-[11px] font-mono text-muted uppercase tracking-wider block mb-1">{t('next_post')} →</span>
+            <span class="text-sm sm:text-base font-semibold group-hover:text-accent transition-colors">{next.data.title}</span>
           </a>
         )}
       </div>
     </nav>
   )}
   
-  <div class="mt-24 pt-12 border-t border-line text-center">
-    <p class="text-muted mb-6">{t('post_cta_title')}</p>
+  <div class="mt-16 pt-12 border-t border-line text-center">
+    <p class="text-muted text-sm mb-6">{t('post_cta_title')}</p>
     <a href={localePath(lang, '/contact/')} class="btn-primary">{t('nav_cta')}</a>
   </div>
+
+  <script>
+    function setupPostInteractions() {
+      // Reading Progress
+      const bar = document.getElementById('reading-progress');
+      if (bar) {
+        window.onscroll = () => {
+          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+          bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+        };
+      }
+
+      // Copy Link Button
+      const copyBtn = document.getElementById('copy-link-btn');
+      const copyLabel = document.getElementById('copy-btn-label');
+      if (copyBtn && copyLabel) {
+        copyBtn.onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(window.location.href);
+            const originalText = copyLabel.textContent;
+            copyLabel.textContent = copyBtn.dataset.copiedText || 'Copied!';
+            setTimeout(() => {
+              copyLabel.textContent = originalText;
+            }, 2000);
+          } catch {
+            // fallback
+          }
+        };
+      }
+    }
+
+    setupPostInteractions();
+    document.addEventListener('astro:page-load', setupPostInteractions);
+  </script>
 </BlogPostLayout>
 

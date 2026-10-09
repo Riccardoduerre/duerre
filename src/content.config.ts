@@ -24,6 +24,9 @@ const projects = defineCollection({
       challenge: z.string().optional(),
       solution: z.string().optional(),
       results: z.string().optional(),
+      deliverables: z.array(z.string()).default([]),
+      aspectRatio: z.string().optional(),
+      gear: z.array(z.string()).default([]),
       gallery: z
         .array(
           z.object({
@@ -45,6 +48,7 @@ const blog = defineCollection({
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
       tags: z.array(z.string()).default([]),
+      featured: z.boolean().default(false),
       coverImage: image(),
       coverAlt: z.string().optional(),
       draft: z.boolean().default(false),

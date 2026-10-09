@@ -3,7 +3,7 @@ title: "Lunghezze focali e compressione spaziale: oltre l’angolo di campo"
 pubDate: 2026-07-13
 coverImage: ../../../assets/blog/Landscapes_00001.webp
 description: "Come la distanza tra camera e soggetto altera la geometria prospettica e perché un 24mm appare intimo mentre un 85mm isola il prestigio."
-tags: []
+tags: ["Ottica", "Composizione", "Cinematografia"]
 ---
 Uno dei luoghi comuni più diffusi nella cultura visiva è che la lunghezza focale modifichi la prospettiva. Gli obiettivi non modificano la prospettiva: **è la distanza fisica tra la fotocamera e il soggetto a determinarla**. La lunghezza focale si limita a ritagliare l'angolo di campo inquadrato.
 

@@ -3,7 +3,7 @@ title: "Illuminare mondi 3D: HDRI abbinate a luci d’accento controllate"
 pubDate: 2026-07-27
 coverImage: ../../../assets/blog/Landscapes_00002.webp
 description: "Perché affidarsi solo a un’environment map rende i render piatti, e come l’aggiunta di luci di contorno intaglia volumi tangibili."
-tags: []
+tags: ["3D & CGI", "Illuminazione", "Rendering"]
 ---
 Le immagini ad alta gamma dinamica (HDRI) hanno rivoluzionato la computer grafica sostituendo le vecchie luci puntiformi con panorami a 32 bit in virgola mobile registrati in ambienti reali. Tuttavia, affidarsi esclusivamente a una cupola HDRI è tra le cause principali di render piatti e privi di personalità.
 

@@ -1,5 +1,6 @@
 ---
 import { render } from 'astro:content';
+import { Picture } from 'astro:assets';
 import ProjectGalleryLayout from '../../layouts/ProjectGalleryLayout.astro';
 import PhotoGallery from '../PhotoGallery.astro';
 import YouTubeEmbed from '../YouTubeEmbed.astro';
@@ -19,68 +20,141 @@ const t = useTranslations(lang);
 ---
 
 <ProjectGalleryLayout 
-  title={`${project.data.title} | Duerre Media`} 
+  title={`${project.data.title} | Duerremedia`} 
   description={project.data.description} 
   lang={lang}
   image={project.data.cover.src}
 >
-  <header class="mb-16 md:mb-24">
-    <div class="max-w-3xl">
-      <h1 class="text-4xl md:text-6xl font-bold mb-6">{project.data.title}</h1>
-      <p class="text-xl md:text-2xl text-muted mb-12">{project.data.description}</p>
-      
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-y border-line text-sm">
-        <div>
-          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">{t('label_client')}</span>
-          <span class="font-medium">{project.data.client}</span>
-        </div>
-        <div>
-          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">{t('label_role')}</span>
-          <span class="font-medium">{project.data.role}</span>
-        </div>
-        <div>
-          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">{t('label_year')}</span>
-          <span class="font-medium">{project.data.year}</span>
-        </div>
-        <div>
-          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">{t('label_category')}</span>
-          <span class="font-medium">{t(`category_${project.data.category}`)}</span>
-        </div>
+  <!-- Project Editorial Header -->
+  <header class="mb-14 md:mb-20">
+    <div class="flex items-center gap-3 mb-6">
+      <a href={localePath(lang, '/projects/')} class="text-xs font-semibold uppercase tracking-[0.2em] text-accent hover:underline">
+        ← {t('nav_projects')}
+      </a>
+      <span class="text-line">/</span>
+      <span class="text-xs font-mono uppercase tracking-widest text-muted">
+        {t(`category_${project.data.category}`)}
+      </span>
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 max-w-4xl text-ink">
+      {project.data.title}
+    </h1>
+    <p class="text-lg sm:text-xl text-muted max-w-3xl leading-relaxed mb-12">
+      {project.data.description}
+    </p>
+    
+    <!-- Production Specs HUD -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-y border-line text-xs font-mono uppercase tracking-wider">
+      <div>
+        <span class="block text-accent mb-1 text-[10px]">{t('label_client')}</span>
+        <span class="font-sans font-semibold text-ink text-sm normal-case">{project.data.client}</span>
+      </div>
+      <div>
+        <span class="block text-accent mb-1 text-[10px]">{t('label_role')}</span>
+        <span class="font-sans font-semibold text-ink text-sm normal-case">{project.data.role}</span>
+      </div>
+      <div>
+        <span class="block text-accent mb-1 text-[10px]">{t('label_year')}</span>
+        <span class="font-mono text-ink text-sm">{project.data.year}</span>
+      </div>
+      <div>
+        <span class="block text-accent mb-1 text-[10px]">{project.data.aspectRatio ? t('label_aspect_ratio') : t('label_category')}</span>
+        <span class="font-sans font-semibold text-ink text-sm normal-case">
+          {project.data.aspectRatio || t(`category_${project.data.category}`)}
+        </span>
       </div>
     </div>
   </header>
 
-  <div class="grid lg:grid-cols-12 gap-12 lg:gap-24 mb-24">
-    <div class="lg:col-span-8 prose prose-studio prose-invert max-w-none">
+  <!-- Hero Cover Image -->
+  <div class="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-2xl overflow-hidden bg-surface border border-line mb-16 md:mb-24 shadow-2xl">
+    <Picture 
+      formats={['avif', 'webp']} 
+      src={project.data.cover} 
+      alt={project.data.coverAlt} 
+      class="w-full h-full object-cover"
+      widths={[800, 1400, 2000]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+
+  <!-- Editorial Story & Creative Challenge Grid -->
+  <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-24">
+    <!-- Narrative Column -->
+    <div class="lg:col-span-7 xl:col-span-8 prose prose-studio max-w-none">
       <Content />
     </div>
     
-    <div class="lg:col-span-4 space-y-12">
+    <!-- Production Specs & Metrics Sidebar -->
+    <div class="lg:col-span-5 xl:col-span-4 space-y-8">
       {project.data.challenge && (
-        <div>
-          <h3 class="text-lg font-semibold mb-3">{t('challenge_title')}</h3>
+        <div class="p-6 rounded-xl bg-surface/70 border border-line">
+          <span class="text-xs font-mono uppercase tracking-widest text-accent block mb-2">{t('challenge_title')}</span>
           <p class="text-muted text-sm leading-relaxed">{project.data.challenge}</p>
         </div>
       )}
+
       {project.data.solution && (
-        <div>
-          <h3 class="text-lg font-semibold mb-3">{t('solution_title')}</h3>
+        <div class="p-6 rounded-xl bg-surface/70 border border-line">
+          <span class="text-xs font-mono uppercase tracking-widest text-accent block mb-2">{t('solution_title')}</span>
           <p class="text-muted text-sm leading-relaxed">{project.data.solution}</p>
+        </div>
+      )}
+
+      {project.data.results && (
+        <div class="p-6 rounded-xl bg-surface/70 border border-line border-l-2 border-l-accent">
+          <span class="text-xs font-mono uppercase tracking-widest text-accent block mb-2">{t('results_title')}</span>
+          <p class="text-ink font-medium text-sm leading-relaxed">{project.data.results}</p>
+        </div>
+      )}
+
+      {project.data.deliverables && project.data.deliverables.length > 0 && (
+        <div class="p-6 rounded-xl bg-surface/70 border border-line">
+          <span class="text-xs font-mono uppercase tracking-widest text-accent block mb-3">{t('deliverables_title')}</span>
+          <ul class="space-y-2 text-xs text-muted">
+            {project.data.deliverables.map((item) => (
+              <li class="flex items-start gap-2">
+                <span class="text-accent">▪</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {project.data.gear && project.data.gear.length > 0 && (
+        <div class="p-6 rounded-xl bg-surface/70 border border-line">
+          <span class="text-xs font-mono uppercase tracking-widest text-accent block mb-3">{t('gear_title')}</span>
+          <ul class="space-y-1.5 text-xs text-muted font-mono">
+            {project.data.gear.map((item) => (
+              <li class="flex items-start gap-2">
+                <span class="text-accent/60">/</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
   </div>
 
+  <!-- Video Showcase (if present) -->
   {project.data.youtubeId && (
-    <div class="mb-24">
+    <section class="mb-24">
+      <h2 class="text-xs font-mono uppercase tracking-[0.2em] text-accent mb-6">Cinema Playback</h2>
       <YouTubeEmbed id={project.data.youtubeId} title={project.data.title} />
-    </div>
+    </section>
   )}
 
+  <!-- High-Res Stills Gallery -->
   {project.data.gallery && project.data.gallery.length > 0 && (
-    <div class="mb-24">
+    <section class="mb-24">
+      <h2 class="text-xs font-mono uppercase tracking-[0.2em] text-accent mb-6">Production Gallery</h2>
       <PhotoGallery images={project.data.gallery} />
-    </div>
+    </section>
   )}
 
   <!-- Previous / Next Project Navigation -->
@@ -89,25 +163,26 @@ const t = useTranslations(lang);
       <div>
         {prev && (
           <a href={localePath(lang, `/projects/${splitId(prev.id).slug}/`)} class="group block text-left">
-            <span class="text-xs text-muted uppercase tracking-wider block mb-1">← {t('prev_project')}</span>
-            <span class="text-base md:text-lg font-semibold group-hover:text-accent transition-colors">{prev.data.title}</span>
+            <span class="text-[11px] font-mono text-muted uppercase tracking-wider block mb-1">← {t('prev_project')}</span>
+            <span class="text-base sm:text-lg font-semibold group-hover:text-accent transition-colors">{prev.data.title}</span>
           </a>
         )}
       </div>
       <div>
         {next && (
           <a href={localePath(lang, `/projects/${splitId(next.id).slug}/`)} class="group block text-right">
-            <span class="text-xs text-muted uppercase tracking-wider block mb-1">{t('next_project')} →</span>
-            <span class="text-base md:text-lg font-semibold group-hover:text-accent transition-colors">{next.data.title}</span>
+            <span class="text-[11px] font-mono text-muted uppercase tracking-wider block mb-1">{t('next_project')} →</span>
+            <span class="text-base sm:text-lg font-semibold group-hover:text-accent transition-colors">{next.data.title}</span>
           </a>
         )}
       </div>
     </nav>
   )}
 
-  <div class="text-center py-24 border-t border-line">
-    <h2 class="text-3xl font-bold mb-6">{t('project_cta_title')}</h2>
-    <p class="text-muted mb-8">{t('project_cta_desc')}</p>
+  <!-- Bottom Inquiry CTA -->
+  <div class="text-center py-20 border-t border-line">
+    <h2 class="text-2xl sm:text-3xl font-bold mb-4">{t('project_cta_title')}</h2>
+    <p class="text-muted text-sm sm:text-base mb-8 max-w-lg mx-auto">{t('project_cta_desc')}</p>
     <a href={localePath(lang, '/contact/')} class="btn-primary">{t('nav_cta')}</a>
   </div>
 </ProjectGalleryLayout>

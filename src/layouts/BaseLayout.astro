@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -18,12 +19,17 @@ const { title, description, lang, image, type = 'website' } = Astro.props;
 <html lang={lang}>
   <head>
     <BaseHead title={title} description={description} lang={lang} image={image} type={type} />
+    <ClientRouter />
     <script is:inline>
-      document.documentElement.classList.add('js');
-      const stored = localStorage.getItem('theme');
-      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-      const theme = stored === 'light' || stored === 'dark' ? stored : prefersLight ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
+      function applyTheme() {
+        document.documentElement.classList.add('js');
+        const stored = localStorage.getItem('theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        const theme = stored === 'light' || stored === 'dark' ? stored : prefersLight ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
     </script>
   </head>
   <body>

@@ -3,7 +3,7 @@ title: "Key-to-Fill Contrast Ratios: Designing Emotional Light in Video"
 pubDate: 2026-05-18
 coverImage: ../../../assets/blog/DSCN7050.webp
 description: "Transitioning from flat corporate 2:1 lighting to dramatic 8:1 cinematic ratios using book lights and ambient feathering."
-tags: []
+tags: ["Lighting", "Cinematography", "Theory"]
 ---
 In visual storytelling, the mood of a frame is governed primarily by its lighting contrast ratio: the mathematical relationship between the brightest illuminated planes of a subject (Key light) and the shadowed planes (Fill light). Mastering this ratio separates flat commercial video from evocative cinematic imagery.
 

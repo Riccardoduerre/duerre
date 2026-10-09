@@ -1,4 +1,4 @@
-# Duerre Media — Portfolio & Journal
+# Duerremedia — Portfolio & Journal
 
 Photography, film and 3D work by Riccardo Riva. Live at [duerremedia.com](https://duerremedia.com).
 
@@ -31,6 +31,16 @@ Images are co-located with the Markdown and referenced relatively:
 ```yaml
 cover: "./cover.webp"
 coverAlt: "…"
+aspectRatio: "2.39:1 CinemaScope"   # optional, e.g. "16:9", "4:5 Portrait"
+deliverables:                       # optional array
+  - "Global Fall/Winter Print Catalog"
+  - "Commercial Broadcast 4K Cuts"
+gear:                               # optional array
+  - "Cinema Camera Package"
+  - "Anamorphic Primes"
+challenge: "…"
+solution: "…"
+results: "…"
 youtubeId: "dQw4w9WgXcQ"   # optional, the 11-character ID, not the URL
 gallery:
   - image: "./gallery-01.webp"
@@ -42,7 +52,7 @@ gallery:
 
 ### Blog — `src/content/blog/<slug>/`
 
-Required: `title`, `description`, `pubDate`, `coverImage`. Shared covers live in `src/assets/blog/`.
+Required: `title`, `description`, `pubDate`, `coverImage`, `tags` (e.g. `["Cinematography", "Lighting"]`). Shared covers live in `src/assets/blog/`. Flagship articles can set `featured: true` to lead the journal.
 
 ### Drafts
 
@@ -58,7 +68,14 @@ Source images go through Astro's `<Picture>` at build time, producing AVIF and W
 
 ## Styling
 
-Theme tokens (colors, fonts, animations) are defined with `@theme` in `src/styles/global.css`; there is no `tailwind.config.js`. Colors come from the `--c-*` RGB variables, which switch between the dark (default) and light palettes via `data-theme` on `<html>`.
+High-end, 100% all-sans typographic system built with Plus Jakarta Sans and system monospaced stacks. Theme tokens (colors, fonts, animations) are defined with `@theme` in `src/styles/global.css`; there is no `tailwind.config.js`. Colors come from the `--c-*` RGB variables, which switch between the dark (default) and light palettes via `data-theme` on `<html>`.
+
+## RSS & Sitemaps
+
+Bilingual feeds are automatically generated:
+- `/rss.xml` — English publication feed
+- `/it/rss.xml` — Italian publication feed
+- `/sitemap-index.xml` — Full sitemap
 
 ## Contact form
 

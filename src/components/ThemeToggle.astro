@@ -15,13 +15,17 @@ const t = useTranslations(lang);
 </button>
 
 <script>
-  // Initial theme is applied by the inline script in BaseLayout before first paint.
-  document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const root = document.documentElement;
-      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+  function setupThemeToggle() {
+    document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+      (button as HTMLButtonElement).onclick = () => {
+        const root = document.documentElement;
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      };
     });
-  });
+  }
+
+  setupThemeToggle();
+  document.addEventListener('astro:page-load', setupThemeToggle);
 </script>

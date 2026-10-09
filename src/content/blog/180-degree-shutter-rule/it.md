@@ -3,7 +3,7 @@ title: "La regola dei 180 gradi dell’otturatore e il motion blur naturale"
 pubDate: 2026-09-21
 coverImage: ../../../assets/blog/_RIK7376_HDR.webp
 description: "Perché sincronizzare l’esposizione al doppio del frame rate crea cadenza cinematografica organica, e quando infrangere la regola serve alla narrazione."
-tags: []
+tags: ["Cinematografia", "Ottica", "Movimento"]
 ---
 Nel cinema e nei video commerciali d'autore, il motion blur non è un difetto: è il collante percettivo che trasforma una rapida successione di fotogrammi statici in un flusso continuo ed organico. Il pilastro di questa cadenza è la celebre regola dei 180 gradi dell'otturatore.
 

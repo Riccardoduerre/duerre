@@ -3,7 +3,7 @@ title: "Color Harmony and Split Toning: Creating Cohesive Visual Palettes"
 pubDate: 2026-04-20
 coverImage: ../../../assets/blog/Giau_00002.webp
 description: "Implementing complementary color theory across highlights and shadows while rigorously protecting authentic human skin tones."
-tags: []
+tags: ["Color Grading", "Post-Production", "Theory"]
 ---
 Color grading is frequently mistaken for the aggressive application of preset LUTs. In professional visual direction, however, color grading is an exercise in rigorous chromatic discipline: stripping away distracting hues to build an intentional, cohesive relationship between highlights, midtones, and shadows.
 

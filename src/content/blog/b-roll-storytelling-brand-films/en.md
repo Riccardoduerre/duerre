@@ -3,7 +3,7 @@ title: "Elevating B-Roll: Transforming Cutaways into Narrative Pillars"
 pubDate: 2026-04-06
 coverImage: ../../../assets/blog/_RIK7376_HDR.webp
 description: "Moving away from visual filler: how tactile textures, deliberate match cuts, and atmospheric details deepen commercial pacing."
-tags: []
+tags: ["Filmmaking", "Direction", "Storytelling"]
 ---
 The term "B-roll" is historically unfortunate: it implies secondary, disposable footage shot solely to cover awkward interview cuts or fill dead space in a timeline. In high-end commercial filmmaking, however, atmospheric cutaways are not filler—they are the visceral marrow that communicates craftsmanship, tactile luxury, and emotional tone.
 

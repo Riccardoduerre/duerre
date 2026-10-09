@@ -10,28 +10,80 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const currentPath = Astro.url.pathname;
 const otherLang = lang === 'en' ? 'it' : 'en';
+
+const isProjects = currentPath.includes('/projects');
+const isAbout = currentPath.includes('/about');
+const isBlog = currentPath.includes('/blog');
+const isContact = currentPath.includes('/contact');
 ---
 
-<header class="sticky top-0 z-50 w-full border-b border-line/50 bg-bg/80 backdrop-blur-sm">
+<header class="sticky top-0 z-50 w-full border-b border-line/60 bg-bg/85 backdrop-blur-md transition-colors">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-    <a href={localePath(lang, '/')} class="text-xl font-bold tracking-tight hover:text-accent transition-colors">Duerre Media</a>
+    <a href={localePath(lang, '/')} class="flex items-center gap-2 group text-base font-bold tracking-tight text-ink hover:text-accent transition-colors">
+      <span class="tracking-[-0.03em] uppercase text-sm font-extrabold">Duerremedia</span>
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent opacity-80 group-hover:scale-125 transition-transform"></span>
+    </a>
     
     <!-- Desktop Navigation -->
-    <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
-      <a href={localePath(lang, '/projects/')} class="hover:text-accent transition-colors">{t('nav_projects')}</a>
-      <a href={localePath(lang, '/about/')} class="hover:text-accent transition-colors">{t('nav_about')}</a>
-      <a href={localePath(lang, '/blog/')} class="hover:text-accent transition-colors">{t('nav_blog')}</a>
-      <a href={localePath(lang, '/contact/')} class="hover:text-accent transition-colors">{t('nav_contact')}</a>
+    <nav class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-[0.14em] uppercase text-muted">
+      <a 
+        href={localePath(lang, '/projects/')} 
+        class={`transition-colors hover:text-ink relative py-1 ${isProjects ? 'text-ink' : ''}`}
+        aria-current={isProjects ? 'page' : undefined}
+      >
+        {t('nav_projects')}
+        {isProjects && <span class="absolute bottom-0 left-0 right-0 h-[2px] bg-accent rounded-full"></span>}
+      </a>
+      <a 
+        href={localePath(lang, '/about/')} 
+        class={`transition-colors hover:text-ink relative py-1 ${isAbout ? 'text-ink' : ''}`}
+        aria-current={isAbout ? 'page' : undefined}
+      >
+        {t('nav_about')}
+        {isAbout && <span class="absolute bottom-0 left-0 right-0 h-[2px] bg-accent rounded-full"></span>}
+      </a>
+      <a 
+        href={localePath(lang, '/blog/')} 
+        class={`transition-colors hover:text-ink relative py-1 ${isBlog ? 'text-ink' : ''}`}
+        aria-current={isBlog ? 'page' : undefined}
+      >
+        {t('nav_blog')}
+        {isBlog && <span class="absolute bottom-0 left-0 right-0 h-[2px] bg-accent rounded-full"></span>}
+      </a>
+      <a 
+        href={localePath(lang, '/contact/')} 
+        class={`transition-colors hover:text-ink relative py-1 ${isContact ? 'text-ink' : ''}`}
+        aria-current={isContact ? 'page' : undefined}
+      >
+        {t('nav_contact')}
+        {isContact && <span class="absolute bottom-0 left-0 right-0 h-[2px] bg-accent rounded-full"></span>}
+      </a>
       
-      <div class="flex items-center gap-4 ml-4 pl-4 border-l border-line">
-        <a href={switchLocalePath(currentPath, otherLang)} class="text-xs font-bold uppercase hover:text-accent">{otherLang}</a>
+      <div class="flex items-center gap-3 ml-4 pl-4 border-l border-line">
+        <!-- Segmented Language Switcher -->
+        <div class="flex items-center rounded-full bg-surface border border-line p-0.5 text-[10px] font-bold">
+          <span class={`px-2 py-0.5 rounded-full ${lang === 'en' ? 'bg-ink text-bg' : 'text-muted'}`}>EN</span>
+          <a 
+            href={switchLocalePath(currentPath, otherLang)} 
+            class={`px-2 py-0.5 rounded-full transition hover:text-ink ${lang === 'it' ? 'bg-ink text-bg' : 'text-muted'}`}
+            aria-label={t('switch_lang_label')}
+          >
+            IT
+          </a>
+        </div>
         <ThemeToggle lang={lang} />
       </div>
     </nav>
 
-    <!-- Mobile Hamburger Button & Theme Toggle -->
+    <!-- Mobile Navigation Toggle -->
     <div class="flex items-center gap-3 md:hidden">
-      <a href={switchLocalePath(currentPath, otherLang)} class="text-xs font-bold uppercase hover:text-accent px-1">{otherLang}</a>
+      <a 
+        href={switchLocalePath(currentPath, otherLang)} 
+        class="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded bg-surface border border-line text-muted hover:text-ink"
+        aria-label={t('switch_lang_label')}
+      >
+        {otherLang.toUpperCase()}
+      </a>
       <ThemeToggle lang={lang} />
       <button 
         id="mobile-menu-toggle" 
@@ -49,27 +101,32 @@ const otherLang = lang === 'en' ? 'it' : 'en';
   </div>
 
   <!-- Mobile Drawer -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-line bg-surface/95 backdrop-blur-sm px-6 py-6 space-y-4 text-base font-medium">
-    <a href={localePath(lang, '/projects/')} class="block py-2 hover:text-accent transition-colors">{t('nav_projects')}</a>
-    <a href={localePath(lang, '/about/')} class="block py-2 hover:text-accent transition-colors">{t('nav_about')}</a>
-    <a href={localePath(lang, '/blog/')} class="block py-2 hover:text-accent transition-colors">{t('nav_blog')}</a>
-    <a href={localePath(lang, '/contact/')} class="block py-2 hover:text-accent transition-colors">{t('nav_contact')}</a>
+  <div id="mobile-menu" class="hidden md:hidden border-t border-line bg-surface/95 backdrop-blur-md px-6 py-6 space-y-4 text-sm font-semibold uppercase tracking-[0.12em]">
+    <a href={localePath(lang, '/projects/')} class={`block py-2 hover:text-accent transition-colors ${isProjects ? 'text-accent' : ''}`}>{t('nav_projects')}</a>
+    <a href={localePath(lang, '/about/')} class={`block py-2 hover:text-accent transition-colors ${isAbout ? 'text-accent' : ''}`}>{t('nav_about')}</a>
+    <a href={localePath(lang, '/blog/')} class={`block py-2 hover:text-accent transition-colors ${isBlog ? 'text-accent' : ''}`}>{t('nav_blog')}</a>
+    <a href={localePath(lang, '/contact/')} class={`block py-2 hover:text-accent transition-colors ${isContact ? 'text-accent' : ''}`}>{t('nav_contact')}</a>
   </div>
 </header>
 
-<script is:inline>
-  const toggleBtn = document.getElementById('mobile-menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const barsIcon = document.getElementById('menu-icon-bars');
-  const closeIcon = document.getElementById('menu-icon-close');
+<script>
+  function setupMobileMenu() {
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const barsIcon = document.getElementById('menu-icon-bars');
+    const closeIcon = document.getElementById('menu-icon-close');
 
-  if (toggleBtn && mobileMenu && barsIcon && closeIcon) {
-    toggleBtn.addEventListener('click', () => {
-      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
-      mobileMenu.classList.toggle('hidden');
-      barsIcon.classList.toggle('hidden');
-      closeIcon.classList.toggle('hidden');
-    });
+    if (toggleBtn && mobileMenu && barsIcon && closeIcon) {
+      toggleBtn.onclick = () => {
+        const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+        toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+        mobileMenu.classList.toggle('hidden');
+        barsIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      };
+    }
   }
+
+  setupMobileMenu();
+  document.addEventListener('astro:page-load', setupMobileMenu);
 </script>

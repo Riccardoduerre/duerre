@@ -14,7 +14,7 @@ const projects = await getProjects(lang);
 ---
 
 <BaseLayout 
-  title={`${t('projects_title')} | Duerre Media`} 
+  title={`${t('projects_title')} | Duerremedia`} 
   description={t('projects_intro')} 
   lang={lang}
 >
@@ -29,30 +29,30 @@ const projects = await getProjects(lang);
       <button 
         type="button" 
         data-filter="all" 
-        class="filter-pill active px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-ink text-bg"
+        class="filter-pill active px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-ink text-bg cursor-pointer"
       >
-        {t('all_projects_link')}
+        {t('all_projects_link')} ({projects.length})
       </button>
       <button 
         type="button" 
         data-filter="photo" 
-        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink"
+        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
       >
-        {t('category_photo')}
+        {t('category_photo')} ({projects.filter(p => p.data.category === 'photo').length})
       </button>
       <button 
         type="button" 
         data-filter="video" 
-        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink"
+        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
       >
-        {t('category_video')}
+        {t('category_video')} ({projects.filter(p => p.data.category === 'video').length})
       </button>
       <button 
         type="button" 
         data-filter="3d" 
-        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink"
+        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
       >
-        {t('category_3d')}
+        {t('category_3d')} ({projects.filter(p => p.data.category === '3d').length})
       </button>
     </div>
 
@@ -65,30 +65,35 @@ const projects = await getProjects(lang);
     </div>
   </div>
 
-  <script is:inline>
-    const filterButtons = document.querySelectorAll('.filter-pill');
-    const projectItems = document.querySelectorAll('.project-item');
+  <script>
+    function initProjectFilters() {
+      const filterButtons = document.querySelectorAll('.filter-pill');
+      const projectItems = document.querySelectorAll('.project-item');
 
-    filterButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
+      filterButtons.forEach((btn) => {
+        (btn as HTMLButtonElement).onclick = () => {
+          const filter = (btn as HTMLElement).dataset.filter;
 
-        filterButtons.forEach((b) => {
-          b.classList.remove('bg-ink', 'text-bg');
-          b.classList.add('bg-surface', 'text-muted', 'border', 'border-line');
-        });
-        btn.classList.add('bg-ink', 'text-bg');
-        btn.classList.remove('bg-surface', 'text-muted', 'border', 'border-line');
+          filterButtons.forEach((b) => {
+            b.classList.remove('bg-ink', 'text-bg');
+            b.classList.add('bg-surface', 'text-muted', 'border', 'border-line');
+          });
+          btn.classList.add('bg-ink', 'text-bg');
+          btn.classList.remove('bg-surface', 'text-muted', 'border', 'border-line');
 
-        projectItems.forEach((item) => {
-          if (filter === 'all' || item.dataset.category === filter) {
-            item.classList.remove('hidden');
-          } else {
-            item.classList.add('hidden');
-          }
-        });
+          projectItems.forEach((item) => {
+            if (filter === 'all' || (item as HTMLElement).dataset.category === filter) {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+        };
       });
-    });
+    }
+
+    initProjectFilters();
+    document.addEventListener('astro:page-load', initProjectFilters);
   </script>
 </BaseLayout>
 

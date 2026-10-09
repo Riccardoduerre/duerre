@@ -30,6 +30,12 @@ date: ${date}
 category: "photo"
 featured: false
 draft: true
+aspectRatio: "16:9"
+deliverables: []
+gear: []
+challenge: "Describe the creative challenge"
+solution: "Describe the strategic and technical approach"
+results: "Key impact or metrics"
 cover: "./cover.webp"
 coverAlt: "Describe the cover image"
 # youtubeId: "dQw4w9WgXcQ"

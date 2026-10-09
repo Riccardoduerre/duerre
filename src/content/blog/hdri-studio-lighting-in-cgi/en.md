@@ -3,7 +3,7 @@ title: "Illuminating 3D Worlds: HDRIs Paired with Controlled Accent Lights"
 pubDate: 2026-07-27
 coverImage: ../../../assets/blog/Landscapes_00002.webp
 description: "Why relying solely on an environment map makes renders muddy, and how adding directional rim lights carves tangible volume."
-tags: []
+tags: ["3D & CGI", "Lighting", "Rendering"]
 ---
 High Dynamic Range Images (HDRIs) transformed computer graphics by replacing sterile point lights with 32-bit floating-point panoramic captures of real environments. However, relying exclusively on an HDRI dome is one of the most common reasons why 3D scenes look muddy and indistinct.
 

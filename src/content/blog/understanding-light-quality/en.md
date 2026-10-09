@@ -3,7 +3,7 @@ title: "Understanding Light Quality: Direction, Softness and Falloff"
 pubDate: 2026-10-05
 coverImage: ../../../assets/blog/Landscapes_00003.webp
 description: "How relative source size, inverse-square falloff, and shadow transitions define the sculptural identity of your frames."
-tags: []
+tags: ["Lighting", "Photography", "Cinematography"]
 ---
 In commercial and editorial photography, light is not merely illumination—it is the physical medium that communicates form, texture, and psychological weight. While exposure ensures technical visibility, the quality of light determines emotional resonance.
 

@@ -24,7 +24,8 @@ pubDate: ${date}
 coverImage: ../../../assets/blog/_RIK7376_HDR.webp
 coverAlt: ""
 description: "${description}"
-tags: []
+tags: ["Cinematography"]
+featured: false
 draft: true
 ---
 `;

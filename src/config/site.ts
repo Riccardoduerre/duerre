@@ -1,5 +1,5 @@
 export const SITE = {
-  name: 'Duerre Media',
+  name: 'Duerremedia',
   author: 'Riccardo Riva',
   url: 'https://duerremedia.com',
   email: 'riccardo@duerremedia.com',
