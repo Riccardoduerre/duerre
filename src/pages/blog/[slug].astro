@@ -1,0 +1,20 @@
+---
+import BlogDetailPage from '../../components/views/BlogDetailPage.astro';
+import { getPosts, splitId } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts('en');
+  return posts.map((post, i) => {
+    const prev = i > 0 ? posts[i - 1] : null;
+    const next = i < posts.length - 1 ? posts[i + 1] : null;
+    return {
+      params: { slug: splitId(post.id).slug },
+      props: { post, prev, next },
+    };
+  });
+}
+
+const { post, prev, next } = Astro.props;
+---
+
+<BlogDetailPage lang="en" post={post} prev={prev} next={next} />

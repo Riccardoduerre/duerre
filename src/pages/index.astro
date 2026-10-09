@@ -1,24 +1,5 @@
 ---
-import { LOCALES, DEFAULT_LOCALE } from '../i18n';
-
-// Static redirect for the root URL
-// This generates an empty HTML page that immediately redirects the user
-// based on their browser language or falls back to DEFAULT_LOCALE.
+import HomePage from '../components/views/HomePage.astro';
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Duerre Media</title>
-  <script is:inline define:vars={{ LOCALES, DEFAULT_LOCALE }}>
-    const userLang = navigator.language.split('-')[0];
-    const targetLang = LOCALES.includes(userLang) ? userLang : DEFAULT_LOCALE;
-    window.location.replace(`/${targetLang}/`);
-  </script>
-</head>
-<body>
-  <p>Redirecting to <a href={`/${DEFAULT_LOCALE}/`}>/{DEFAULT_LOCALE}/</a>...</p>
-</body>
-</html>
+<HomePage lang="en" />

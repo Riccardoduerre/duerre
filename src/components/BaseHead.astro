@@ -6,12 +6,14 @@ interface Props {
   title: string;
   description: string;
   image?: string;
-  type?: 'website' | 'article';
+  type?: 'website' | 'article' | 'creativework';
 }
 
 const { title, description, image = SITE.defaultOgImage, type = 'website' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || SITE.url);
 const imageURL = new URL(image, Astro.site || SITE.url);
+
+const primarySchemaType = type === 'article' ? 'Article' : type === 'creativework' ? 'CreativeWork' : 'WebPage';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -35,11 +37,12 @@ const jsonLd = {
       },
     },
     {
-      '@type': type === 'article' ? 'Article' : 'WebPage',
-      '@id': `${canonicalURL.href}#webpage`,
+      '@type': primarySchemaType,
+      '@id': `${canonicalURL.href}#content`,
       url: canonicalURL.href,
       name: title,
       description: description,
+      image: imageURL.href,
       isPartOf: {
         '@id': `${SITE.url}/#website`,
       },

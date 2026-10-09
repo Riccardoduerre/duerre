@@ -1,14 +1,14 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { LOCALES, useTranslations, type Locale } from '../../i18n';
+import { useTranslations, localePath, type Locale } from '../../i18n';
 import portraitImg from '../../assets/images/optimized/DSCN7050.webp';
 
-export async function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
+interface Props {
+  lang: Locale;
 }
 
-const { lang } = Astro.params as { lang: Locale };
+const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
@@ -45,10 +45,10 @@ const t = useTranslations(lang);
         </p>
 
         <div class="flex flex-wrap gap-4">
-          <a href={`/${lang}/projects/`} class="btn-primary">
+          <a href={localePath(lang, '/projects/')} class="btn-primary">
             {t('selected_works')} →
           </a>
-          <a href={`/${lang}/contact/`} class="btn-ghost">
+          <a href={localePath(lang, '/contact/')} class="btn-ghost">
             {t('nav_cta')}
           </a>
         </div>
@@ -79,66 +79,65 @@ const t = useTranslations(lang);
     </section>
 
     <div class="prose prose-studio prose-invert max-w-none">
-    
-    <h2>Workflow & Services</h2>
-    <p>
-      From the first spark of an idea to the final delivery, I handle all aspects of production. 
-      Whether it's a still life product shoot, an editorial fashion film, or a fully CGI rendered commercial,
-      the goal is always the same: visual excellence that speaks for itself.
-    </p>
-    <ul>
-      <li>Commercial Photography</li>
-      <li>Fashion & Editorial Film</li>
-      <li>3D Product Rendering</li>
-      <li>Color Grading</li>
-    </ul>
+      <h2>Workflow & Services</h2>
+      <p>
+        From the first spark of an idea to the final delivery, I handle all aspects of production. 
+        Whether it's a still life product shoot, an editorial fashion film, or a fully CGI rendered commercial,
+        the goal is always the same: visual excellence that speaks for itself.
+      </p>
+      <ul>
+        <li>Commercial Photography</li>
+        <li>Fashion & Editorial Film</li>
+        <li>3D Product Rendering</li>
+        <li>Color Grading</li>
+      </ul>
 
-    <h2>Selected Clients</h2>
-    <p>
-      Working with forward-thinking brands, design agencies, and commercial clients across Europe who value precision, narrative depth, and visual polish.
-    </p>
+      <h2>Selected Clients</h2>
+      <p>
+        Working with forward-thinking brands, design agencies, and commercial clients across Europe who value precision, narrative depth, and visual polish.
+      </p>
 
-    <h2>Gear & Production Stack</h2>
-    <div class="not-prose grid sm:grid-cols-2 gap-6 my-8">
-      <div class="p-6 rounded-xl bg-surface border border-line">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Camera & Optics</h3>
-        <ul class="text-sm text-muted space-y-2">
-          <li>Cinema & High-Resolution Full-Frame systems</li>
-          <li>Prime Cinema lenses & Tilt-Shift optical glass</li>
-          <li>High-speed RAW & 10-bit Log capture</li>
-        </ul>
+      <h2>Gear & Production Stack</h2>
+      <div class="not-prose grid sm:grid-cols-2 gap-6 my-8">
+        <div class="p-6 rounded-xl bg-surface border border-line">
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Camera & Optics</h3>
+          <ul class="text-sm text-muted space-y-2">
+            <li>Cinema & High-Resolution Full-Frame systems</li>
+            <li>Prime Cinema lenses & Tilt-Shift optical glass</li>
+            <li>High-speed RAW & 10-bit Log capture</li>
+          </ul>
+        </div>
+        <div class="p-6 rounded-xl bg-surface border border-line">
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Lighting & Grip</h3>
+          <ul class="text-sm text-muted space-y-2">
+            <li>Continuous Bi-Color / Daylight LED arrays</li>
+            <li>High-speed strobe lighting & studio shapers</li>
+            <li>Motorized sliders & camera stabilization</li>
+          </ul>
+        </div>
+        <div class="p-6 rounded-xl bg-surface border border-line">
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Color & Finishing</h3>
+          <ul class="text-sm text-muted space-y-2">
+            <li>DaVinci Resolve Studio (ACES color managed)</li>
+            <li>Calibrated reference monitoring</li>
+            <li>Film emulation & custom show LUT development</li>
+          </ul>
+        </div>
+        <div class="p-6 rounded-xl bg-surface border border-line">
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">3D CGI & VFX</h3>
+          <ul class="text-sm text-muted space-y-2">
+            <li>Blender & GPU-accelerated raytracing</li>
+            <li>Substance 3D PBR materials workflow</li>
+            <li>Multi-pass AOV compositing pipeline</li>
+          </ul>
+        </div>
       </div>
-      <div class="p-6 rounded-xl bg-surface border border-line">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Lighting & Grip</h3>
-        <ul class="text-sm text-muted space-y-2">
-          <li>Continuous Bi-Color / Daylight LED arrays</li>
-          <li>High-speed strobe lighting & studio shapers</li>
-          <li>Motorized sliders & camera stabilization</li>
-        </ul>
-      </div>
-      <div class="p-6 rounded-xl bg-surface border border-line">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Color & Finishing</h3>
-        <ul class="text-sm text-muted space-y-2">
-          <li>DaVinci Resolve Studio (ACES color managed)</li>
-          <li>Calibrated reference monitoring</li>
-          <li>Film emulation & custom show LUT development</li>
-        </ul>
-      </div>
-      <div class="p-6 rounded-xl bg-surface border border-line">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">3D CGI & VFX</h3>
-        <ul class="text-sm text-muted space-y-2">
-          <li>Blender & GPU-accelerated raytracing</li>
-          <li>Substance 3D PBR materials workflow</li>
-          <li>Multi-pass AOV compositing pipeline</li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="not-prose pt-12 border-t border-line text-center">
-      <h2 class="text-2xl font-bold mb-4">{t('project_cta_title')}</h2>
-      <p class="text-muted mb-8">{t('project_cta_desc')}</p>
-      <a href={`/${lang}/contact/`} class="btn-primary">{t('nav_cta')}</a>
+      <div class="not-prose pt-12 border-t border-line text-center">
+        <h2 class="text-2xl font-bold mb-4">{t('project_cta_title')}</h2>
+        <p class="text-muted mb-8">{t('project_cta_desc')}</p>
+        <a href={localePath(lang, '/contact/')} class="btn-primary">{t('nav_cta')}</a>
+      </div>
     </div>
   </div>
-</div>
 </BaseLayout>

@@ -9,14 +9,15 @@ interface Props {
   description: string;
   lang: Locale;
   image?: string;
+  type?: 'website' | 'article' | 'creativework';
 }
 
-const { title, description, lang, image } = Astro.props;
+const { title, description, lang, image, type = 'website' } = Astro.props;
 ---
 
 <html lang={lang}>
   <head>
-    <BaseHead title={title} description={description} image={image} />
+    <BaseHead title={title} description={description} image={image} type={type} />
     <script is:inline>
       document.documentElement.classList.add('js');
       const theme = (() => {

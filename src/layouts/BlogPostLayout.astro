@@ -12,7 +12,7 @@ interface Props {
 const { title, description, lang, image } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} lang={lang} image={image}>
+<BaseLayout title={title} description={description} lang={lang} image={image} type="article">
   <div class="mx-auto max-w-3xl px-6 py-12 md:py-24">
     <slot />
   </div>

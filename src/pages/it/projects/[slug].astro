@@ -1,0 +1,20 @@
+---
+import ProjectDetailPage from '../../../components/views/ProjectDetailPage.astro';
+import { getProjects, splitId } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const projects = await getProjects('it');
+  return projects.map((project, i) => {
+    const prev = i > 0 ? projects[i - 1] : null;
+    const next = i < projects.length - 1 ? projects[i + 1] : null;
+    return {
+      params: { slug: splitId(project.id).slug },
+      props: { project, prev, next },
+    };
+  });
+}
+
+const { project, prev, next } = Astro.props;
+---
+
+<ProjectDetailPage lang="it" project={project} prev={prev} next={next} />

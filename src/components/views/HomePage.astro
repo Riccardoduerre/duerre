@@ -1,17 +1,17 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostPreview from '../../components/PostPreview.astro';
+import PostPreview from '../PostPreview.astro';
 import { getProjects, getPosts, splitId } from '../../lib/content';
-import { LOCALES, useTranslations, type Locale } from '../../i18n';
+import { useTranslations, localePath, type Locale } from '../../i18n';
 import heroImg from '../../assets/images/_RIK7376_HDR.jpg';
 import studioImg from '../../assets/images/_DSC2344.jpg';
 
-export async function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
+interface Props {
+  lang: Locale;
 }
 
-const { lang } = Astro.params as { lang: Locale };
+const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const allProjects = await getProjects(lang);
@@ -63,7 +63,7 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
         <a href="#featured-work" class="btn-primary px-8 py-3.5 shadow-2xl">
           {t('hero_cta_primary')} <span class="ml-2 font-normal">↓</span>
         </a>
-        <a href={`/${lang}/contact/`} class="btn-ghost border-white/30 text-white backdrop-blur-md bg-white/5 hover:border-white px-8 py-3.5">
+        <a href={localePath(lang, '/contact/')} class="btn-ghost border-white/30 text-white backdrop-blur-md bg-white/5 hover:border-white px-8 py-3.5">
           {t('hero_cta_secondary')}
         </a>
       </div>
@@ -72,22 +72,22 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
     <!-- Pinned 4-Discipline Ticker Bar -->
     <div class="relative z-10 border-t border-white/15 bg-black/50 backdrop-blur-md">
       <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 text-center">
-        <a href={`/${lang}/projects/`} class="group py-5 px-4 transition hover:bg-white/5">
+        <a href={localePath(lang, '/projects/')} class="group py-5 px-4 transition hover:bg-white/5">
           <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
             {t('service_1_title')}
           </span>
         </a>
-        <a href={`/${lang}/projects/`} class="group py-5 px-4 transition hover:bg-white/5">
+        <a href={localePath(lang, '/projects/')} class="group py-5 px-4 transition hover:bg-white/5">
           <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
             {t('service_2_title')}
           </span>
         </a>
-        <a href={`/${lang}/projects/`} class="group py-5 px-4 transition hover:bg-white/5">
+        <a href={localePath(lang, '/projects/')} class="group py-5 px-4 transition hover:bg-white/5">
           <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
             {t('service_3_title')}
           </span>
         </a>
-        <a href={`/${lang}/about/`} class="group py-5 px-4 transition hover:bg-white/5">
+        <a href={localePath(lang, '/about/')} class="group py-5 px-4 transition hover:bg-white/5">
           <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
             {t('service_4_title')}
           </span>
@@ -103,7 +103,7 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
         <p class="eyebrow mb-2">{t('selected_works')}</p>
         <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight">{t('projects_title')}</h2>
       </div>
-      <a href={`/${lang}/projects/`} class="link-underline text-sm font-semibold mt-4 md:mt-0 inline-flex items-center gap-1">
+      <a href={localePath(lang, '/projects/')} class="link-underline text-sm font-semibold mt-4 md:mt-0 inline-flex items-center gap-1">
         {t('all_projects_link')} →
       </a>
     </div>
@@ -119,7 +119,7 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
             <div class={`grid lg:grid-cols-12 items-center`}>
               <!-- Media Column -->
               <div class={`lg:col-span-7 relative aspect-[16/10] overflow-hidden bg-surface media-zoom ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
-                <a href={`/${lang}/projects/${slug}/`} aria-label={`${t('view_project')}: ${project.data.title}`} class="block h-full w-full">
+                <a href={localePath(lang, `/projects/${slug}/`)} aria-label={`${t('view_project')}: ${project.data.title}`} class="block h-full w-full">
                   <Image 
                     src={project.data.cover} 
                     alt={project.data.coverAlt} 
@@ -142,7 +142,7 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
                 </div>
 
                 <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4 group-hover:text-accent transition-colors">
-                  <a href={`/${lang}/projects/${slug}/`}>
+                  <a href={localePath(lang, `/projects/${slug}/`)}>
                     {project.data.title}
                   </a>
                 </h3>
@@ -152,10 +152,10 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
                 </p>
 
                 <div class="flex items-center gap-4 pt-4 border-t border-line/60">
-                  <a href={`/${lang}/projects/${slug}/`} class="btn-primary text-xs py-3 px-6">
+                  <a href={localePath(lang, `/projects/${slug}/`)} class="btn-primary text-xs py-3 px-6">
                     {t('view_project')} <span class="ml-1">→</span>
                   </a>
-                  <a href={`/${lang}/projects/`} class="text-xs font-semibold uppercase tracking-wider text-muted hover:text-accent transition-colors">
+                  <a href={localePath(lang, '/projects/')} class="text-xs font-semibold uppercase tracking-wider text-muted hover:text-accent transition-colors">
                     {t('all_projects_link')}
                   </a>
                 </div>
@@ -188,7 +188,7 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
             <p class="text-sm text-ink">Italy / Available Worldwide</p>
           </div>
         </div>
-        <a href={`/${lang}/about/`} class="btn-ghost">
+        <a href={localePath(lang, '/about/')} class="btn-ghost">
           {t('nav_about')} →
         </a>
       </div>
@@ -258,7 +258,7 @@ const latestPosts = (await getPosts(lang)).slice(0, 3);
             <p class="eyebrow mb-2">{t('nav_blog')}</p>
             <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight">{t('latest_articles')}</h2>
           </div>
-          <a href={`/${lang}/blog/`} class="link-underline text-sm font-semibold mt-4 md:mt-0 inline-flex items-center gap-1">
+          <a href={localePath(lang, '/blog/')} class="link-underline text-sm font-semibold mt-4 md:mt-0 inline-flex items-center gap-1">
             {t('all_articles')} →
           </a>
         </div>

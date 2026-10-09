@@ -5,8 +5,10 @@ export type Project = CollectionEntry<'projects'>;
 export type Post = CollectionEntry<'blog'>;
 
 export function splitId(id: string): { slug: string; lang: Locale } {
-  const [slug, lang] = id.split('/');
-  if (!slug || !isLocale(lang)) throw new Error(`Unexpected content id "${id}" – expected "<slug>/<en|it>"`);
+  const parts = id.split('/');
+  const slug = parts[0];
+  const langPart = parts[1] || 'en';
+  const lang: Locale = langPart === 'it' ? 'it' : 'en';
   return { slug, lang };
 }
 

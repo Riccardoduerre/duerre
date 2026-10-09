@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { Post } from '../lib/content';
 import { formatDate, splitId, readingMinutes } from '../lib/content';
+import { localePath } from '../i18n';
 
 interface Props {
   post: Post;
@@ -31,7 +32,7 @@ const mins = readingMinutes(post.body);
   </div>
   <div class="group relative">
     <h3 class="mt-3 text-xl font-semibold leading-6 group-hover:text-accent transition-colors">
-      <a href={`/${lang}/blog/${slug}/`}>
+      <a href={localePath(lang, `/blog/${slug}/`)}>
         <span class="absolute inset-0"></span>
         {post.data.title}
       </a>

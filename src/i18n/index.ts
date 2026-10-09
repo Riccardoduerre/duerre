@@ -119,9 +119,16 @@ export function useTranslations(lang: Locale) {
 
 export function localePath(lang: Locale, path = '/') {
   const clean = path.startsWith('/') ? path : `/${path}`;
-  return `/${lang}${clean === '/' ? '/' : clean}`;
+  if (lang === 'en') {
+    return clean;
+  }
+  return `/it${clean === '/' ? '/' : clean}`;
 }
 
 export function switchLocalePath(pathname: string, target: Locale) {
-  return pathname.replace(/^\/(en|it)(?=\/|$)/, `/${target}`) || `/${target}/`;
+  const stripped = pathname.replace(/^\/(en|it)(?=\/|$)/, '') || '/';
+  if (target === 'en') {
+    return stripped;
+  }
+  return `/it${stripped === '/' ? '/' : stripped}`;
 }
