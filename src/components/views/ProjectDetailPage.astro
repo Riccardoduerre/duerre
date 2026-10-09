@@ -31,19 +31,19 @@ const t = useTranslations(lang);
       
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-y border-line text-sm">
         <div>
-          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">Client</span>
+          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">{t('label_client')}</span>
           <span class="font-medium">{project.data.client}</span>
         </div>
         <div>
-          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">Role</span>
+          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">{t('label_role')}</span>
           <span class="font-medium">{project.data.role}</span>
         </div>
         <div>
-          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">Year</span>
+          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">{t('label_year')}</span>
           <span class="font-medium">{project.data.year}</span>
         </div>
         <div>
-          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">Category</span>
+          <span class="block text-muted mb-1 uppercase tracking-wider text-xs font-semibold">{t('label_category')}</span>
           <span class="font-medium">{t(`category_${project.data.category}`)}</span>
         </div>
       </div>
@@ -58,13 +58,13 @@ const t = useTranslations(lang);
     <div class="lg:col-span-4 space-y-12">
       {project.data.challenge && (
         <div>
-          <h3 class="text-lg font-semibold mb-3">The Challenge</h3>
+          <h3 class="text-lg font-semibold mb-3">{t('challenge_title')}</h3>
           <p class="text-muted text-sm leading-relaxed">{project.data.challenge}</p>
         </div>
       )}
       {project.data.solution && (
         <div>
-          <h3 class="text-lg font-semibold mb-3">The Solution</h3>
+          <h3 class="text-lg font-semibold mb-3">{t('solution_title')}</h3>
           <p class="text-muted text-sm leading-relaxed">{project.data.solution}</p>
         </div>
       )}

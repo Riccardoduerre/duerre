@@ -31,6 +31,11 @@ export default defineConfig({
     '/it/portfolio/ethereal-landscapes': '/it/projects/ethereal-landscapes',
     '/it/portfolio/lumen-atelier': '/it/projects/lumen-atelier',
     '/it/portfolio/urban-character-study': '/it/projects/urban-character-study',
+    '/portfolio.html': '/projects',
+    '/about.html': '/about',
+    '/contact.html': '/contact',
+    '/blog.html': '/blog',
+    '/index.html': '/',
   },
   integrations: [sitemap(), mdx()],
   vite: {

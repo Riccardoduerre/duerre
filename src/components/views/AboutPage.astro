@@ -79,25 +79,19 @@ const t = useTranslations(lang);
     </section>
 
     <div class="prose prose-studio prose-invert max-w-none">
-      <h2>Workflow & Services</h2>
-      <p>
-        From the first spark of an idea to the final delivery, I handle all aspects of production. 
-        Whether it's a still life product shoot, an editorial fashion film, or a fully CGI rendered commercial,
-        the goal is always the same: visual excellence that speaks for itself.
-      </p>
+      <h2>{t('about_workflow_title')}</h2>
+      <p>{t('about_workflow_p')}</p>
       <ul>
-        <li>Commercial Photography</li>
-        <li>Fashion & Editorial Film</li>
-        <li>3D Product Rendering</li>
-        <li>Color Grading</li>
+        <li>{lang === 'it' ? 'Fotografia Commerciale' : 'Commercial Photography'}</li>
+        <li>{lang === 'it' ? 'Produzione Video & Film Editoriale' : 'Fashion & Editorial Film'}</li>
+        <li>{lang === 'it' ? 'Rendering 3D di Prodotto' : '3D Product Rendering'}</li>
+        <li>{lang === 'it' ? 'Color Grading ACES' : 'Color Grading'}</li>
       </ul>
 
-      <h2>Selected Clients</h2>
-      <p>
-        Working with forward-thinking brands, design agencies, and commercial clients across Europe who value precision, narrative depth, and visual polish.
-      </p>
+      <h2>{t('about_clients_title')}</h2>
+      <p>{t('about_clients_p')}</p>
 
-      <h2>Gear & Production Stack</h2>
+      <h2>{t('about_gear_title')}</h2>
       <div class="not-prose grid sm:grid-cols-2 gap-6 my-8">
         <div class="p-6 rounded-xl bg-surface border border-line">
           <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Camera & Optics</h3>

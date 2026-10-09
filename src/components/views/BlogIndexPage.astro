@@ -16,13 +16,13 @@ const allTags = Array.from(new Set(posts.flatMap(p => p.data.tags || []))).sort(
 
 <BaseLayout 
   title={`${t('nav_blog')} | Duerre Media`} 
-  description="Thoughts on photography, filmmaking, and visual arts." 
+  description={t('blog_meta_desc')} 
   lang={lang}
 >
   <div class="px-6 py-24 md:py-32 max-w-7xl mx-auto">
     <div class="max-w-3xl mb-12">
       <h1 class="text-4xl md:text-5xl font-bold mb-6">{t('nav_blog')}</h1>
-      <p class="text-xl text-muted">Process, behind the scenes, and thoughts on visual arts.</p>
+      <p class="text-xl text-muted">{t('blog_intro')}</p>
     </div>
 
     {allTags.length > 0 && (
