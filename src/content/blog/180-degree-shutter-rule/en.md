@@ -1,8 +1,9 @@
 ---
 title: "The 180-Degree Shutter Rule and Natural Motion Blur"
-date: 2026-09-21
-image: ../../assets/images/optimized/_RIK7376_HDR.webp
-excerpt: "Why timing exposure to double the frame rate creates organic cinematic cadence, and when deliberate rule-breaking serves the narrative."
+pubDate: 2026-09-21
+coverImage: ../../../assets/images/optimized/_RIK7376_HDR.webp
+description: "Why timing exposure to double the frame rate creates organic cinematic cadence, and when deliberate rule-breaking serves the narrative."
+tags: []
 ---
 In cinematic film and high-end commercial video, motion blur is not a defect—it is the perceptual glue that turns a rapid sequence of still frames into a fluid visual stream. The foundation of this natural cadence is the legendary 180-degree shutter rule.
 

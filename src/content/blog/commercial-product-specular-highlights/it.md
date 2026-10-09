@@ -1,8 +1,9 @@
 ---
 title: "Illuminare superfici speculari: scrim, gradienti e controllo dei riflessi"
-date: 2026-03-09
-image: ../../assets/images/optimized/_DSC2344.webp
-excerpt: "Gli oggetti metallici e lucidi non si illuminano direttamente: si illumina ciò che riflettono. Padroneggiare i gradienti di diffusione."
+pubDate: 2026-03-09
+coverImage: ../../../assets/images/optimized/_DSC2344.webp
+description: "Gli oggetti metallici e lucidi non si illuminano direttamente: si illumina ciò che riflettono. Padroneggiare i gradienti di diffusione."
+tags: []
 ---
 Fotografare prodotti commerciali riflettenti — orologi d'alta gamma, bottiglie in vetro, cosmetici o componenti metallici satinati — mette a nudo le leggi fisiche della luce. Non è possibile illuminare una superficie lucida puntandovi direttamente un softbox: trattandosi di uno specchio, **si sta semplicemente fotografando ciò che si specchia sulla sua superficie**.
 

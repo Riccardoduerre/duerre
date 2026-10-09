@@ -1,0 +1,19 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { Locale } from '../i18n';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Locale;
+  image?: string;
+}
+
+const { title, description, lang, image } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} lang={lang} image={image}>
+  <div class="mx-auto max-w-3xl px-6 py-12 md:py-24">
+    <slot />
+  </div>
+</BaseLayout>

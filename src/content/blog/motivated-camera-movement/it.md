@@ -1,8 +1,9 @@
 ---
 title: "Movimento di macchina motivato: parallasse, ritmo e intenzione cinetica"
-date: 2026-06-29
-image: ../../assets/images/optimized/Giau_00003.webp
-excerpt: "Abbandonare movimenti di camera arbitrari per un blocking intenzionale dove la parallasse enfatizza la psicologia del soggetto."
+pubDate: 2026-06-29
+coverImage: ../../../assets/images/optimized/Giau_00003.webp
+description: "Abbandonare movimenti di camera arbitrari per un blocking intenzionale dove la parallasse enfatizza la psicologia del soggetto."
+tags: []
 ---
 Gimbal stabilizzati su tre assi, slider e droni hanno reso i movimenti di macchina fluidi accessibili a chiunque. Paradossalmente, questa facilità tecnica ha generato una proliferazione di movimenti fini a se stessi: carrellate e panoramiche che vagano nella scena senza una motivazione narrativa o un punto focale preciso.
 

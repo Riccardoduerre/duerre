@@ -1,8 +1,9 @@
 ---
 title: "Physically Based Rendering: Mastering the Roughness-Metallic Pipeline"
-date: 2026-09-07
-image: ../../assets/images/optimized/Giau_00004.webp
-excerpt: "Demystifying microfacet theory, dielectric Fresnel reflectance, and why roughness maps are the authentic soul of 3D realism."
+pubDate: 2026-09-07
+coverImage: ../../../assets/images/optimized/Giau_00004.webp
+description: "Demystifying microfacet theory, dielectric Fresnel reflectance, and why roughness maps are the authentic soul of 3D realism."
+tags: []
 ---
 In contemporary 3D visual direction, achieving photorealism no longer relies on arbitrary specular shaders and intuitive guesswork. Physically Based Rendering (PBR) establishes a mathematical and physical framework that mirrors how photons interact with real-world matter.
 

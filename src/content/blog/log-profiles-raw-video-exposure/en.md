@@ -1,8 +1,9 @@
 ---
 title: "Exposing Log Curves and RAW Video: The False Color Method"
-date: 2026-08-10
-image: ../../assets/images/optimized/_DSC2344.webp
-excerpt: "Stop guessing on flat monitor profiles. How middle grey IRE mapping guarantees clean shadow recovery and rich skin tones."
+pubDate: 2026-08-10
+coverImage: ../../../assets/images/optimized/_DSC2344.webp
+description: "Stop guessing on flat monitor profiles. How middle grey IRE mapping guarantees clean shadow recovery and rich skin tones."
+tags: []
 ---
 Shooting in logarithmic gamma profiles (such as Sony S-Log3, Canon C-Log2, or ARRI LogC) is standard operating procedure for commercial productions aiming to capture the maximum dynamic range of the sensor. However, evaluating a flat, desaturated Log image on a field monitor leads many operators into chronic underexposure.
 

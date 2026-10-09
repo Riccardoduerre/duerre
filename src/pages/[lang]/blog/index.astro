@@ -1,22 +1,31 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import { translations } from '../../../i18n/index';
-import Blog from '../../../views/Blog';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostPreview from '../../../components/PostPreview.astro';
+import { getPosts } from '../../../lib/content';
+import { LOCALES, useTranslations, type Locale } from '../../../i18n';
 
-export function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'it' } },
-  ];
+export async function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
 }
 
-const { lang } = Astro.params;
-const t = (key: keyof typeof translations.en) => translations[lang as 'en' | 'it']?.[key] || key;
+const { lang } = Astro.params as { lang: Locale };
+const t = useTranslations(lang);
+const posts = await getPosts(lang);
 ---
 
-<Layout 
-  title={t('seo_blog')} 
-  description={t('seo_blog')}
+<BaseLayout 
+  title={`${t('nav_blog')} | Duerre Media`} 
+  description="Thoughts on photography, filmmaking, and visual arts." 
+  lang={lang}
 >
-  <Blog client:load lang={lang as 'en' | 'it'} />
-</Layout>
+  <div class="px-6 py-24 md:py-32 max-w-7xl mx-auto">
+    <div class="max-w-3xl mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">{t('nav_blog')}</h1>
+      <p class="text-xl text-muted">Process, behind the scenes, and thoughts on visual arts.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+      {posts.map(post => <PostPreview post={post} />)}
+    </div>
+  </div>
+</BaseLayout>

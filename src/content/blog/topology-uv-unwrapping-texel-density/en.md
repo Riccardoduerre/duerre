@@ -1,8 +1,9 @@
 ---
 title: "Clean Topology and Texel Density: Foundations of Commercial 3D Assets"
-date: 2026-03-23
-image: ../../assets/images/optimized/Landscapes_00003.webp
-excerpt: "Why all-quad modeling prevents shading artifacts under subdivision, and how uniform texel density ensures sharp texture resolution."
+pubDate: 2026-03-23
+coverImage: ../../../assets/images/optimized/Landscapes_00003.webp
+description: "Why all-quad modeling prevents shading artifacts under subdivision, and how uniform texel density ensures sharp texture resolution."
+tags: []
 ---
 In 3D visualization, stunning lighting and sophisticated materials cannot conceal sloppy geometry. An asset with poor polygonal topology and chaotic UV unwrapping will deform unpredictably, develop pinched shading artifacts, and suffer from blurry texture resolution. 
 

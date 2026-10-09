@@ -1,8 +1,9 @@
 ---
 title: "Overcoming the Sterile 3D Look: Emulating Physical Optical Imperfections"
-date: 2026-05-04
-image: ../../assets/images/optimized/Giau_00006.webp
-excerpt: "How subtle chromatic aberration, diffraction, optical vignetting, and sensor grain breathe tangible life into synthetic renders."
+pubDate: 2026-05-04
+coverImage: ../../../assets/images/optimized/Giau_00006.webp
+description: "How subtle chromatic aberration, diffraction, optical vignetting, and sensor grain breathe tangible life into synthetic renders."
+tags: []
 ---
 Computers render images with mathematical perfection: lines are infinitely sharp, lenses are completely devoid of aberrations, and sensors possess zero electronic noise. Paradoxically, this absolute perfection is precisely what triggers the "uncanny valley" in 3D renders. Human beings have spent over a century viewing photographs filtered through real glass optics and physical sensors.
 

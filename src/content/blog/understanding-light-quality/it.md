@@ -1,8 +1,9 @@
 ---
 title: "Comprendere la qualità della luce: direzione, morbidezza e caduta"
-date: 2026-10-05
-image: ../../assets/images/optimized/Landscapes_00003.webp
-excerpt: "Come la dimensione relativa della sorgente, la legge dell’inverso del quadrato e le transizioni d’ombra definiscono l’identità scultorea dello scatto."
+pubDate: 2026-10-05
+coverImage: ../../../assets/images/optimized/Landscapes_00003.webp
+description: "Come la dimensione relativa della sorgente, la legge dell’inverso del quadrato e le transizioni d’ombra definiscono l’identità scultorea dello scatto."
+tags: []
 ---
 Nella fotografia commerciale ed editoriale, la luce non è semplice illuminazione: è la materia fisica che comunica forma, texture e peso visivo. Se l'esposizione garantisce la visibilità tecnica, è la qualità della luce a determinare l'impatto narrativo ed emotivo dello scatto.
 

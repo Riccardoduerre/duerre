@@ -1,8 +1,9 @@
 ---
 title: "Compositing Multipass Renders: Beauty Passes, AOVs and Cryptomatte"
-date: 2026-02-09
-image: ../../assets/images/optimized/Giau_00001.webp
-excerpt: "Breaking down the CGI render equation into separate diffuse, specular, and emissive passes for surgical control in post."
+pubDate: 2026-02-09
+coverImage: ../../../assets/images/optimized/Giau_00001.webp
+description: "Breaking down the CGI render equation into separate diffuse, specular, and emissive passes for surgical control in post."
+tags: []
 ---
 Rendering a final 3D image as a single, flattened "Beauty" file is acceptable for quick previews, but for high-end commercial production, it leaves zero flexibility in post-production. If an art director requests a slight drop in product reflections or warmer shadow tinting, re-rendering a complex 3D frame can take hours. Multipass rendering with Arbitrary Output Variables (AOVs) provides absolute control.
 

@@ -1,8 +1,9 @@
 ---
 title: "Maximizing Dynamic Range: The ETTR Strategy in the Field"
-date: 2026-08-24
-image: ../../assets/images/optimized/Giau_00001.webp
-excerpt: "Pushing sensor exposure to the right to retain pristine shadow signal without sacrificing organic highlight roll-off."
+pubDate: 2026-08-24
+coverImage: ../../../assets/images/optimized/Giau_00001.webp
+description: "Pushing sensor exposure to the right to retain pristine shadow signal without sacrificing organic highlight roll-off."
+tags: []
 ---
 Digital camera sensors do not record light the way human eyes perceive it. While our visual cortex processes light on a logarithmic curve, digital sensors count photons linearly. Understanding this physical reality is the key to mastering dynamic range through ETTR: Exposing to the Right.
 

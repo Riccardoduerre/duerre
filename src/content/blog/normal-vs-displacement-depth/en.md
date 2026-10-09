@@ -1,8 +1,9 @@
 ---
 title: "Bump, Normal and Displacement: Choosing the Correct Depth Architecture"
-date: 2026-06-15
-image: ../../assets/images/optimized/_DSC2919.webp
-excerpt: "Balancing render memory and visual accuracy: when normal vectors suffice versus when micro-polygon tessellation is non-negotiable."
+pubDate: 2026-06-15
+coverImage: ../../../assets/images/optimized/_DSC2919.webp
+description: "Balancing render memory and visual accuracy: when normal vectors suffice versus when micro-polygon tessellation is non-negotiable."
+tags: []
 ---
 In 3D production, modeling every surface wrinkle, weave, and geological fracture into polygonal geometry is computationally impossible. Visual artists rely on texture maps to fake or generate geometric depth. Understanding the architectural differences between Bump, Normal, and Displacement maps is essential for optimizing render memory and visual fidelity.
 

@@ -1,22 +1,43 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { translations } from '../../i18n/index';
-import About from '../../views/About';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { LOCALES, useTranslations, type Locale } from '../../i18n';
 
-export function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'it' } },
-  ];
+export async function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
 }
 
-const { lang } = Astro.params;
-const t = (key: keyof typeof translations.en) => translations[lang as 'en' | 'it']?.[key] || key;
+const { lang } = Astro.params as { lang: Locale };
+const t = useTranslations(lang);
 ---
 
-<Layout 
-  title={t('seo_about')} 
-  description={t('seo_about')}
+<BaseLayout 
+  title={`${t('nav_about')} | Duerre Media`} 
+  description={t('studio_blurb')} 
+  lang={lang}
 >
-  <About client:load lang={lang as 'en' | 'it'} />
-</Layout>
+  <article class="max-w-3xl mx-auto px-6 py-24 md:py-32 prose prose-studio prose-invert max-w-none">
+    <h1>{t('nav_about')}</h1>
+    <p class="lead text-xl md:text-2xl text-muted font-medium mb-12">
+      {t('studio_blurb')}
+    </p>
+    
+    <h2>Workflow & Services</h2>
+    <p>
+      From the first spark of an idea to the final delivery, I handle all aspects of production. 
+      Whether it's a still life product shoot, an editorial fashion film, or a fully CGI rendered commercial,
+      the goal is always the same: visual excellence that speaks for itself.
+    </p>
+    <ul>
+      <li>Commercial Photography</li>
+      <li>Fashion & Editorial Film</li>
+      <li>3D Product Rendering</li>
+      <li>Color Grading</li>
+    </ul>
+
+    <h2>Selected Clients</h2>
+    <p>
+      I've had the pleasure of working with brands that value craft and precision.
+      (Client list can be populated here).
+    </p>
+  </article>
+</BaseLayout>

@@ -1,8 +1,9 @@
 ---
 title: "Ritmo editoriale: sequenziare le immagini per un impatto duraturo del brand"
-date: 2026-01-26
-image: ../../assets/images/optimized/DSCN7050.webp
-excerpt: "Come abbinare ampie scene d’atmosfera a dettagli macro intimi crea una cadenza visiva che guida lo sguardo dello spettatore attraverso la campagna."
+pubDate: 2026-01-26
+coverImage: ../../../assets/images/optimized/DSCN7050.webp
+description: "Come abbinare ampie scene d’atmosfera a dettagli macro intimi crea una cadenza visiva che guida lo sguardo dello spettatore attraverso la campagna."
+tags: []
 ---
 Una singola fotografia può essere memorabile, ma una campagna per un brand vive o muore nel modo in cui le immagini dialogano in sequenza. Nei lookbook, nei cataloghi e nelle piattaforme digitali contemporanee, il ritmo editoriale è la musica invisibile che trasforma una raccolta di immagini in un racconto coinvolgente.
 

@@ -1,8 +1,9 @@
 ---
 title: "Massimizzare la gamma dinamica: la strategia ETTR sul campo"
-date: 2026-08-24
-image: ../../assets/images/optimized/Giau_00001.webp
-excerpt: "Spingere l’esposizione del sensore a destra per preservare il segnale nelle ombre senza sacrificare la transizione graduale delle alte luci."
+pubDate: 2026-08-24
+coverImage: ../../../assets/images/optimized/Giau_00001.webp
+description: "Spingere l’esposizione del sensore a destra per preservare il segnale nelle ombre senza sacrificare la transizione graduale delle alte luci."
+tags: []
 ---
 I sensori delle fotocamere digitali non registrano la luce nel modo in cui la percepisce l'occhio umano. Mentre il nostro sistema visivo risponde in maniera logaritmica, i sensori digitali quantificano i fotoni in modo rigorosamente lineare. Comprendere questo principio è la chiave per padroneggiare la gamma dinamica tramite la tecnica ETTR (Expose To The Right).
 

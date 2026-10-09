@@ -1,0 +1,40 @@
+---
+import { type Locale, useTranslations, localePath } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line bg-surface py-12 md:py-16 mt-24">
+  <div class="mx-auto max-w-7xl px-6 grid gap-12 md:grid-cols-2">
+    <div>
+      <h2 class="text-2xl font-semibold tracking-tight mb-4">{t('contact_title')}</h2>
+      <a href={localePath(lang, '/contact/')} class="btn-primary mt-4 inline-flex">{t('nav_cta')}</a>
+    </div>
+    <div class="grid grid-cols-2 gap-8 text-sm">
+      <div>
+        <h3 class="font-semibold mb-4 text-accent uppercase tracking-wider text-xs">Menu</h3>
+        <ul class="space-y-3 flex flex-col">
+          <li><a href={localePath(lang, '/projects/')} class="hover:text-accent transition-colors">{t('nav_projects')}</a></li>
+          <li><a href={localePath(lang, '/about/')} class="hover:text-accent transition-colors">{t('nav_about')}</a></li>
+          <li><a href={localePath(lang, '/blog/')} class="hover:text-accent transition-colors">{t('nav_blog')}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-4 text-accent uppercase tracking-wider text-xs">{t('social_label')}</h3>
+        <ul class="space-y-3 flex flex-col">
+          <li><a href="#" class="hover:text-accent transition-colors">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="mx-auto max-w-7xl px-6 mt-16 pt-8 border-t border-line flex flex-col md:flex-row justify-between items-center text-xs text-muted">
+    <p>&copy; {year} Duerre Media. All rights reserved.</p>
+    <p class="mt-4 md:mt-0">{t('footer_stack')}</p>
+  </div>
+</footer>

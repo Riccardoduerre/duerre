@@ -1,22 +1,87 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { translations } from '../../i18n/index';
-import Home from '../../views/Home';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import PostPreview from '../../components/PostPreview.astro';
+import { getProjects, getPosts } from '../../lib/content';
+import { LOCALES, useTranslations, type Locale } from '../../i18n';
 
-export function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'it' } },
-  ];
+export async function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
 }
 
-const { lang } = Astro.params;
-const t = (key: keyof typeof translations) => translations[key]?.[lang as 'en' | 'it'] || key;
+const { lang } = Astro.params as { lang: Locale };
+const t = useTranslations(lang);
+
+const allProjects = await getProjects(lang);
+const featuredProjects = allProjects.filter(p => p.data.featured).slice(0, 4);
+if (featuredProjects.length === 0) {
+    featuredProjects.push(...allProjects.slice(0, 4));
+}
+
+const latestPosts = (await getPosts(lang)).slice(0, 3);
 ---
 
-<Layout 
-  title={t('home_title')} 
-  description={t('seo_home')}
+<BaseLayout 
+  title={`Duerre Media | ${t('hero_eyebrow')}`} 
+  description={t('studio_blurb')} 
+  lang={lang}
 >
-  <Home client:load lang={lang as 'en' | 'it'} />
-</Layout>
+  <section class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
+    <p class="eyebrow mb-6">{t('hero_eyebrow')}</p>
+    <h1 class="text-4xl md:text-6xl font-bold leading-tight max-w-4xl">
+      Riccardo Riva is a director and photographer based in Italy, focusing on high-end visual production.
+    </h1>
+    <div class="mt-12 flex gap-4">
+      <a href={`/${lang}/contact/`} class="btn-primary">{t('nav_cta')}</a>
+      <a href={`/${lang}/projects/`} class="btn-ghost">{t('all_projects_link')}</a>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24 px-6 bg-surface">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex items-end justify-between mb-12">
+        <div>
+          <p class="eyebrow mb-3">{t('selected_works')}</p>
+          <h2 class="text-3xl md:text-4xl font-bold">{t('projects_title')}</h2>
+        </div>
+        <a href={`/${lang}/projects/`} class="link-underline text-sm font-semibold hidden sm:block">{t('all_projects_link')}</a>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-8 md:gap-12">
+        {featuredProjects.map(project => <ProjectCard project={project} />)}
+      </div>
+      <div class="mt-12 sm:hidden">
+        <a href={`/${lang}/projects/`} class="btn-ghost w-full">{t('all_projects_link')}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="eyebrow mb-3">{t('studio_eyebrow')}</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Small by design, hands-on from concept to final grade.</h2>
+      <p class="text-muted leading-relaxed mb-8">{t('studio_blurb')}</p>
+      <a href={`/${lang}/about/`} class="link-underline text-sm font-semibold">{t('nav_about')} →</a>
+    </div>
+    <div class="aspect-square bg-surface rounded-xl overflow-hidden relative">
+      <!-- Optional: Add a studio or self portrait here -->
+      <div class="absolute inset-0 bg-gradient-to-tr from-surface to-bg opacity-50"></div>
+    </div>
+  </section>
+
+  {latestPosts.length > 0 && (
+    <section class="py-16 md:py-24 px-6 bg-surface border-t border-line">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-end justify-between mb-12">
+          <div>
+            <p class="eyebrow mb-3">{t('nav_blog')}</p>
+            <h2 class="text-3xl md:text-4xl font-bold">{t('latest_articles')}</h2>
+          </div>
+          <a href={`/${lang}/blog/`} class="link-underline text-sm font-semibold hidden sm:block">{t('all_articles')}</a>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          {latestPosts.map(post => <PostPreview post={post} />)}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

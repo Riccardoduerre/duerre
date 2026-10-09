@@ -1,0 +1,30 @@
+---
+import { type Locale, useTranslations, localePath, switchLocalePath } from '../i18n';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const currentPath = Astro.url.pathname;
+const otherLang = lang === 'en' ? 'it' : 'en';
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-line/50 bg-bg/80 backdrop-blur">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <a href={localePath(lang, '/')} class="text-xl font-bold tracking-tight">Duerre Media</a>
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+      <a href={localePath(lang, '/projects/')} class="hover:text-accent transition-colors">{t('nav_projects')}</a>
+      <a href={localePath(lang, '/about/')} class="hover:text-accent transition-colors">{t('nav_about')}</a>
+      <a href={localePath(lang, '/blog/')} class="hover:text-accent transition-colors">{t('nav_blog')}</a>
+      <a href={localePath(lang, '/contact/')} class="hover:text-accent transition-colors">{t('nav_contact')}</a>
+      
+      <div class="flex items-center gap-4 ml-4 pl-4 border-l border-line">
+        <a href={switchLocalePath(currentPath, otherLang)} class="text-xs font-bold uppercase hover:text-accent">{otherLang}</a>
+        <ThemeToggle lang={lang} />
+      </div>
+    </nav>
+  </div>
+</header>
