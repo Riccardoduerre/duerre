@@ -7,11 +7,20 @@ year: "2025"
 date: 2025-03-22
 category: "photo"
 featured: false
-cover: "../../../assets/images/optimized/_RIK7376_HDR.webp"
-coverAlt: "Paesaggi Eterei cover"
+cover: "../../../assets/images/optimized/Landscapes_00001.webp"
+coverAlt: "Paesaggi Eterei - Nebbia di montagna all'alba"
 
 challenge: "Una serie poetica per il turismo eco fuori stagione, per far sentire le vette lontane intime e senza tempo."
 solution: "Percorsi mattutini e crepuscolari in zone remote, lunghe esposizioni e sfumature atmosferiche per mantenere calma e dramma in ogni immagine."
 results: "Oltre 3 milioni di visualizzazioni organiche e un +25% nelle prenotazioni di eco-lodge rispetto all’anno precedente."
-gallery: []
+gallery:
+  - image: "../../../assets/images/optimized/Landscapes_00001.webp"
+    alt: "Paesaggio montano drammatico con nebbia"
+    caption: "Inversione termica all'alba nelle valli settentrionali"
+  - image: "../../../assets/images/optimized/Landscapes_00002.webp"
+    alt: "Vette alpine illuminate dal tramonto"
+    caption: "Enrosadira calda su pareti calcaree verticali"
+  - image: "../../../assets/images/optimized/Landscapes_00003.webp"
+    alt: "Passo montano atmosferico"
+    caption: "Profili crepuscolari e vallate glaciali"
 ---
