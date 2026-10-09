@@ -262,3 +262,4 @@ const t = useTranslations(lang);
 EOF
 
 chmod +x scratch/make-pages.sh 2>/dev/null || true
+

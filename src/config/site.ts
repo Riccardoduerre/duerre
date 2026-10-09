@@ -22,3 +22,4 @@ export function contactFormMode(): 'web3forms' | 'formspree' | 'mailto' {
 }
 
 export const siteConfig = SITE; // for backwards compatibility in case I missed any
+

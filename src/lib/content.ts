@@ -37,3 +37,4 @@ export function formatDate(date: Date, lang: Locale, style: 'long' | 'month' = '
     timeZone: 'UTC',
   }).format(date);
 }
+

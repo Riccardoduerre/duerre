@@ -46,3 +46,4 @@ export async function GET(context: any) {
 EOF
 
 chmod +x scratch/make-pages3.sh 2>/dev/null || true
+

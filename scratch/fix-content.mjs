@@ -106,3 +106,4 @@ ${gallery.length > 0 ? `gallery:\n${gallery.map(img => `  - image: "${img}"\n   
 }
 
 console.log('Projects fixed');
+

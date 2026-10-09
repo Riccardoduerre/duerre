@@ -91,3 +91,4 @@ const { title, description, lang, image } = Astro.props;
   </div>
 </BaseLayout>
 EOF
+

@@ -246,3 +246,4 @@ const mins = readingMinutes(post.body);
 EOF
 
 chmod +x scratch/make-pages2.sh 2>/dev/null || true
+
