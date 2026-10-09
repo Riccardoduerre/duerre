@@ -43,6 +43,10 @@ const translations: Record<Locale, Record<string, string>> = {
     not_found_title: 'This frame is missing.',
     social_label: 'Elsewhere',
     footer_stack: 'Built with Astro. Hosted on GitHub Pages.',
+    prev_project: 'Previous project',
+    next_project: 'Next project',
+    prev_post: 'Previous article',
+    next_post: 'Next article',
   },
   it: {
     nav_projects: 'Progetti',
@@ -80,6 +84,10 @@ const translations: Record<Locale, Record<string, string>> = {
     not_found_title: 'Questo fotogramma manca.',
     social_label: 'Altrove',
     footer_stack: 'Realizzato con Astro. Ospitato su GitHub Pages.',
+    prev_project: 'Progetto precedente',
+    next_project: 'Progetto successivo',
+    prev_post: 'Articolo precedente',
+    next_post: 'Articolo successivo',
   }
 };
 

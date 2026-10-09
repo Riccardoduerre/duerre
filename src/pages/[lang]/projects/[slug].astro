@@ -10,10 +10,13 @@ export async function getStaticPaths() {
   const paths = [];
   for (const lang of LOCALES) {
     const projects = await getProjects(lang);
-    for (const project of projects) {
+    for (let i = 0; i < projects.length; i++) {
+      const project = projects[i];
+      const prev = i > 0 ? projects[i - 1] : null;
+      const next = i < projects.length - 1 ? projects[i + 1] : null;
       paths.push({
         params: { lang, slug: splitId(project.id).slug },
-        props: { project },
+        props: { project, prev, next },
       });
     }
   }
@@ -21,7 +24,7 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: Locale };
-const { project } = Astro.props;
+const { project, prev, next } = Astro.props;
 const { Content } = await render(project);
 const t = useTranslations(lang);
 ---
@@ -89,6 +92,28 @@ const t = useTranslations(lang);
     <div class="mb-24">
       <PhotoGallery images={project.data.gallery} />
     </div>
+  )}
+
+  <!-- Previous / Next Project Navigation -->
+  {(prev || next) && (
+    <nav aria-label="Project pagination" class="grid grid-cols-2 gap-6 py-12 border-t border-line my-12">
+      <div>
+        {prev && (
+          <a href={`/${lang}/projects/${splitId(prev.id).slug}/`} class="group block text-left">
+            <span class="text-xs text-muted uppercase tracking-wider block mb-1">← {t('prev_project')}</span>
+            <span class="text-base md:text-lg font-semibold group-hover:text-accent transition-colors">{prev.data.title}</span>
+          </a>
+        )}
+      </div>
+      <div>
+        {next && (
+          <a href={`/${lang}/projects/${splitId(next.id).slug}/`} class="group block text-right">
+            <span class="text-xs text-muted uppercase tracking-wider block mb-1">{t('next_project')} →</span>
+            <span class="text-base md:text-lg font-semibold group-hover:text-accent transition-colors">{next.data.title}</span>
+          </a>
+        )}
+      </div>
+    </nav>
   )}
 
   <div class="text-center py-24 border-t border-line">

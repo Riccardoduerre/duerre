@@ -9,10 +9,13 @@ export async function getStaticPaths() {
   const paths = [];
   for (const lang of LOCALES) {
     const posts = await getPosts(lang);
-    for (const post of posts) {
+    for (let i = 0; i < posts.length; i++) {
+      const post = posts[i];
+      const prev = i > 0 ? posts[i - 1] : null;
+      const next = i < posts.length - 1 ? posts[i + 1] : null;
       paths.push({
         params: { lang, slug: splitId(post.id).slug },
-        props: { post },
+        props: { post, prev, next },
       });
     }
   }
@@ -20,7 +23,7 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: Locale };
-const { post } = Astro.props;
+const { post, prev, next } = Astro.props;
 const { Content } = await render(post);
 const t = useTranslations(lang);
 const mins = readingMinutes(post.body);
@@ -64,6 +67,28 @@ const mins = readingMinutes(post.body);
   <div class="prose prose-studio prose-invert max-w-none">
     <Content />
   </div>
+
+  <!-- Previous / Next Article Navigation -->
+  {(prev || next) && (
+    <nav aria-label="Article pagination" class="grid grid-cols-2 gap-6 py-12 border-t border-line my-12">
+      <div>
+        {prev && (
+          <a href={`/${lang}/blog/${splitId(prev.id).slug}/`} class="group block text-left">
+            <span class="text-xs text-muted uppercase tracking-wider block mb-1">← {t('prev_post')}</span>
+            <span class="text-base md:text-lg font-semibold group-hover:text-accent transition-colors">{prev.data.title}</span>
+          </a>
+        )}
+      </div>
+      <div>
+        {next && (
+          <a href={`/${lang}/blog/${splitId(next.id).slug}/`} class="group block text-right">
+            <span class="text-xs text-muted uppercase tracking-wider block mb-1">{t('next_post')} →</span>
+            <span class="text-base md:text-lg font-semibold group-hover:text-accent transition-colors">{next.data.title}</span>
+          </a>
+        )}
+      </div>
+    </nav>
+  )}
   
   <div class="mt-24 pt-12 border-t border-line text-center">
     <p class="text-muted mb-6">{t('post_cta_title')}</p>

@@ -15,13 +15,13 @@ export const slugOf = (entry: { id: string }) => splitId(entry.id).slug;
 const visible = (data: { draft?: boolean }) => import.meta.env.DEV || !data.draft;
 
 export async function getProjects(lang: Locale): Promise<Project[]> {
-  const all = await getCollection('projects', (e) => splitId(e.id).lang === lang && visible(e.data));
-  return all.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const all = await getCollection('projects', (e: Project) => splitId(e.id).lang === lang && visible(e.data));
+  return all.sort((a: Project, b: Project) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
 export async function getPosts(lang: Locale): Promise<Post[]> {
-  const all = await getCollection('blog', (e) => splitId(e.id).lang === lang && visible(e.data));
-  return all.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const all = await getCollection('blog', (e: Post) => splitId(e.id).lang === lang && visible(e.data));
+  return all.sort((a: Post, b: Post) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
 export function readingMinutes(body = ''): number {
