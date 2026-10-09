@@ -24,13 +24,71 @@ const projects = await getProjects(lang);
       <p class="text-xl text-muted">{t('projects_intro')}</p>
     </div>
 
+    <!-- Category Filter Pills -->
+    <div class="flex flex-wrap gap-2 mb-12 items-center" id="category-filters">
+      <button 
+        type="button" 
+        data-filter="all" 
+        class="filter-pill active px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-ink text-bg"
+      >
+        {t('all_projects_link')}
+      </button>
+      <button 
+        type="button" 
+        data-filter="photo" 
+        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink"
+      >
+        {t('category_photo')}
+      </button>
+      <button 
+        type="button" 
+        data-filter="video" 
+        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink"
+      >
+        {t('category_video')}
+      </button>
+      <button 
+        type="button" 
+        data-filter="3d" 
+        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink"
+      >
+        {t('category_3d')}
+      </button>
+    </div>
+
     <div class="grid sm:grid-cols-2 gap-8 md:gap-12" id="projects-grid">
       {projects.map(project => (
-        <div class="project-item">
+        <div class="project-item transition-opacity duration-300" data-category={project.data.category}>
           <ProjectCard project={project} />
         </div>
       ))}
     </div>
   </div>
+
+  <script is:inline>
+    const filterButtons = document.querySelectorAll('.filter-pill');
+    const projectItems = document.querySelectorAll('.project-item');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+
+        filterButtons.forEach((b) => {
+          b.classList.remove('bg-ink', 'text-bg');
+          b.classList.add('bg-surface', 'text-muted', 'border', 'border-line');
+        });
+        btn.classList.add('bg-ink', 'text-bg');
+        btn.classList.remove('bg-surface', 'text-muted', 'border', 'border-line');
+
+        projectItems.forEach((item) => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
 </BaseLayout>
 

@@ -18,6 +18,13 @@ const { title, description, lang, image, type = 'website' } = Astro.props;
 <html lang={lang}>
   <head>
     <BaseHead title={title} description={description} lang={lang} image={image} type={type} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      const stored = localStorage.getItem('theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersLight ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
   </head>
   <body>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-bg focus:rounded-md focus:font-semibold">

@@ -14,41 +14,17 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
+
+      - name: Install, build, and upload your site
+        uses: withastro/action@v6
         with:
-          node-version: "24"
-          cache: "npm"
-      - name: Install dependencies
-        run: npm ci
-      # AVIF/WebP encoding is the slowest build step; reuse Astro's optimized-image cache.
-      # Note: hashFiles does not support curly brace expansion, so patterns are explicitly separated.
-      - name: Restore Astro image cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules/.astro
-          key: astro-assets-${{ hashFiles('package-lock.json', 'src/**/*.jpg', 'src/**/*.jpeg', 'src/**/*.png', 'src/**/*.webp', 'src/**/*.JPG', 'src/**/*.astro', 'src/**/*.md') }}
-          restore-keys: |
-            astro-assets-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Typecheck
-        run: npm run typecheck
-      - name: Build
-        run: npm run build
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "./dist"
+          node-version: 24
 
   deploy:
     environment:

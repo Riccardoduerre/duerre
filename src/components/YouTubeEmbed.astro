@@ -5,16 +5,49 @@ interface Props {
 }
 
 const { id, title = 'YouTube video player' } = Astro.props;
-const embedSrc = `https://www.youtube-nocookie.com/embed/${id}?rel=0`;
+const posterUrl = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const embedSrc = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
 ---
 
-<div class="relative w-full aspect-video rounded-xl overflow-hidden bg-surface border border-line shadow-2xl">
-  <iframe 
-    src={embedSrc} 
-    title={title} 
+<div 
+  class="youtube-facade relative w-full aspect-video rounded-xl overflow-hidden bg-surface border border-line group cursor-pointer"
+  data-embed-src={embedSrc}
+  data-title={title}
+>
+  <img 
+    src={posterUrl} 
+    alt={title} 
     loading="lazy" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    allowfullscreen 
-    class="w-full h-full border-0"
-  ></iframe>
+    decoding="async" 
+    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+  />
+  <div class="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/20 flex items-center justify-center">
+    <button 
+      type="button" 
+      aria-label={`Play ${title}`}
+      class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-ink/90 text-bg flex items-center justify-center shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:bg-accent group-hover:text-ink focus:outline-hidden focus:ring-4 focus:ring-accent"
+    >
+      <svg class="w-6 h-6 md:w-8 md:h-8 translate-x-0.5 fill-current" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z" />
+      </svg>
+    </button>
+  </div>
 </div>
+
+<script is:inline>
+  document.querySelectorAll('.youtube-facade').forEach((facade) => {
+    if (facade.dataset.bound) return;
+    facade.dataset.bound = 'true';
+    // The inner <button> handles Enter/Space natively; clicks bubble up to the facade.
+    facade.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.className = 'absolute inset-0 w-full h-full';
+      iframe.src = facade.dataset.embedSrc;
+      iframe.title = facade.dataset.title;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      facade.replaceChildren(iframe);
+      iframe.focus();
+    }, { once: true });
+  });
+</script>

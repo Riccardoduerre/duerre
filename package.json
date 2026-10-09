@@ -10,8 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "typecheck": "astro sync && tsc --noEmit",
-    "new-post": "node scripts/new-post.mjs",
-    "new-project": "node scripts/new-project.mjs"
+    "new-post": "node scripts/new-post.js",
+    "new-project": "node scripts/new-project.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.3",
