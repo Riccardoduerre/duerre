@@ -362,6 +362,11 @@ const serviceOptions = [
               window.location.href = thanksPath;
               return;
             }
+            // If FormSubmit requires first-time email activation, trigger native POST to send the activation email
+            if (result && typeof result.message === 'string' && /activat|confirm/i.test(result.message)) {
+              HTMLFormElement.prototype.submit.call(form);
+              return;
+            }
           } catch {
             // Network/blocker error -> fall through to mailto fallback below
           }
