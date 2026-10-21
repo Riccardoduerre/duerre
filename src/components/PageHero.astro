@@ -1,0 +1,39 @@
+---
+import { localePath, useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+  eyebrow: string;
+  title: string;
+}
+
+const { lang, eyebrow, title } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="section-carbon bg-grid-lines-dark relative overflow-hidden border-b border-white/10 py-20 md:py-28">
+  <!-- Subtle radial ambient glow -->
+  <div class="pointer-events-none absolute -top-24 right-1/4 h-96 w-96 rounded-full bg-white/[0.03] blur-3xl"></div>
+
+  <div class="mx-auto max-w-7xl px-6 relative z-10">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <span class="pill-subtext-dark mb-5">
+          {eyebrow}
+        </span>
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.05]">
+          {title}
+        </h1>
+      </div>
+
+      <nav aria-label="Breadcrumb" class="text-xs font-semibold uppercase tracking-[0.16em] text-[#A8A8A8] flex items-center gap-2">
+        <a href={localePath(lang, '/')} class="hover:text-white transition-colors">
+          {t('nav_home')}
+        </a>
+        <span class="text-white/30">/</span>
+        <span class="text-white">{title}</span>
+      </nav>
+    </div>
+  </div>
+</section>
+

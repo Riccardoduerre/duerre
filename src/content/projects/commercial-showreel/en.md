@@ -1,7 +1,7 @@
 ---
 title: "Commercial Showreel"
 description: "A fast-paced directorial showreel condensing automotive, fashion, and architectural visual storytelling into a unified cinematic rhythm."
-client: "Duerremedia Production"
+client: "Duerre Production"
 role: "Video Production & Direction"
 year: "2025"
 date: 2025-11-01

@@ -1,8 +1,14 @@
 ---
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import FaqAccordion from '../FaqAccordion.astro';
+import DualCtaBanner from '../DualCtaBanner.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n';
+import { SITE } from '../../config/site';
+
 import portraitImg from '../../assets/blog/DSCN7050.webp';
+import studioImg from '../../assets/site/studio.jpg';
 
 interface Props {
   lang: Locale;
@@ -10,129 +16,252 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+const steps = [
+  { num: '01', title: t('step_1_title'), desc: t('step_1_desc') },
+  { num: '02', title: t('step_2_title'), desc: t('step_2_desc') },
+  { num: '03', title: t('step_3_title'), desc: t('step_3_desc') },
+];
+
+const faqItems =
+  lang === 'it'
+    ? [
+        {
+          question: 'Duerre lavora solo con grandi aziende?',
+          answer:
+            'No, affianchiamo imprese di ogni dimensione, professionisti, studi di architettura e brand emergenti. Ogni progetto viene calibrato sugli obiettivi specifici e sulle esigenze reali del cliente.',
+        },
+        {
+          question: 'Posso rivolgermi a voi anche se non ho un’idea precisa di cosa mi serve?',
+          answer:
+            'Assolutamente sì. La nostra prima fase di analisi e ascolto serve proprio a tradurre i tuoi obiettivi di business in una direzione visiva, fotografica, video, 3D o digitale chiara ed efficace.',
+        },
+        {
+          question: 'Operative solo in Italia o anche da remoto / internazionale?',
+          answer:
+            'Operiamo su tutto il territorio italiano per produzioni fotografiche e video on-location, e lavoriamo quotidianamente da remoto con clienti internazionali per rendering 3D CGI, post-produzione ACES e digital marketing.',
+        },
+      ]
+    : [
+        {
+          question: 'Does Duerre work only with large enterprises?',
+          answer:
+            'No — we partner with ambitious companies of all sizes, independent brands, architectural studios, and agencies. Every production is tailored around your goals and scope.',
+        },
+        {
+          question: 'Can I reach out even if I don’t have a finalized brief yet?',
+          answer:
+            'Absolutely. Our first phase (Analysis & Listening) is designed specifically to help clarify your objectives and shape a cohesive visual, 3D, or digital strategy.',
+        },
+        {
+          question: 'Do you work on-location or remotely for international clients?',
+          answer:
+            'We travel across Italy and Europe for on-location commercial photography and cinema productions, and collaborate remotely worldwide for 3D CGI rendering, product still life, ACES grading, and digital marketing.',
+        },
+      ];
 ---
 
-<BaseLayout 
-  title={`${t('nav_about')} | Duerremedia`} 
-  description={t('studio_blurb')} 
+<BaseLayout
+  title={`${t('nav_about')} | Duerre`}
+  description={t('studio_blurb')}
   lang={lang}
   image={portraitImg.src}
 >
-  <div class="max-w-6xl mx-auto px-6 py-24 md:py-32">
-    <!-- Main Editorial Spread -->
-    <section class="grid gap-12 lg:grid-cols-12 lg:items-center mb-20">
-      <div class="lg:col-span-7">
-        <div class="flex items-center gap-3 mb-6">
-          <span class="text-xs font-bold uppercase tracking-[0.25em] text-accent">
-            {t('studio_eyebrow')}
-          </span>
-          <span class="text-line">/</span>
-          <span class="font-mono text-xs text-muted">Riccardo Riva</span>
-        </div>
+  <PageHero
+    lang={lang}
+    eyebrow={t('studio_eyebrow')}
+    title={t('nav_about')}
+  />
 
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-8">
-          {t('nav_about')}
-        </h1>
-
-        <p class="text-lg md:text-xl text-muted leading-relaxed mb-6 font-medium">
-          {t('studio_blurb')}
-        </p>
-
-        <p class="text-base text-muted/90 leading-relaxed mb-10">
-          {lang === 'it' 
-            ? 'Dall’idea iniziale alla color grading finale, curo ogni fase della produzione. Che si tratti di fotografia commerciale di prodotto, filmati promozionali o ambienti virtuali fotorealistici in 3D, l’obiettivo resta costante: eccellenza visiva senza compromessi.'
-            : 'From the initial concept through to final color delivery, I manage every stage of production. Whether creating tactile product imagery, cinematic brand films, or photo-real 3D environments, the focus remains absolute: visual excellence that speaks with clarity and durability.'}
-        </p>
-
-        <div class="flex flex-wrap gap-4">
-          <a href={localePath(lang, '/projects/')} class="btn-primary">
-            {t('selected_works')} →
-          </a>
-          <a href={localePath(lang, '/contact/')} class="btn-ghost">
-            {t('nav_cta')}
-          </a>
-        </div>
+  <!-- Wide Studio Reveal Banner + Agency Narrative (communicationitalia.com/agenzia-di-comunicazione) -->
+  <section class="py-20 md:py-32 px-6 bg-grid-lines">
+    <div class="mx-auto max-w-7xl">
+      <!-- Wide Reveal Image -->
+      <div class="overflow-hidden rounded-3xl border border-line bg-surface aspect-[21/9] mb-20 shadow-2xl media-zoom group">
+        <Picture
+          formats={['avif', 'webp']}
+          src={studioImg}
+          alt="Duerre Studio — Riccardo Riva"
+          class="h-full w-full object-cover"
+          widths={[800, 1400, 2000]}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
       </div>
 
-      <div class="lg:col-span-5">
-        <div class="relative overflow-hidden rounded-2xl bg-surface border border-line shadow-2xl group">
-          <Picture formats={['avif', 'webp']} 
-            src={portraitImg} 
-            alt="Riccardo Riva — Visual Director & Commercial Photographer" 
-            class="w-full h-auto object-cover transition duration-700 ease-out group-hover:scale-105"
-            widths={[400, 800, 1200]}
-            sizes="(max-width: 1024px) 100vw, 42vw"
-            loading="eager"
-            fetchpriority="high"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
-          <div class="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
-            <span class="block font-mono text-[10px] tracking-widest text-accent uppercase mb-1">
-              PORTRAIT · RICCARDO RIVA
-            </span>
-            <p class="text-sm font-semibold tracking-wide text-white/90">
-              Visual Director & Commercial Photographer
+      <!-- Main Studio Narrative + Mission + Portrait -->
+      <div class="grid lg:grid-cols-12 gap-14 lg:gap-20 items-center">
+        <div class="lg:col-span-7">
+          <span class="pill-subtext mb-5">Duerre · {SITE.author}</span>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-ink mb-6">
+            {lang === 'it'
+              ? 'Studio di Produzione Visiva e Comunicazione Integrata'
+              : 'Integrated Visual Production & Digital Studio'}
+          </h2>
+          <p class="text-base sm:text-lg text-muted leading-relaxed mb-8">
+            {t('studio_blurb')}
+          </p>
+
+          <div class="rounded-2xl border border-line bg-surface/60 p-8 mb-8">
+            <h3 class="text-xl font-extrabold text-ink mb-3">
+              {t('mission_title')}
+            </h3>
+            <p class="text-sm sm:text-base text-muted leading-relaxed">
+              {t('mission_body')}
             </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-6">
+            <a href={localePath(lang, '/services/')} class="learn-more-btn">
+              <span>{t('nav_services')}</span>
+              <span class="arrow-box">↗</span>
+            </a>
+            <a href={localePath(lang, '/projects/')} class="learn-more-btn">
+              <span>{t('nav_projects')}</span>
+              <span class="arrow-box">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="relative overflow-hidden rounded-3xl border border-line bg-surface shadow-2xl media-zoom group">
+            <Picture
+              formats={['avif', 'webp']}
+              src={portraitImg}
+              alt="Riccardo Riva — Duerre"
+              class="w-full h-auto object-cover"
+              widths={[400, 800, 1200]}
+              sizes="(max-width: 1024px) 100vw, 42vw"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
+              <span class="block font-mono text-[10px] tracking-widest text-white/70 uppercase mb-1">
+                FOUNDER & CREATIVE DIRECTOR
+              </span>
+              <p class="text-lg font-extrabold tracking-tight text-white">
+                Riccardo Riva
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <div class="prose prose-studio max-w-none">
-      <h2>{t('about_workflow_title')}</h2>
-      <p>{t('about_workflow_p')}</p>
-      <ul>
-        <li>{lang === 'it' ? 'Fotografia Commerciale' : 'Commercial Photography'}</li>
-        <li>{lang === 'it' ? 'Produzione Video & Film Editoriale' : 'Fashion & Editorial Film'}</li>
-        <li>{lang === 'it' ? 'Rendering 3D di Prodotto' : '3D Product Rendering'}</li>
-        <li>{lang === 'it' ? 'Color Grading ACES' : 'Color Grading'}</li>
-      </ul>
-
-      <h2>{t('about_clients_title')}</h2>
-      <p>{t('about_clients_p')}</p>
-
-      <h2>{t('about_gear_title')}</h2>
-      <div class="not-prose grid sm:grid-cols-2 gap-6 my-8">
-        <div class="p-6 rounded-xl bg-surface border border-line">
-          <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Camera & Optics</h3>
-          <ul class="text-sm text-muted space-y-2">
-            <li>Cinema & High-Resolution Full-Frame systems</li>
-            <li>Prime Cinema lenses & Tilt-Shift optical glass</li>
-            <li>High-speed RAW & 10-bit Log capture</li>
-          </ul>
-        </div>
-        <div class="p-6 rounded-xl bg-surface border border-line">
-          <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Lighting & Grip</h3>
-          <ul class="text-sm text-muted space-y-2">
-            <li>Continuous Bi-Color / Daylight LED arrays</li>
-            <li>High-speed strobe lighting & studio shapers</li>
-            <li>Motorized sliders & camera stabilization</li>
-          </ul>
-        </div>
-        <div class="p-6 rounded-xl bg-surface border border-line">
-          <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">Color & Finishing</h3>
-          <ul class="text-sm text-muted space-y-2">
-            <li>DaVinci Resolve Studio (ACES color managed)</li>
-            <li>Calibrated reference monitoring</li>
-            <li>Film emulation & custom show LUT development</li>
-          </ul>
-        </div>
-        <div class="p-6 rounded-xl bg-surface border border-line">
-          <h3 class="text-sm font-semibold uppercase tracking-wider text-accent mb-3">3D CGI & VFX</h3>
-          <ul class="text-sm text-muted space-y-2">
-            <li>Blender & GPU-accelerated raytracing</li>
-            <li>Substance 3D PBR materials workflow</li>
-            <li>Multi-pass AOV compositing pipeline</li>
-          </ul>
-        </div>
+  <!-- Dark 3-Step Approach Section -->
+  <section class="section-carbon bg-grid-lines-dark py-24 md:py-32 px-6 border-y border-white/10">
+    <div class="mx-auto max-w-7xl">
+      <div class="max-w-3xl mb-16">
+        <span class="pill-subtext-dark mb-5">{t('approach_eyebrow')}</span>
+        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-white mb-6">
+          {t('approach_title')}
+        </h2>
+        <p class="text-base sm:text-lg text-[#A8A8A8] leading-relaxed">
+          {t('approach_desc')}
+        </p>
       </div>
 
-      <div class="not-prose pt-12 border-t border-line text-center">
-        <h2 class="text-2xl font-bold mb-4">{t('project_cta_title')}</h2>
-        <p class="text-muted mb-8">{t('project_cta_desc')}</p>
-        <a href={localePath(lang, '/contact/')} class="btn-primary">{t('nav_cta')}</a>
+      <div class="grid md:grid-cols-3 gap-8">
+        {steps.map((step) => (
+          <div class="group rounded-3xl border border-white/15 bg-[#141414] p-8 sm:p-10 transition-colors hover:border-white/40">
+            <div class="flex items-center justify-between mb-8">
+              <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/5 text-white">
+                ↗
+              </span>
+              <span class="text-5xl font-extrabold tracking-tighter text-white/20 group-hover:text-white/40 transition-colors">
+                {step.num}
+              </span>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-4">{step.title}</h3>
+            <p class="text-sm sm:text-base text-[#A8A8A8] leading-relaxed">{step.desc}</p>
+          </div>
+        ))}
       </div>
     </div>
-  </div>
-</BaseLayout>
+  </section>
 
+  <!-- Production Stack & Core Capabilities -->
+  <section class="py-24 md:py-32 px-6 bg-grid-lines border-b border-line">
+    <div class="mx-auto max-w-7xl">
+      <div class="max-w-3xl mb-16">
+        <span class="pill-subtext mb-4">{t('about_gear_title')}</span>
+        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-ink mb-4">
+          {t('about_workflow_title')}
+        </h2>
+        <p class="text-base sm:text-lg text-muted leading-relaxed">
+          {t('about_workflow_p')}
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-8 rounded-3xl bg-surface border border-line">
+          <span class="font-mono text-xs font-bold text-muted block mb-3">/01</span>
+          <h3 class="text-lg font-extrabold uppercase tracking-tight text-ink mb-3">Commercial Photography</h3>
+          <ul class="text-sm text-muted space-y-2">
+            <li>Full-Frame High-Resolution Systems</li>
+            <li>Prime & Tilt-Shift Optical Glass</li>
+            <li>Precision Studio Strobe & LED Arrays</li>
+          </ul>
+        </div>
+
+        <div class="p-8 rounded-3xl bg-surface border border-line">
+          <span class="font-mono text-xs font-bold text-muted block mb-3">/02</span>
+          <h3 class="text-lg font-extrabold uppercase tracking-tight text-ink mb-3">Cinema & Video</h3>
+          <ul class="text-sm text-muted space-y-2">
+            <li>RAW & 10-bit Log Cinema Capture</li>
+            <li>Motorized Sliders & Gimbal Systems</li>
+            <li>DaVinci Resolve Studio (ACES Pipeline)</li>
+          </ul>
+        </div>
+
+        <div class="p-8 rounded-3xl bg-surface border border-line">
+          <span class="font-mono text-xs font-bold text-muted block mb-3">/03</span>
+          <h3 class="text-lg font-extrabold uppercase tracking-tight text-ink mb-3">3D CGI & Rendering</h3>
+          <ul class="text-sm text-muted space-y-2">
+            <li>Blender & GPU Path-Tracing</li>
+            <li>Substance 3D PBR Material Pipeline</li>
+            <li>32-bit EXR Multi-Pass Compositing</li>
+          </ul>
+        </div>
+
+        <div class="p-8 rounded-3xl bg-surface border border-line">
+          <span class="font-mono text-xs font-bold text-muted block mb-3">/04</span>
+          <h3 class="text-lg font-extrabold uppercase tracking-tight text-ink mb-3">Digital Marketing</h3>
+          <ul class="text-sm text-muted space-y-2">
+            <li>Social Media Visual Strategy</li>
+            <li>SEO & Content Architecture</li>
+            <li>Performance & Conversion Assets</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion ("Domande frequenti") -->
+  <FaqAccordion
+    eyebrow={t('faq_eyebrow')}
+    title={t('faq_title')}
+    items={faqItems}
+  />
+
+  <!-- Selected Clients Matrix -->
+  <section class="pb-24 px-6">
+    <div class="mx-auto max-w-7xl">
+      <div class="text-center mb-10">
+        <span class="pill-subtext">{t('clients_eyebrow')}</span>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 border-y border-line divide-x divide-y sm:divide-y-0 divide-line">
+        {SITE.clients.map((client) => (
+          <div class="flex items-center justify-center py-10 px-4 text-center group">
+            <span class="text-sm sm:text-base font-extrabold uppercase tracking-[0.16em] text-muted group-hover:text-ink transition-colors">
+              {client}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <DualCtaBanner lang={lang} />
+</BaseLayout>

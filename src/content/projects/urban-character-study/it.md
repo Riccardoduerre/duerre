@@ -49,4 +49,4 @@ Senza ricorrere a complessi set flash che avrebbero rotto la naturalezza della s
 
 ## Mostra & Valore Editoriale
 
-Il corpus è stato esposto a Venezia e recensito da pubblicazioni di settore. Questo lavoro incarna la filosofia di Duerremedia: cercare la verità umana autentica al centro di ogni produzione visiva.
+Il corpus è stato esposto a Venezia e recensito da pubblicazioni di settore. Questo lavoro incarna la filosofia di Duerre: cercare la verità umana autentica al centro di ogni produzione visiva.

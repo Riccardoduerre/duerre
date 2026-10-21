@@ -1,6 +1,10 @@
+@import '@fontsource/plus-jakarta-sans/300.css';
+@import '@fontsource/plus-jakarta-sans/300-italic.css';
 @import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
 @import '@fontsource/plus-jakarta-sans/600.css';
 @import '@fontsource/plus-jakarta-sans/700.css';
+@import '@fontsource/plus-jakarta-sans/800.css';
 
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
@@ -21,6 +25,8 @@
 
   --animate-subtle-zoom: subtleZoom 16s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-fade-in: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-spin-slow: spinSlow 18s linear infinite;
+  --animate-marquee: marqueeScroll 34s linear infinite;
 
   @keyframes subtleZoom {
     0% {
@@ -38,6 +44,22 @@
     100% {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+  @keyframes spinSlow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes marqueeScroll {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
     }
   }
 }
@@ -84,47 +106,45 @@
 }
 
 @layer base {
-  /* Tailwind v4 resets buttons to cursor: default; keep the v3 pointer behaviour. */
   button:not(:disabled),
   [role='button']:not(:disabled) {
     cursor: pointer;
   }
 
-  /* <Picture> wraps <img>; let the img lay out as a direct child of its container. */
   picture {
     display: contents;
   }
 
   :root {
     color-scheme: dark;
-    --c-bg: 10 10 11;
-    --c-surface: 20 20 22;
-    --c-line: 40 40 44;
-    --c-ink: 237 235 231;
-    --c-muted: 158 155 148;
+    --c-bg: 9 9 9;
+    --c-surface: 20 20 20;
+    --c-line: 40 40 40;
+    --c-ink: 255 255 255;
+    --c-muted: 168 168 168;
     --c-accent: 201 161 91;
   }
 
   @media (prefers-color-scheme: light) {
     :root:not([data-theme='dark']) {
       color-scheme: light;
-      --c-bg: 246 245 242;
-      --c-surface: 255 255 255;
-      --c-line: 226 223 216;
+      --c-bg: 255 255 255;
+      --c-surface: 243 243 243;
+      --c-line: 217 217 217;
       --c-ink: 20 20 20;
-      --c-muted: 92 89 83;
-      --c-accent: 138 100 36;
+      --c-muted: 116 120 124;
+      --c-accent: 20 20 20;
     }
   }
 
   :root[data-theme='light'] {
     color-scheme: light;
-    --c-bg: 246 245 242;
-    --c-surface: 255 255 255;
-    --c-line: 226 223 216;
+    --c-bg: 255 255 255;
+    --c-surface: 243 243 243;
+    --c-line: 217 217 217;
     --c-ink: 20 20 20;
-    --c-muted: 92 89 83;
-    --c-accent: 138 100 36;
+    --c-muted: 116 120 124;
+    --c-accent: 20 20 20;
   }
 
   html {
@@ -139,18 +159,18 @@
   }
 
   ::selection {
-    @apply bg-accent text-bg;
+    @apply bg-ink text-bg;
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--c-accent));
+    outline: 2px solid rgb(var(--c-ink));
     outline-offset: 3px;
   }
 
   h1,
   h2,
   h3 {
-    @apply font-semibold tracking-tight text-ink;
+    @apply font-bold tracking-tight text-ink;
     text-wrap: balance;
   }
 
@@ -169,22 +189,70 @@
 
 @layer components {
   .eyebrow {
-    @apply text-[0.7rem] font-semibold uppercase tracking-widest text-accent;
+    @apply text-[0.75rem] font-semibold uppercase tracking-widest text-muted;
+  }
+
+  /* Signature communicationitalia.com bordered pill sub-text */
+  .pill-subtext {
+    @apply inline-flex items-center rounded-full border border-line px-4 py-1.5 text-xs md:text-sm font-medium tracking-wide text-ink;
+  }
+
+  .pill-subtext-dark {
+    @apply inline-flex items-center rounded-full border border-white/25 px-4 py-1.5 text-xs md:text-sm font-medium tracking-wide text-white;
+  }
+
+  /* High-contrast carbon dark section used for alternating dark/light rhythm */
+  .section-carbon {
+    background-color: #0e0e0e;
+    color: #ffffff;
+  }
+
+  /* Architectural vertical grid lines overlay */
+  .bg-grid-lines {
+    background-image: linear-gradient(to right, rgb(var(--c-line) / 0.35) 1px, transparent 1px);
+    background-size: 25% 100%;
+  }
+
+  .bg-grid-lines-dark {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 25% 100%;
   }
 
   .btn-primary {
-    @apply btn bg-ink text-bg hover:bg-accent;
+    @apply btn bg-ink text-bg hover:opacity-85;
   }
+
   .btn-ghost {
-    @apply btn border border-line text-ink hover:border-ink;
+    @apply btn border border-line text-ink hover:bg-ink hover:text-bg hover:border-ink;
+  }
+
+  /* Signature communicationitalia.com learn-more button with bordered ↗ box */
+  .learn-more-btn {
+    @apply inline-flex items-center gap-3 text-xs md:text-sm font-bold uppercase tracking-[0.12em] text-ink transition-colors duration-300;
+  }
+  .learn-more-btn .arrow-box {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/30 transition-all duration-300;
+  }
+  .learn-more-btn:hover .arrow-box {
+    @apply bg-ink text-bg border-ink translate-x-0.5 -translate-y-0.5;
+  }
+
+  .learn-more-btn-dark {
+    @apply inline-flex items-center gap-3 text-xs md:text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors duration-300;
+  }
+  .learn-more-btn-dark .arrow-box {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/35 text-white transition-all duration-300;
+  }
+  .learn-more-btn-dark:hover .arrow-box {
+    @apply bg-white text-[#141414] border-white translate-x-0.5 -translate-y-0.5;
   }
 
   .link-underline {
-    @apply underline decoration-line underline-offset-4 transition hover:text-accent hover:decoration-accent;
+    @apply underline decoration-line underline-offset-4 transition hover:text-ink hover:decoration-ink;
   }
 
   .field {
-    @apply w-full rounded-lg border border-line bg-surface px-4 py-3.5 text-ink placeholder:text-muted/60 transition focus:border-accent focus:outline-hidden;
+    @apply w-full rounded-lg border border-line bg-surface px-4 py-3.5 text-ink placeholder:text-muted/60 transition focus:border-ink focus:outline-hidden;
   }
 
   .media-zoom img {
@@ -192,7 +260,7 @@
   }
   .group:hover .media-zoom img,
   .group:focus-visible .media-zoom img {
-    transform: scale(1.04);
+    transform: scale(1.05);
   }
 
   .portfolio-card {
@@ -206,6 +274,20 @@
     background: rgb(var(--c-surface) / 0.7);
     backdrop-filter: blur(16px);
     border: 1px solid rgb(var(--c-line) / 0.7);
+  }
+
+  /* Interactive Service Row (single-item-service-one) */
+  .service-row-item {
+    @apply relative border-b border-line py-8 md:py-11 transition-colors duration-300;
+  }
+  .service-row-item:first-child {
+    @apply border-t border-line;
+  }
+  .service-row-preview {
+    @apply pointer-events-none hidden lg:block absolute left-[38%] top-1/2 -translate-y-1/2 z-20 w-72 aspect-[4/3] overflow-hidden rounded-xl shadow-2xl opacity-0 scale-90 -rotate-3 transition-all duration-500 ease-out border border-line;
+  }
+  .service-row-item:hover .service-row-preview {
+    @apply opacity-100 scale-100 rotate-2;
   }
 }
 

@@ -1,7 +1,7 @@
 ---
 title: "Showreel Commerciale"
 description: "Uno showreel registico ad alto impatto visivo che condensa cinematografia automotive, fashion e architettura in un ritmo serrato e contemporaneo."
-client: "Duerremedia"
+client: "Duerre"
 role: "Produzione e Regia Video"
 year: "2025"
 date: 2025-11-01

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n';
 import { CONTACT_FORM, contactFormMode, SITE } from '../../config/site';
 
@@ -10,86 +11,259 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const mode = contactFormMode();
+const thanksUrl = `${Astro.url.origin}${localePath(lang, '/thanks/')}`;
+const thanksPath = localePath(lang, '/thanks/');
+
+const serviceOptions = [
+  t('service_1_title'),
+  t('service_2_title'),
+  t('service_3_title'),
+  t('service_4_title'),
+];
 ---
 
-<BaseLayout 
-  title={`${t('nav_contact')} | Duerremedia`} 
-  description={t('contact_title')} 
+<BaseLayout
+  title={`${t('nav_contact')} | Duerre`}
+  description={t('contact_title')}
   lang={lang}
 >
-  <div class="max-w-4xl mx-auto px-6 py-20 md:py-28">
-    <!-- Header with Live Studio Availability HUD -->
-    <div class="mb-12">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-line text-[11px] font-mono uppercase tracking-wider text-muted mb-6">
-        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>Italy (CET) · Accepting commissions</span>
-      </div>
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 text-ink">{t('contact_title')}</h1>
-      <p class="text-muted text-base sm:text-lg max-w-2xl leading-relaxed">{t('project_cta_desc')}</p>
-    </div>
+  <PageHero
+    lang={lang}
+    eyebrow={t('contact_breadcrumb_sub')}
+    title={t('nav_contact')}
+  />
 
-    <!-- Direct Email Quick Card -->
-    <div class="mb-12 p-6 rounded-2xl bg-surface/60 border border-line flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div>
-        <span class="text-[11px] font-mono text-muted uppercase tracking-wider block mb-1">Direct Studio Dispatch</span>
-        <a href={`mailto:${SITE.email}`} class="text-base sm:text-lg font-semibold text-ink hover:text-accent transition-colors">
-          {SITE.email}
-        </a>
-      </div>
-      <button 
-        id="copy-contact-email" 
-        type="button" 
-        class="btn-ghost text-xs py-2.5 px-5 self-start sm:self-auto cursor-pointer"
-        data-copied-text={t('link_copied')}
-      >
-        <span id="copy-email-label">Copy Email Address</span>
-      </button>
-    </div>
+  <section class="py-20 md:py-32 px-6 bg-grid-lines">
+    <div class="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <!-- Left Column: Studio Contact Cards (communicationitalia.com contact-icon-box style) -->
+      <div class="lg:col-span-5 space-y-6">
+        <div>
+          <span class="pill-subtext mb-4">Duerre Studio</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink mb-4">
+            {t('contact_title')}
+          </h2>
+          <p class="text-muted text-base leading-relaxed">
+            {t('project_cta_desc')}
+          </p>
+        </div>
 
-    {mode === 'mailto' ? (
-      <div class="bg-surface/70 border border-line rounded-2xl p-8 sm:p-12 text-center">
-        <h3 class="text-xl font-bold mb-3 text-ink">Prefer writing an email directly?</h3>
-        <p class="text-muted text-sm mb-8 max-w-lg mx-auto leading-relaxed">
-          {t('contact_form_fallback_note')} <a href={`mailto:${SITE.email}`} class="text-accent underline underline-offset-4">{SITE.email}</a>.
-        </p>
-        <a href={`mailto:${SITE.email}?subject=${encodeURIComponent(t('contact_form_subject'))}`} class="btn-primary">
-          {t('open_email_app')} →
-        </a>
-      </div>
-    ) : (
-      <form action={CONTACT_FORM.action} method="POST" class="space-y-6 bg-surface/40 p-8 sm:p-10 rounded-2xl border border-line">
-        {mode === 'web3forms' && <input type="hidden" name="access_key" value={CONTACT_FORM.accessKey} />}
-        <input type="hidden" name="subject" value={t('contact_form_subject')} />
-        <input type="hidden" name="redirect" value={`${Astro.url.origin}${localePath(lang, '/thanks/')}`} />
-        
-        <div class="grid md:grid-cols-2 gap-6">
+        <!-- Direct Email Box -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-surface border border-line flex flex-col justify-between gap-4">
           <div>
-            <label for="name" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">{t('label_name')}</label>
-            <input type="text" id="name" name="name" required class="field" placeholder="Jane Doe" />
+            <span class="text-xs font-mono text-muted uppercase tracking-wider block mb-1">Email</span>
+            <a href={`mailto:${SITE.email}`} class="text-lg sm:text-xl font-extrabold text-ink hover:opacity-75 transition-opacity break-all">
+              {SITE.email}
+            </a>
           </div>
           <div>
-            <label for="email" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">{t('label_email')}</label>
-            <input type="email" id="email" name="email" required class="field" placeholder="jane@brand.com" />
+            <button
+              id="copy-contact-email"
+              type="button"
+              class="btn-ghost text-xs py-2.5 px-5 cursor-pointer"
+              data-copied-text={t('link_copied')}
+            >
+              <span id="copy-email-label">{t('copy_link')}: {SITE.email}</span>
+            </button>
           </div>
         </div>
-        
-        <div>
-          <label for="budget" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">{t('contact_form_budget')}</label>
-          <input type="text" id="budget" name="budget" placeholder={t('contact_form_budget_placeholder')} class="field" />
-        </div>
-        
-        <div>
-          <label for="message" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">{t('label_message')}</label>
-          <textarea id="message" name="message" required rows="6" class="field resize-y" placeholder="Tell me about the project goals, timeline, and scope..."></textarea>
-        </div>
 
-        <button type="submit" class="btn-primary w-full sm:w-auto">{t('label_send')} →</button>
-      </form>
-    )}
-  </div>
+        <!-- Studio Location & Availability Box -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bg border border-line text-[11px] font-mono uppercase tracking-wider text-ink">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>{SITE.location} · {lang === 'it' ? 'Disponibile per nuovi progetti' : 'Accepting Commissions'}</span>
+          </div>
+          <div>
+            <span class="text-xs font-mono text-muted uppercase tracking-wider block mb-1">
+              {t('nav_services')}
+            </span>
+            <p class="text-sm font-semibold text-ink">
+              {t('service_1_title')} · {t('service_2_title')} · {t('service_3_title')} · {t('service_4_title')}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Hybrid FormSubmit AJAX + Automatic Mailto Fallback -->
+      <div class="lg:col-span-7">
+        <form
+          id="contact-request-form"
+          action={CONTACT_FORM.action}
+          method="POST"
+          data-mode={mode}
+          data-ajax-action={CONTACT_FORM.ajaxAction}
+          data-recipient={SITE.email}
+          data-subject={t('contact_form_subject')}
+          data-thanks-path={thanksPath}
+          class="space-y-6 bg-surface p-8 sm:p-12 rounded-3xl border border-line shadow-sm"
+        >
+          <div class="border-b border-line pb-5 mb-2">
+            <span class="pill-subtext mb-3">{t('nav_cta')}</span>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight">
+              {lang === 'it' ? 'Invia una richiesta di progetto' : 'Send a project request'}
+            </h3>
+          </div>
+
+          <!-- Hidden configuration fields for FormSubmit / Web3Forms -->
+          {mode === 'web3forms' && <input type="hidden" name="access_key" value={CONTACT_FORM.accessKey} />}
+          <input type="hidden" name="_subject" value={t('contact_form_subject')} />
+          <input type="hidden" name="_template" value="box" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value={thanksUrl} />
+          <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
+
+          <!-- Name & Email -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
+                {t('label_name')} *
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="field bg-bg"
+                placeholder={lang === 'it' ? 'Mario Rossi' : 'Jane Doe'}
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
+                {t('label_email')} *
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="field bg-bg"
+                placeholder={lang === 'it' ? 'nome@azienda.it' : 'jane@brand.com'}
+              />
+            </div>
+          </div>
+
+          <!-- Company / Brand & Budget -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="company" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
+                {lang === 'it' ? 'Azienda / Brand (facoltativo)' : 'Company / Brand (optional)'}
+              </label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                class="field bg-bg"
+                placeholder={lang === 'it' ? 'Nome Azienda o Brand' : 'Brand or Studio Name'}
+              />
+            </div>
+            <div>
+              <label for="budget" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
+                {t('contact_form_budget')}
+              </label>
+              <input
+                type="text"
+                id="budget"
+                name="budget"
+                placeholder={t('contact_form_budget_placeholder')}
+                class="field bg-bg"
+              />
+            </div>
+          </div>
+
+          <!-- Interactive 4-Discipline Selector Pills -->
+          <div>
+            <span class="block text-xs font-mono uppercase tracking-wider text-muted mb-3">
+              {lang === 'it' ? 'Servizi di interesse' : 'Services of Interest'}
+            </span>
+            <div class="flex flex-wrap gap-2.5">
+              {serviceOptions.map((service) => (
+                <label class="cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    name="services"
+                    value={service}
+                    class="peer sr-only"
+                  />
+                  <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-line bg-bg text-xs font-bold text-muted transition-all peer-checked:bg-ink peer-checked:text-bg peer-checked:border-ink hover:border-ink/50">
+                    <span>{service}</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <!-- Project Brief / Message -->
+          <div>
+            <label for="message" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
+              {t('label_message')} *
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="5"
+              class="field bg-bg resize-y"
+              placeholder={
+                lang === 'it'
+                  ? 'Raccontaci gli obiettivi del progetto, le tempistiche e i deliverables richiesti...'
+                  : 'Tell us about your project goals, timeline, and desired deliverables...'
+              }
+            ></textarea>
+          </div>
+
+          <!-- Submit Row -->
+          <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <button
+              id="contact-submit-btn"
+              type="submit"
+              data-default-label={`${t('label_send')} ↗`}
+              data-sending-label={lang === 'it' ? 'Invio in corso...' : 'Sending...'}
+              class="btn-primary w-full sm:w-auto cursor-pointer disabled:opacity-60"
+            >
+              {t('label_send')} ↗
+            </button>
+            <span class="text-xs text-muted">
+              {lang === 'it' ? 'Risposta garantita entro 24–48 ore.' : 'Reply within 24–48 hours.'}
+            </span>
+          </div>
+
+          <!-- Automatic Fallback & Copy Brief Box -->
+          <div
+            id="contact-dispatch-feedback"
+            class="hidden rounded-2xl border border-line bg-bg p-5 space-y-3"
+            aria-live="polite"
+          >
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <p class="text-sm font-bold text-ink">
+                {lang === 'it'
+                  ? '✓ Richiesta pronta! Abbiamo aperto il tuo client email con il brief compilato.'
+                  : '✓ Request ready! Your email client has been opened with your formatted brief.'}
+              </p>
+              <button
+                type="button"
+                id="copy-compiled-brief"
+                class="btn-ghost text-xs py-1.5 px-3.5 cursor-pointer"
+                data-copied-label={lang === 'it' ? 'Brief copiato!' : 'Brief copied!'}
+              >
+                {lang === 'it' ? 'Copia testo del brief' : 'Copy formatted brief'}
+              </button>
+            </div>
+            <p class="text-xs text-muted">
+              {lang === 'it'
+                ? 'Se non usi un’app email predefinita, copia il brief qui sopra e invialo a '
+                : 'If your email app did not open automatically, copy the brief above and send it to '}
+              <a href={`mailto:${SITE.email}`} class="text-ink font-semibold underline underline-offset-4">
+                {SITE.email}
+              </a>.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
 
   <script>
-    function initContactCopy() {
+    function initContactPage() {
       const copyBtn = document.getElementById('copy-contact-email');
       const copyLabel = document.getElementById('copy-email-label');
       if (copyBtn && copyLabel) {
@@ -106,10 +280,126 @@ const mode = contactFormMode();
           }
         };
       }
+
+      const form = document.getElementById('contact-request-form') as HTMLFormElement | null;
+      const submitBtn = document.getElementById('contact-submit-btn') as HTMLButtonElement | null;
+      const feedbackBox = document.getElementById('contact-dispatch-feedback');
+      const copyBriefBtn = document.getElementById('copy-compiled-brief') as HTMLButtonElement | null;
+
+      if (!form) return;
+
+      let latestBriefText = '';
+
+      form.onsubmit = async (e) => {
+        const mode = form.dataset.mode || 'formsubmit';
+        if (mode === 'web3forms' || mode === 'formspree') {
+          return; // allow native form POST
+        }
+
+        e.preventDefault();
+        const formData = new FormData(form);
+
+        // Ignore spam honeypot
+        if (formData.get('_honey')) return;
+
+        const name = (formData.get('name') as string || '').trim();
+        const email = (formData.get('email') as string || '').trim();
+        const company = (formData.get('company') as string || '').trim();
+        const budget = (formData.get('budget') as string || '').trim();
+        const message = (formData.get('message') as string || '').trim();
+        const services = formData.getAll('services').map((s) => String(s));
+
+        const recipient = form.dataset.recipient || 'riccardo@duerremedia.com';
+        const baseSubject = form.dataset.subject || 'New inquiry from duerremedia.com';
+        const thanksPath = form.dataset.thanksPath || '/thanks/';
+        const ajaxAction = form.dataset.ajaxAction || `https://formsubmit.co/ajax/${recipient}`;
+
+        const subject = company
+          ? `${baseSubject} — ${name} (${company})`
+          : `${baseSubject} — ${name}`;
+
+        const lines = [
+          `Name: ${name}`,
+          `Email: ${email}`,
+          company ? `Company / Brand: ${company}` : '',
+          services.length > 0 ? `Services: ${services.join(', ')}` : '',
+          budget ? `Budget: ${budget}` : '',
+          '',
+          'Project Brief:',
+          message,
+        ].filter((line, idx, arr) => line !== '' || arr[idx - 1] !== '');
+
+        latestBriefText = lines.join('\n');
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = submitBtn.dataset.sendingLabel || 'Sending...';
+        }
+
+        if (mode === 'formsubmit') {
+          try {
+            const response = await fetch(ajaxAction, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+              },
+              body: JSON.stringify({
+                name,
+                email,
+                _replyto: email,
+                company: company || '—',
+                services: services.length > 0 ? services.join(', ') : '—',
+                budget: budget || '—',
+                message,
+                _subject: subject,
+                _template: 'box',
+              }),
+            });
+
+            const result = await response.json().catch(() => null);
+            if (response.ok && result && (result.success === 'true' || result.success === true)) {
+              window.location.href = thanksPath;
+              return;
+            }
+          } catch {
+            // Network/blocker error -> fall through to mailto fallback below
+          }
+        }
+
+        // Fallback: open mailto with pre-filled brief + reveal copy button
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitBtn.dataset.defaultLabel || 'Send Message ↗';
+        }
+
+        const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(latestBriefText)}`;
+        window.location.href = mailtoUrl;
+
+        if (feedbackBox) {
+          feedbackBox.classList.remove('hidden');
+        }
+      };
+
+      if (copyBriefBtn) {
+        copyBriefBtn.onclick = async () => {
+          if (!latestBriefText) return;
+          try {
+            await navigator.clipboard.writeText(latestBriefText);
+            const original = copyBriefBtn.textContent;
+            copyBriefBtn.textContent = copyBriefBtn.dataset.copiedLabel || 'Copied!';
+            setTimeout(() => {
+              copyBriefBtn.textContent = original;
+            }, 2000);
+          } catch {
+            // ignore
+          }
+        };
+      }
     }
 
-    initContactCopy();
-    document.addEventListener('astro:page-load', initContactCopy);
+    initContactPage();
+    document.addEventListener('astro:page-load', initContactPage);
   </script>
 </BaseLayout>
 

@@ -2,7 +2,7 @@
   "name": "duerre",
   "private": true,
   "version": "1.0.0",
-  "description": "Duerremedia portfolio and editorial blog \u2014 Astro static site for duerremedia.com.",
+  "description": "Duerre portfolio and editorial blog \u2014 Astro static site for duerremedia.com.",
   "author": "Riccardo Riva",
   "type": "module",
   "scripts": {

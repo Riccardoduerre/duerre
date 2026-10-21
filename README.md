@@ -1,4 +1,4 @@
-# Duerremedia — Portfolio & Journal
+# Duerre — Portfolio & Journal
 
 Photography, film and 3D work by Riccardo Riva. Live at [duerremedia.com](https://duerremedia.com).
 

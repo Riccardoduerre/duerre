@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
 import ProjectCard from '../ProjectCard.astro';
+import DualCtaBanner from '../DualCtaBanner.astro';
 import { getProjects } from '../../lib/content';
 import { useTranslations, type Locale } from '../../i18n';
 
@@ -13,57 +15,63 @@ const t = useTranslations(lang);
 const projects = await getProjects(lang);
 ---
 
-<BaseLayout 
-  title={`${t('projects_title')} | Duerremedia`} 
-  description={t('projects_intro')} 
+<BaseLayout
+  title={`${t('projects_title')} | Duerre`}
+  description={t('projects_intro')}
   lang={lang}
 >
-  <div class="px-6 py-24 md:py-32 max-w-7xl mx-auto">
-    <div class="max-w-3xl mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold mb-6">{t('projects_title')}</h1>
-      <p class="text-xl text-muted">{t('projects_intro')}</p>
-    </div>
+  <PageHero
+    lang={lang}
+    eyebrow={t('projects_breadcrumb_sub')}
+    title={t('projects_title')}
+  />
 
-    <!-- Category Filter Pills -->
-    <div class="flex flex-wrap gap-2 mb-12 items-center" id="category-filters">
-      <button 
-        type="button" 
-        data-filter="all" 
-        class="filter-pill active px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-ink text-bg cursor-pointer"
-      >
-        {t('all_projects_link')} ({projects.length})
-      </button>
-      <button 
-        type="button" 
-        data-filter="photo" 
-        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
-      >
-        {t('category_photo')} ({projects.filter(p => p.data.category === 'photo').length})
-      </button>
-      <button 
-        type="button" 
-        data-filter="video" 
-        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
-      >
-        {t('category_video')} ({projects.filter(p => p.data.category === 'video').length})
-      </button>
-      <button 
-        type="button" 
-        data-filter="3d" 
-        class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
-      >
-        {t('category_3d')} ({projects.filter(p => p.data.category === '3d').length})
-      </button>
-    </div>
+  <section class="py-20 md:py-28 px-6 bg-grid-lines">
+    <div class="mx-auto max-w-7xl">
+      <!-- Category Filter Pills -->
+      <div class="flex flex-wrap gap-2.5 mb-14 items-center" id="category-filters">
+        <button
+          type="button"
+          data-filter="all"
+          class="filter-pill active px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors bg-ink text-bg cursor-pointer"
+        >
+          {t('all_projects_link')} ({projects.length})
+        </button>
+        <button
+          type="button"
+          data-filter="photo"
+          class="filter-pill px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
+        >
+          {t('category_photo')} ({projects.filter((p) => p.data.category === 'photo').length})
+        </button>
+        <button
+          type="button"
+          data-filter="video"
+          class="filter-pill px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
+        >
+          {t('category_video')} ({projects.filter((p) => p.data.category === 'video').length})
+        </button>
+        <button
+          type="button"
+          data-filter="3d"
+          class="filter-pill px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
+        >
+          {t('category_3d')} ({projects.filter((p) => p.data.category === '3d').length})
+        </button>
+      </div>
 
-    <div class="grid sm:grid-cols-2 gap-8 md:gap-12" id="projects-grid">
-      {projects.map(project => (
-        <div class="project-item transition-opacity duration-300" data-category={project.data.category}>
-          <ProjectCard project={project} />
-        </div>
-      ))}
+      <!-- 3-Column Portfolio Grid (communicationitalia.com/portfolio style) -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10" id="projects-grid">
+        {projects.map((project) => (
+          <div class="project-item transition-opacity duration-300" data-category={project.data.category}>
+            <ProjectCard project={project} />
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
+  </section>
+
+  <DualCtaBanner lang={lang} />
 
   <script>
     function initProjectFilters() {
@@ -96,4 +104,3 @@ const projects = await getProjects(lang);
     document.addEventListener('astro:page-load', initProjectFilters);
   </script>
 </BaseLayout>
-

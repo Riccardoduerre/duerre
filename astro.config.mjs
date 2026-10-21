@@ -10,6 +10,8 @@ export default defineConfig({
   redirects: {
     '/en': '/',
     '/en/about': '/about',
+    '/en/services': '/services',
+    '/servizi': '/it/services',
     '/en/projects': '/projects',
     '/en/projects/alps-brand-campaign': '/projects/alps-brand-campaign',
     '/en/projects/commercial-showreel': '/projects/commercial-showreel',

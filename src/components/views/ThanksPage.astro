@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../PageHero.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n';
+import { SITE } from '../../config/site';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const nextSteps =
+  lang === 'it'
+    ? [
+        {
+          num: '01',
+          title: 'Revisione del Brief',
+          desc: 'Analizziamo gli obiettivi, i servizi selezionati e le tempistiche indicate nella tua richiesta.',
+        },
+        {
+          num: '02',
+          title: 'Risposta entro 24–48 ore',
+          desc: 'Ti ricontatteremo via email con un primo riscontro, eventuali domande di approfondimento o una proposta.',
+        },
+        {
+          num: '03',
+          title: 'Call Conoscitiva & Preventivo',
+          desc: 'Definiamo insieme direzione creativa, deliverables e piano di produzione su misura per il tuo brand.',
+        },
+      ]
+    : [
+        {
+          num: '01',
+          title: 'Brief Review',
+          desc: 'We review your project goals, selected services, and timeline details.',
+        },
+        {
+          num: '02',
+          title: 'Reply within 24–48 Hours',
+          desc: 'You will receive a direct email response with initial thoughts, follow-up questions, or an estimate.',
+        },
+        {
+          num: '03',
+          title: 'Discovery Call & Proposal',
+          desc: 'We align on creative direction, deliverables, and a tailored production schedule.',
+        },
+      ];
+---
+
+<BaseLayout
+  title={`${t('thanks_title')} | Duerre`}
+  description={t('thanks_desc')}
+  lang={lang}
+>
+  <PageHero
+    lang={lang}
+    eyebrow={lang === 'it' ? 'Richiesta Inviata' : 'Request Received'}
+    title={t('thanks_title')}
+  />
+
+  <section class="py-20 md:py-32 px-6 bg-grid-lines">
+    <div class="mx-auto max-w-5xl">
+      <!-- Confirmation Card -->
+      <div class="rounded-3xl border border-line bg-surface p-8 sm:p-14 text-center mb-16">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-ink text-bg mb-6">
+          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+
+        <span class="block text-xs font-mono uppercase tracking-widest text-muted mb-3">
+          Duerre Studio · {SITE.email}
+        </span>
+
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink mb-4">
+          {lang === 'it' ? 'Grazie per averci contattato.' : 'Thank you for reaching out.'}
+        </h2>
+
+        <p class="text-muted text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+          {t('thanks_desc')}
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href={localePath(lang, '/')} class="btn-primary">
+            {t('thanks_back')} ↗
+          </a>
+          <a href={localePath(lang, '/projects/')} class="btn-ghost">
+            {t('hero_cta_primary')} ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Next Steps (01 / 02 / 03) -->
+      <div>
+        <div class="text-center mb-10">
+          <span class="pill-subtext">
+            {lang === 'it' ? 'Prossimi Passi' : 'What Happens Next'}
+          </span>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          {nextSteps.map((step) => (
+            <div class="rounded-3xl border border-line bg-surface p-8 flex flex-col justify-between">
+              <div>
+                <span class="text-3xl font-extrabold text-muted/40 block mb-4 font-mono">
+                  {step.num}
+                </span>
+                <h3 class="text-xl font-extrabold text-ink mb-3">
+                  {step.title}
+                </h3>
+                <p class="text-sm text-muted leading-relaxed">
+                  {step.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,11 +1,18 @@
 ---
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostPreview from '../PostPreview.astro';
-import { getProjects, getPosts, splitId } from '../../lib/content';
+import DualCtaBanner from '../DualCtaBanner.astro';
+import { getProjects, getPosts, splitId, formatDate, readingMinutes } from '../../lib/content';
 import { useTranslations, localePath, type Locale } from '../../i18n';
+import { SITE } from '../../config/site';
+
 import heroImg from '../../assets/site/hero.jpg';
 import studioImg from '../../assets/site/studio.jpg';
+import imgPhoto from '../../assets/blog/Giau_00001.webp';
+import imgVideo from '../../assets/blog/_DSC2365.webp';
+import img3d from '../../assets/blog/Giau_00004.webp';
+import imgMarketing from '../../assets/blog/Landscapes_00003.webp';
+import imgVision from '../../assets/blog/DSCN7050.webp';
 
 interface Props {
   lang: Locale;
@@ -15,258 +22,574 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const allProjects = await getProjects(lang);
-const featuredProjects = allProjects.filter(p => p.data.featured);
+const featuredProjects = allProjects.filter((p) => p.data.featured);
 if (featuredProjects.length === 0) {
-  featuredProjects.push(...allProjects.slice(0, 4));
+  featuredProjects.push(...allProjects);
 }
 
-const latestPosts = (await getPosts(lang)).slice(0, 3);
+const latestPosts = (await getPosts(lang)).slice(0, 2);
+
+const services = [
+  {
+    id: 'commercial-photography',
+    num: '01',
+    title: 'COMMERCIAL PHOTOGRAPHY',
+    desc: t('service_1_desc'),
+    img: imgPhoto,
+    href: `${localePath(lang, '/services/')}#commercial-photography`,
+  },
+  {
+    id: 'cinema-video-production',
+    num: '02',
+    title: 'CINEMA & VIDEO PRODUCTION',
+    desc: t('service_2_desc'),
+    img: imgVideo,
+    href: `${localePath(lang, '/services/')}#cinema-video-production`,
+  },
+  {
+    id: '3d-cgi-rendering',
+    num: '03',
+    title: '3D CGI & PRODUCT RENDERING',
+    desc: t('service_3_desc'),
+    img: img3d,
+    href: `${localePath(lang, '/services/')}#3d-cgi-rendering`,
+  },
+  {
+    id: 'digital-marketing',
+    num: '04',
+    title: 'DIGITAL MARKETING',
+    desc: t('service_4_desc'),
+    img: imgMarketing,
+    href: `${localePath(lang, '/services/')}#digital-marketing`,
+  },
+];
+
+const skills = [
+  { label: t('skill_1_label'), percent: 98 },
+  { label: t('skill_2_label'), percent: 94 },
+  { label: t('skill_3_label'), percent: 95 },
+  { label: t('skill_4_label'), percent: 92 },
+];
+
+const steps = [
+  { num: '01', title: t('step_1_title'), desc: t('step_1_desc') },
+  { num: '02', title: t('step_2_title'), desc: t('step_2_desc') },
+  { num: '03', title: t('step_3_title'), desc: t('step_3_desc') },
+];
 ---
 
-<BaseLayout 
-  title={`Duerremedia | ${t('hero_eyebrow')}`} 
-  description={t('studio_blurb')} 
+<BaseLayout
+  title={`Duerre | ${t('hero_eyebrow')}`}
+  description={t('studio_blurb')}
   lang={lang}
   image={heroImg.src}
 >
-  <!-- Full-Screen Cinematic Hero -->
-  <section class="relative min-h-[92vh] flex flex-col justify-between overflow-hidden text-white -mt-20 pt-24 border-b border-line/40">
-    <!-- Background Hero Image with Slow Cinematic Zoom -->
-    <div class="absolute inset-0 z-0 overflow-hidden">
-      <Picture formats={['avif', 'webp']} 
-        src={heroImg} 
-        alt="Duerremedia Cinematic Showcase" 
-        class="h-full w-full object-cover object-center animate-subtle-zoom"
+  <!-- 1. HERO BANNER (communicationitalia.com rt-hBanner style) -->
+  <section class="section-carbon relative overflow-hidden pt-24 pb-44 md:pt-36 md:pb-64 border-b border-white/10">
+    <!-- Atmospheric Background Image + Carbon Overlay -->
+    <div class="absolute inset-0 z-0">
+      <Picture
+        formats={['avif', 'webp']}
+        src={heroImg}
+        alt="Duerre Creative Studio Showcase"
+        class="h-full w-full object-cover object-center opacity-35 animate-subtle-zoom"
         widths={[800, 1400, 2000]}
         sizes="100vw"
         loading="eager"
         fetchpriority="high"
       />
-      <!-- Dramatic Vignette & Gradient Overlays -->
-      <div class="absolute inset-0 bg-gradient-to-t from-bg via-black/45 to-black/85"></div>
-      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0E0E0E]/80 via-[#0E0E0E]/65 to-[#0E0E0E]"></div>
+      <div class="absolute inset-0 bg-grid-lines-dark opacity-70"></div>
     </div>
 
-    <!-- Hero Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-16 md:pt-40 md:pb-24 flex-1 flex flex-col justify-center items-center text-center">
-      <span class="inline-block text-xs md:text-sm font-semibold uppercase tracking-[0.25em] text-accent mb-6 animate-fade-in">
-        {t('hero_eyebrow')}
-      </span>
-      <h1 class="font-display max-w-5xl text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight drop-shadow-xl animate-fade-in">
-        {t('hero_headline')}
-      </h1>
-      <p class="mt-8 max-w-2xl text-base sm:text-xl text-white/85 leading-relaxed drop-shadow-md animate-fade-in">
-        {t('hero_subheadline')}
-      </p>
+    <div class="relative z-10 mx-auto max-w-7xl px-6">
+      <div class="grid lg:grid-cols-12 items-end gap-12">
+        <div class="lg:col-span-9">
+          <span class="pill-subtext-dark mb-8 animate-fade-in">
+            {t('hero_eyebrow')}
+          </span>
+          <h1 class="text-5xl sm:text-7xl lg:text-[88px] font-extrabold leading-[1.02] tracking-tight text-white animate-fade-in">
+            {t('hero_headline_prefix')}{' '}
+            <span class="inline-block text-[#A8A8A8] border-b-4 border-[#A8A8A8] pb-1">
+              {t('hero_headline_highlight')}
+            </span>
+          </h1>
+          <p class="mt-8 max-w-2xl text-base sm:text-xl text-[#A8A8A8] leading-relaxed animate-fade-in">
+            {t('hero_subheadline')}
+          </p>
+        </div>
 
-      <div class="mt-10 flex flex-col sm:flex-row items-center gap-4 animate-fade-in">
-        <a href="#featured-work" class="btn-primary px-8 py-3.5 shadow-2xl">
-          {t('hero_cta_primary')} <span class="ml-2 font-normal">↓</span>
-        </a>
-        <a href={localePath(lang, '/contact/')} class="btn-ghost border-white/30 text-white backdrop-blur-md bg-white/5 hover:border-white px-8 py-3.5">
-          {t('hero_cta_secondary')}
-        </a>
+        <!-- Rotating Circular Scroll-Down Badge (rt-circle-path) -->
+        <div class="lg:col-span-3 flex lg:justify-end">
+          <a
+            href="#vision"
+            aria-label={t('hero_cta_primary')}
+            class="group relative inline-flex h-36 w-36 sm:h-40 sm:w-40 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-md transition-transform duration-300 hover:scale-105"
+          >
+            <svg viewBox="0 0 160 160" class="h-full w-full p-2 animate-spin-slow">
+              <defs>
+                <path
+                  id="heroCirclePath"
+                  d="M 80, 80 m -60, 0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0"
+                />
+              </defs>
+              <text class="fill-white/85 text-[11px] font-bold uppercase tracking-[0.23em]">
+                <textPath href="#heroCirclePath">
+                  • DUERRE STUDIO • EXPLORE PORTFOLIO
+                </textPath>
+              </text>
+            </svg>
+            <span class="absolute inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#141414] transition-transform duration-300 group-hover:translate-y-0.5">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7V16" />
+              </svg>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Pinned 4-Discipline Ticker Bar -->
-    <div class="relative z-10 border-t border-white/15 bg-black/50 backdrop-blur-md">
-      <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 text-center">
-        <a href={localePath(lang, '/projects/')} class="group py-5 px-4 transition hover:bg-white/5">
-          <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
-            {t('service_1_title')}
-          </span>
-        </a>
-        <a href={localePath(lang, '/projects/')} class="group py-5 px-4 transition hover:bg-white/5">
-          <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
-            {t('service_2_title')}
-          </span>
-        </a>
-        <a href={localePath(lang, '/projects/')} class="group py-5 px-4 transition hover:bg-white/5">
-          <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
-            {t('service_3_title')}
-          </span>
-        </a>
-        <a href={localePath(lang, '/about/')} class="group py-5 px-4 transition hover:bg-white/5">
-          <span class="block text-xs font-semibold uppercase tracking-[0.16em] text-white/90 group-hover:text-accent transition-colors">
-            {t('service_4_title')}
-          </span>
+  <!-- 2. OVERLAPPING VISION QUOTE BLOCK ("Creatività è intuizione") -->
+  <section id="vision" class="relative z-20 -mt-20 md:-mt-28 px-6">
+    <div class="mx-auto max-w-7xl">
+      <div class="overflow-hidden rounded-3xl border border-line bg-bg shadow-2xl">
+        <div class="grid lg:grid-cols-12 items-center">
+          <div class="lg:col-span-7 p-8 sm:p-14 lg:p-16">
+            <h2 class="text-3xl sm:text-5xl font-extrabold uppercase leading-[1.06] tracking-tight text-ink">
+              {t('vision_title_line1')}<br />
+              <span class="text-muted">{t('vision_title_line2')}</span>
+            </h2>
+            <p class="mt-5 max-w-xl text-base sm:text-xl font-medium text-muted leading-relaxed">
+              {t('vision_subtitle')}
+            </p>
+          </div>
+          <div class="lg:col-span-5 relative aspect-[16/10] lg:aspect-[5/4] overflow-hidden bg-surface">
+            <Picture
+              formats={['avif', 'webp']}
+              src={imgVision}
+              alt="Duerre Creative Vision"
+              class="h-full w-full object-cover"
+              widths={[500, 900]}
+              sizes="(max-width: 1024px) 100vw, 42vw"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. GIANT INFINITE MARQUEE #1 ("Soluzioni creative per il tuo business") -->
+  <section class="overflow-hidden py-14 md:py-20 border-b border-line bg-grid-lines">
+    <div class="flex whitespace-nowrap overflow-hidden select-none">
+      <div class="flex shrink-0 items-center gap-12 animate-marquee pr-12">
+        <span class="text-5xl sm:text-7xl lg:text-[96px] font-extrabold uppercase tracking-tight text-ink">
+          {t('marquee_1')}
+        </span>
+        <span class="text-4xl sm:text-6xl text-muted">✦</span>
+        <span class="text-5xl sm:text-7xl lg:text-[96px] font-extrabold uppercase tracking-tight text-muted/35">
+          {t('marquee_1')}
+        </span>
+        <span class="text-4xl sm:text-6xl text-muted">✦</span>
+      </div>
+      <div class="flex shrink-0 items-center gap-12 animate-marquee pr-12" aria-hidden="true">
+        <span class="text-5xl sm:text-7xl lg:text-[96px] font-extrabold uppercase tracking-tight text-ink">
+          {t('marquee_1')}
+        </span>
+        <span class="text-4xl sm:text-6xl text-muted">✦</span>
+        <span class="text-5xl sm:text-7xl lg:text-[96px] font-extrabold uppercase tracking-tight text-muted/35">
+          {t('marquee_1')}
+        </span>
+        <span class="text-4xl sm:text-6xl text-muted">✦</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. STRATEGY & ANIMATED SKILL BARS ("Strategie di Comunicazione per il Tuo Business") -->
+  <section class="py-24 md:py-36 px-6 bg-grid-lines">
+    <div class="mx-auto max-w-7xl grid lg:grid-cols-12 gap-14 lg:gap-20 items-center">
+      <!-- Left: Overlapping Dual Studio Visuals -->
+      <div class="lg:col-span-6 relative">
+        <div class="relative overflow-hidden rounded-3xl border border-line bg-surface aspect-[4/3] shadow-xl media-zoom group">
+          <Picture
+            formats={['avif', 'webp']}
+            src={studioImg}
+            alt="Riccardo Riva - Duerre Studio"
+            class="h-full w-full object-cover"
+            widths={[600, 1000]}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        </div>
+        <!-- Floating Secondary Badge Card -->
+        <div class="hidden sm:flex items-center gap-4 absolute -bottom-8 right-6 rounded-2xl border border-line bg-bg p-5 shadow-2xl">
+          <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#141414] text-white text-lg font-extrabold">
+            DR
+          </div>
+          <div>
+            <span class="block text-xs font-bold uppercase tracking-widest text-ink">Riccardo Riva</span>
+            <span class="text-xs text-muted">Visual Director & Founder</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Heading, Narrative & 4 Skill Progress Bars -->
+      <div class="lg:col-span-6">
+        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-ink mb-6">
+          {t('strategy_title')}
+        </h2>
+        <p class="text-base sm:text-lg text-muted leading-relaxed mb-10">
+          {t('strategy_body')}
+        </p>
+
+        <!-- 4 Capability Bars -->
+        <div class="space-y-6 mb-10">
+          {skills.map((skill) => (
+            <div>
+              <div class="flex items-center justify-between text-xs sm:text-sm font-bold uppercase tracking-wider text-ink mb-2">
+                <span>{skill.label}</span>
+                <span class="font-mono">{skill.percent}%</span>
+              </div>
+              <div class="h-2 w-full overflow-hidden rounded-full bg-line/60">
+                <div
+                  class="h-full rounded-full bg-ink transition-all duration-1000"
+                  style={`width: ${skill.percent}%`}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <a href={localePath(lang, '/about/')} class="learn-more-btn">
+          <span>{t('discover_more')}</span>
+          <span class="arrow-box">↗</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Editorial Featured Projects Showcase -->
-  <section id="featured-work" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-line">
-      <div>
-        <p class="eyebrow mb-2">{t('selected_works')}</p>
-        <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight">{t('projects_title')}</h2>
+  <!-- 5. DARK APPROACH SECTION ("Il Nostro Approccio" + 01 / 02 / 03 Step Grid) -->
+  <section class="section-carbon bg-grid-lines-dark py-24 md:py-36 px-6 border-y border-white/10">
+    <div class="mx-auto max-w-7xl">
+      <!-- Top Header Split -->
+      <div class="grid lg:grid-cols-12 gap-10 items-end mb-20">
+        <div class="lg:col-span-8">
+          <span class="pill-subtext-dark mb-5">
+            {t('approach_eyebrow')}
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-white mb-6">
+            {t('approach_title')}
+          </h2>
+          <p class="text-base sm:text-lg text-[#A8A8A8] max-w-3xl leading-relaxed">
+            {t('approach_desc')}
+          </p>
+        </div>
+        <div class="lg:col-span-4 flex lg:justify-end">
+          <a href={localePath(lang, '/about/')} class="learn-more-btn-dark">
+            <span>{t('nav_about')}</span>
+            <span class="arrow-box">↗</span>
+          </a>
+        </div>
       </div>
-      <a href={localePath(lang, '/projects/')} class="link-underline text-sm font-semibold mt-4 md:mt-0 inline-flex items-center gap-1">
-        {t('all_projects_link')} →
-      </a>
+
+      <!-- 3 Architectural Step Cards (rt-step-grid) -->
+      <div class="grid md:grid-cols-3 gap-8">
+        {steps.map((step) => (
+          <div class="group relative flex flex-col justify-between rounded-3xl border border-white/15 bg-[#141414] p-8 sm:p-10 transition-colors duration-300 hover:border-white/40">
+            <div>
+              <div class="flex items-center justify-between mb-8">
+                <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/5 text-white">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </span>
+                <span class="text-5xl sm:text-6xl font-extrabold tracking-tighter text-white/15 group-hover:text-white/35 transition-colors">
+                  {step.num}
+                </span>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-4">
+                {step.title}
+              </h3>
+              <p class="text-sm sm:text-base text-[#A8A8A8] leading-relaxed">
+                {step.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 360° SERVICES INTERACTIVE HOVER-REVEAL ROWS ("Comunicazione a 360 Gradi") -->
+  <section class="py-24 md:py-36 px-6 bg-grid-lines">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid lg:grid-cols-12 gap-10 items-end mb-16">
+        <div class="lg:col-span-6">
+          <span class="pill-subtext mb-5">
+            {t('services_eyebrow')}
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-ink">
+            {t('services_title')}
+          </h2>
+        </div>
+        <div class="lg:col-span-6">
+          <p class="text-base sm:text-lg text-muted leading-relaxed">
+            {t('services_desc')}
+          </p>
+        </div>
+      </div>
+
+      <!-- Full-Width Interactive Service List (single-item-service-one) -->
+      <div class="mt-8">
+        {services.map((service) => (
+          <div class="service-row-item group">
+            <a href={service.href} class="grid lg:grid-cols-12 gap-6 items-center">
+              <!-- Left Column: Number + Large Title -->
+              <div class="lg:col-span-6 flex items-baseline gap-5">
+                <span class="font-mono text-xs font-bold uppercase tracking-widest text-muted">
+                  /{service.num}
+                </span>
+                <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold uppercase tracking-tight text-ink transition-transform duration-300 group-hover:translate-x-2">
+                  {service.title}
+                </h3>
+              </div>
+
+              <!-- Floating Preview Image on Hover (Desktop) -->
+              <div class="service-row-preview">
+                <Picture
+                  formats={['avif', 'webp']}
+                  src={service.img}
+                  alt={service.title}
+                  class="h-full w-full object-cover"
+                  widths={[400, 600]}
+                  sizes="288px"
+                />
+              </div>
+
+              <!-- Middle-Right Column: Service Description -->
+              <div class="lg:col-span-5">
+                <p class="text-sm sm:text-base text-muted leading-relaxed">
+                  {service.desc}
+                </p>
+              </div>
+
+              <!-- Far-Right Column: Diagonal Arrow -->
+              <div class="lg:col-span-1 flex lg:justify-end">
+                <span class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-line text-ink transition-all duration-300 group-hover:bg-ink group-hover:text-bg group-hover:border-ink group-hover:rotate-12">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7V16" />
+                  </svg>
+                </span>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. DARK PORTFOLIO SHOWCASE ("alcuni dei nostri lavori" Marquee + Featured Case Studies) -->
+  <section id="featured-work" class="section-carbon bg-grid-lines-dark py-24 md:py-36 border-y border-white/10 overflow-hidden">
+    <!-- Giant Marquee Header -->
+    <div class="flex whitespace-nowrap overflow-hidden select-none mb-16 md:mb-24">
+      <div class="flex shrink-0 items-center gap-12 animate-marquee pr-12">
+        <span class="text-6xl sm:text-8xl lg:text-[130px] font-extrabold lowercase tracking-tight text-white">
+          {t('marquee_portfolio')}
+        </span>
+        <span class="text-4xl sm:text-6xl text-white/30">•</span>
+        <span class="text-6xl sm:text-8xl lg:text-[130px] font-extrabold lowercase tracking-tight text-white/30">
+          {t('marquee_portfolio')}
+        </span>
+        <span class="text-4xl sm:text-6xl text-white/30">•</span>
+      </div>
+      <div class="flex shrink-0 items-center gap-12 animate-marquee pr-12" aria-hidden="true">
+        <span class="text-6xl sm:text-8xl lg:text-[130px] font-extrabold lowercase tracking-tight text-white">
+          {t('marquee_portfolio')}
+        </span>
+        <span class="text-4xl sm:text-6xl text-white/30">•</span>
+        <span class="text-6xl sm:text-8xl lg:text-[130px] font-extrabold lowercase tracking-tight text-white/30">
+          {t('marquee_portfolio')}
+        </span>
+        <span class="text-4xl sm:text-6xl text-white/30">•</span>
+      </div>
     </div>
 
-    <!-- Alternating Editorial Cards -->
-    <div class="space-y-16 md:space-y-24">
+    <!-- Showcase Cards (use-case-area-start) -->
+    <div class="mx-auto max-w-7xl px-6 space-y-16 md:space-y-24">
       {featuredProjects.map((project, index) => {
         const isReversed = index % 2 === 1;
         const { slug } = splitId(project.id);
 
         return (
-          <article class="portfolio-card group rounded-2xl overflow-hidden border border-line bg-surface/40 hover:border-accent/50 transition-all duration-500">
-            <div class={`grid lg:grid-cols-12 items-center`}>
-              <!-- Media Column -->
-              <div class={`lg:col-span-7 relative aspect-[16/10] overflow-hidden bg-surface media-zoom ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
-                <a href={localePath(lang, `/projects/${slug}/`)} aria-label={`${t('view_project')}: ${project.data.title}`} class="block h-full w-full">
-                  <Picture formats={['avif', 'webp']} 
-                    src={project.data.cover} 
-                    alt={project.data.coverAlt} 
-                    class="h-full w-full object-cover"
-                    widths={[600, 1000, 1400]}
-                    sizes="(max-width: 1024px) 100vw, 58vw"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  <span class="absolute top-5 left-5 px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-black/70 backdrop-blur-md text-white border border-white/15">
-                    {t(`category_${project.data.category}`)}
-                  </span>
-                </a>
-              </div>
+          <article class="group rounded-3xl border border-white/15 bg-[#141414] overflow-hidden transition-all duration-500 hover:border-white/40">
+            <div class="grid lg:grid-cols-12 items-center">
+              <!-- Text Content Wrapper -->
+              <div class={`lg:col-span-5 p-8 sm:p-12 lg:p-16 flex flex-col justify-center ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
+                <span class="pill-subtext-dark self-start mb-6">
+                  {t(`category_${project.data.category}`)}
+                </span>
 
-              <!-- Editorial Details Column -->
-              <div class={`lg:col-span-5 p-8 sm:p-12 lg:p-14 flex flex-col justify-center ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
-                <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-muted mb-4">
-                  <span class="text-accent">{project.data.client}</span>
-                  <span class="font-mono">{project.data.year}</span>
-                </div>
-
-                <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4 group-hover:text-accent transition-colors">
-                  <a href={localePath(lang, `/projects/${slug}/`)}>
+                <h3 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-4">
+                  <a href={localePath(lang, `/projects/${slug}/`)} class="hover:opacity-85 transition-opacity">
                     {project.data.title}
                   </a>
                 </h3>
 
-                <p class="text-muted text-sm sm:text-base leading-relaxed mb-6">
+                <p class="text-xs font-mono uppercase tracking-widest text-[#A8A8A8] mb-5">
+                  {project.data.client} · {project.data.year}
+                </p>
+
+                <p class="text-sm sm:text-base text-[#A8A8A8] leading-relaxed mb-8">
                   {project.data.description}
                 </p>
 
-                <div class="flex items-center gap-4 pt-4 border-t border-line/60">
-                  <a href={localePath(lang, `/projects/${slug}/`)} class="btn-primary text-xs py-3 px-6">
-                    {t('view_project')} <span class="ml-1">→</span>
-                  </a>
-                  <a href={localePath(lang, '/projects/')} class="text-xs font-semibold uppercase tracking-wider text-muted hover:text-accent transition-colors">
-                    {t('all_projects_link')}
+                <div>
+                  <a href={localePath(lang, `/projects/${slug}/`)} class="learn-more-btn-dark">
+                    <span>{t('nav_projects')}</span>
+                    <span class="arrow-box">↗</span>
                   </a>
                 </div>
+              </div>
+
+              <!-- Image Wrapper -->
+              <div class={`lg:col-span-7 relative aspect-[16/11] overflow-hidden bg-black media-zoom ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
+                <a href={localePath(lang, `/projects/${slug}/`)} class="block h-full w-full">
+                  <Picture
+                    formats={['avif', 'webp']}
+                    src={project.data.cover}
+                    alt={project.data.coverAlt}
+                    class="h-full w-full object-cover"
+                    widths={[600, 1000, 1400]}
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                  />
+                </a>
               </div>
             </div>
           </article>
         );
       })}
-    </div>
-  </section>
 
-  <!-- Studio Narrative & Creative Direction -->
-  <section class="py-24 md:py-32 bg-surface/60 border-y border-line">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-      <div>
-        <p class="eyebrow mb-3">{t('studio_eyebrow')}</p>
-        <h2 class="font-display text-3xl md:text-5xl font-bold mb-8 leading-tight">
-          Small by design. Precision from initial storyboard to final master.
-        </h2>
-        <p class="text-muted leading-relaxed text-base md:text-lg mb-8">
-          {t('studio_blurb')}
-        </p>
-        <div class="grid grid-cols-2 gap-6 pt-6 border-t border-line/60 mb-8">
-          <div>
-            <h4 class="text-xs uppercase tracking-wider font-semibold text-accent mb-2">Discipline</h4>
-            <p class="text-sm text-ink">Commercial Stills, Cinema, 3D CGI</p>
-          </div>
-          <div>
-            <h4 class="text-xs uppercase tracking-wider font-semibold text-accent mb-2">Location</h4>
-            <p class="text-sm text-ink">Italy / Available Worldwide</p>
-          </div>
-        </div>
-        <a href={localePath(lang, '/about/')} class="btn-ghost">
-          {t('nav_about')} →
+      <div class="pt-6 flex justify-center">
+        <a href={localePath(lang, '/projects/')} class="learn-more-btn-dark">
+          <span>{t('all_projects_link')}</span>
+          <span class="arrow-box">↗</span>
         </a>
       </div>
+    </div>
+  </section>
 
-      <div class="relative aspect-square rounded-2xl overflow-hidden bg-surface border border-line media-zoom shadow-2xl">
-        <Picture formats={['avif', 'webp']} 
-          src={studioImg} 
-          alt="Riccardo Riva - Duerremedia Studio" 
-          class="w-full h-full object-cover"
-          widths={[500, 900, 1200]}
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-        <div class="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white text-xs">
-          <span class="font-bold uppercase tracking-wider text-accent block mb-0.5">Riccardo Riva</span>
-          <span class="text-white/80">Director & Creative Producer</span>
+  <!-- 8. SELECTED CLIENTS & COMPETENCE STATEMENT -->
+  <section class="py-24 md:py-36 px-6 bg-grid-lines">
+    <div class="mx-auto max-w-7xl">
+      <div class="text-center mb-12">
+        <span class="pill-subtext">
+          {t('clients_eyebrow')}
+        </span>
+      </div>
+
+      <!-- Architectural Bordered Brand Matrix (logo-grid-style1) -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 border-y border-line divide-x divide-y sm:divide-y-0 divide-line mb-24">
+        {SITE.clients.map((client) => (
+          <div class="flex items-center justify-center py-10 px-4 text-center group">
+            <span class="text-sm sm:text-base font-extrabold uppercase tracking-[0.16em] text-muted group-hover:text-ink transition-colors">
+              {client}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <!-- Big Competence Statement + Wide Studio Banner -->
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7">
+          <h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight leading-[1.06] text-ink">
+            {t('competence_statement_1')}<br />
+            <span class="text-muted">{t('competence_statement_2')}</span>
+          </h2>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="overflow-hidden rounded-3xl border border-line aspect-[3/2] bg-surface shadow-xl media-zoom group">
+            <Picture
+              formats={['avif', 'webp']}
+              src={imgMarketing}
+              alt="Duerre Visual Production"
+              class="h-full w-full object-cover"
+              widths={[500, 900]}
+              sizes="(max-width: 1024px) 100vw, 42vw"
+            />
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Production Pipeline / 3-Step Process -->
-  <section class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
-    <div class="text-center max-w-3xl mx-auto mb-20">
-      <p class="eyebrow mb-3">Workflow</p>
-      <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight mb-6">
-        Engineered for High-End Commercial Output
-      </h2>
-      <p class="text-muted text-base md:text-lg">
-        Every campaign is built on technical discipline, narrative clarity, and calibrated color science.
-      </p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="p-8 rounded-2xl bg-surface border border-line hover:border-accent/40 transition-colors">
-        <span class="font-mono text-xs text-accent font-semibold uppercase tracking-widest block mb-4">01 / Concept</span>
-        <h3 class="text-xl font-semibold mb-3">Art Direction & Pre-Vis</h3>
-        <p class="text-muted text-sm leading-relaxed">
-          Detailed moodboards, lighting setups, 3D pre-visualization, and shot lists tailored to the brand's identity.
-        </p>
-      </div>
-
-      <div class="p-8 rounded-2xl bg-surface border border-line hover:border-accent/40 transition-colors">
-        <span class="font-mono text-xs text-accent font-semibold uppercase tracking-widest block mb-4">02 / Execution</span>
-        <h3 class="text-xl font-semibold mb-3">Precision Production</h3>
-        <p class="text-muted text-sm leading-relaxed">
-          State-of-the-art camera packages, controlled studio or remote location lighting, and GPU-accelerated CGI rendering.
-        </p>
-      </div>
-
-      <div class="p-8 rounded-2xl bg-surface border border-line hover:border-accent/40 transition-colors">
-        <span class="font-mono text-xs text-accent font-semibold uppercase tracking-widest block mb-4">03 / Finishing</span>
-        <h3 class="text-xl font-semibold mb-3">ACES Color & Delivery</h3>
-        <p class="text-muted text-sm leading-relaxed">
-          Calibrated color grading in DaVinci Resolve, clean retouches, high-dynamic-range exports, and multi-format delivery.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- From the Journal (Editorial Articles) -->
+  <!-- 9. DARK BLOG SECTION ("NEWS DAL BLOG") -->
   {latestPosts.length > 0 && (
-    <section class="py-24 md:py-32 px-6 bg-surface/50 border-t border-line">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-line">
+    <section class="section-carbon bg-grid-lines-dark py-24 md:py-36 px-6 border-t border-white/10">
+      <div class="mx-auto max-w-7xl">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div>
-            <p class="eyebrow mb-2">{t('nav_blog')}</p>
-            <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight">{t('latest_articles')}</h2>
+            <span class="pill-subtext-dark mb-5">
+              {t('nav_blog')}
+            </span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white">
+              {t('latest_articles')}
+            </h2>
+            <p class="mt-3 text-base sm:text-lg text-[#A8A8A8]">
+              {t('blog_section_desc')}
+            </p>
           </div>
-          <a href={localePath(lang, '/blog/')} class="link-underline text-sm font-semibold mt-4 md:mt-0 inline-flex items-center gap-1">
-            {t('all_articles')} →
+          <a href={localePath(lang, '/blog/')} class="learn-more-btn-dark self-start md:self-auto">
+            <span>{t('go_to_blog')}</span>
+            <span class="arrow-box">↗</span>
           </a>
         </div>
-        <div class="grid md:grid-cols-3 gap-8">
-          {latestPosts.map(post => <PostPreview post={post} />)}
+
+        <div class="grid md:grid-cols-2 gap-10">
+          {latestPosts.map((post) => {
+            const { slug } = splitId(post.id);
+            const mins = readingMinutes(post.body);
+            return (
+              <article class="group flex flex-col justify-between rounded-3xl border border-white/15 bg-[#141414] overflow-hidden transition-colors hover:border-white/40">
+                <div>
+                  <a href={localePath(lang, `/blog/${slug}/`)} class="block relative aspect-[16/9] overflow-hidden bg-black media-zoom">
+                    <Picture
+                      formats={['avif', 'webp']}
+                      src={post.data.coverImage}
+                      alt={post.data.coverAlt || post.data.title}
+                      class="h-full w-full object-cover"
+                      widths={[500, 900]}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </a>
+                  <div class="p-8 sm:p-10">
+                    <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-wider text-[#A8A8A8] mb-4">
+                      <time datetime={post.data.pubDate.toISOString()}>
+                        {formatDate(post.data.pubDate, lang)}
+                      </time>
+                      <span>•</span>
+                      <span>{mins} min read</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white leading-snug mb-6 group-hover:text-[#D9D9D9] transition-colors">
+                      <a href={localePath(lang, `/blog/${slug}/`)}>
+                        {post.data.title}
+                      </a>
+                    </h3>
+                    <a
+                      href={localePath(lang, `/blog/${slug}/`)}
+                      class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-[0.14em] text-[#141414] transition hover:bg-[#D9D9D9]"
+                    >
+                      <span>{t('read_more')}</span>
+                      <span>↗</span>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
   )}
-</BaseLayout>
 
+  <!-- 10. MONUMENTAL DUAL-HEADING CTA BANNER ("COSTRUIAMO INSIEME IL TUO SUCCESSO") -->
+  <DualCtaBanner lang={lang} />
+</BaseLayout>
