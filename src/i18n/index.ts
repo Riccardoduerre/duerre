@@ -1,6 +1,6 @@
 export type Locale = 'en' | 'it';
-export const LOCALES: readonly Locale[] = ['en', 'it'];
-export const DEFAULT_LOCALE: Locale = 'en';
+export const LOCALES: readonly Locale[] = ['it', 'en'];
+export const DEFAULT_LOCALE: Locale = 'it';
 
 export function isLocale(value: unknown): value is Locale {
   return value === 'en' || value === 'it';
@@ -323,7 +323,7 @@ const translations: Record<Locale, Record<string, string>> = {
 
 export function useTranslations(lang: Locale) {
   return (key: string, vars: Record<string, string | number> = {}) => {
-    let str = translations[lang][key] ?? translations.en[key] ?? key;
+    let str = translations[lang][key] ?? translations.it[key] ?? key;
     for (const [k, v] of Object.entries(vars)) str = str.replaceAll(`{{${k}}}`, String(v));
     return str;
   };
@@ -331,16 +331,16 @@ export function useTranslations(lang: Locale) {
 
 export function localePath(lang: Locale, path = '/') {
   const clean = path.startsWith('/') ? path : `/${path}`;
-  if (lang === 'en') {
+  if (lang === 'it') {
     return clean;
   }
-  return `/it${clean === '/' ? '/' : clean}`;
+  return `/en${clean === '/' ? '/' : clean}`;
 }
 
 export function switchLocalePath(pathname: string, target: Locale) {
   const stripped = pathname.replace(/^\/(en|it)(?=\/|$)/, '') || '/';
-  if (target === 'en') {
+  if (target === 'it') {
     return stripped;
   }
-  return `/it${stripped === '/' ? '/' : stripped}`;
+  return `/en${stripped === '/' ? '/' : stripped}`;
 }

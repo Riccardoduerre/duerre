@@ -3,12 +3,11 @@ import { getPosts, splitId } from '../lib/content';
 import { SITE } from '../config/site';
 
 export async function GET(context: any) {
-  // We'll just generate the RSS feed for the default English locale.
-  const posts = await getPosts('en');
+  const posts = await getPosts('it');
 
   return rss({
-    title: SITE.name,
-    description: "Riccardo Riva's Journal",
+    title: `${SITE.name} — Blog`,
+    description: 'Articoli e approfondimenti su fotografia, cinema, 3D CGI e digital marketing di Riccardo Riva.',
     site: context.site || SITE.url,
     items: posts.map((post) => ({
       title: post.data.title,
@@ -17,6 +16,6 @@ export async function GET(context: any) {
       categories: post.data.tags,
       link: `/blog/${splitId(post.id).slug}/`,
     })),
-    customData: `<language>en-us</language>`,
+    customData: `<language>it-it</language>`,
   });
 }

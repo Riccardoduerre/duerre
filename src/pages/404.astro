@@ -7,7 +7,7 @@ const t = useTranslations(DEFAULT_LOCALE);
 
 <BaseLayout 
   title={`${t('not_found_title')} | Duerre`} 
-  description="Page not found" 
+  description="Pagina non trovata" 
   lang={DEFAULT_LOCALE}
 >
   <div class="max-w-3xl mx-auto px-6 py-32 text-center flex flex-col items-center justify-center min-h-[60vh]">
@@ -17,10 +17,10 @@ const t = useTranslations(DEFAULT_LOCALE);
   </div>
 
   <script is:inline>
-    // Graceful fallback for legacy URLs starting with /en/
-    if (window.location.pathname.startsWith('/en/')) {
-      const target = window.location.pathname.replace(/^\/en/, '') + window.location.search + window.location.hash;
-      window.location.replace(target || '/');
+    // Graceful fallback for legacy URLs starting with /it/
+    if (window.location.pathname === '/it' || window.location.pathname.startsWith('/it/')) {
+      const target = (window.location.pathname.replace(/^\/it(?=\/|$)/, '') || '/') + window.location.search + window.location.hash;
+      window.location.replace(target);
     }
   </script>
 </BaseLayout>
