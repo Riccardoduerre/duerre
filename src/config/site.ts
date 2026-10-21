@@ -19,8 +19,9 @@ export const SITE = {
 } as const;
 
 export const CONTACT_FORM = {
-  action: `https://formsubmit.co/${SITE.email}`,
-  ajaxAction: `https://formsubmit.co/ajax/${SITE.email}`,
+  token: 'b3c0b49afe301d86d6a62a3f768735fd',
+  action: 'https://formsubmit.co/b3c0b49afe301d86d6a62a3f768735fd',
+  ajaxAction: 'https://formsubmit.co/ajax/b3c0b49afe301d86d6a62a3f768735fd',
   accessKey: '',
 };
 
