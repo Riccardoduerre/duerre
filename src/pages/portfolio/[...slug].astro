@@ -3,15 +3,18 @@ import { getCollection } from 'astro:content';
 import ProjectDetailPage from '../../components/views/ProjectDetailPage.astro';
 import { splitId, type PortfolioItem } from '../../lib/content';
 
+interface Props {
+  project: PortfolioItem;
+  prev: PortfolioItem | null;
+  next: PortfolioItem | null;
+}
+
 export async function getStaticPaths() {
   const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
-  const entries = await getCollection(
-    'portfolio',
-    (e: PortfolioItem) => {
-      const parsed = splitId(e.id);
-      return (parsed.lang === 'it' || parsed.lang === 'shared') && isVisible(e.data.draft);
-    },
-  );
+  const entries = await getCollection('portfolio', (e: PortfolioItem) => {
+    const parsed = splitId(e.id);
+    return (parsed.lang === 'it' || parsed.lang === 'shared') && isVisible(e.data.draft);
+  });
   const projects = entries.sort(
     (a: PortfolioItem, b: PortfolioItem) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
   );
@@ -30,4 +33,3 @@ const { project, prev, next } = Astro.props;
 ---
 
 <ProjectDetailPage lang="it" project={project} prev={prev} next={next} />
-

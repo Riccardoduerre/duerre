@@ -3,15 +3,18 @@ import { getCollection } from 'astro:content';
 import BlogDetailPage from '../../components/views/BlogDetailPage.astro';
 import { splitId, type Post } from '../../lib/content';
 
+interface Props {
+  post: Post;
+  prev: Post | null;
+  next: Post | null;
+}
+
 export async function getStaticPaths() {
   const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
-  const entries = await getCollection(
-    'blog',
-    (e: Post) => {
-      const parsed = splitId(e.id);
-      return (parsed.lang === 'it' || parsed.lang === 'shared') && isVisible(e.data.draft);
-    },
-  );
+  const entries = await getCollection('blog', (e: Post) => {
+    const parsed = splitId(e.id);
+    return (parsed.lang === 'it' || parsed.lang === 'shared') && isVisible(e.data.draft);
+  });
   const posts = entries.sort(
     (a: Post, b: Post) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
   );
@@ -30,4 +33,3 @@ const { post, prev, next } = Astro.props;
 ---
 
 <BlogDetailPage lang="it" post={post} prev={prev} next={next} />
-

@@ -65,7 +65,7 @@ const jsonLd = {
 <meta name="generator" content={Astro.generator} />
 
 <!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
+<link rel="canonical" href={canonicalURL.href} />
 
 <!-- RSS & Sitemap -->
 <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
@@ -84,18 +84,18 @@ const jsonLd = {
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={ogType} />
 <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_US'} />
-<meta property="og:url" content={canonicalURL} />
+<meta property="og:url" content={canonicalURL.href} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={imageURL} />
+<meta property="og:image" content={imageURL.href} />
 <meta property="og:site_name" content={SITE.name} />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:url" content={canonicalURL.href} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={imageURL} />
+<meta name="twitter:image" content={imageURL.href} />
 
 <!-- JSON-LD Structured Data (Organization, WebSite, CreativeWork) -->
-<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
