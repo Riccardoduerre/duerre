@@ -4,9 +4,19 @@ description: "A fast-paced directorial showreel condensing automotive, fashion, 
 client: "Duerre Production"
 role: "Video Production & Direction"
 year: "2025"
-date: 2025-11-01
+publishDate: 2025-11-01
+services:
+  - "Cinema Direction & DOP"
+  - "Anamorphic Motion Production"
+  - "5.1 Sound Architecture & ACES Grading"
+tags:
+  - "Cinema"
+  - "Anamorphic"
+  - "Showreel"
+  - "ACES"
 category: "video"
 featured: true
+bentoSpan: "hero"
 aspectRatio: "2.39:1 CinemaScope"
 deliverables:
   - "Directors Cut 4K Master (60s)"
@@ -17,7 +27,7 @@ gear:
   - "Anamorphic Prime Lenses (2x Squeeze)"
   - "Gimbal & Motion Control Rigging"
   - "DaVinci Resolve Studio (ACEScc Grading)"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Commercial Showreel cinematic still"
 youtubeId: "vpW0ibNGsBo"
 challenge: "Distilling two years of diverse commercial assignments into a tightly curated, emotionally propulsive montage that demonstrates narrative command and technical range."

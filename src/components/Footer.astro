@@ -11,132 +11,132 @@ const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
-<footer class="section-carbon border-t border-white/10 pt-20 pb-12">
-  <div class="mx-auto max-w-7xl px-6 grid gap-12 md:grid-cols-2 lg:grid-cols-12">
-    <!-- Column 1: Brand, Tagline & Socials -->
-    <div class="lg:col-span-4">
-      <a href={localePath(lang, '/')} class="inline-flex items-center gap-3 text-white mb-6">
-        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#141414] text-sm font-extrabold tracking-tighter">
-          DR
-        </span>
-        <span class="text-xl font-extrabold uppercase tracking-tight">Duerre</span>
-      </a>
-      <p class="text-sm text-[#A8A8A8] max-w-sm mb-8 leading-relaxed">
-        {t('footer_tagline')}<br />
-        {t('studio_blurb')}
-      </p>
-      <div class="flex items-center gap-3">
-        {SITE.social.map((item) => (
+<footer class="section-carbon border-t border-white/10 pt-24 pb-14">
+  <div class="mx-auto max-w-[1440px] px-6 sm:px-10">
+    <!-- Top Editorial Grid -->
+    <div class="grid gap-14 lg:grid-cols-12 pb-20 border-b border-white/10">
+      <!-- Column 1: Studio Identity -->
+      <div class="lg:col-span-5 flex flex-col justify-between">
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-[0.28em] text-[#CCA870] block mb-4">
+            00 / COLOPHON
+          </span>
+          <p class="text-xl sm:text-2xl font-light text-white/90 max-w-md leading-relaxed tracking-tight mb-8">
+            {t('studio_blurb')}
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-6">
           <a
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-white hover:text-[#141414] transition-colors"
+            href={`mailto:${SITE.email}`}
+            class="font-mono text-xs uppercase tracking-[0.2em] text-white hover:text-[#CCA870] transition-colors"
           >
-            <span>{item.name}</span>
+            {SITE.email} ↗
+          </a>
+          {SITE.social.map((item) => (
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-mono text-xs uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors"
+            >
+              {item.name} ↗
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Column 2: Capabilities -->
+      <div class="lg:col-span-3">
+        <span class="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 block mb-6">
+          01 / {t('nav_services')}
+        </span>
+        <ul class="space-y-3.5 text-sm font-light text-white/75">
+          <li>
+            <a href={`${localePath(lang, '/services/')}#commercial-photography`} class="hover:text-white transition-colors">
+              Commercial Photography
+            </a>
+          </li>
+          <li>
+            <a href={`${localePath(lang, '/services/')}#cinema-video-production`} class="hover:text-white transition-colors">
+              Cinema & Video Production
+            </a>
+          </li>
+          <li>
+            <a href={`${localePath(lang, '/services/')}#3d-cgi-rendering`} class="hover:text-white transition-colors">
+              3D CGI & Product Rendering
+            </a>
+          </li>
+          <li>
+            <a href={`${localePath(lang, '/services/')}#digital-marketing`} class="hover:text-white transition-colors">
+              Digital Marketing & Direction
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Index Navigation -->
+      <div class="lg:col-span-2">
+        <span class="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 block mb-6">
+          02 / INDEX
+        </span>
+        <ul class="space-y-3.5 text-sm font-light text-white/75">
+          <li><a href={localePath(lang, '/')} class="hover:text-white transition-colors">{t('nav_home')}</a></li>
+          <li><a href={localePath(lang, '/portfolio/')} class="hover:text-white transition-colors">{t('nav_projects')}</a></li>
+          <li><a href={localePath(lang, '/services/')} class="hover:text-white transition-colors">{t('nav_services')}</a></li>
+          <li><a href={localePath(lang, '/about/')} class="hover:text-white transition-colors">{t('nav_about')}</a></li>
+          <li><a href={localePath(lang, '/blog/')} class="hover:text-white transition-colors">{t('nav_blog')}</a></li>
+          <li><a href={localePath(lang, '/contact/')} class="hover:text-white transition-colors">{t('nav_contact')}</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Studio Dispatches -->
+      <div class="lg:col-span-2">
+        <span class="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 block mb-6">
+          03 / DISPATCHES
+        </span>
+        <p class="text-xs text-white/60 leading-relaxed mb-5">
+          {t('newsletter_desc')}
+        </p>
+        <form action={CONTACT_FORM.action} method="POST" class="space-y-3">
+          <input type="hidden" name="_subject" value="Newsletter Subscription — Duerre" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value={`${SITE.url}${localePath(lang, '/thanks/')}`} />
+          <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder={t('newsletter_placeholder')}
+            class="w-full border-0 border-b border-white/25 bg-transparent px-0 py-2.5 text-xs text-white placeholder:text-white/35 focus:border-[#CCA870] focus:outline-hidden"
+          />
+          <button
+            type="submit"
+            class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-[#CCA870] hover:text-white transition-colors cursor-pointer pt-1"
+          >
+            <span>{t('newsletter_btn')}</span>
             <span>↗</span>
-          </a>
-        ))}
+          </button>
+        </form>
       </div>
     </div>
 
-    <!-- Column 2: Services & Navigation -->
-    <div class="lg:col-span-3">
-      <h3 class="text-sm font-bold uppercase tracking-[0.14em] text-white mb-5">
-        {t('nav_services')}
-      </h3>
-      <ul class="space-y-3 text-sm text-[#A8A8A8]">
-        <li>
-          <a href={`${localePath(lang, '/services/')}#commercial-photography`} class="hover:text-white transition-colors">
-            Commercial Photography
-          </a>
-        </li>
-        <li>
-          <a href={`${localePath(lang, '/services/')}#cinema-video-production`} class="hover:text-white transition-colors">
-            Cinema & Video Production
-          </a>
-        </li>
-        <li>
-          <a href={`${localePath(lang, '/services/')}#3d-cgi-rendering`} class="hover:text-white transition-colors">
-            3D CGI & Product Rendering
-          </a>
-        </li>
-        <li>
-          <a href={`${localePath(lang, '/services/')}#digital-marketing`} class="hover:text-white transition-colors">
-            Digital Marketing
-          </a>
-        </li>
-      </ul>
-
-      <div class="mt-8 pt-6 border-t border-white/10 flex flex-wrap gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-wider text-[#A8A8A8]">
-        <a href={localePath(lang, '/about/')} class="hover:text-white transition-colors">{t('nav_about')}</a>
-        <a href={localePath(lang, '/projects/')} class="hover:text-white transition-colors">{t('nav_projects')}</a>
-        <a href={localePath(lang, '/blog/')} class="hover:text-white transition-colors">{t('nav_blog')}</a>
-        <a href={localePath(lang, '/contact/')} class="hover:text-white transition-colors">{t('nav_contact')}</a>
+    <!-- Monumental Architectural Wordmark -->
+    <div class="py-12 md:py-16 border-b border-white/10 select-none overflow-hidden">
+      <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-6">
+        <span class="text-[15vw] sm:text-[13vw] lg:text-[11rem] font-light leading-[0.82] tracking-[-0.05em] text-white/95 uppercase">
+          DUERRE
+        </span>
+        <div class="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 space-y-1 md:text-right">
+          <p>{SITE.author} · {SITE.location}</p>
+          <p>45.4642° N, 9.1900° E · ACES COLOR PIPELINE</p>
+        </div>
       </div>
     </div>
 
-    <!-- Column 3: Contatti / Studio Info -->
-    <div class="lg:col-span-2">
-      <h3 class="text-sm font-bold uppercase tracking-[0.14em] text-white mb-5">
-        {t('nav_contact')}
-      </h3>
-      <ul class="space-y-4 text-sm text-[#A8A8A8]">
-        <li>
-          <span class="block text-[11px] uppercase tracking-wider text-white/50 mb-1">Studio</span>
-          <span class="text-white font-medium">{SITE.author}</span>
-        </li>
-        <li>
-          <span class="block text-[11px] uppercase tracking-wider text-white/50 mb-1">Location</span>
-          <span>{SITE.location}</span>
-        </li>
-        <li>
-          <span class="block text-[11px] uppercase tracking-wider text-white/50 mb-1">Email</span>
-          <a href={`mailto:${SITE.email}`} class="text-white hover:underline break-all">
-            {SITE.email}
-          </a>
-        </li>
-      </ul>
+    <!-- Bottom Legal & Stack Bar -->
+    <div class="pt-8 flex flex-col sm:flex-row justify-between items-center font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
+      <p>&copy; {year} {SITE.name} · {SITE.author}. All rights reserved.</p>
+      <p class="mt-3 sm:mt-0">{t('footer_stack')}</p>
     </div>
-
-    <!-- Column 4: Newsletter -->
-    <div class="lg:col-span-3">
-      <h3 class="text-sm font-bold uppercase tracking-[0.14em] text-white mb-3">
-        {t('newsletter_title')}
-      </h3>
-      <p class="text-sm text-[#A8A8A8] mb-5 leading-relaxed">
-        {t('newsletter_desc')}
-      </p>
-      <form
-        action={CONTACT_FORM.action}
-        method="POST"
-        class="flex flex-col gap-3"
-      >
-        <input type="hidden" name="_subject" value="Newsletter Subscription — Duerre" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value={`${SITE.url}${localePath(lang, '/thanks/')}`} />
-        <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
-        <input
-          type="email"
-          name="email"
-          required
-          placeholder={t('newsletter_placeholder')}
-          class="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 focus:border-white focus:outline-hidden"
-        />
-        <button
-          type="submit"
-          class="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-[#141414] transition hover:bg-[#D9D9D9] cursor-pointer"
-        >
-          <span>{t('newsletter_btn')}</span>
-          <span>↗</span>
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Copyright Bottom Bar -->
-  <div class="mx-auto max-w-7xl px-6 mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center text-xs text-[#A8A8A8]">
-    <p>&copy; {year} Duerre · {SITE.author}. All rights reserved.</p>
-    <p class="mt-3 sm:mt-0">{t('footer_stack')}</p>
   </div>
 </footer>

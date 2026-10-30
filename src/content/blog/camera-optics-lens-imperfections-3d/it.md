@@ -1,6 +1,7 @@
 ---
 featured: true
 title: "Superare l’aspetto asettico del 3D: emulare le imperfezioni ottiche reali"
+publishDate: 2026-05-04
 pubDate: 2026-05-04
 coverImage: ../../../assets/blog/Giau_00006.webp
 description: "Come aberrazione cromatica, diffrazione, vignettatura ottica e grana del sensore infondono vita tangibile nei render sintetici."

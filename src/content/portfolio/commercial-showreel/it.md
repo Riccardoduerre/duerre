@@ -4,9 +4,19 @@ description: "Uno showreel registico ad alto impatto visivo che condensa cinemat
 client: "Duerre"
 role: "Produzione e Regia Video"
 year: "2025"
-date: 2025-11-01
+publishDate: 2025-11-01
+services:
+  - "Regia & Direzione della Fotografia"
+  - "Produzione Cinema Anamorfica"
+  - "Sound Design 5.1 & Color ACES"
+tags:
+  - "Cinema"
+  - "Anamorphic"
+  - "Showreel"
+  - "ACES"
 category: "video"
 featured: true
+bentoSpan: "hero"
 aspectRatio: "2.39:1 CinemaScope"
 deliverables:
   - "Master 4K Director’s Cut (60s)"
@@ -17,7 +27,7 @@ gear:
   - "Ottiche Anamorfiche Prime (Squeeze 2x)"
   - "Sistemi di Controllo Movimento e Gimbal"
   - "DaVinci Resolve Studio (Pipeline ACEScc)"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Showreel Commerciale fotogramma cinematico"
 youtubeId: "vpW0ibNGsBo"
 challenge: "Condensare una vasta gamma di lavori brand in edit brevi e cinematici con forte ritmo ed efficacia emotiva."

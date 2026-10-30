@@ -1,5 +1,6 @@
 ---
 title: "Color Harmony and Split Toning: Creating Cohesive Visual Palettes"
+publishDate: 2026-04-20
 pubDate: 2026-04-20
 coverImage: ../../../assets/blog/Giau_00002.webp
 description: "Implementing complementary color theory across highlights and shadows while rigorously protecting authentic human skin tones."

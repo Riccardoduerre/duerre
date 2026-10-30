@@ -1,6 +1,7 @@
 ---
 featured: true
 title: "Esporre curve Log e video RAW: il metodo dei False Color"
+publishDate: 2026-08-10
 pubDate: 2026-08-10
 coverImage: ../../../assets/blog/_DSC2344.webp
 description: "Smettere di tirare a indovinare sui profili flat. Come mappare il grigio medio a IRE specifici garantisce ombre pulite e toni pelle ricchi."

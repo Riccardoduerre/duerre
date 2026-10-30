@@ -4,9 +4,19 @@ description: "Uno studio di design 3D CGI fotorealistico che indaga la luce spaz
 client: "Maison Lumen"
 role: "Direzione Visiva 3D & Storytelling di Prodotto"
 year: "2024"
-date: 2024-10-10
+publishDate: 2024-10-10
+services:
+  - "3D CGI & Product Rendering"
+  - "PBR Material Architecture"
+  - "Multi-Pass EXR Compositing"
+tags:
+  - "3D CGI"
+  - "Product Design"
+  - "PBR"
+  - "Luxury"
 category: "3d"
 featured: true
+bentoSpan: "tall"
 aspectRatio: "4:3 Architectural"
 deliverables:
   - "Rendering d'Ambiente 3D Interattivi per Prodotto"
@@ -17,7 +27,7 @@ gear:
   - "Substance 3D Designer & Painter"
   - "Shader con Dispersione Spettrale e Subsurface"
   - "Compositing Multi-Pass AOV in DaVinci Fusion"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Lumen Atelier - Studio di luce e prodotto"
 challenge: "Trasporre una collezione d'avanguardia di corpi illuminanti in ambienti virtuali senza smarrire la concretezza materica dell'ottone spazzolato, del vetro soffiato e della luce reale."
 solution: "Una pipeline di rendering basata sulla fisica (PBR) con scansioni di luce HDR dedicate, micro-imperfezioni superficiali e simulazione della dispersione cromatica."

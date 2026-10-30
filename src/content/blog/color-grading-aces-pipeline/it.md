@@ -1,6 +1,7 @@
 ---
 featured: true
 title: "La pipeline colore ACES: gestione dello spazio colore per film commerciali"
+publishDate: 2026-02-23
 pubDate: 2026-02-23
 coverImage: ../../../assets/blog/Landscapes_00001.webp
 description: "Standardizzare sorgenti camera miste in uno spazio wide gamut non vincolato per mantenere l’integrità delle alte luci."

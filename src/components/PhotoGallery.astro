@@ -7,82 +7,101 @@ interface Props {
 }
 
 const { images } = Astro.props;
-// Lightbox gets a single optimized large rendition instead of the full-resolution original.
 const lightboxSources = await Promise.all(
   images.map((img) => getImage({ src: img.image, width: Math.min(img.image.width, 2400), format: 'webp' })),
 );
 ---
 
-<div class="columns-1 sm:columns-2 lg:columns-3 gap-6">
-  {images.map((img, index) => (
-    <figure 
-      class="mb-6 last:mb-0 break-inside-avoid group relative cursor-zoom-in overflow-hidden rounded-xl bg-surface border border-line/60 transition duration-500 hover:border-accent/60 hover:shadow-2xl"
-      data-gallery-item
-      data-img-src={lightboxSources[index].src}
-      data-alt={img.alt}
-      data-caption={img.caption || ''}
-      data-index={index}
-      tabindex="0"
-      role="button"
-      aria-label={`View photo: ${img.alt}`}
-    >
-      <div class="overflow-hidden">
-        <Picture formats={['avif', 'webp']} 
-          src={img.image} 
-          alt={img.alt} 
-          class="w-full object-cover transition duration-700 ease-out group-hover:scale-105"
-          widths={[400, 800, 1200, 1800]} 
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-      </div>
-      <div class="absolute inset-0 bg-black/25 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-end p-4">
-        {img.caption && (
-          <span class="text-xs text-white/90 font-medium drop-shadow-md line-clamp-1">{img.caption}</span>
-        )}
-      </div>
-    </figure>
-  ))}
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8">
+  {images.map((img, index) => {
+    const spanClass =
+      images.length === 2
+        ? 'md:col-span-6'
+        : index % 3 === 0
+          ? 'md:col-span-12'
+          : 'md:col-span-6';
+    const aspectClass = index % 3 === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]';
+
+    return (
+      <figure
+        class={`${spanClass} group relative cursor-zoom-in overflow-hidden bg-surface`}
+        data-gallery-item
+        data-img-src={lightboxSources[index].src}
+        data-alt={img.alt}
+        data-caption={img.caption || ''}
+        data-index={index}
+        data-reveal
+        tabindex="0"
+        role="button"
+        aria-label={`View photo: ${img.alt}`}
+      >
+        <div class={`overflow-hidden ${aspectClass} media-zoom`}>
+          <Picture
+            formats={['avif', 'webp']}
+            src={img.image}
+            alt={img.alt}
+            class="w-full h-full object-cover"
+            widths={[600, 1200, 1800, 2400]}
+            sizes={index % 3 === 0 ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <figcaption class="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+          <span>FIG. {String(index + 1).padStart(2, '0')}</span>
+          {img.caption && <span class="text-ink/80 normal-case tracking-normal font-sans text-xs">{img.caption}</span>}
+        </figcaption>
+      </figure>
+    );
+  })}
 </div>
 
 <!-- Native High-Performance Image Lightbox Modal -->
-<dialog id="photo-lightbox" class="fixed inset-0 m-auto max-w-[96vw] max-h-[96vh] bg-transparent p-0 border-0 outline-hidden select-none z-50 backdrop:bg-black/92 backdrop:backdrop-blur-md">
+<dialog
+  id="photo-lightbox"
+  class="fixed inset-0 m-auto max-w-[96vw] max-h-[96vh] bg-transparent p-0 border-0 outline-hidden select-none z-50"
+>
   <div class="relative flex flex-col items-center justify-center p-4">
-    <!-- Top Bar with Counter and Close -->
-    <div class="w-full max-w-[90vw] flex items-center justify-between mb-3 text-white">
-      <span id="lightbox-counter" class="font-mono text-xs tracking-widest text-accent font-semibold px-2 py-1 bg-black/60 rounded"></span>
-      <button 
-        id="lightbox-close" 
-        type="button" 
-        class="w-9 h-9 rounded-full bg-black/80 text-white border border-white/20 flex items-center justify-center hover:bg-accent hover:text-black transition cursor-pointer text-sm shadow-xl"
+    <div class="w-full max-w-[90vw] flex items-center justify-between mb-4 text-white">
+      <span id="lightbox-counter" class="font-mono text-[11px] tracking-[0.24em] text-[#CCA870] uppercase"></span>
+      <button
+        id="lightbox-close"
+        type="button"
+        class="px-4 py-1.5 border border-white/25 font-mono text-[10px] uppercase tracking-[0.24em] text-white hover:bg-white hover:text-black transition cursor-pointer"
         aria-label="Close lightbox"
       >
-        ✕
+        Close [ESC]
       </button>
     </div>
 
-    <!-- Image Container with Prev/Next Overlay Buttons -->
-    <div class="relative overflow-hidden rounded-xl bg-black/40 border border-white/10 shadow-2xl flex flex-col items-center group">
-      <img id="lightbox-img" src="" alt="" class="max-h-[78vh] max-w-[90vw] object-contain rounded-lg" />
-      
-      <!-- Nav Arrows -->
-      <button 
-        id="lightbox-prev" 
-        type="button" 
-        class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 text-white flex items-center justify-center hover:bg-accent hover:text-black transition cursor-pointer"
+    <div class="relative overflow-hidden bg-black/60 border border-white/10 shadow-2xl flex flex-col items-center group">
+      <img
+        id="lightbox-img"
+        src=""
+        alt=""
+        loading="lazy"
+        decoding="async"
+        class="max-h-[80vh] max-w-[90vw] object-contain"
+      />
+
+      <button
+        id="lightbox-prev"
+        type="button"
+        class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/65 border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition cursor-pointer"
         aria-label="Previous image"
       >
         ←
       </button>
-      <button 
-        id="lightbox-next" 
-        type="button" 
-        class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 text-white flex items-center justify-center hover:bg-accent hover:text-black transition cursor-pointer"
+      <button
+        id="lightbox-next"
+        type="button"
+        class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/65 border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition cursor-pointer"
         aria-label="Next image"
       >
         →
       </button>
 
-      <div id="lightbox-caption" class="w-full p-3 text-center text-xs text-white/85 bg-black/80 backdrop-blur-sm"></div>
+      <div id="lightbox-caption" class="w-full py-3 px-6 text-center font-mono text-xs text-white/80 bg-black/85"></div>
     </div>
   </div>
 </dialog>
@@ -111,7 +130,7 @@ const lightboxSources = await Promise.all(
       lightboxImg.alt = item.dataset.alt || '';
 
       if (lightboxCounter) {
-        lightboxCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+        lightboxCounter.textContent = `FRAME ${String(currentIndex + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
       }
 
       const caption = item.dataset.caption;
@@ -141,8 +160,16 @@ const lightboxSources = await Promise.all(
     });
 
     if (closeBtn) closeBtn.onclick = () => dialog.close();
-    if (prevBtn) prevBtn.onclick = (e) => { e.stopPropagation(); showIndex(currentIndex - 1); };
-    if (nextBtn) nextBtn.onclick = (e) => { e.stopPropagation(); showIndex(currentIndex + 1); };
+    if (prevBtn)
+      prevBtn.onclick = (e) => {
+        e.stopPropagation();
+        showIndex(currentIndex - 1);
+      };
+    if (nextBtn)
+      nextBtn.onclick = (e) => {
+        e.stopPropagation();
+        showIndex(currentIndex + 1);
+      };
 
     dialog.onclick = (e) => {
       if (e.target === dialog) dialog.close();

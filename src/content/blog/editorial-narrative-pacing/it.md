@@ -1,5 +1,6 @@
 ---
 title: "Ritmo editoriale: sequenziare le immagini per un impatto duraturo del brand"
+publishDate: 2026-01-26
 pubDate: 2026-01-26
 coverImage: ../../../assets/blog/DSCN7050.webp
 description: "Come abbinare ampie scene d’atmosfera a dettagli macro intimi crea una cadenza visiva che guida lo sguardo dello spettatore attraverso la campagna."

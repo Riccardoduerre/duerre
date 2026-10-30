@@ -4,9 +4,19 @@ description: "A fine-art photographic monograph exploring dawn thermal inversion
 client: "Dolomiti Tourism Board"
 role: "Landscape Art & Visual Exploration"
 year: "2025"
-date: 2025-03-22
+publishDate: 2025-03-22
+services:
+  - "Medium Format Photography"
+  - "Territory Art Direction"
+  - "Archival Fine Art Mastering"
+tags:
+  - "Fine Art"
+  - "Medium Format"
+  - "Landscape"
+  - "Campaign"
 category: "photo"
-featured: false
+featured: true
+bentoSpan: "full"
 aspectRatio: "16:9 Cinematic"
 deliverables:
   - "Fine Art Exhibition Prints (120x80cm)"
@@ -17,7 +27,7 @@ gear:
   - "Tilt-Shift & High-Resolving Prime Optics"
   - "0.9 & 1.8 Neutral Density Filters"
   - "Carbon Fiber Mountain Rigging"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Ethereal Landscapes - Mountain mist at dawn"
 challenge: "Capturing a visual series for off-season eco-tourism that transcended postcard clichés, conveying the solitary stillness and atmospheric majesty of alpine winters."
 solution: "Remote bivouac ascents in pre-dawn fog, utilizing long exposures and ETTR exposure methodology to preserve delicate cloud gradients and rock shadow nuance."

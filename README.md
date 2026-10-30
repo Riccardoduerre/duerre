@@ -1,8 +1,8 @@
-# Duerre — Portfolio & Journal
+# Duerre — Visual Production Atelier & Editorial Journal
 
-Photography, film and 3D work by Riccardo Riva. Live at [duerremedia.com](https://duerremedia.com).
+Commercial Photography, Cinema & Video Production, 3D CGI Rendering, and Digital Brand Direction by Riccardo Riva. Live at [duerremedia.com](https://duerremedia.com).
 
-Static [Astro](https://astro.build) site styled with Tailwind CSS v4 and `@tailwindcss/typography`, bilingual (English at `/`, Italian at `/it/`), deployed to GitHub Pages.
+Built with [Astro](https://astro.build) and Tailwind CSS v4, bilingual (Italian default at `/`, English at `/en/`), deployed to GitHub Pages.
 
 ## Commands
 
@@ -18,73 +18,29 @@ npm run new-project -- <slug>
 
 Node 22+ is required.
 
-## Content
+## Content Architecture (`src/content/`)
 
-All content lives in `src/content/` and is validated against the Zod schemas in `src/content.config.ts`; a build fails with a clear message if frontmatter is wrong.
+All content is managed via native Astro Content Collections in `src/content/portfolio/` and `src/content/blog/`, strictly validated against the TypeScript/Zod schemas in `src/content/config.ts` (and re-exported by `src/content.config.ts`).
 
-Every entry is a folder with one file per locale: `en.md` and `it.md` (`.mdx` also works).
+Adding new content is as simple as dropping a Markdown (`.md` or `.mdx`) file directly into `src/content/portfolio/` or `src/content/blog/` (or using a `<slug>/it.md` and `<slug>/en.md` folder for bilingual entries).
 
-### Projects — `src/content/projects/<slug>/`
+### Portfolio Collection — `src/content/portfolio/`
 
-Images are co-located with the Markdown and referenced relatively:
+Required frontmatter fields enforced by `src/content/config.ts`:
+- `title`, `description`, `client`, `year`, `publishDate`, `services` (array), `tags` (array), `coverImage`, `coverAlt`
+- Optional case study metadata: `role`, `category` (`photo` | `video` | `3d` | `marketing`), `bentoSpan` (`hero` | `tall` | `wide` | `standard` | `full`), `featured`, `youtubeId`, `videoUrl`, `aspectRatio`, `challenge`, `solution`, `results`, `deliverables`, `gear`, `gallery`.
 
-```yaml
-cover: "./cover.webp"
-coverAlt: "…"
-aspectRatio: "2.39:1 CinemaScope"   # optional, e.g. "16:9", "4:5 Portrait"
-deliverables:                       # optional array
-  - "Global Fall/Winter Print Catalog"
-  - "Commercial Broadcast 4K Cuts"
-gear:                               # optional array
-  - "Cinema Camera Package"
-  - "Anamorphic Primes"
-challenge: "…"
-solution: "…"
-results: "…"
-youtubeId: "dQw4w9WgXcQ"   # optional, the 11-character ID, not the URL
-gallery:
-  - image: "./gallery-01.webp"
-    alt: "…"
-    caption: "…"            # optional
-```
+### Blog Collection — `src/content/blog/`
 
-`category` is one of `photo`, `video`, `3d`. Set `featured: true` to show a project on the home page.
+Required frontmatter fields enforced by `src/content/config.ts`:
+- `title`, `description`, `publishDate`, `coverImage`, `tags` (array)
+- Optional metadata: `updatedDate`, `featured`, `coverAlt`, `draft`.
 
-### Blog — `src/content/blog/<slug>/`
+## Editorial Design System & Core Web Vitals
 
-Required: `title`, `description`, `pubDate`, `coverImage`, `tags` (e.g. `["Cinematography", "Lighting"]`). Shared covers live in `src/assets/blog/`. Flagship articles can set `featured: true` to lead the journal.
-
-### Drafts
-
-Both scaffold scripts create entries with `draft: true`. Drafts appear in `npm run dev` only; set `draft: false` to publish.
-
-## Images
-
-Source images go through Astro's `<Picture>` at build time, producing AVIF and WebP at several widths with intrinsic dimensions (no layout shift). Commit reasonably sized sources (≈2000–2400 px on the long edge); there's no need to pre-optimize.
-
-- `src/assets/blog/` — blog covers (also the About portrait)
-- `src/assets/site/` — home page hero and studio photos
-- `src/assets/brand/` — logo and favicon sources
-
-## Styling
-
-High-end, 100% all-sans typographic system built with Plus Jakarta Sans and system monospaced stacks. Theme tokens (colors, fonts, animations) are defined with `@theme` in `src/styles/global.css`; there is no `tailwind.config.js`. Colors come from the `--c-*` RGB variables, which switch between the dark (default) and light palettes via `data-theme` on `<html>`.
-
-## RSS & Sitemaps
-
-Bilingual feeds are automatically generated:
-- `/rss.xml` — English publication feed
-- `/it/rss.xml` — Italian publication feed
-- `/sitemap-index.xml` — Full sitemap
-
-## Contact form
-
-Configured in `src/config/site.ts`. With an empty Web3Forms `accessKey` the contact page falls back to a `mailto:` link; add a key (or a Formspree endpoint as `action`) to enable the form.
-
-## Deployment
-
-Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it with GitHub Pages Actions. In the repository settings, Pages must use **GitHub Actions** as its source. `public/CNAME` sets the custom domain `duerremedia.com`.
+- **Global Layout (`src/layouts/Layout.astro` & `src/styles/global.css`)**: Minimalist luxury editorial typography with extreme scale contrast (`display-monument`, `display-editorial`, and crisp monospaced micro-tracking), generous negative space, and seamless hairline dividers.
+- **Motion & Core Web Vitals**: Lightweight `IntersectionObserver` scroll-reveal animations (`[data-reveal]`), lazy-loaded HTML5 background video hydration (`video[data-lazy-video]`), and native Astro `<Picture formats={['avif', 'webp']} />` optimization across all views.
 
 ## License
 
-© 2026 Riccardo Riva. All rights reserved.
+© 2026 Riccardo Riva · Duerre. All rights reserved.

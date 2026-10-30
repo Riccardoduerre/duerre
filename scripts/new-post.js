@@ -17,9 +17,9 @@ fs.mkdirSync(dir, { recursive: true });
 
 const date = new Date().toISOString().split('T')[0];
 
-// Starts as a draft (visible in `npm run dev`, excluded from builds) with a shared placeholder cover.
 const frontmatter = (title, description) => `---
 title: "${title}"
+publishDate: ${date}
 pubDate: ${date}
 coverImage: ../../../assets/blog/_RIK7376_HDR.webp
 coverAlt: ""

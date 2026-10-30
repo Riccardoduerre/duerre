@@ -4,9 +4,19 @@ description: "Un'intensa serie editoriale di ritratto che analizza la relazione 
 client: "Editoriale Studio Riva"
 role: "Fotografia di Ritratto ed Editoriale"
 year: "2024"
-date: 2024-05-18
+publishDate: 2024-05-18
+services:
+  - "Fotografia Editoriale"
+  - "Direzione Ritrattistica"
+  - "Fine Art Print Mastering"
+tags:
+  - "Editorial"
+  - "Portrait"
+  - "Architecture"
+  - "Monograph"
 category: "photo"
-featured: false
+featured: true
+bentoSpan: "standard"
 aspectRatio: "4:5 Editorial Portrait"
 deliverables:
   - "Stampe Fine Art da Galleria"
@@ -17,7 +27,7 @@ gear:
   - "Ottiche Cinema Prime Luminose (35mm e 85mm T1.5)"
   - "Pannelli e Griglie di Direzionamento Portatili"
   - "Calibrazione Fine Art Monocromatica e Bitonale"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Studio di Carattere Urbano - Ritratto"
 challenge: "Creare una campagna di ritratti intima, spontanea e priva di pose artefatte, integrando la severità geometrica degli spazi urbani di Milano e Venezia all'interno dell'inquadratura."
 solution: "Un metodo di illuminazione naturale low-key che sfrutta porticati, androni e vicoli ombrosi come bandiere naturali per scolpire la luce, abbinato a lenti cinema ultra-luminose."

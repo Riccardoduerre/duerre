@@ -1,9 +1,10 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
 import PageHero from '../PageHero.astro';
 import PostPreview from '../PostPreview.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
-import { getPosts } from '../../lib/content';
+import { splitId, type Post } from '../../lib/content';
 import { useTranslations, type Locale } from '../../i18n';
 
 interface Props {
@@ -12,9 +13,21 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const allPosts = await getPosts(lang);
 
-// Tag counts
+const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
+const matchesLocale = (id: string) => {
+  const parsed = splitId(id);
+  return parsed.lang === lang || parsed.lang === 'shared';
+};
+
+const rawPosts = await getCollection(
+  'blog',
+  (entry: Post) => matchesLocale(entry.id) && isVisible(entry.data.draft),
+);
+const allPosts = rawPosts.sort(
+  (a: Post, b: Post) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+
 const tagCounts = new Map<string, number>();
 allPosts.forEach((post) => {
   (post.data.tags || []).forEach((tag) => {
@@ -24,7 +37,7 @@ allPosts.forEach((post) => {
 const sortedTags = Array.from(tagCounts.keys()).sort();
 ---
 
-<BaseLayout
+<Layout
   title={`${t('nav_blog')} | Duerre`}
   description={t('blog_meta_desc')}
   lang={lang}
@@ -33,45 +46,42 @@ const sortedTags = Array.from(tagCounts.keys()).sort();
     lang={lang}
     eyebrow={t('blog_breadcrumb_sub')}
     title={t('nav_blog')}
+    subtitle={t('blog_page_heading')}
   />
 
-  <section class="py-20 md:py-28 px-6 bg-grid-lines">
-    <div class="mx-auto max-w-7xl">
-      <!-- Intro Heading (communicationitalia.com/blog-communication-italia style) -->
-      <div class="max-w-3xl mb-14">
-        <span class="pill-subtext mb-4">{t('nav_blog')}</span>
-        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.12] text-ink">
-          {t('blog_page_heading')}
-        </h2>
-      </div>
-
-      <!-- Category Filter Pills -->
+  <section class="py-24 md:py-36 px-6 sm:px-10">
+    <div class="mx-auto max-w-[1440px]">
+      <!-- Editorial Topic Filter Bar -->
       {sortedTags.length > 0 && (
-        <div class="flex flex-wrap gap-2 mb-14 items-center" id="blog-filters">
+        <div
+          class="flex flex-wrap gap-x-6 gap-y-3 pb-10 mb-16 border-b border-line/60 items-center"
+          id="blog-filters"
+          data-reveal
+        >
           <button
             type="button"
             data-tag="all"
-            class="blog-filter-pill active px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-colors bg-ink text-bg cursor-pointer"
+            class="blog-filter-pill active font-mono text-[11px] uppercase tracking-[0.22em] text-ink underline decoration-accent underline-offset-8 cursor-pointer transition-colors"
           >
-            {t('all_articles')} ({allPosts.length})
+            {t('all_articles')} [{allPosts.length}]
           </button>
           {sortedTags.map((tag) => (
             <button
               type="button"
               data-tag={tag}
-              class="blog-filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-colors bg-surface text-muted border border-line hover:border-ink hover:text-ink cursor-pointer"
+              class="blog-filter-pill font-mono text-[11px] uppercase tracking-[0.22em] text-muted hover:text-ink cursor-pointer transition-colors"
             >
-              {tag} ({tagCounts.get(tag)})
+              {tag} [{tagCounts.get(tag)}]
             </button>
           ))}
         </div>
       )}
 
-      <!-- Articles Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10" id="blog-grid">
+      <!-- Essays Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12" id="blog-grid">
         {allPosts.map((post) => (
-          <div class="blog-item transition-opacity duration-300" data-tags={(post.data.tags || []).join(',')}>
-            <PostPreview post={post} />
+          <div class="blog-item transition-opacity duration-500" data-tags={(post.data.tags || []).join(',')}>
+            <PostPreview post={post} lang={lang} />
           </div>
         ))}
       </div>
@@ -90,11 +100,11 @@ const sortedTags = Array.from(tagCounts.keys()).sort();
           const selectedTag = (btn as HTMLElement).dataset.tag;
 
           filterButtons.forEach((b) => {
-            b.classList.remove('bg-ink', 'text-bg');
-            b.classList.add('bg-surface', 'text-muted', 'border', 'border-line');
+            b.classList.remove('text-ink', 'underline', 'decoration-accent', 'underline-offset-8');
+            b.classList.add('text-muted');
           });
-          btn.classList.add('bg-ink', 'text-bg');
-          btn.classList.remove('bg-surface', 'text-muted', 'border', 'border-line');
+          btn.classList.add('text-ink', 'underline', 'decoration-accent', 'underline-offset-8');
+          btn.classList.remove('text-muted');
 
           blogItems.forEach((item) => {
             const tags = ((item as HTMLElement).dataset.tags || '').split(',');
@@ -111,4 +121,4 @@ const sortedTags = Array.from(tagCounts.keys()).sort();
     initBlogFilters();
     document.addEventListener('astro:page-load', initBlogFilters);
   </script>
-</BaseLayout>
+</Layout>

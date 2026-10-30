@@ -1,5 +1,6 @@
 ---
 title: "Il potere del negative fill: sottrarre luce per costruire contrasto"
+publishDate: 2026-06-01
 pubDate: 2026-06-01
 coverImage: ../../../assets/blog/_DSC2365.webp
 description: "Perché i migliori fotografi portano pannelli neri invece di riflettori argentati negli shooting commerciali all’aperto con cielo coperto."

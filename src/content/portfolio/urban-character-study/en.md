@@ -4,9 +4,19 @@ description: "An intimate editorial portrait series examining the dialogue betwe
 client: "Studio Riva Editorial"
 role: "Portrait & Editorial Photography"
 year: "2024"
-date: 2024-05-18
+publishDate: 2024-05-18
+services:
+  - "Editorial Photography"
+  - "Portrait Direction"
+  - "Fine Art Print Mastering"
+tags:
+  - "Editorial"
+  - "Portrait"
+  - "Architecture"
+  - "Monograph"
 category: "photo"
-featured: false
+featured: true
+bentoSpan: "standard"
 aspectRatio: "4:5 Editorial Portrait"
 deliverables:
   - "Gallery Exhibition Prints"
@@ -17,7 +27,7 @@ gear:
   - "Cinema High-Speed Prime Optics (35mm & 85mm T1.5)"
   - "Portable Directional Grid Modifiers"
   - "Fine-Art Monochrome & Dual-Tone Calibration"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Urban Character Study - Subject portrait"
 challenge: "Crafting a portrait campaign that felt intimate, vulnerable, and unvarnished while keeping the architectural geometry of Milan and Venice firmly embedded in the frame."
 solution: "A low-key natural lighting methodology using street corridors, porticos, and doorways as organic light shapers, paired with fast cinema prime glass."

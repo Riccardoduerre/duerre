@@ -7,14 +7,13 @@ if (!slug || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
   process.exit(1);
 }
 
-const dir = path.join('src/content/projects', slug);
+const dir = path.join('src/content/portfolio', slug);
 if (fs.existsSync(dir)) {
-  console.error(`Project ${slug} already exists!`);
+  console.error(`Portfolio project ${slug} already exists!`);
   process.exit(1);
 }
 
 fs.mkdirSync(dir, { recursive: true });
-// Placeholder cover so the schema's image() validation passes; replace with the real cover.webp.
 fs.copyFileSync('src/assets/blog/_RIK7376_HDR.webp', path.join(dir, 'cover.webp'));
 
 const date = new Date().toISOString().split('T')[0];
@@ -24,11 +23,18 @@ const frontmatter = (title, description) => `---
 title: "${title}"
 description: "${description}"
 client: "Client Name"
-role: "Role"
+role: "Visual Direction"
 year: "${year}"
-date: ${date}
+publishDate: ${date}
+services:
+  - "Commercial Photography"
+  - "Creative Direction"
+tags:
+  - "Campaign"
+  - "Photography"
 category: "photo"
 featured: false
+bentoSpan: "standard"
 draft: true
 aspectRatio: "16:9"
 deliverables: []
@@ -36,18 +42,14 @@ gear: []
 challenge: "Describe the creative challenge"
 solution: "Describe the strategic and technical approach"
 results: "Key impact or metrics"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Describe the cover image"
-# youtubeId: "dQw4w9WgXcQ"
+# youtubeId: "vpW0ibNGsBo"
 gallery: []
-# gallery:
-#   - image: "./gallery-01.webp"
-#     alt: "Describe the photo"
-#     caption: "Optional caption"
 ---
 `;
 
 fs.writeFileSync(path.join(dir, 'en.md'), `${frontmatter('New Project', 'English summary.')}\nEnglish case study.\n`);
 fs.writeFileSync(path.join(dir, 'it.md'), `${frontmatter('Nuovo Progetto', 'Sommario in italiano.')}\nCaso studio in italiano.\n`);
 
-console.log(`Created draft project in ${dir} — replace cover.webp, then set draft: false to publish.`);
+console.log(`Created draft portfolio project in ${dir} — replace cover.webp, then set draft: false to publish.`);

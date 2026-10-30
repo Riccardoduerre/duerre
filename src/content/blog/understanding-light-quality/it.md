@@ -1,5 +1,6 @@
 ---
 title: "Comprendere la qualità della luce: direzione, morbidezza e caduta"
+publishDate: 2026-10-05
 pubDate: 2026-10-05
 coverImage: ../../../assets/blog/Landscapes_00003.webp
 description: "Come la dimensione relativa della sorgente, la legge dell’inverso del quadrato e le transizioni d’ombra definiscono l’identità scultorea dello scatto."

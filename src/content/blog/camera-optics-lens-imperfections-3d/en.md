@@ -1,6 +1,7 @@
 ---
 featured: true
 title: "Overcoming the Sterile 3D Look: Emulating Physical Optical Imperfections"
+publishDate: 2026-05-04
 pubDate: 2026-05-04
 coverImage: ../../../assets/blog/Giau_00006.webp
 description: "How subtle chromatic aberration, diffraction, optical vignetting, and sensor grain breathe tangible life into synthetic renders."

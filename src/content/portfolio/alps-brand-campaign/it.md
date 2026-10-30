@@ -4,9 +4,19 @@ description: "Campagna commerciale ad alta quota che cattura la bellezza aspra e
 client: "Alps Apparel Co."
 role: "Fotografia Commerciale e Direzione Visiva"
 year: "2025"
-date: 2025-07-15
+publishDate: 2025-07-15
+services:
+  - "Fotografia Commerciale"
+  - "Direzione Artistica Outdoor"
+  - "Digital Marketing & Lancio"
+tags:
+  - "Commercial Photography"
+  - "Outdoor"
+  - "Campaign"
+  - "Dolomites"
 category: "photo"
 featured: true
+bentoSpan: "wide"
 aspectRatio: "3:2 Full-Frame"
 deliverables:
   - "Catalogo Stampa Globale Autunno/Inverno"
@@ -17,7 +27,7 @@ gear:
   - "Ottiche Cinema a Focale Fissa (28mm, 50mm, 85mm)"
   - "Rigging Tropicalizzato per Climi Rigidi"
   - "DaVinci Resolve Studio (Pipeline ACEScc)"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Campagna Alpina Alps - Passo Giau"
 challenge: "Lanciare una linea tecnica per l'inverno alpino con un immaginario autentico, aspro e resistente, lontano dai cliché della moda da studio."
 solution: "Una spedizione continuativa di 4 giorni al Passo Giau sotto temperature sottozero, combinando la luce cruda e tempestosa delle albe alpine con una color grading a tonalità fredde e calibrate."

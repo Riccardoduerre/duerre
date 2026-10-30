@@ -1,5 +1,6 @@
 ---
 title: "Massimizzare la gamma dinamica: la strategia ETTR sul campo"
+publishDate: 2026-08-24
 pubDate: 2026-08-24
 coverImage: ../../../assets/blog/Giau_00001.webp
 description: "Spingere l’esposizione del sensore a destra per preservare il segnale nelle ombre senza sacrificare la transizione graduale delle alte luci."

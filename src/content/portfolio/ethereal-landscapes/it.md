@@ -4,9 +4,19 @@ description: "Una monografia fotografica d'autore che esplora le inversioni term
 client: "Ente Turismo Dolomiti"
 role: "Fotografia di Paesaggio e Direzione Artistica"
 year: "2025"
-date: 2025-03-22
+publishDate: 2025-03-22
+services:
+  - "Fotografia Medio Formato"
+  - "Direzione Artistica Territoriale"
+  - "Stampa Fine Art Archivistica"
+tags:
+  - "Fine Art"
+  - "Medium Format"
+  - "Landscape"
+  - "Campaign"
 category: "photo"
-featured: false
+featured: true
+bentoSpan: "full"
 aspectRatio: "16:9 Cinematic"
 deliverables:
   - "Stampe Fine Art da Mostra (120x80cm)"
@@ -17,7 +27,7 @@ gear:
   - "Ottiche Prime Tilt-Shift ad Alta Risoluzione"
   - "Filtri a Densità Neutra ND 0.9 e 1.8"
   - "Treppiedi e Rigging Alpino in Carbonio"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Paesaggi Eterei - Nebbia di montagna all'alba"
 challenge: "Creare un corpus visivo per il turismo alpino fuori stagione che andasse oltre i cliché da cartolina, trasmettendo il silenzio e la solenne monumentalità della montagna d'inverno."
 solution: "Ascensioni pre-alba e bivacchi in quota immersi nella nebbia, ricorrendo a lunghe esposizioni e tecnica ETTR per valorizzare ogni sfumatura di luce e roccia."

@@ -1,0 +1,166 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import type { Locale } from '../i18n';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: Locale;
+  image?: string;
+  type?: 'website' | 'article' | 'creativework';
+}
+
+const { title, description, lang = 'it', image, type = 'website' } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <BaseHead title={title} description={description} lang={lang} image={image} type={type} />
+    <ClientRouter />
+    <script is:inline>
+      function detectLanguageAndRedirect() {
+        try {
+          const path = window.location.pathname;
+          if (path === '/it' || path.startsWith('/it/')) {
+            const target = (path.replace(/^\/it(?=\/|$)/, '') || '/') + window.location.search + window.location.hash;
+            window.location.replace(target);
+            return;
+          }
+
+          const ua = navigator.userAgent || '';
+          if (
+            /bot|crawl|spider|slurp|googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|linkedinbot|applebot|whatsapp/i.test(
+              ua,
+            )
+          ) {
+            return;
+          }
+
+          const savedLang = localStorage.getItem('duerre_lang');
+          const isEnglishPath = path === '/en' || path.startsWith('/en/');
+
+          if (savedLang === 'en' && !isEnglishPath) {
+            const enTarget = '/en' + (path === '/' ? '/' : path) + window.location.search + window.location.hash;
+            window.location.replace(enTarget);
+            return;
+          }
+
+          if (savedLang === 'it') {
+            return;
+          }
+
+          if (!isEnglishPath) {
+            const rawLang = (navigator.languages && navigator.languages[0]) || navigator.language || 'it';
+            const primaryLang = rawLang.toLowerCase();
+            if (primaryLang && !primaryLang.startsWith('it')) {
+              const enTarget = '/en' + (path === '/' ? '/' : path) + window.location.search + window.location.hash;
+              window.location.replace(enTarget);
+            }
+          }
+        } catch {
+          // ignore storage/navigation errors
+        }
+      }
+
+      function applyTheme() {
+        document.documentElement.classList.add('js');
+        const stored = localStorage.getItem('theme');
+        const theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+
+      detectLanguageAndRedirect();
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
+    </script>
+  </head>
+  <body class="selection:bg-accent selection:text-black">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-5 focus:py-2.5 focus:bg-accent focus:text-black focus:rounded-full focus:font-mono focus:text-xs focus:uppercase focus:tracking-widest"
+    >
+      Skip to content
+    </a>
+    <Header lang={lang} />
+    <main id="main-content" class="min-h-screen">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+
+    <!-- Global Motion Paths & Lazy Video Hydrator (IntersectionObserver) -->
+    <script>
+      function initEditorialMotion() {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const revealNodes = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+        if (prefersReduced || !('IntersectionObserver' in window)) {
+          revealNodes.forEach((el) => el.classList.add('is-visible'));
+        } else {
+          const revealObserver = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  const target = entry.target as HTMLElement;
+                  const delay = target.dataset.revealDelay;
+                  if (delay) {
+                    target.style.transitionDelay = `${delay}ms`;
+                  }
+                  target.classList.add('is-visible');
+                  obs.unobserve(target);
+                }
+              });
+            },
+            { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+          );
+
+          revealNodes.forEach((el) => revealObserver.observe(el));
+        }
+
+        // Core Web Vitals Lazy Background Video Loader
+        const lazyVideos = document.querySelectorAll<HTMLVideoElement>('video[data-lazy-video]');
+        const saveData = (navigator as any).connection?.saveData === true;
+
+        if (!prefersReduced && !saveData && 'IntersectionObserver' in window) {
+          const videoObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                const video = entry.target as HTMLVideoElement;
+                if (entry.isIntersecting) {
+                  if (!video.dataset.loaded) {
+                    const sources = video.querySelectorAll<HTMLSourceElement>('source[data-src]');
+                    sources.forEach((source) => {
+                      if (source.dataset.src) {
+                        source.src = source.dataset.src;
+                      }
+                    });
+                    if (video.dataset.src && !video.src) {
+                      video.src = video.dataset.src;
+                    }
+                    video.load();
+                    video.dataset.loaded = 'true';
+                  }
+                  video.play().catch(() => {
+                    // Autoplay prevented by browser policy; poster remains visible
+                  });
+                } else if (video.dataset.loaded === 'true') {
+                  video.pause();
+                }
+              });
+            },
+            { rootMargin: '150px 0px', threshold: 0.05 },
+          );
+
+          lazyVideos.forEach((v) => videoObserver.observe(v));
+        }
+      }
+
+      initEditorialMotion();
+      document.addEventListener('astro:page-load', initEditorialMotion);
+    </script>
+  </body>
+</html>
+

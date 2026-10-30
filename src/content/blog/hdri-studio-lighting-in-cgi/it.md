@@ -1,5 +1,6 @@
 ---
 title: "Illuminare mondi 3D: HDRI abbinate a luci d’accento controllate"
+publishDate: 2026-07-27
 pubDate: 2026-07-27
 coverImage: ../../../assets/blog/Landscapes_00002.webp
 description: "Perché affidarsi solo a un’environment map rende i render piatti, e come l’aggiunta di luci di contorno intaglia volumi tangibili."

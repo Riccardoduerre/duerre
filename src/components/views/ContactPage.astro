@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import Layout from '../../layouts/Layout.astro';
 import PageHero from '../PageHero.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n';
 import { CONTACT_FORM, contactFormMode, SITE } from '../../config/site';
@@ -22,7 +22,7 @@ const serviceOptions = [
 ];
 ---
 
-<BaseLayout
+<Layout
   title={`${t('nav_contact')} | Duerre`}
   description={t('contact_title')}
   lang={lang}
@@ -31,35 +31,38 @@ const serviceOptions = [
     lang={lang}
     eyebrow={t('contact_breadcrumb_sub')}
     title={t('nav_contact')}
+    subtitle={t('contact_title')}
   />
 
-  <section class="py-20 md:py-32 px-6 bg-grid-lines">
-    <div class="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-      <!-- Left Column: Studio Contact Cards (communicationitalia.com contact-icon-box style) -->
-      <div class="lg:col-span-5 space-y-6">
+  <section class="py-24 md:py-40 px-6 sm:px-10">
+    <div class="mx-auto max-w-[1440px] grid lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+      <!-- Left 5 Cols: Direct Atelier Coordinates -->
+      <div class="lg:col-span-5 space-y-12" data-reveal>
         <div>
-          <span class="pill-subtext mb-4">Duerre Studio</span>
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink mb-4">
+          <span class="pill-subtext mb-6">01 / DIRECT COORDINATES</span>
+          <h2 class="display-section text-ink mb-6">
             {t('contact_title')}
           </h2>
-          <p class="text-muted text-base leading-relaxed">
+          <p class="text-base sm:text-lg font-light text-muted leading-relaxed">
             {t('project_cta_desc')}
           </p>
         </div>
 
-        <!-- Direct Email Box -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-surface border border-line flex flex-col justify-between gap-4">
-          <div>
-            <span class="text-xs font-mono text-muted uppercase tracking-wider block mb-1">Email</span>
-            <a href={`mailto:${SITE.email}`} class="text-lg sm:text-xl font-extrabold text-ink hover:opacity-75 transition-opacity break-all">
-              {SITE.email}
-            </a>
-          </div>
-          <div>
+        <div class="border-t border-line/60 pt-8 space-y-4">
+          <span class="font-mono text-[10px] text-accent uppercase tracking-[0.26em] block">
+            DIRECT ELECTRONIC MAIL
+          </span>
+          <a
+            href={`mailto:${SITE.email}`}
+            class="block text-2xl sm:text-3xl font-light tracking-tight text-ink hover:text-accent transition-colors break-all"
+          >
+            {SITE.email}
+          </a>
+          <div class="pt-2">
             <button
               id="copy-contact-email"
               type="button"
-              class="btn-ghost text-xs py-2.5 px-5 cursor-pointer"
+              class="font-mono text-[10px] uppercase tracking-[0.24em] text-muted hover:text-ink underline underline-offset-4 cursor-pointer"
               data-copied-text={t('link_copied')}
             >
               <span id="copy-email-label">{t('copy_link')}: {SITE.email}</span>
@@ -67,25 +70,21 @@ const serviceOptions = [
           </div>
         </div>
 
-        <!-- Studio Location & Availability Box -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-4">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bg border border-line text-[11px] font-mono uppercase tracking-wider text-ink">
+        <div class="border-t border-line/60 pt-8 space-y-4">
+          <div class="inline-flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.24em] text-ink">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>{SITE.location} · {lang === 'it' ? 'Disponibile per nuovi progetti' : 'Accepting Commissions'}</span>
-          </div>
-          <div>
-            <span class="text-xs font-mono text-muted uppercase tracking-wider block mb-1">
-              {t('nav_services')}
+            <span>
+              {SITE.location} · {lang === 'it' ? 'Disponibile per nuove commissioni' : 'Accepting Commissions'}
             </span>
-            <p class="text-sm font-semibold text-ink">
-              {t('service_1_title')} · {t('service_2_title')} · {t('service_3_title')} · {t('service_4_title')}
-            </p>
           </div>
+          <p class="text-sm font-light text-muted leading-relaxed">
+            {t('service_1_title')} · {t('service_2_title')} · {t('service_3_title')} · {t('service_4_title')}
+          </p>
         </div>
       </div>
 
-      <!-- Right Column: Hybrid FormSubmit AJAX + Automatic Mailto Fallback -->
-      <div class="lg:col-span-7">
+      <!-- Right 7 Cols: Minimalist Editorial Commission Form -->
+      <div class="lg:col-span-7" data-reveal>
         <form
           id="contact-request-form"
           action={CONTACT_FORM.action}
@@ -95,16 +94,15 @@ const serviceOptions = [
           data-recipient={SITE.email}
           data-subject={t('contact_form_subject')}
           data-thanks-path={thanksPath}
-          class="space-y-6 bg-surface p-8 sm:p-12 rounded-3xl border border-line shadow-sm"
+          class="space-y-10 border-t border-line/60 pt-10"
         >
-          <div class="border-b border-line pb-5 mb-2">
-            <span class="pill-subtext mb-3">{t('nav_cta')}</span>
-            <h3 class="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight">
-              {lang === 'it' ? 'Invia una richiesta di progetto' : 'Send a project request'}
+          <div>
+            <span class="pill-subtext mb-4">02 / {t('nav_cta')}</span>
+            <h3 class="text-2xl sm:text-4xl font-light text-ink tracking-tight">
+              {lang === 'it' ? 'Trasmetti il tuo brief di progetto' : 'Transmit your project brief'}
             </h3>
           </div>
 
-          <!-- Hidden configuration fields for FormSubmit / Web3Forms -->
           {mode === 'web3forms' && <input type="hidden" name="access_key" value={CONTACT_FORM.accessKey} />}
           <input type="hidden" name="_subject" value={t('contact_form_subject')} />
           <input type="hidden" name="_template" value="box" />
@@ -112,10 +110,9 @@ const serviceOptions = [
           <input type="hidden" name="_next" value={thanksUrl} />
           <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
 
-          <!-- Name & Email -->
-          <div class="grid md:grid-cols-2 gap-6">
+          <div class="grid md:grid-cols-2 gap-10">
             <div>
-              <label for="name" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
+              <label for="name" class="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-2">
                 {t('label_name')} *
               </label>
               <input
@@ -123,12 +120,12 @@ const serviceOptions = [
                 id="name"
                 name="name"
                 required
-                class="field bg-bg"
+                class="field"
                 placeholder={lang === 'it' ? 'Mario Rossi' : 'Jane Doe'}
               />
             </div>
             <div>
-              <label for="email" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
+              <label for="email" class="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-2">
                 {t('label_email')} *
               </label>
               <input
@@ -136,28 +133,27 @@ const serviceOptions = [
                 id="email"
                 name="email"
                 required
-                class="field bg-bg"
+                class="field"
                 placeholder={lang === 'it' ? 'nome@azienda.it' : 'jane@brand.com'}
               />
             </div>
           </div>
 
-          <!-- Company / Brand & Budget -->
-          <div class="grid md:grid-cols-2 gap-6">
+          <div class="grid md:grid-cols-2 gap-10">
             <div>
-              <label for="company" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
-                {lang === 'it' ? 'Azienda / Brand (facoltativo)' : 'Company / Brand (optional)'}
+              <label for="company" class="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-2">
+                {lang === 'it' ? 'Maison / Azienda (facoltativo)' : 'Maison / Brand (optional)'}
               </label>
               <input
                 type="text"
                 id="company"
                 name="company"
-                class="field bg-bg"
-                placeholder={lang === 'it' ? 'Nome Azienda o Brand' : 'Brand or Studio Name'}
+                class="field"
+                placeholder={lang === 'it' ? 'Nome Azienda o Studio' : 'Brand or Studio Name'}
               />
             </div>
             <div>
-              <label for="budget" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
+              <label for="budget" class="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-2">
                 {t('contact_form_budget')}
               </label>
               <input
@@ -165,17 +161,16 @@ const serviceOptions = [
                 id="budget"
                 name="budget"
                 placeholder={t('contact_form_budget_placeholder')}
-                class="field bg-bg"
+                class="field"
               />
             </div>
           </div>
 
-          <!-- Interactive 4-Discipline Selector Pills -->
           <div>
-            <span class="block text-xs font-mono uppercase tracking-wider text-muted mb-3">
-              {lang === 'it' ? 'Servizi di interesse' : 'Services of Interest'}
+            <span class="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-4">
+              {lang === 'it' ? 'Discipline richieste' : 'Requested Disciplines'}
             </span>
-            <div class="flex flex-wrap gap-2.5">
+            <div class="flex flex-wrap gap-3">
               {serviceOptions.map((service) => (
                 <label class="cursor-pointer select-none">
                   <input
@@ -184,17 +179,16 @@ const serviceOptions = [
                     value={service}
                     class="peer sr-only"
                   />
-                  <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-line bg-bg text-xs font-bold text-muted transition-all peer-checked:bg-ink peer-checked:text-bg peer-checked:border-ink hover:border-ink/50">
-                    <span>{service}</span>
+                  <span class="inline-flex items-center px-4 py-2.5 border border-line/80 font-mono text-[10px] uppercase tracking-[0.2em] text-muted transition-all peer-checked:bg-ink peer-checked:text-bg peer-checked:border-ink hover:border-ink">
+                    {service}
                   </span>
                 </label>
               ))}
             </div>
           </div>
 
-          <!-- Project Brief / Message -->
           <div>
-            <label for="message" class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">
+            <label for="message" class="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-2">
               {t('label_message')} *
             </label>
             <textarea
@@ -202,47 +196,45 @@ const serviceOptions = [
               name="message"
               required
               rows="5"
-              class="field bg-bg resize-y"
+              class="field resize-y"
               placeholder={
                 lang === 'it'
-                  ? 'Raccontaci gli obiettivi del progetto, le tempistiche e i deliverables richiesti...'
-                  : 'Tell us about your project goals, timeline, and desired deliverables...'
+                  ? 'Descrivi gli obiettivi visivi, le tempistiche e i deliverables desiderati...'
+                  : 'Outline your visual objectives, timeline, and desired deliverables...'
               }
             ></textarea>
           </div>
 
-          <!-- Submit Row -->
-          <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <button
               id="contact-submit-btn"
               type="submit"
               data-default-label={`${t('label_send')} ↗`}
-              data-sending-label={lang === 'it' ? 'Invio in corso...' : 'Sending...'}
+              data-sending-label={lang === 'it' ? 'Trasmissione in corso...' : 'Transmitting...'}
               class="btn-primary w-full sm:w-auto cursor-pointer disabled:opacity-60"
             >
               {t('label_send')} ↗
             </button>
-            <span class="text-xs text-muted">
-              {lang === 'it' ? 'Risposta garantita entro 24–48 ore.' : 'Reply within 24–48 hours.'}
+            <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+              {lang === 'it' ? 'Risposta diretta entro 24–48 ore' : 'Direct response within 24–48 hours'}
             </span>
           </div>
 
-          <!-- Automatic Fallback & Copy Brief Box -->
           <div
             id="contact-dispatch-feedback"
-            class="hidden rounded-2xl border border-line bg-bg p-5 space-y-3"
+            class="hidden border border-line/80 bg-surface p-6 space-y-3"
             aria-live="polite"
           >
             <div class="flex items-center justify-between gap-3 flex-wrap">
-              <p class="text-sm font-bold text-ink">
+              <p class="text-sm font-medium text-ink">
                 {lang === 'it'
-                  ? '✓ Richiesta pronta! Abbiamo aperto il tuo client email con il brief compilato.'
-                  : '✓ Request ready! Your email client has been opened with your formatted brief.'}
+                  ? '✓ Brief pronto. Abbiamo aperto il tuo client email con i dettagli formattati.'
+                  : '✓ Brief ready. Your email client has been opened with your formatted inquiry.'}
               </p>
               <button
                 type="button"
                 id="copy-compiled-brief"
-                class="btn-ghost text-xs py-1.5 px-3.5 cursor-pointer"
+                class="btn-ghost text-xs py-2 px-4 cursor-pointer"
                 data-copied-label={lang === 'it' ? 'Brief copiato!' : 'Brief copied!'}
               >
                 {lang === 'it' ? 'Copia testo del brief' : 'Copy formatted brief'}
@@ -276,7 +268,7 @@ const serviceOptions = [
               copyLabel.textContent = originalText;
             }, 2000);
           } catch {
-            // fallback
+            // ignore
           }
         };
       }
@@ -293,20 +285,18 @@ const serviceOptions = [
       form.onsubmit = async (e) => {
         const mode = form.dataset.mode || 'formsubmit';
         if (mode === 'web3forms' || mode === 'formspree') {
-          return; // allow native form POST
+          return;
         }
 
         e.preventDefault();
         const formData = new FormData(form);
-
-        // Ignore spam honeypot
         if (formData.get('_honey')) return;
 
-        const name = (formData.get('name') as string || '').trim();
-        const email = (formData.get('email') as string || '').trim();
-        const company = (formData.get('company') as string || '').trim();
-        const budget = (formData.get('budget') as string || '').trim();
-        const message = (formData.get('message') as string || '').trim();
+        const name = ((formData.get('name') as string) || '').trim();
+        const email = ((formData.get('email') as string) || '').trim();
+        const company = ((formData.get('company') as string) || '').trim();
+        const budget = ((formData.get('budget') as string) || '').trim();
+        const message = ((formData.get('message') as string) || '').trim();
         const services = formData.getAll('services').map((s) => String(s));
 
         const recipient = form.dataset.recipient || 'riccardo@duerremedia.com';
@@ -314,9 +304,7 @@ const serviceOptions = [
         const thanksPath = form.dataset.thanksPath || '/thanks/';
         const ajaxAction = form.dataset.ajaxAction || 'https://formsubmit.co/ajax/b3c0b49afe301d86d6a62a3f768735fd';
 
-        const subject = company
-          ? `${baseSubject} — ${name} (${company})`
-          : `${baseSubject} — ${name}`;
+        const subject = company ? `${baseSubject} — ${name} (${company})` : `${baseSubject} — ${name}`;
 
         const lines = [
           `Name: ${name}`,
@@ -362,17 +350,15 @@ const serviceOptions = [
               window.location.href = thanksPath;
               return;
             }
-            // If FormSubmit requires first-time email activation, trigger native POST to send the activation email
             if (result && typeof result.message === 'string' && /activat|confirm/i.test(result.message)) {
               HTMLFormElement.prototype.submit.call(form);
               return;
             }
           } catch {
-            // Network/blocker error -> fall through to mailto fallback below
+            // fall through to mailto
           }
         }
 
-        // Fallback: open mailto with pre-filled brief + reveal copy button
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.textContent = submitBtn.dataset.defaultLabel || 'Send Message ↗';
@@ -406,5 +392,4 @@ const serviceOptions = [
     initContactPage();
     document.addEventListener('astro:page-load', initContactPage);
   </script>
-</BaseLayout>
-
+</Layout>

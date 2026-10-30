@@ -4,9 +4,19 @@ description: "High-altitude commercial campaign capturing the harsh, elemental b
 client: "Alps Apparel Co."
 role: "Commercial Photography & Visual Strategy"
 year: "2025"
-date: 2025-07-15
+publishDate: 2025-07-15
+services:
+  - "Commercial Photography"
+  - "Expedition Art Direction"
+  - "Digital Marketing & Launch"
+tags:
+  - "Commercial Photography"
+  - "Outdoor"
+  - "Campaign"
+  - "Dolomites"
 category: "photo"
 featured: true
+bentoSpan: "wide"
 aspectRatio: "3:2 Full-Frame"
 deliverables:
   - "Global Fall/Winter Print Catalog"
@@ -17,7 +27,7 @@ gear:
   - "Prime Cinema Optics (28mm, 50mm, 85mm)"
   - "High-Performance Weather-Sealed Rigging"
   - "DaVinci Resolve Studio (ACEScc Pipeline)"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Alps Brand Campaign hero landscape - Passo Giau"
 challenge: "Launching an alpine technical winter line with imagery that felt authentic, rugged, and emotionally enduring rather than staged studio fashion."
 solution: "A 4-day continuous mountain expedition at Passo Giau in sub-zero dawn temperatures, pairing raw directional storm light with calibrated cool-toned color science."

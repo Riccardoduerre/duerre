@@ -21,16 +21,16 @@
 
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-mono: ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
 
-  --animate-subtle-zoom: subtleZoom 16s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-fade-in: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-spin-slow: spinSlow 18s linear infinite;
-  --animate-marquee: marqueeScroll 34s linear infinite;
+  --animate-subtle-zoom: subtleZoom 20s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-spin-slow: spinSlow 24s linear infinite;
+  --animate-marquee: marqueeScroll 42s linear infinite;
 
   @keyframes subtleZoom {
     0% {
-      transform: scale(1.08);
+      transform: scale(1.07);
     }
     100% {
       transform: scale(1);
@@ -39,7 +39,7 @@
   @keyframes fadeIn {
     0% {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(20px);
     }
     100% {
       opacity: 1;
@@ -64,7 +64,7 @@
   }
 }
 
-/* Typography modifier: maps prose colors onto the studio palette in both themes. */
+/* Typography modifier: maps prose colors onto the luxury editorial palette in both themes. */
 @utility prose-studio {
   --tw-prose-body: var(--color-ink);
   --tw-prose-headings: var(--color-ink);
@@ -72,10 +72,10 @@
   --tw-prose-links: var(--color-accent);
   --tw-prose-bold: var(--color-ink);
   --tw-prose-counters: var(--color-muted);
-  --tw-prose-bullets: var(--color-muted);
+  --tw-prose-bullets: var(--color-accent);
   --tw-prose-hr: var(--color-line);
   --tw-prose-quotes: var(--color-ink);
-  --tw-prose-quote-borders: var(--color-line);
+  --tw-prose-quote-borders: var(--color-accent);
   --tw-prose-captions: var(--color-muted);
   --tw-prose-code: var(--color-ink);
   --tw-prose-pre-code: var(--color-bg);
@@ -88,10 +88,10 @@
   --tw-prose-invert-links: var(--color-accent);
   --tw-prose-invert-bold: var(--color-ink);
   --tw-prose-invert-counters: var(--color-muted);
-  --tw-prose-invert-bullets: var(--color-muted);
+  --tw-prose-invert-bullets: var(--color-accent);
   --tw-prose-invert-hr: var(--color-line);
   --tw-prose-invert-quotes: var(--color-ink);
-  --tw-prose-invert-quote-borders: var(--color-line);
+  --tw-prose-invert-quote-borders: var(--color-accent);
   --tw-prose-invert-captions: var(--color-muted);
   --tw-prose-invert-code: var(--color-ink);
   --tw-prose-invert-pre-code: var(--color-bg);
@@ -100,9 +100,8 @@
   --tw-prose-invert-td-borders: var(--color-line);
 }
 
-/* Shared button base, declared as a utility so component classes can @apply it. */
 @utility btn {
-  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 text-xs font-semibold uppercase tracking-[0.16em] transition duration-300;
+  @apply inline-flex min-h-12 items-center justify-center gap-3 rounded-full px-8 text-[11px] font-semibold uppercase tracking-[0.22em] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)];
 }
 
 @layer base {
@@ -117,34 +116,34 @@
 
   :root {
     color-scheme: dark;
-    --c-bg: 9 9 9;
-    --c-surface: 20 20 20;
-    --c-line: 40 40 40;
-    --c-ink: 255 255 255;
-    --c-muted: 168 168 168;
-    --c-accent: 201 161 91;
+    --c-bg: 7 7 7;
+    --c-surface: 16 16 16;
+    --c-line: 36 36 36;
+    --c-ink: 245 243 239;
+    --c-muted: 150 147 142;
+    --c-accent: 204 168 112;
   }
 
   @media (prefers-color-scheme: light) {
     :root:not([data-theme='dark']) {
       color-scheme: light;
-      --c-bg: 255 255 255;
-      --c-surface: 243 243 243;
-      --c-line: 217 217 217;
-      --c-ink: 20 20 20;
-      --c-muted: 116 120 124;
-      --c-accent: 20 20 20;
+      --c-bg: 248 247 244;
+      --c-surface: 239 237 232;
+      --c-line: 218 214 207;
+      --c-ink: 14 14 14;
+      --c-muted: 106 103 98;
+      --c-accent: 148 112 62;
     }
   }
 
   :root[data-theme='light'] {
     color-scheme: light;
-    --c-bg: 255 255 255;
-    --c-surface: 243 243 243;
-    --c-line: 217 217 217;
-    --c-ink: 20 20 20;
-    --c-muted: 116 120 124;
-    --c-accent: 20 20 20;
+    --c-bg: 248 247 244;
+    --c-surface: 239 237 232;
+    --c-line: 218 214 207;
+    --c-ink: 14 14 14;
+    --c-muted: 106 103 98;
+    --c-accent: 148 112 62;
   }
 
   html {
@@ -152,25 +151,27 @@
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
   }
 
   body {
-    @apply min-h-screen bg-bg font-sans text-ink;
+    @apply min-h-screen bg-bg font-sans text-ink overflow-x-hidden;
   }
 
   ::selection {
-    @apply bg-ink text-bg;
+    @apply bg-accent text-black;
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--c-ink));
-    outline-offset: 3px;
+    outline: 1.5px solid rgb(var(--c-accent));
+    outline-offset: 4px;
   }
 
   h1,
   h2,
-  h3 {
-    @apply font-bold tracking-tight text-ink;
+  h3,
+  h4 {
+    @apply tracking-tight text-ink;
     text-wrap: balance;
   }
 
@@ -188,120 +189,159 @@
 }
 
 @layer components {
-  .eyebrow {
-    @apply text-[0.75rem] font-semibold uppercase tracking-widest text-muted;
+  /* Extreme Typographic Scale Contrasts */
+  .display-monument {
+    font-size: clamp(3rem, 8vw, 8.25rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-weight: 300;
   }
 
-  /* Signature communicationitalia.com bordered pill sub-text */
+  .display-editorial {
+    font-size: clamp(2.25rem, 5.2vw, 5.25rem);
+    line-height: 0.96;
+    letter-spacing: -0.038em;
+    font-weight: 300;
+  }
+
+  .display-section {
+    font-size: clamp(1.875rem, 3.8vw, 3.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.032em;
+    font-weight: 400;
+  }
+
+  /* Crisp Micro-Tracking Details */
+  .eyebrow,
+  .micro-kicker {
+    @apply font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.28em] text-muted;
+  }
+
+  .micro-index {
+    @apply font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.24em] text-accent;
+  }
+
+  /* Minimalist editorial badge (replaces blocky corporate pill) */
   .pill-subtext {
-    @apply inline-flex items-center rounded-full border border-line px-4 py-1.5 text-xs md:text-sm font-medium tracking-wide text-ink;
+    @apply inline-flex items-center gap-2.5 font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.26em] text-muted;
+  }
+  .pill-subtext::before {
+    content: '';
+    @apply inline-block h-px w-6 bg-accent/80;
   }
 
   .pill-subtext-dark {
-    @apply inline-flex items-center rounded-full border border-white/25 px-4 py-1.5 text-xs md:text-sm font-medium tracking-wide text-white;
+    @apply inline-flex items-center gap-2.5 font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.26em] text-white/65;
+  }
+  .pill-subtext-dark::before {
+    content: '';
+    @apply inline-block h-px w-6 bg-[#CCA870];
   }
 
-  /* High-contrast carbon dark section used for alternating dark/light rhythm */
+  /* Deep cinema obsidian surface */
   .section-carbon {
-    background-color: #0e0e0e;
-    color: #ffffff;
-  }
-
-  /* Architectural vertical grid lines overlay */
-  .bg-grid-lines {
-    background-image: linear-gradient(to right, rgb(var(--c-line) / 0.35) 1px, transparent 1px);
-    background-size: 25% 100%;
-  }
-
-  .bg-grid-lines-dark {
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-    background-size: 25% 100%;
+    background-color: #070707;
+    color: #f5f3ef;
   }
 
   .btn-primary {
-    @apply btn bg-ink text-bg hover:opacity-85;
+    @apply btn bg-ink text-bg hover:bg-accent hover:text-black;
   }
 
   .btn-ghost {
-    @apply btn border border-line text-ink hover:bg-ink hover:text-bg hover:border-ink;
+    @apply btn border border-line/80 text-ink hover:border-ink hover:bg-ink hover:text-bg;
   }
 
-  /* Signature communicationitalia.com learn-more button with bordered ↗ box */
+  /* Luxury Editorial Link with Magnetic Circle Arrow */
   .learn-more-btn {
-    @apply inline-flex items-center gap-3 text-xs md:text-sm font-bold uppercase tracking-[0.12em] text-ink transition-colors duration-300;
+    @apply inline-flex items-center gap-4 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-ink transition-colors duration-500;
   }
   .learn-more-btn .arrow-box {
-    @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/30 transition-all duration-300;
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)];
   }
   .learn-more-btn:hover .arrow-box {
-    @apply bg-ink text-bg border-ink translate-x-0.5 -translate-y-0.5;
+    @apply bg-ink text-bg border-ink translate-x-1 -translate-y-0.5;
   }
 
   .learn-more-btn-dark {
-    @apply inline-flex items-center gap-3 text-xs md:text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors duration-300;
+    @apply inline-flex items-center gap-4 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-white transition-colors duration-500;
   }
   .learn-more-btn-dark .arrow-box {
-    @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/35 text-white transition-all duration-300;
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)];
   }
   .learn-more-btn-dark:hover .arrow-box {
-    @apply bg-white text-[#141414] border-white translate-x-0.5 -translate-y-0.5;
+    @apply bg-white text-[#070707] border-white translate-x-1 -translate-y-0.5;
   }
 
   .link-underline {
-    @apply underline decoration-line underline-offset-4 transition hover:text-ink hover:decoration-ink;
+    @apply underline decoration-line underline-offset-4 transition duration-300 hover:text-ink hover:decoration-ink;
   }
 
   .field {
-    @apply w-full rounded-lg border border-line bg-surface px-4 py-3.5 text-ink placeholder:text-muted/60 transition focus:border-ink focus:outline-hidden;
+    @apply w-full border-0 border-b border-line bg-transparent px-0 py-4 text-ink placeholder:text-muted/50 transition-colors duration-300 focus:border-accent focus:outline-hidden rounded-none;
   }
 
   .media-zoom img {
-    @apply transition duration-700 ease-out;
+    @apply transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform;
   }
   .group:hover .media-zoom img,
   .group:focus-visible .media-zoom img {
-    transform: scale(1.05);
+    transform: scale(1.045);
   }
 
-  .portfolio-card {
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  /* Capabilities Matrix Row */
+  .capability-row {
+    @apply relative border-b border-line/60 py-10 md:py-14 transition-colors duration-500;
   }
-  .portfolio-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .glass-card {
-    background: rgb(var(--c-surface) / 0.7);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgb(var(--c-line) / 0.7);
+  .capability-row:first-child {
+    @apply border-t border-line/60;
   }
 
-  /* Interactive Service Row (single-item-service-one) */
+  /* Legacy service row compatibility */
   .service-row-item {
-    @apply relative border-b border-line py-8 md:py-11 transition-colors duration-300;
+    @apply relative border-b border-line/60 py-10 md:py-14 transition-colors duration-500;
   }
   .service-row-item:first-child {
-    @apply border-t border-line;
+    @apply border-t border-line/60;
   }
   .service-row-preview {
-    @apply pointer-events-none hidden lg:block absolute left-[38%] top-1/2 -translate-y-1/2 z-20 w-72 aspect-[4/3] overflow-hidden rounded-xl shadow-2xl opacity-0 scale-90 -rotate-3 transition-all duration-500 ease-out border border-line;
+    @apply pointer-events-none hidden lg:block absolute left-[40%] top-1/2 -translate-y-1/2 z-20 w-80 aspect-[4/3] overflow-hidden rounded-sm shadow-2xl opacity-0 scale-95 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)];
   }
   .service-row-item:hover .service-row-preview {
-    @apply opacity-100 scale-100 rotate-2;
+    @apply opacity-100 scale-100;
   }
 }
 
+/* IntersectionObserver Organic Scroll Reveal System */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+html.js [data-reveal='scale'] {
+  transform: scale(0.97) translate3d(0, 20px, 0);
+}
+
+html.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
 dialog::backdrop {
-  background: rgba(0, 0, 0, 0.88);
-  backdrop-filter: blur(12px);
+  background: rgba(5, 5, 5, 0.94);
+  backdrop-filter: blur(16px);
 }
 
 [popover] {
   @apply m-0 border-0 bg-transparent p-0 text-ink;
 }
 [popover]::backdrop {
-  background: rgb(0 0 0 / 0.85);
-  backdrop-filter: blur(6px);
+  background: rgb(0 0 0 / 0.88);
+  backdrop-filter: blur(8px);
 }
 
 html:not(.js) .js-only {
@@ -314,6 +354,11 @@ html:not(.js) .js-only {
   }
   @view-transition {
     navigation: none;
+  }
+  html.js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
   *,
   *::before,

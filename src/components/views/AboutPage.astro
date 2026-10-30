@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import Layout from '../../layouts/Layout.astro';
 import PageHero from '../PageHero.astro';
 import FaqAccordion from '../FaqAccordion.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
@@ -29,39 +29,39 @@ const faqItems =
         {
           question: 'Duerre lavora solo con grandi aziende?',
           answer:
-            'No, affianchiamo imprese di ogni dimensione, professionisti, studi di architettura e brand emergenti. Ogni progetto viene calibrato sugli obiettivi specifici e sulle esigenze reali del cliente.',
+            'No, affianchiamo imprese di ogni dimensione, maison di design, studi di architettura e brand emergenti. Ogni produzione viene calibrata sugli obiettivi specifici e sulle esigenze reali del committente.',
         },
         {
-          question: 'Posso rivolgermi a voi anche se non ho un’idea precisa di cosa mi serve?',
+          question: 'Posso rivolgermi a voi anche se non ho ancora un trattamento visivo definito?',
           answer:
-            'Assolutamente sì. La nostra prima fase di analisi e ascolto serve proprio a tradurre i tuoi obiettivi di business in una direzione visiva, fotografica, video, 3D o digitale chiara ed efficace.',
+            'Assolutamente sì. La nostra prima fase di analisi curatoria serve proprio a tradurre i tuoi obiettivi di business in una direzione visiva, fotografica, cinematografica, 3D o digitale chiara ed efficace.',
         },
         {
-          question: 'Operative solo in Italia o anche da remoto / internazionale?',
+          question: 'Operate solo in Italia o anche da remoto per clienti internazionali?',
           answer:
-            'Operiamo su tutto il territorio italiano per produzioni fotografiche e video on-location, e lavoriamo quotidianamente da remoto con clienti internazionali per rendering 3D CGI, post-produzione ACES e digital marketing.',
+            'Operiamo su tutto il territorio italiano ed europeo per produzioni fotografiche e cinema on-location, e collaboriamo quotidianamente da remoto con clienti internazionali per rendering 3D CGI, color grading ACES e direzione digitale.',
         },
       ]
     : [
         {
           question: 'Does Duerre work only with large enterprises?',
           answer:
-            'No — we partner with ambitious companies of all sizes, independent brands, architectural studios, and agencies. Every production is tailored around your goals and scope.',
+            'No — we partner with ambitious companies of all sizes, independent luxury houses, architectural studios, and agencies. Every production is tailored around your goals and scope.',
         },
         {
-          question: 'Can I reach out even if I don’t have a finalized brief yet?',
+          question: 'Can I reach out even if I don’t have a finalized visual treatment yet?',
           answer:
-            'Absolutely. Our first phase (Analysis & Listening) is designed specifically to help clarify your objectives and shape a cohesive visual, 3D, or digital strategy.',
+            'Absolutely. Our first phase (Curatorial & Strategic Audit) is designed specifically to clarify your objectives and author a cohesive visual, 3D, or digital blueprint.',
         },
         {
           question: 'Do you work on-location or remotely for international clients?',
           answer:
-            'We travel across Italy and Europe for on-location commercial photography and cinema productions, and collaborate remotely worldwide for 3D CGI rendering, product still life, ACES grading, and digital marketing.',
+            'We travel across Italy and Europe for on-location commercial photography and cinema productions, and collaborate remotely worldwide for 3D CGI rendering, product still life, ACES grading, and digital direction.',
         },
       ];
 ---
 
-<BaseLayout
+<Layout
   title={`${t('nav_about')} | Duerre`}
   description={t('studio_blurb')}
   lang={lang}
@@ -71,75 +71,76 @@ const faqItems =
     lang={lang}
     eyebrow={t('studio_eyebrow')}
     title={t('nav_about')}
+    subtitle={t('studio_blurb')}
   />
 
-  <!-- Wide Studio Reveal Banner + Agency Narrative (communicationitalia.com/agenzia-di-comunicazione) -->
-  <section class="py-20 md:py-32 px-6 bg-grid-lines">
-    <div class="mx-auto max-w-7xl">
-      <!-- Wide Reveal Image -->
-      <div class="overflow-hidden rounded-3xl border border-line bg-surface aspect-[21/9] mb-20 shadow-2xl media-zoom group">
+  <!-- 01. CINEMATIC STUDIO PLATE & EDITORIAL MANIFESTO -->
+  <section class="py-24 md:py-40 px-6 sm:px-10">
+    <div class="mx-auto max-w-[1440px]">
+      <!-- Full-Bleed Studio Panorama -->
+      <div class="overflow-hidden bg-surface aspect-[21/9] mb-24 md:mb-36 media-zoom group" data-reveal>
         <Picture
           formats={['avif', 'webp']}
           src={studioImg}
           alt="Duerre Studio — Riccardo Riva"
           class="h-full w-full object-cover"
-          widths={[800, 1400, 2000]}
+          widths={[800, 1400, 2200]}
           sizes="100vw"
           loading="eager"
           fetchpriority="high"
         />
       </div>
 
-      <!-- Main Studio Narrative + Mission + Portrait -->
-      <div class="grid lg:grid-cols-12 gap-14 lg:gap-20 items-center">
-        <div class="lg:col-span-7">
-          <span class="pill-subtext mb-5">Duerre · {SITE.author}</span>
-          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-ink mb-6">
+      <!-- Asymmetric Editorial Monograph -->
+      <div class="grid lg:grid-cols-12 gap-14 lg:gap-20 items-start">
+        <div class="lg:col-span-7" data-reveal>
+          <span class="pill-subtext mb-6">01 / {SITE.author}</span>
+          <h2 class="display-editorial text-ink mb-10">
             {lang === 'it'
-              ? 'Studio di Produzione Visiva e Comunicazione Integrata'
-              : 'Integrated Visual Production & Digital Studio'}
+              ? 'Atelier di Produzione Visiva e Direzione Creativa'
+              : 'Visual Production Atelier & Creative Direction'}
           </h2>
-          <p class="text-base sm:text-lg text-muted leading-relaxed mb-8">
+          <p class="text-lg sm:text-xl font-light text-ink/90 leading-relaxed mb-8">
             {t('studio_blurb')}
           </p>
 
-          <div class="rounded-2xl border border-line bg-surface/60 p-8 mb-8">
-            <h3 class="text-xl font-extrabold text-ink mb-3">
+          <div class="border-l border-accent pl-8 py-2 my-12">
+            <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-3">
               {t('mission_title')}
-            </h3>
-            <p class="text-sm sm:text-base text-muted leading-relaxed">
+            </span>
+            <p class="text-base sm:text-lg font-light text-muted leading-relaxed">
               {t('mission_body')}
             </p>
           </div>
 
-          <div class="flex flex-wrap items-center gap-6">
+          <div class="flex flex-wrap items-center gap-8 pt-4">
             <a href={localePath(lang, '/services/')} class="learn-more-btn">
               <span>{t('nav_services')}</span>
               <span class="arrow-box">↗</span>
             </a>
-            <a href={localePath(lang, '/projects/')} class="learn-more-btn">
+            <a href={localePath(lang, '/portfolio/')} class="learn-more-btn">
               <span>{t('nav_projects')}</span>
               <span class="arrow-box">↗</span>
             </a>
           </div>
         </div>
 
-        <div class="lg:col-span-5">
-          <div class="relative overflow-hidden rounded-3xl border border-line bg-surface shadow-2xl media-zoom group">
+        <div class="lg:col-span-5" data-reveal>
+          <div class="relative overflow-hidden bg-surface aspect-[4/5] media-zoom group">
             <Picture
               formats={['avif', 'webp']}
               src={portraitImg}
-              alt="Riccardo Riva — Duerre"
-              class="w-full h-auto object-cover"
-              widths={[400, 800, 1200]}
+              alt="Riccardo Riva — Founder & Creative Director"
+              class="w-full h-full object-cover"
+              widths={[500, 900, 1200]}
               sizes="(max-width: 1024px) 100vw, 42vw"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
             <div class="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
-              <span class="block font-mono text-[10px] tracking-widest text-white/70 uppercase mb-1">
-                FOUNDER & CREATIVE DIRECTOR
+              <span class="block font-mono text-[10px] tracking-[0.26em] text-[#CCA870] uppercase mb-1">
+                FOUNDER & VISUAL DIRECTOR
               </span>
-              <p class="text-lg font-extrabold tracking-tight text-white">
+              <p class="text-2xl font-light tracking-tight text-white">
                 Riccardo Riva
               </p>
             </div>
@@ -149,119 +150,108 @@ const faqItems =
     </div>
   </section>
 
-  <!-- Dark 3-Step Approach Section -->
-  <section class="section-carbon bg-grid-lines-dark py-24 md:py-32 px-6 border-y border-white/10">
-    <div class="mx-auto max-w-7xl">
-      <div class="max-w-3xl mb-16">
-        <span class="pill-subtext-dark mb-5">{t('approach_eyebrow')}</span>
-        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-white mb-6">
-          {t('approach_title')}
-        </h2>
-        <p class="text-base sm:text-lg text-[#A8A8A8] leading-relaxed">
-          {t('approach_desc')}
-        </p>
+  <!-- 02. DARK 3-PHASE PRODUCTION METHODOLOGY -->
+  <section class="section-carbon py-28 md:py-40 px-6 sm:px-10 border-y border-white/10">
+    <div class="mx-auto max-w-[1440px]">
+      <div class="grid lg:grid-cols-12 gap-12 items-end mb-20" data-reveal>
+        <div class="lg:col-span-7">
+          <span class="pill-subtext-dark mb-6">02 / {t('approach_eyebrow')}</span>
+          <h2 class="display-editorial text-white">
+            {t('approach_title')}
+          </h2>
+        </div>
+        <div class="lg:col-span-5">
+          <p class="text-base sm:text-lg font-light text-white/65 leading-relaxed">
+            {t('approach_desc')}
+          </p>
+        </div>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
+      <div class="grid md:grid-cols-3 gap-12 pt-14 border-t border-white/12">
         {steps.map((step) => (
-          <div class="group rounded-3xl border border-white/15 bg-[#141414] p-8 sm:p-10 transition-colors hover:border-white/40">
-            <div class="flex items-center justify-between mb-8">
-              <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/5 text-white">
-                ↗
-              </span>
-              <span class="text-5xl font-extrabold tracking-tighter text-white/20 group-hover:text-white/40 transition-colors">
-                {step.num}
-              </span>
-            </div>
-            <h3 class="text-2xl font-bold text-white mb-4">{step.title}</h3>
-            <p class="text-sm sm:text-base text-[#A8A8A8] leading-relaxed">{step.desc}</p>
+          <div class="group" data-reveal>
+            <span class="font-mono text-xs uppercase tracking-[0.26em] text-[#CCA870] block mb-6">
+              /{step.num}
+            </span>
+            <h3 class="text-2xl sm:text-3xl font-light tracking-tight text-white mb-4">
+              {step.title}
+            </h3>
+            <p class="text-sm sm:text-base font-light text-white/65 leading-relaxed">
+              {step.desc}
+            </p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Production Stack & Core Capabilities -->
-  <section class="py-24 md:py-32 px-6 bg-grid-lines border-b border-line">
-    <div class="mx-auto max-w-7xl">
-      <div class="max-w-3xl mb-16">
-        <span class="pill-subtext mb-4">{t('about_gear_title')}</span>
-        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-ink mb-4">
-          {t('about_workflow_title')}
-        </h2>
-        <p class="text-base sm:text-lg text-muted leading-relaxed">
-          {t('about_workflow_p')}
-        </p>
+  <!-- 03. OPTICAL & HARDWARE ARCHITECTURE -->
+  <section class="py-28 md:py-40 px-6 sm:px-10 border-b border-line/60">
+    <div class="mx-auto max-w-[1440px]">
+      <div class="grid lg:grid-cols-12 gap-12 items-end mb-20" data-reveal>
+        <div class="lg:col-span-7">
+          <span class="pill-subtext mb-6">03 / {t('about_gear_title')}</span>
+          <h2 class="display-editorial text-ink">
+            {t('about_workflow_title')}
+          </h2>
+        </div>
+        <div class="lg:col-span-5">
+          <p class="text-base sm:text-lg font-light text-muted leading-relaxed">
+            {t('about_workflow_p')}
+          </p>
+        </div>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="p-8 rounded-3xl bg-surface border border-line">
-          <span class="font-mono text-xs font-bold text-muted block mb-3">/01</span>
-          <h3 class="text-lg font-extrabold uppercase tracking-tight text-ink mb-3">Commercial Photography</h3>
-          <ul class="text-sm text-muted space-y-2">
-            <li>Full-Frame High-Resolution Systems</li>
-            <li>Prime & Tilt-Shift Optical Glass</li>
-            <li>Precision Studio Strobe & LED Arrays</li>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pt-14 border-t border-line/60" data-reveal>
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">/01</span>
+          <h3 class="text-xl font-light tracking-tight text-ink mb-4">Commercial Photography</h3>
+          <ul class="text-sm font-light text-muted space-y-2.5">
+            <li>Medium & Full-Frame High-Resolution Sensors</li>
+            <li>Prime & Tilt-Shift Architectural Glass</li>
+            <li>Precision Studio Strobe & Negative Fill</li>
           </ul>
         </div>
 
-        <div class="p-8 rounded-3xl bg-surface border border-line">
-          <span class="font-mono text-xs font-bold text-muted block mb-3">/02</span>
-          <h3 class="text-lg font-extrabold uppercase tracking-tight text-ink mb-3">Cinema & Video</h3>
-          <ul class="text-sm text-muted space-y-2">
-            <li>RAW & 10-bit Log Cinema Capture</li>
-            <li>Motorized Sliders & Gimbal Systems</li>
-            <li>DaVinci Resolve Studio (ACES Pipeline)</li>
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">/02</span>
+          <h3 class="text-xl font-light tracking-tight text-ink mb-4">Cinema & Motion</h3>
+          <ul class="text-sm font-light text-muted space-y-2.5">
+            <li>RAW & ProRes 4444 XQ Cinema Capture</li>
+            <li>2x Anamorphic Prime Lenses</li>
+            <li>DaVinci Resolve Studio (ACEScc Pipeline)</li>
           </ul>
         </div>
 
-        <div class="p-8 rounded-3xl bg-surface border border-line">
-          <span class="font-mono text-xs font-bold text-muted block mb-3">/03</span>
-          <h3 class="text-lg font-extrabold uppercase tracking-tight text-ink mb-3">3D CGI & Rendering</h3>
-          <ul class="text-sm text-muted space-y-2">
-            <li>Blender & GPU Path-Tracing</li>
-            <li>Substance 3D PBR Material Pipeline</li>
-            <li>32-bit EXR Multi-Pass Compositing</li>
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">/03</span>
+          <h3 class="text-xl font-light tracking-tight text-ink mb-4">3D CGI & Rendering</h3>
+          <ul class="text-sm font-light text-muted space-y-2.5">
+            <li>Blender GPU Path-Traced Raytracing</li>
+            <li>Substance 3D PBR Material Architecture</li>
+            <li>32-bit EXR Multi-Pass AOV Compositing</li>
           </ul>
         </div>
 
-        <div class="p-8 rounded-3xl bg-surface border border-line">
-          <span class="font-mono text-xs font-bold text-muted block mb-3">/04</span>
-          <h3 class="text-lg font-extrabold uppercase tracking-tight text-ink mb-3">Digital Marketing</h3>
-          <ul class="text-sm text-muted space-y-2">
-            <li>Social Media Visual Strategy</li>
-            <li>SEO & Content Architecture</li>
-            <li>Performance & Conversion Assets</li>
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">/04</span>
+          <h3 class="text-xl font-light tracking-tight text-ink mb-4">Digital Direction</h3>
+          <ul class="text-sm font-light text-muted space-y-2.5">
+            <li>Omnichannel Visual Strategy</li>
+            <li>Technical SEO & Editorial Architecture</li>
+            <li>High-Conversion Campaign Assets</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ Accordion ("Domande frequenti") -->
+  <!-- 04. FAQ ACCORDION -->
   <FaqAccordion
     eyebrow={t('faq_eyebrow')}
     title={t('faq_title')}
     items={faqItems}
   />
 
-  <!-- Selected Clients Matrix -->
-  <section class="pb-24 px-6">
-    <div class="mx-auto max-w-7xl">
-      <div class="text-center mb-10">
-        <span class="pill-subtext">{t('clients_eyebrow')}</span>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 border-y border-line divide-x divide-y sm:divide-y-0 divide-line">
-        {SITE.clients.map((client) => (
-          <div class="flex items-center justify-center py-10 px-4 text-center group">
-            <span class="text-sm sm:text-base font-extrabold uppercase tracking-[0.16em] text-muted group-hover:text-ink transition-colors">
-              {client}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <DualCtaBanner lang={lang} />
-</BaseLayout>
+</Layout>

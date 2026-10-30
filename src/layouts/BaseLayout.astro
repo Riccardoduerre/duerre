@@ -1,8 +1,5 @@
 ---
-import { ClientRouter } from 'astro:transitions';
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Layout from './Layout.astro';
 import type { Locale } from '../i18n';
 
 interface Props {
@@ -13,78 +10,9 @@ interface Props {
   type?: 'website' | 'article' | 'creativework';
 }
 
-const { title, description, lang, image, type = 'website' } = Astro.props;
+const props = Astro.props;
 ---
 
-<html lang={lang}>
-  <head>
-    <BaseHead title={title} description={description} lang={lang} image={image} type={type} />
-    <ClientRouter />
-    <script is:inline>
-      function detectLanguageAndRedirect() {
-        try {
-          const path = window.location.pathname;
-          // Legacy /it/* URLs -> strip /it prefix
-          if (path === '/it' || path.startsWith('/it/')) {
-            const target = (path.replace(/^\/it(?=\/|$)/, '') || '/') + window.location.search + window.location.hash;
-            window.location.replace(target);
-            return;
-          }
-
-          // Skip bots/crawlers so search engines index Italian root and English /en/ pages cleanly
-          const ua = navigator.userAgent || '';
-          if (/bot|crawl|spider|slurp|googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|linkedinbot|applebot|whatsapp/i.test(ua)) {
-            return;
-          }
-
-          const savedLang = localStorage.getItem('duerre_lang');
-          const isEnglishPath = path === '/en' || path.startsWith('/en/');
-
-          if (savedLang === 'en' && !isEnglishPath) {
-            const enTarget = '/en' + (path === '/' ? '/' : path) + window.location.search + window.location.hash;
-            window.location.replace(enTarget);
-            return;
-          }
-
-          if (savedLang === 'it') {
-            return;
-          }
-
-          // No explicit user override yet: default is Italian, switch to /en/ only if non-Italian browser language is detected
-          if (!isEnglishPath) {
-            const rawLang = (navigator.languages && navigator.languages[0]) || navigator.language || 'it';
-            const primaryLang = rawLang.toLowerCase();
-            if (primaryLang && !primaryLang.startsWith('it')) {
-              const enTarget = '/en' + (path === '/' ? '/' : path) + window.location.search + window.location.hash;
-              window.location.replace(enTarget);
-            }
-          }
-        } catch {
-          // ignore storage/navigation errors
-        }
-      }
-
-      function applyTheme() {
-        document.documentElement.classList.add('js');
-        const stored = localStorage.getItem('theme');
-        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-        const theme = stored === 'light' || stored === 'dark' ? stored : prefersLight ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', theme);
-      }
-
-      detectLanguageAndRedirect();
-      applyTheme();
-      document.addEventListener('astro:after-swap', applyTheme);
-    </script>
-  </head>
-  <body>
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-bg focus:rounded-md focus:font-semibold">
-      Skip to content
-    </a>
-    <Header lang={lang} />
-    <main id="main-content" class="min-h-screen">
-      <slot />
-    </main>
-    <Footer lang={lang} />
-  </body>
-</html>
+<Layout {...props}>
+  <slot />
+</Layout>

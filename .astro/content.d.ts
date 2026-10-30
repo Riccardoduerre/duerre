@@ -144,11 +144,11 @@ declare module 'astro:content' {
   filePath?: string;
   digest?: string | number;
 }>;
-"projects": Record<string, {
+"portfolio": Record<string, {
   id: string;
   body?: string;
-  collection: "projects";
-  data: InferEntrySchema<"projects">;
+  collection: "portfolio";
+  data: InferEntrySchema<"portfolio">;
   rendered?: RenderedContent;
   filePath?: string;
   digest?: string | number;

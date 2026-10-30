@@ -1,5 +1,6 @@
 ---
 title: "Architettura sonora: sound design, foley e peso dinamico nel video"
+publishDate: 2026-01-12
 pubDate: 2026-01-12
 coverImage: ../../../assets/blog/_DSC2919.webp
 description: "Il pubblico perdona una risoluzione video modesta, ma non perdona mai un audio scadente. Come room tone stratificati e foley esaltano le immagini."

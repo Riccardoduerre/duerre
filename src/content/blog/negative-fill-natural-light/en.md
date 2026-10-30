@@ -1,5 +1,6 @@
 ---
 title: "The Power of Negative Fill: Subtracting Light to Build Contrast"
+publishDate: 2026-06-01
 pubDate: 2026-06-01
 coverImage: ../../../assets/blog/_DSC2365.webp
 description: "Why great photographers bring black solids rather than silver reflectors to overcast outdoor commercial shoots."

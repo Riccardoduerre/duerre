@@ -1,5 +1,6 @@
 ---
 title: "La regola dei 180 gradi dell’otturatore e il motion blur naturale"
+publishDate: 2026-09-21
 pubDate: 2026-09-21
 coverImage: ../../../assets/blog/_RIK7376_HDR.webp
 description: "Perché sincronizzare l’esposizione al doppio del frame rate crea cadenza cinematografica organica, e quando infrangere la regola serve alla narrazione."

@@ -6,12 +6,12 @@ export async function GET(context: any) {
   const posts = await getPosts('en');
 
   return rss({
-    title: `${SITE.name} — Blog`,
-    description: "Riccardo Riva's Journal",
+    title: `${SITE.name} — Journal`,
+    description: 'Technical essays on commercial photography, anamorphic cinema, 3D CGI, and visual strategy by Riccardo Riva.',
     site: context.site || SITE.url,
     items: posts.map((post) => ({
       title: post.data.title,
-      pubDate: post.data.pubDate,
+      pubDate: post.data.publishDate,
       description: post.data.description,
       categories: post.data.tags,
       link: `/en/blog/${splitId(post.id).slug}/`,
@@ -19,4 +19,3 @@ export async function GET(context: any) {
     customData: `<language>en-us</language>`,
   });
 }
-

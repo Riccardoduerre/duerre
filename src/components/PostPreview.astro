@@ -2,66 +2,67 @@
 import { Picture } from 'astro:assets';
 import type { Post } from '../lib/content';
 import { formatDate, splitId, readingMinutes } from '../lib/content';
-import { localePath, useTranslations } from '../i18n';
+import { localePath, useTranslations, type Locale } from '../i18n';
 
 interface Props {
   post: Post;
+  lang?: Locale;
 }
 
-const { post } = Astro.props;
-const { slug, lang } = splitId(post.id);
+const { post, lang: propLang } = Astro.props;
+const parsed = splitId(post.id);
+const lang: Locale = propLang || (parsed.lang === 'en' ? 'en' : 'it');
+const { slug } = parsed;
 const t = useTranslations(lang);
 const mins = readingMinutes(post.body);
-const primaryTag = post.data.tags?.[0] || 'Journal';
+const primaryTag = post.data.tags?.[0] || 'Monograph';
 ---
 
-<article class="group flex flex-col justify-between rounded-2xl border border-line bg-bg overflow-hidden transition-all duration-300 hover:border-ink/40 shadow-xs">
+<article class="group flex flex-col justify-between border-t border-line/60 pt-6 pb-10 transition-colors duration-500" data-reveal>
   <div>
-    <a href={localePath(lang, `/blog/${slug}/`)} class="block relative w-full aspect-[16/9] overflow-hidden bg-surface media-zoom">
+    <div class="flex items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-5">
+      <span class="text-accent">{primaryTag}</span>
+      <div class="flex items-center gap-2">
+        <time datetime={post.data.publishDate.toISOString()}>
+          {formatDate(post.data.publishDate, lang)}
+        </time>
+        <span>·</span>
+        <span>{mins} MIN</span>
+      </div>
+    </div>
+
+    <a
+      href={localePath(lang, `/blog/${slug}/`)}
+      class="block relative w-full aspect-[16/10] overflow-hidden bg-surface mb-6 media-zoom"
+    >
       <Picture
         formats={['avif', 'webp']}
         src={post.data.coverImage}
         alt={post.data.coverAlt || post.data.title}
         class="object-cover w-full h-full"
-        widths={[400, 800]}
+        widths={[400, 800, 1200]}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        height={450}
       />
     </a>
 
-    <div class="p-6 sm:p-8">
-      <div class="flex items-center justify-between gap-2 mb-4">
-        <span class="inline-block rounded-full border border-line bg-surface px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-ink">
-          {primaryTag}
-        </span>
-        <div class="flex items-center gap-2 text-xs text-muted font-mono">
-          <time datetime={post.data.pubDate.toISOString()}>
-            {formatDate(post.data.pubDate, lang)}
-          </time>
-          <span>·</span>
-          <span>{mins} min</span>
-        </div>
-      </div>
+    <h3 class="text-xl sm:text-2xl font-light tracking-tight leading-snug text-ink group-hover:text-accent transition-colors duration-300">
+      <a href={localePath(lang, `/blog/${slug}/`)}>
+        {post.data.title}
+      </a>
+    </h3>
 
-      <h3 class="text-xl sm:text-2xl font-extrabold leading-snug text-ink group-hover:opacity-75 transition-opacity">
-        <a href={localePath(lang, `/blog/${slug}/`)}>
-          {post.data.title}
-        </a>
-      </h3>
+    <p class="mt-3 line-clamp-3 text-sm font-light leading-relaxed text-muted">
+      {post.data.description}
+    </p>
+  </div>
 
-      <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">
-        {post.data.description}
-      </p>
-
-      <div class="mt-6 pt-5 border-t border-line/60">
-        <a
-          href={localePath(lang, `/blog/${slug}/`)}
-          class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-ink group-hover:translate-x-1 transition-transform"
-        >
-          <span>{t('read_more')}</span>
-          <span>↗</span>
-        </a>
-      </div>
-    </div>
+  <div class="mt-6 pt-4">
+    <a
+      href={localePath(lang, `/blog/${slug}/`)}
+      class="inline-flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.24em] text-ink group-hover:text-accent transition-colors"
+    >
+      <span>{t('read_more')}</span>
+      <span class="transition-transform duration-300 group-hover:translate-x-1">↗</span>
+    </a>
   </div>
 </article>

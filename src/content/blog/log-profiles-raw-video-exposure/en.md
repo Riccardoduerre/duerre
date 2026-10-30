@@ -1,6 +1,7 @@
 ---
 featured: true
 title: "Exposing Log Curves and RAW Video: The False Color Method"
+publishDate: 2026-08-10
 pubDate: 2026-08-10
 coverImage: ../../../assets/blog/_DSC2344.webp
 description: "Stop guessing on flat monitor profiles. How middle grey IRE mapping guarantees clean shadow recovery and rich skin tones."

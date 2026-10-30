@@ -4,9 +4,19 @@ description: "A photorealistic 3D CGI design study exploring spatial illuminatio
 client: "Maison Lumen"
 role: "3D Visual Direction & Product Storytelling"
 year: "2024"
-date: 2024-10-10
+publishDate: 2024-10-10
+services:
+  - "3D CGI & Product Rendering"
+  - "PBR Material Architecture"
+  - "Multi-Pass EXR Compositing"
+tags:
+  - "3D CGI"
+  - "Product Design"
+  - "PBR"
+  - "Luxury"
 category: "3d"
 featured: true
+bentoSpan: "tall"
 aspectRatio: "4:3 Architectural"
 deliverables:
   - "Interactive 3D Product Environment Renders"
@@ -17,7 +27,7 @@ gear:
   - "Substance 3D Designer & Painter"
   - "Spectral Dispersion & Subsurface Shaders"
   - "Multi-Pass AOV Compositing in DaVinci Fusion"
-cover: "./cover.webp"
+coverImage: "./cover.webp"
 coverAlt: "Lumen Atelier - Spatial lighting and product study"
 challenge: "Translating an avant-garde luminaire collection into digital environments without losing the organic tactile reality of brushed brass, blown glass, and delicate light falloff."
 solution: "A bespoke physically based rendering (PBR) pipeline utilizing custom HDR light sweeps, micro-displacement surface imperfections, and spectral dispersion simulation."

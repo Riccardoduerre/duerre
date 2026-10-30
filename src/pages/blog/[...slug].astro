@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BlogDetailPage from '../../components/views/BlogDetailPage.astro';
+import { splitId, type Post } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
+  const entries = await getCollection(
+    'blog',
+    (e: Post) => {
+      const parsed = splitId(e.id);
+      return (parsed.lang === 'it' || parsed.lang === 'shared') && isVisible(e.data.draft);
+    },
+  );
+  const posts = entries.sort(
+    (a: Post, b: Post) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+  );
+
+  return posts.map((post, i) => {
+    const prev = i > 0 ? posts[i - 1] : null;
+    const next = i < posts.length - 1 ? posts[i + 1] : null;
+    return {
+      params: { slug: splitId(post.id).slug },
+      props: { post, prev, next },
+    };
+  });
+}
+
+const { post, prev, next } = Astro.props;
+---
+
+<BlogDetailPage lang="it" post={post} prev={prev} next={next} />
+

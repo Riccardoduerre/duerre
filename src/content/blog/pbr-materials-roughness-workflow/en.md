@@ -1,5 +1,6 @@
 ---
 title: "Physically Based Rendering: Mastering the Roughness-Metallic Pipeline"
+publishDate: 2026-09-07
 pubDate: 2026-09-07
 coverImage: ../../../assets/blog/Giau_00004.webp
 description: "Demystifying microfacet theory, dielectric Fresnel reflectance, and why roughness maps are the authentic soul of 3D realism."

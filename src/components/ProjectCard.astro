@@ -1,43 +1,63 @@
 ---
 import { Picture } from 'astro:assets';
-import type { Project } from '../lib/content';
+import type { PortfolioItem } from '../lib/content';
 import { splitId } from '../lib/content';
-import { localePath, useTranslations } from '../i18n';
+import { localePath, useTranslations, type Locale } from '../i18n';
 
 interface Props {
-  project: Project;
+  project: PortfolioItem;
+  index?: number;
+  lang?: Locale;
 }
 
-const { project } = Astro.props;
-const { slug, lang } = splitId(project.id);
+const { project, index = 0, lang: propLang } = Astro.props;
+const parsed = splitId(project.id);
+const lang: Locale = propLang || (parsed.lang === 'en' ? 'en' : 'it');
+const { slug } = parsed;
 const t = useTranslations(lang);
+const indexLabel = String(index + 1).padStart(2, '0');
 ---
 
-<article class="group">
-  <a href={localePath(lang, `/projects/${slug}/`)} class="block">
-    <div class="relative overflow-hidden rounded-2xl border border-line bg-surface aspect-[78/70] media-zoom">
+<article class="group relative" data-reveal>
+  <a href={localePath(lang, `/portfolio/${slug}/`)} class="block">
+    <div class="relative overflow-hidden bg-surface aspect-[4/5] media-zoom">
       <Picture
         formats={['avif', 'webp']}
-        src={project.data.cover}
+        src={project.data.coverImage}
         alt={project.data.coverAlt}
         class="object-cover w-full h-full"
-        widths={[400, 800]}
+        widths={[500, 900, 1400]}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        height={700}
       />
-      <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-5">
-        <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#141414] shadow-xl transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
+
+      <!-- Top Editorial Telemetry -->
+      <div class="absolute top-5 left-5 right-5 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.24em] text-white/80">
+        <span>/{indexLabel}</span>
+        <span class="px-2.5 py-1 bg-black/45 backdrop-blur-md text-white/90">
+          {t(`category_${project.data.category}`)}
+        </span>
+      </div>
+
+      <!-- Bottom Reveal Details -->
+      <div class="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4">
+        <div class="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+          <span class="block font-mono text-[10px] uppercase tracking-[0.22em] text-[#CCA870] mb-1.5">
+            {project.data.client} · {project.data.year}
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-light tracking-tight text-white">
+            {project.data.title}
+          </h3>
+          {project.data.services && project.data.services.length > 0 && (
+            <p class="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/65 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              {project.data.services.slice(0, 2).join(' · ')}
+            </p>
+          )}
+        </div>
+        <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-md text-white transition-all duration-500 group-hover:bg-white group-hover:text-black">
           ↗
         </span>
       </div>
-    </div>
-    <div class="mt-5">
-      <span class="block text-xs font-bold uppercase tracking-[0.14em] text-muted mb-1.5">
-        {t(`category_${project.data.category}`)} · {project.data.year}
-      </span>
-      <h3 class="text-xl sm:text-2xl font-extrabold tracking-tight text-ink group-hover:opacity-75 transition-opacity">
-        {project.data.title}
-      </h3>
     </div>
   </a>
 </article>
