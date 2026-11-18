@@ -2,7 +2,7 @@
   "name": "duerre",
   "private": true,
   "version": "1.0.0",
-  "description": "Duerre portfolio and editorial blog \u2014 Astro static site for duerremedia.com.",
+  "description": "Duerre portfolio and editorial blog — Astro static site for duerremedia.com.",
   "author": "Riccardo Riva",
   "type": "module",
   "scripts": {
@@ -10,6 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "typecheck": "astro sync && tsc --noEmit",
+    "cms:dev": "npx @tinacms/cli dev -c \"astro dev\"",
+    "cms:build": "npx @tinacms/cli build --skip-cloud-checks && astro build",
     "new-post": "node scripts/new-post.js",
     "new-project": "node scripts/new-project.js"
   },

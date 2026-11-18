@@ -1,1 +1,1 @@
-export { portfolio, blog, collections } from './content/config';
+export { articoli, progetti, portfolio, blog, collections } from './content/config';

@@ -7,6 +7,15 @@ export default defineConfig({
   site: 'https://duerremedia.com',
   base: '/',
   output: 'static',
+  compressHTML: true,
+  build: {
+    format: 'directory',
+    inlineStylesheets: 'auto',
+  },
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'hover',
+  },
   redirects: {
     '/it': '/',
     '/it/about': '/about',
@@ -33,7 +42,19 @@ export default defineConfig({
     '/contact.html': '/contact',
     '/blog.html': '/blog',
   },
-  integrations: [sitemap(), mdx()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/admin') && !page.includes('/thanks'),
+      i18n: {
+        defaultLocale: 'it',
+        locales: {
+          it: 'it-IT',
+          en: 'en-US',
+        },
+      },
+    }),
+    mdx(),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

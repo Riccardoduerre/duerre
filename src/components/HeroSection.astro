@@ -1,0 +1,272 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import heroFallbackImg from '../assets/site/hero.jpg';
+
+export interface HeroMetric {
+  value: string;
+  label: string;
+  spec?: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  headlinePrefix?: string;
+  headlineHighlight?: string;
+  headlineSuffix?: string;
+  subheadline?: string;
+  primaryCtaLabel?: string;
+  primaryCtaHref?: string;
+  primaryCtaAriaLabel?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+  secondaryCtaAriaLabel?: string;
+  showreelHref?: string;
+  showreelLabel?: string;
+  backgroundImage?: ImageMetadata | string;
+  backgroundAlt?: string;
+  videoSrc?: string;
+  telemetryLeft?: string;
+  telemetryCenter?: string;
+  telemetryRight?: string;
+  metrics?: HeroMetric[];
+}
+
+const {
+  eyebrow = 'ATELIER DI PRODUZIONE VISIVA & DIREZIONE CREATIVA',
+  headlinePrefix = 'Immagini ad alto impatto per brand che cercano',
+  headlineHighlight = 'autorevolezza visiva.',
+  headlineSuffix = '',
+  subheadline = 'Fotografia commerciale, cinema anamorfico, CGI 3D fotorealistica e direzione editoriale. Progettiamo ecosistemi visivi ad altissima resa estetica e prestazionale.',
+  primaryCtaLabel = 'Esplora i Progetti Selezionati',
+  primaryCtaHref = '#featured-work',
+  primaryCtaAriaLabel = 'Esplora i progetti selezionati nel portfolio Duerre Media',
+  secondaryCtaLabel = 'Richiedi una Consulenza di Produzione',
+  secondaryCtaHref = '/contact/',
+  secondaryCtaAriaLabel = 'Vai alla pagina contatti per richiedere una consulenza di produzione',
+  showreelHref = '/portfolio/commercial-showreel/',
+  showreelLabel = 'Guarda lo Showreel Cinematografico Duerre (2.39:1 Anamorphic)',
+  backgroundImage = heroFallbackImg,
+  backgroundAlt = 'Set di produzione cinematografica e fotografica Duerre Media',
+  videoSrc,
+  telemetryLeft = '01 / VISUAL ARCHITECTURE ATELIER',
+  telemetryCenter = 'OPTICS · ANAMORPHIC MOTION · 3D CGI · ACEScc',
+  telemetryRight = 'ITALIA / WORLDWIDE',
+  metrics = [
+    {
+      value: '100/100',
+      label: 'Core Web Vitals & SEO',
+      spec: 'ARCHITETTURA ZERO-JS',
+    },
+    {
+      value: 'ACEScc',
+      label: 'Pipeline Colore Cinema',
+      spec: 'RAW 16-BIT · HDR MASTER',
+    },
+    {
+      value: '2.39:1',
+      label: 'Produzione Anamorfica & 3D',
+      spec: 'OTTICHE FULL-FRAME & CGI PBR',
+    },
+    {
+      value: 'WCAG AA+',
+      label: 'Accessibilità Certificata',
+      spec: 'CONTRASTO > 9.1:1',
+    },
+  ],
+} = Astro.props;
+
+const isAstroImage = typeof backgroundImage === 'object' && backgroundImage !== null && 'src' in backgroundImage;
+const posterUrl = isAstroImage ? backgroundImage.src : String(backgroundImage);
+---
+
+<section
+  aria-labelledby="hero-main-heading"
+  class="section-carbon relative min-h-[90vh] flex flex-col justify-between overflow-hidden pt-16 pb-16 md:pt-24 md:pb-24 px-6 sm:px-10 border-b border-white/10"
+>
+  <!-- Background Media Layer (LCP Preloaded & Hardware-Accelerated) -->
+  <div class="absolute inset-0 z-0 select-none pointer-events-none" aria-hidden="true">
+    {
+      isAstroImage ? (
+        <Picture
+          formats={['avif', 'webp']}
+          src={backgroundImage as ImageMetadata}
+          alt={backgroundAlt}
+          class="h-full w-full object-cover object-center opacity-40 animate-subtle-zoom"
+          widths={[640, 1024, 1536, 2048]}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
+          decoding="sync"
+        />
+      ) : (
+        <img
+          src={String(backgroundImage)}
+          alt={backgroundAlt}
+          width="1920"
+          height="1080"
+          loading="eager"
+          fetchpriority="high"
+          decoding="sync"
+          class="h-full w-full object-cover object-center opacity-40 animate-subtle-zoom"
+        />
+      )
+    }
+
+    {
+      videoSrc && (
+        <video
+          data-lazy-video
+          data-src={videoSrc}
+          preload="none"
+          muted
+          loop
+          playsinline
+          disablepictureinpicture
+          poster={posterUrl}
+          aria-hidden="true"
+          class="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-screen"
+        />
+      )
+    }
+
+    <!-- Multi-Stop Scrim for Certified WCAG AAA Text Contrast -->
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-[#070707]/90 via-[#070707]/60 to-[#070707]"
+    >
+    </div>
+  </div>
+
+  <!-- 01. Top Editorial Telemetry Bar -->
+  <div
+    class="relative z-10 mx-auto w-full max-w-[1440px] flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-5 font-mono text-[11px] uppercase tracking-[0.26em] text-white/70"
+  >
+    <span>{telemetryLeft}</span>
+    <span class="hidden md:inline text-white/60">{telemetryCenter}</span>
+    <span class="text-[#CCA870]">{telemetryRight}</span>
+  </div>
+
+  <!-- 02. Main Editorial Hero Stage -->
+  <div class="relative z-10 mx-auto w-full max-w-[1440px] my-auto py-14 md:py-20">
+    <div class="grid lg:grid-cols-12 gap-12 items-end">
+      <div class="lg:col-span-9">
+        <!-- Eyebrow Badge -->
+        <p class="pill-subtext-dark mb-7 animate-fade-in">
+          <span>{eyebrow}</span>
+        </p>
+
+        <!-- Monumental Fluid Display Heading -->
+        <h1
+          id="hero-main-heading"
+          class="display-monument text-[#F5F3EF] animate-fade-in"
+        >
+          {headlinePrefix}{' '}
+          <span class="italic font-light text-[#CCA870] block sm:inline">
+            {headlineHighlight}
+          </span>
+          {headlineSuffix && <span> {headlineSuffix}</span>}
+        </h1>
+
+        <!-- High-Contrast Editorial Lead Paragraph -->
+        <p
+          class="mt-8 max-w-2xl text-base sm:text-xl font-light text-[#F5F3EF]/85 leading-relaxed animate-fade-in"
+        >
+          {subheadline}
+        </p>
+
+        <!-- Accessible Dual CTA Bar (WCAG 2.1 AA Focus Ring & 48px Touch Target) -->
+        <div
+          class="mt-10 sm:mt-12 flex flex-wrap items-center gap-5 sm:gap-6 animate-fade-in"
+        >
+          <a
+            href={primaryCtaHref}
+            aria-label={primaryCtaAriaLabel}
+            class="group inline-flex min-h-[3.25rem] items-center justify-center gap-4 rounded-full bg-[#F5F3EF] px-8 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[#070707] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#CCA870] hover:text-[#070707] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#CCA870]"
+          >
+            <span>{primaryCtaLabel}</span>
+            <span
+              aria-hidden="true"
+              class="inline-block transition-transform duration-300 group-hover:translate-y-0.5"
+            >
+              ↓
+            </span>
+          </a>
+
+          <a
+            href={secondaryCtaHref}
+            aria-label={secondaryCtaAriaLabel}
+            class="group inline-flex min-h-[3.25rem] items-center gap-3 rounded-full border border-white/25 bg-white/[0.03] px-7 py-3.5 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-[#F5F3EF] backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[#CCA870] hover:bg-[#CCA870]/10 hover:text-[#CCA870] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#CCA870]"
+          >
+            <span>{secondaryCtaLabel}</span>
+            <span
+              aria-hidden="true"
+              class="inline-block transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            >
+              ↗
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Showreel Interactive Medallion -->
+      <div class="lg:col-span-3 flex lg:justify-end">
+        <a
+          href={showreelHref}
+          aria-label={showreelLabel}
+          class="group relative inline-flex h-36 w-36 sm:h-40 sm:w-40 items-center justify-center rounded-full border border-white/20 bg-white/[0.04] backdrop-blur-md transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 hover:border-[#CCA870] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#CCA870]"
+        >
+          <svg
+            viewBox="0 0 160 160"
+            aria-hidden="true"
+            class="h-full w-full p-2.5 animate-spin-slow"
+          >
+            <defs>
+              <path
+                id="duerreShowreelOrbit"
+                d="M 80, 80 m -60, 0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0"
+              ></path>
+            </defs>
+            <text class="fill-white/80 text-[10px] font-mono uppercase tracking-[0.26em]">
+              <textPath href="#duerreShowreelOrbit">
+                • DUERRE SHOWREEL • 2.39:1 ANAMORPHIC
+              </textPath>
+            </text>
+          </svg>
+          <span
+            aria-hidden="true"
+            class="absolute inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#F5F3EF] text-[#070707] transition-all duration-500 group-hover:bg-[#CCA870] group-hover:scale-110"
+          >
+            <svg class="h-4 w-4 translate-x-0.5 fill-current" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03. Authority Metrics & Technical Specifications Bar -->
+  <div class="relative z-10 mx-auto w-full max-w-[1440px] pt-8 border-t border-white/15">
+    <dl class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+      {
+        metrics.map((metric) => (
+          <div class="border-l border-white/15 pl-4 sm:pl-5">
+            <dt class="font-mono text-[10px] uppercase tracking-[0.24em] text-white/65">
+              {metric.label}
+            </dt>
+            <dd class="mt-1.5 flex flex-col">
+              <span class="text-2xl sm:text-3xl font-light tracking-tight text-[#F5F3EF]">
+                {metric.value}
+              </span>
+              {metric.spec && (
+                <span class="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[#CCA870]">
+                  {metric.spec}
+                </span>
+              )}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

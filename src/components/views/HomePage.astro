@@ -2,6 +2,8 @@
 import { Picture } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../HeroSection.astro';
+import ServiceProjectCard from '../ServiceProjectCard.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
 import { splitId, formatDate, readingMinutes, type PortfolioItem, type Post } from '../../lib/content';
 import { useTranslations, localePath, type Locale } from '../../i18n';
@@ -173,113 +175,25 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
   image={heroImg.src}
 >
   <!-- 01. CINEMATIC LOOKBOOK HERO -->
-  <section class="section-carbon relative min-h-[90vh] flex flex-col justify-between overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28 px-6 sm:px-10 border-b border-white/10">
-    <!-- Optimized LCP Image + Lazy-Loaded HTML5 Showreel Background Video -->
-    <div class="absolute inset-0 z-0">
-      <Picture
-        formats={['avif', 'webp']}
-        src={heroImg}
-        alt="Duerre Visual Atelier — Commercial Photography, Cinema & 3D CGI"
-        class="h-full w-full object-cover object-center opacity-40 animate-subtle-zoom"
-        widths={[800, 1400, 2000]}
-        sizes="100vw"
-        loading="eager"
-        fetchpriority="high"
-      />
-      <video
-        data-lazy-video
-        preload="none"
-        muted
-        loop
-        playsinline
-        disablepictureinpicture
-        poster={heroImg.src}
-        aria-hidden="true"
-        class="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-screen pointer-events-none"
-      >
-        <!-- Ambient lazy-loaded motion stream when external showreel MP4 is available -->
-      </video>
-      <div class="absolute inset-0 bg-gradient-to-b from-[#070707]/85 via-[#070707]/50 to-[#070707]"></div>
-    </div>
-
-    <!-- Top Telemetry Coordinates -->
-    <div class="relative z-10 mx-auto w-full max-w-[1440px] flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6 font-mono text-[10px] uppercase tracking-[0.28em] text-white/55">
-      <span>01 / VISUAL ARCHITECTURE ATELIER</span>
-      <span class="hidden sm:inline">OPTICS · ANAMORPHIC MOTION · 3D CGI · ACEScc</span>
-      <span>ITALY / WORLDWIDE</span>
-    </div>
-
-    <!-- Monumental Editorial Typography -->
-    <div class="relative z-10 mx-auto w-full max-w-[1440px] my-auto py-16 md:py-24">
-      <div class="grid lg:grid-cols-12 gap-12 items-end">
-        <div class="lg:col-span-9">
-          <span class="pill-subtext-dark mb-8 animate-fade-in">
-            {t('hero_eyebrow')}
-          </span>
-          <h1 class="display-monument text-white animate-fade-in">
-            {t('hero_headline_prefix')}{' '}
-            <span class="italic font-light text-[#CCA870] block sm:inline">
-              {t('hero_headline_highlight')}
-            </span>
-          </h1>
-          <p class="mt-10 max-w-2xl text-base sm:text-xl font-light text-white/75 leading-relaxed animate-fade-in">
-            {t('hero_subheadline')}
-          </p>
-
-          <div class="mt-12 flex flex-wrap items-center gap-6 animate-fade-in">
-            <a
-              href="#featured-work"
-              class="inline-flex items-center gap-4 rounded-full bg-white px-8 py-4 font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-[#070707] transition-all duration-500 hover:bg-[#CCA870] hover:text-black"
-            >
-              <span>{t('hero_cta_primary')}</span>
-              <span>↓</span>
-            </a>
-            <a
-              href={localePath(lang, '/contact/')}
-              class="inline-flex items-center gap-3 border-b border-white/30 pb-2 font-mono text-[11px] uppercase tracking-[0.24em] text-white/85 transition-colors hover:border-[#CCA870] hover:text-[#CCA870]"
-            >
-              <span>{t('hero_cta_secondary')}</span>
-              <span>↗</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Minimalist Reel & Frame Telemetry Badge -->
-        <div class="lg:col-span-3 flex lg:justify-end">
-          <a
-            href={localePath(lang, '/portfolio/commercial-showreel/')}
-            aria-label={t('hero_cta_primary')}
-            class="group relative inline-flex h-36 w-36 sm:h-40 sm:w-40 items-center justify-center rounded-full border border-white/20 bg-white/[0.03] backdrop-blur-md transition-transform duration-700 hover:scale-105 hover:border-[#CCA870]/60"
-          >
-            <svg viewBox="0 0 160 160" class="h-full w-full p-2.5 animate-spin-slow">
-              <defs>
-                <path
-                  id="heroCirclePath"
-                  d="M 80, 80 m -60, 0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0"
-                />
-              </defs>
-              <text class="fill-white/75 text-[10px] font-mono uppercase tracking-[0.26em]">
-                <textPath href="#heroCirclePath">
-                  • DUERRE SHOWREEL • 2.39:1 ANAMORPHIC
-                </textPath>
-              </text>
-            </svg>
-            <span class="absolute inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#070707] transition-all duration-500 group-hover:bg-[#CCA870] group-hover:scale-110">
-              <svg class="h-4 w-4 translate-x-0.5 fill-current" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom Frame Spec Footer -->
-    <div class="relative z-10 mx-auto w-full max-w-[1440px] flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-white/10 font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">
-      <span>RICCARDO RIVA — CREATIVE & VISUAL DIRECTOR</span>
-      <span>SCROLL TO ARCHIVE [01—05]</span>
-    </div>
-  </section>
+  <HeroSection
+    eyebrow={t('hero_eyebrow')}
+    headlinePrefix={t('hero_headline_prefix')}
+    headlineHighlight={t('hero_headline_highlight')}
+    subheadline={t('hero_subheadline')}
+    primaryCtaLabel={t('hero_cta_primary')}
+    primaryCtaHref="#featured-work"
+    primaryCtaAriaLabel={t('hero_cta_primary')}
+    secondaryCtaLabel={t('hero_cta_secondary')}
+    secondaryCtaHref={localePath(lang, '/contact/')}
+    secondaryCtaAriaLabel={t('hero_cta_secondary')}
+    showreelHref={localePath(lang, '/portfolio/commercial-showreel/')}
+    showreelLabel={t('hero_cta_primary')}
+    backgroundImage={heroImg}
+    backgroundAlt="Duerre Visual Atelier — Commercial Photography, Cinema & 3D CGI"
+    telemetryLeft="01 / VISUAL ARCHITECTURE ATELIER"
+    telemetryCenter="OPTICS · ANAMORPHIC MOTION · 3D CGI · ACEScc"
+    telemetryRight={lang === 'it' ? 'ITALIA / WORLDWIDE' : 'ITALY / WORLDWIDE'}
+  />
 
   <!-- 02. ASYMMETRIC BENTO GRID PORTFOLIO SHOWCASE ("alcuni dei nostri lavori") -->
   <section id="featured-work" class="py-28 md:py-44 px-6 sm:px-10">
@@ -307,118 +221,28 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
         {bentoProjects.map((project, index) => {
           const { slug } = splitId(project.id);
           const bento = getBentoClasses(project.data.bentoSpan, index);
-          const indexLabel = String(index + 1).padStart(2, '0');
 
           return (
-            <article
-              class={`${bento.wrapper} group relative overflow-hidden bg-surface border border-line/40`}
-              data-reveal
-              data-reveal-delay={String((index % 3) * 90)}
-            >
-              <a
-                href={localePath(lang, `/portfolio/${slug}/`)}
-                class="relative block h-full w-full overflow-hidden"
-              >
-                <!-- Optimized Astro Picture Payload (.avif / .webp) -->
-                <div class="absolute inset-0 media-zoom">
-                  <Picture
-                    formats={['avif', 'webp']}
-                    src={project.data.coverImage}
-                    alt={project.data.coverAlt}
-                    class="h-full w-full object-cover"
-                    widths={bento.isHero ? [800, 1400, 2000] : [500, 900, 1400]}
-                    sizes={
-                      bento.isHero
-                        ? '(max-width: 1024px) 100vw, 66vw'
-                        : bento.isTall
-                          ? '(max-width: 1024px) 100vw, 33vw'
-                          : '(max-width: 1024px) 100vw, 50vw'
-                    }
-                  />
-                </div>
-
-                <!-- Lazy-Loaded Showreel Video Overlay for the Dominant Cinema Slot -->
-                {project.data.youtubeId && (
-                  <video
-                    data-lazy-video
-                    preload="none"
-                    muted
-                    loop
-                    playsinline
-                    disablepictureinpicture
-                    poster={project.data.coverImage.src}
-                    aria-hidden="true"
-                    class="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-35 transition-opacity duration-700 pointer-events-none"
-                  ></video>
-                )}
-
-                <!-- Multi-stop Editorial Gradient Vignette -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/15 opacity-75 transition-opacity duration-700 group-hover:opacity-95"></div>
-
-                <!-- Top Telemetry HUD -->
-                <div class="absolute top-6 left-6 right-6 z-10 flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.24em] text-white/80">
-                  <div class="flex items-center gap-3">
-                    <span class="text-[#CCA870]">/{indexLabel}</span>
-                    <span>{t(`category_${project.data.category}`)}</span>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    {project.data.youtubeId && (
-                      <span class="inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-md px-3 py-1 text-[9px] tracking-[0.24em] text-white">
-                        <span class="h-1.5 w-1.5 rounded-full bg-[#CCA870] animate-pulse"></span>
-                        <span>SHOWREEL · {project.data.aspectRatio || '2.39:1'}</span>
-                      </span>
-                    )}
-                    {!project.data.youtubeId && project.data.aspectRatio && (
-                      <span class="hidden sm:inline-block px-2.5 py-1 bg-black/40 backdrop-blur-md text-white/75 text-[9px]">
-                        {project.data.aspectRatio}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <!-- Bottom Fluid Hover Reveal Content -->
-                <div class="absolute inset-x-6 bottom-6 z-10 flex flex-col justify-end">
-                  <div class="flex items-end justify-between gap-6">
-                    <div class="max-w-xl transform transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1">
-                      <span class="block font-mono text-[10px] uppercase tracking-[0.24em] text-[#CCA870] mb-2">
-                        {project.data.client} — {project.data.year}
-                      </span>
-                      <h3
-                        class={`${
-                          bento.isHero
-                            ? 'text-3xl sm:text-5xl lg:text-6xl'
-                            : 'text-2xl sm:text-3xl lg:text-4xl'
-                        } font-light tracking-tight text-white leading-[1.02]`}
-                      >
-                        {project.data.title}
-                      </h3>
-
-                      <!-- Expandable Project Description & Service Tags on Hover -->
-                      <div class="grid grid-rows-[0fr] opacity-0 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-visible:grid-rows-[1fr] group-focus-visible:opacity-100">
-                        <div class="overflow-hidden">
-                          <p class="pt-4 text-xs sm:text-sm font-light text-white/75 leading-relaxed line-clamp-2">
-                            {project.data.description}
-                          </p>
-                          {project.data.services && project.data.services.length > 0 && (
-                            <div class="mt-4 flex flex-wrap gap-2">
-                              {project.data.services.map((srv) => (
-                                <span class="border border-white/20 bg-white/5 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white/85">
-                                  {srv}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/10 backdrop-blur-md text-white transition-all duration-500 group-hover:bg-white group-hover:text-black group-hover:scale-105">
-                      ↗
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </article>
+            <ServiceProjectCard
+              class={bento.wrapper}
+              revealDelay={String((index % 3) * 90)}
+              title={project.data.title}
+              description={project.data.description}
+              href={localePath(lang, `/portfolio/${slug}/`)}
+              category={t(`category_${project.data.category}`)}
+              coverImage={project.data.coverImage}
+              coverAlt={project.data.coverAlt}
+              index={index}
+              client={project.data.client}
+              year={project.data.year}
+              aspectRatio="fill"
+              aspectRatioLabel={project.data.aspectRatio}
+              youtubeId={project.data.youtubeId}
+              tags={project.data.services || project.data.tags}
+              featured={bento.isHero}
+              transitionSlug={slug}
+              ctaLabel={t('view_project')}
+            />
           );
         })}
       </div>

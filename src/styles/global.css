@@ -78,10 +78,12 @@
     color-scheme: dark;
     --c-bg: 7 7 7;
     --c-surface: 16 16 16;
+    --c-surface-elevated: 24 24 24;
     --c-line: 36 36 36;
     --c-ink: 245 243 239;
     --c-muted: 150 147 142;
     --c-accent: 204 168 112;
+    --c-accent-hover: 222 188 135;
   }
 
   @media (prefers-color-scheme: light) {
@@ -89,10 +91,12 @@
       color-scheme: light;
       --c-bg: 248 247 244;
       --c-surface: 239 237 232;
+      --c-surface-elevated: 255 255 255;
       --c-line: 218 214 207;
       --c-ink: 14 14 14;
       --c-muted: 106 103 98;
       --c-accent: 148 112 62;
+      --c-accent-hover: 122 89 44;
     }
   }
 
@@ -100,10 +104,12 @@
     color-scheme: light;
     --c-bg: 248 247 244;
     --c-surface: 239 237 232;
+    --c-surface-elevated: 255 255 255;
     --c-line: 218 214 207;
     --c-ink: 14 14 14;
     --c-muted: 106 103 98;
     --c-accent: 148 112 62;
+    --c-accent-hover: 122 89 44;
   }
 
   html {

@@ -16,24 +16,66 @@ concurrency:
 
 jobs:
   build:
+    name: Build & Verify Astro Static Site
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+      TINACMS_CLIENT_ID: ${{ secrets.TINACMS_CLIENT_ID }}
+      TINACMS_TOKEN: ${{ secrets.TINACMS_TOKEN }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Install, build, and upload your site
-        uses: withastro/action@v6
+      - name: Setup Node.js 24 LTS with npm cache
+        uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: 'npm'
+
+      - name: Setup GitHub Pages configuration
+        uses: actions/configure-pages@v5
+
+      - name: Restore Astro & Image Optimization Cache (.astro)
+        uses: actions/cache@v4
+        with:
+          path: |
+            .astro
+            node_modules/.astro
+          key: ${{ runner.os }}-astro-assets-${{ hashFiles('src/assets/**/*', 'public/uploads/**/*', 'astro.config.mjs', 'src/content/config.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-astro-assets-
+
+      - name: Install dependencies deterministically
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Validate Content Collections & TypeScript (Strict Check)
+        run: npm run typecheck
+
+      - name: Build TinaCMS Admin Panel (if TinaCloud credentials are set)
+        if: ${{ env.TINACMS_CLIENT_ID != '' && env.TINACMS_TOKEN != '' }}
+        run: npx @tinacms/cli build --skip-cloud-checks
+
+      - name: Build Astro Production Bundle
+        run: npm run build
+
+      - name: Ensure .nojekyll and CNAME exist in dist/
+        run: |
+          touch dist/.nojekyll
+          if [ ! -f dist/CNAME ]; then echo "duerremedia.com" > dist/CNAME; fi
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
 
   deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    name: Deploy
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Publish to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4

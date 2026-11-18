@@ -1,18 +1,352 @@
 ---
-import Layout from './Layout.astro';
-import type { Locale } from '../i18n';
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+import { type Locale, LOCALES, DEFAULT_LOCALE, switchLocalePath } from '../i18n';
 
-interface Props {
+export interface Props {
   title: string;
   description: string;
-  lang: Locale;
+  lang?: Locale;
   image?: string;
+  imageAlt?: string;
   type?: 'website' | 'article' | 'creativework';
+  publishDate?: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  noindex?: boolean;
+  canonical?: string;
 }
 
-const props = Astro.props;
+const {
+  title,
+  description,
+  lang = 'it',
+  image = SITE.defaultOgImage,
+  imageAlt = `${SITE.name} — ${title}`,
+  type = 'website',
+  publishDate,
+  updatedDate,
+  tags = [],
+  noindex = false,
+  canonical,
+} = Astro.props;
+
+const siteOrigin = Astro.site ?? new URL(SITE.url);
+const canonicalURL = canonical ? new URL(canonical, siteOrigin) : new URL(Astro.url.pathname, siteOrigin);
+const imageURL = new URL(image, siteOrigin);
+
+const formattedTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
+
+const alternates = LOCALES.map((locale) => ({
+  locale,
+  href: new URL(switchLocalePath(Astro.url.pathname, locale), siteOrigin).href,
+}));
+const defaultAlternate = alternates.find((a) => a.locale === DEFAULT_LOCALE)?.href ?? canonicalURL.href;
+
+const ogType = type === 'website' ? 'website' : 'article';
+const primarySchemaType = type === 'article' ? 'Article' : type === 'creativework' ? 'CreativeWork' : 'WebPage';
+
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const breadcrumbItems = [
+  {
+    '@type': 'ListItem',
+    position: 1,
+    name: 'Home',
+    item: siteOrigin.href,
+  },
+  ...pathSegments.map((segment, index) => ({
+    '@type': 'ListItem',
+    position: index + 2,
+    name: segment.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()),
+    item: new URL('/' + pathSegments.slice(0, index + 1).join('/') + '/', siteOrigin).href,
+  })),
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['Organization', 'ProfessionalService'],
+      '@id': `${SITE.url}/#organization`,
+      name: SITE.name,
+      url: SITE.url,
+      email: SITE.email,
+      founder: {
+        '@type': 'Person',
+        name: SITE.author,
+      },
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE.url}/favicon.svg`,
+      },
+      image: imageURL.href,
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'IT',
+      },
+      sameAs: SITE.social.map((s) => s.url),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.url}/#website`,
+      url: SITE.url,
+      name: SITE.name,
+      inLanguage: lang === 'it' ? 'it-IT' : 'en-US',
+      publisher: {
+        '@id': `${SITE.url}/#organization`,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalURL.href}#breadcrumb`,
+      itemListElement: breadcrumbItems,
+    },
+    {
+      '@type': primarySchemaType,
+      '@id': `${canonicalURL.href}#content`,
+      url: canonicalURL.href,
+      name: formattedTitle,
+      headline: title,
+      description,
+      inLanguage: lang === 'it' ? 'it-IT' : 'en-US',
+      image: {
+        '@type': 'ImageObject',
+        url: imageURL.href,
+        caption: imageAlt,
+      },
+      author: {
+        '@type': 'Person',
+        name: SITE.author,
+        url: SITE.url,
+      },
+      publisher: {
+        '@id': `${SITE.url}/#organization`,
+      },
+      isPartOf: {
+        '@id': `${SITE.url}/#website`,
+      },
+      ...(publishDate ? { datePublished: publishDate.toISOString() } : {}),
+      ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
+      ...(tags.length > 0 ? { keywords: tags.join(', ') } : {}),
+    },
+  ],
+};
 ---
 
-<Layout {...props}>
-  <slot />
-</Layout>
+<!doctype html>
+<html lang={lang} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary SEO Meta Tags -->
+    <title>{formattedTitle}</title>
+    <meta name="title" content={formattedTitle} />
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE.author} />
+    <meta
+      name="robots"
+      content={noindex
+        ? 'noindex, nofollow'
+        : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+    />
+    <meta name="theme-color" content="#070707" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f8f7f4" media="(prefers-color-scheme: light)" />
+
+    <!-- Canonical & Internationalization (hreflang) -->
+    <link rel="canonical" href={canonicalURL.href} />
+    {alternates.map(({ locale, href }) => <link rel="alternate" hreflang={locale} href={href} />)}
+    <link rel="alternate" hreflang="x-default" href={defaultAlternate} />
+
+    <!-- Icons, RSS & Sitemap -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.name} — Editorial Journal`}
+      href={lang === 'en' ? '/en/rss.xml' : '/rss.xml'}
+    />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_US'} />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={formattedTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageURL.href} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    {publishDate && <meta property="article:published_time" content={publishDate.toISOString()} />}
+    {updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
+    {tags.map((tag) => <meta property="article:tag" content={tag} />)}
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL.href} />
+    <meta name="twitter:title" content={formattedTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL.href} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <!-- JSON-LD Structured Data -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Astro Native View Transitions (Zero external router bloat) -->
+    <ClientRouter fallback="swap" />
+
+    <!-- Critical Anti-FOUC Theme & Locale Bootstrap -->
+    <script is:inline>
+      function detectLanguageAndRedirect() {
+        try {
+          const path = window.location.pathname;
+          if (path === '/it' || path.startsWith('/it/')) {
+            const target = (path.replace(/^\/it(?=\/|$)/, '') || '/') + window.location.search + window.location.hash;
+            window.location.replace(target);
+            return;
+          }
+
+          if (path.startsWith('/admin') || path.startsWith('/articoli') || path.startsWith('/progetti')) {
+            return;
+          }
+
+          const ua = navigator.userAgent || '';
+          if (
+            /bot|crawl|spider|slurp|googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|linkedinbot|applebot|whatsapp/i.test(
+              ua,
+            )
+          ) {
+            return;
+          }
+
+          const savedLang = localStorage.getItem('duerre_lang');
+          const isEnglishPath = path === '/en' || path.startsWith('/en/');
+
+          if (savedLang === 'en' && !isEnglishPath) {
+            const enTarget = '/en' + (path === '/' ? '/' : path) + window.location.search + window.location.hash;
+            window.location.replace(enTarget);
+            return;
+          }
+
+          if (savedLang === 'it') {
+            return;
+          }
+
+          if (!isEnglishPath) {
+            const rawLang = (navigator.languages && navigator.languages[0]) || navigator.language || 'it';
+            const primaryLang = rawLang.toLowerCase();
+            if (primaryLang && !primaryLang.startsWith('it')) {
+              const enTarget = '/en' + (path === '/' ? '/' : path) + window.location.search + window.location.hash;
+              window.location.replace(enTarget);
+            }
+          }
+        } catch {
+          // ignore storage/navigation errors
+        }
+      }
+
+      function applyTheme() {
+        const root = document.documentElement;
+        root.classList.add('js');
+        try {
+          const stored = localStorage.getItem('theme');
+          const theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
+          root.setAttribute('data-theme', theme);
+        } catch {
+          root.setAttribute('data-theme', 'dark');
+        }
+      }
+
+      detectLanguageAndRedirect();
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
+    </script>
+
+    <slot name="head" />
+  </head>
+
+  <body class="bg-bg text-ink antialiased selection:bg-accent selection:text-black">
+    <!-- WCAG 2.1 AA Skip Link -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-5 focus:py-2.5 focus:bg-accent focus:text-black focus:rounded-full focus:font-mono focus:text-xs focus:uppercase focus:tracking-widest"
+    >
+      {lang === 'it' ? 'Salta al contenuto principale' : 'Skip to main content'}
+    </a>
+
+    <Header lang={lang} />
+
+    <main id="main-content" class="min-h-screen" tabindex="-1">
+      <slot />
+    </main>
+
+    <Footer lang={lang} />
+
+    <!-- Progressive Enhancement: Scroll Reveal & Save-Data Aware Video Hydration -->
+    <script>
+      function initEditorialMotion() {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const revealNodes = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+        if (prefersReduced || !('IntersectionObserver' in window)) {
+          revealNodes.forEach((el) => el.classList.add('is-visible'));
+        } else {
+          const revealObserver = new IntersectionObserver(
+            (entries, obs) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  const target = entry.target as HTMLElement;
+                  if (target.dataset.revealDelay) {
+                    target.style.transitionDelay = `${target.dataset.revealDelay}ms`;
+                  }
+                  target.classList.add('is-visible');
+                  obs.unobserve(target);
+                }
+              }
+            },
+            { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+          );
+          revealNodes.forEach((el) => revealObserver.observe(el));
+        }
+
+        const lazyVideos = document.querySelectorAll<HTMLVideoElement>('video[data-lazy-video]');
+        const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+
+        if (!prefersReduced && !saveData && lazyVideos.length > 0 && 'IntersectionObserver' in window) {
+          const videoObserver = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                const video = entry.target as HTMLVideoElement;
+                if (entry.isIntersecting) {
+                  if (!video.dataset.loaded) {
+                    video.querySelectorAll<HTMLSourceElement>('source[data-src]').forEach((source) => {
+                      if (source.dataset.src) source.src = source.dataset.src;
+                    });
+                    if (video.dataset.src && !video.src) video.src = video.dataset.src;
+                    video.load();
+                    video.dataset.loaded = 'true';
+                  }
+                  video.play().catch(() => {});
+                } else if (video.dataset.loaded === 'true') {
+                  video.pause();
+                }
+              }
+            },
+            { rootMargin: '150px 0px', threshold: 0.05 },
+          );
+          lazyVideos.forEach((v) => videoObserver.observe(v));
+        }
+      }
+
+      initEditorialMotion();
+      document.addEventListener('astro:page-load', initEditorialMotion);
+    </script>
+  </body>
+</html>
