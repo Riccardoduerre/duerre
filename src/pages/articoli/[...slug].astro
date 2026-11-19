@@ -1,8 +1,8 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { splitId, formatDate, readingMinutes } from '../../lib/content';
+import CmsPicture from '../../components/CmsPicture.astro';
+import { splitId, formatDate, readingMinutes, imageUrl } from '../../lib/content';
 
 type ArticleEntry = CollectionEntry<'articoli'> | CollectionEntry<'blog'>;
 
@@ -46,10 +46,7 @@ const { entry, prev, next } = Astro.props;
 const { Content } = await render(entry);
 const mins = readingMinutes(entry.body);
 
-const isPublicUpload = typeof entry.data.coverImage === 'string';
-const ogImageUrl = isPublicUpload
-  ? (entry.data.coverImage as string)
-  : entry.data.coverImage.src;
+const ogImageUrl = imageUrl(entry.data.coverImage);
 
 const getEntrySlug = (item: ArticleEntry) =>
   'slug' in item.data && item.data.slug ? item.data.slug : splitId(item.id).slug;
@@ -133,30 +130,15 @@ const categoryLabel =
 
     <div class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-20 md:mb-28" data-reveal>
       <div class="aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-surface">
-        {isPublicUpload ? (
-          <img
-            src={entry.data.coverImage as string}
-            alt={entry.data.coverAlt || entry.data.title}
-            class="w-full h-full object-cover"
-            width="1920"
-            height="1080"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            itemprop="image"
-          />
-        ) : (
-          <Picture
-            formats={['avif', 'webp']}
-            src={entry.data.coverImage as Exclude<typeof entry.data.coverImage, string>}
-            alt={entry.data.coverAlt || entry.data.title}
-            class="w-full h-full object-cover"
-            widths={[800, 1400, 2000]}
-            sizes="100vw"
-            loading="eager"
-            fetchpriority="high"
-          />
-        )}
+        <CmsPicture
+          src={entry.data.coverImage}
+          alt={entry.data.coverAlt || entry.data.title}
+          class="w-full h-full object-cover"
+          widths={[800, 1400, 2000]}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
       </div>
     </div>
 

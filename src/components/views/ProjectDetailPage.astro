@@ -1,11 +1,11 @@
 ---
 import { render } from 'astro:content';
-import { Picture } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
+import CmsPicture from '../CmsPicture.astro';
 import PhotoGallery from '../PhotoGallery.astro';
 import YouTubeEmbed from '../YouTubeEmbed.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
-import { splitId, type PortfolioItem } from '../../lib/content';
+import { splitId, imageUrl, type PortfolioItem } from '../../lib/content';
 import { useTranslations, localePath, type Locale } from '../../i18n';
 
 interface Props {
@@ -24,7 +24,7 @@ const t = useTranslations(lang);
   title={`${project.data.title} — ${project.data.client} | Duerre`}
   description={project.data.description}
   lang={lang}
-  image={project.data.coverImage.src}
+  image={imageUrl(project.data.coverImage)}
   type="creativework"
 >
   <article class="pt-16 md:pt-28 pb-24">
@@ -100,8 +100,7 @@ const t = useTranslations(lang);
     <!-- 02. HIGH-IMPACT WIDESCREEN HERO FRAME -->
     <div class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-20 md:mb-32" data-reveal>
       <div class="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-surface">
-        <Picture
-          formats={['avif', 'webp']}
+        <CmsPicture
           src={project.data.coverImage}
           alt={project.data.coverAlt}
           class="w-full h-full object-cover"

@@ -1,14 +1,19 @@
 ---
-import type { ImageMetadata } from 'astro';
-import { Picture, getImage } from 'astro:assets';
+import { getImage } from 'astro:assets';
+import CmsPicture from './CmsPicture.astro';
+import { isAstroImage, type CmsImage } from '../lib/content';
 
 interface Props {
-  images: { image: ImageMetadata; alt: string; caption?: string }[];
+  images: { image: CmsImage; alt: string; caption?: string }[];
 }
 
 const { images } = Astro.props;
 const lightboxSources = await Promise.all(
-  images.map((img) => getImage({ src: img.image, width: Math.min(img.image.width, 2400), format: 'webp' })),
+  images.map(async (img) =>
+    isAstroImage(img.image)
+      ? (await getImage({ src: img.image, width: Math.min(img.image.width, 2400), format: 'webp' })).src
+      : img.image,
+  ),
 );
 ---
 
@@ -26,7 +31,7 @@ const lightboxSources = await Promise.all(
       <figure
         class={`${spanClass} group relative cursor-zoom-in overflow-hidden bg-surface`}
         data-gallery-item
-        data-img-src={lightboxSources[index].src}
+        data-img-src={lightboxSources[index]}
         data-alt={img.alt}
         data-caption={img.caption || ''}
         data-index={index}
@@ -36,8 +41,7 @@ const lightboxSources = await Promise.all(
         aria-label={`View photo: ${img.alt}`}
       >
         <div class={`overflow-hidden ${aspectClass} media-zoom`}>
-          <Picture
-            formats={['avif', 'webp']}
+          <CmsPicture
             src={img.image}
             alt={img.alt}
             class="w-full h-full object-cover"

@@ -1,0 +1,49 @@
+---
+import { Picture } from 'astro:assets';
+import { isAstroImage, type CmsImage } from '../lib/content';
+
+interface Props {
+  src: CmsImage;
+  alt: string;
+  widths?: number[];
+  sizes?: string;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  decoding?: 'async' | 'sync' | 'auto';
+}
+
+const {
+  src,
+  alt,
+  widths = [480, 960, 1440],
+  sizes = '100vw',
+  class: className = '',
+  loading = 'lazy',
+  fetchpriority,
+  decoding = 'async',
+} = Astro.props;
+---
+
+{isAstroImage(src) ? (
+  <Picture
+    formats={['avif', 'webp']}
+    src={src}
+    alt={alt}
+    class={className}
+    widths={widths}
+    sizes={sizes}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding={decoding}
+  />
+) : (
+  <img
+    src={src}
+    alt={alt}
+    class={className}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding={decoding}
+  />
+)}

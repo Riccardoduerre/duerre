@@ -2,8 +2,9 @@
 import { Picture } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import CmsPicture from '../components/CmsPicture.astro';
 import DualCtaBanner from '../components/DualCtaBanner.astro';
-import { splitId, formatDate, readingMinutes, type PortfolioItem, type Post } from '../lib/content';
+import { splitId, formatDate, readingMinutes, imageUrl, type PortfolioItem, type Post } from '../lib/content';
 import { useTranslations, localePath, type Locale } from '../i18n';
 import { SITE } from '../config/site';
 
@@ -296,8 +297,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; isHero: b
                 class="relative block h-full w-full overflow-hidden"
               >
                 <div class="absolute inset-0 media-zoom">
-                  <Picture
-                    formats={['avif', 'webp']}
+                  <CmsPicture
                     src={project.data.coverImage}
                     alt={project.data.coverAlt}
                     class="h-full w-full object-cover"
@@ -320,7 +320,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; isHero: b
                     loop
                     playsinline
                     disablepictureinpicture
-                    poster={project.data.coverImage.src}
+                    poster={imageUrl(project.data.coverImage)}
                     aria-hidden="true"
                     class="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-35 transition-opacity duration-700 pointer-events-none"
                   ></video>
@@ -633,8 +633,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; isHero: b
                     href={localePath(lang, `/blog/${slug}/`)}
                     class="block relative aspect-[16/10] overflow-hidden bg-surface mb-6 media-zoom"
                   >
-                    <Picture
-                      formats={['avif', 'webp']}
+                    <CmsPicture
                       src={post.data.coverImage}
                       alt={post.data.coverAlt || post.data.title}
                       class="h-full w-full object-cover"

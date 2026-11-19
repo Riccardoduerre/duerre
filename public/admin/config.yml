@@ -1,9 +1,8 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
 backend:
   name: github
   repo: Riccardoduerre/duerre
   branch: main
-  base_url: https://auth.duerremedia.com
-  auth_endpoint: auth
   commit_messages:
     create: 'content({{collection}}): crea "{{slug}}"'
     update: 'content({{collection}}): aggiorna "{{slug}}"'
@@ -11,9 +10,6 @@ backend:
     uploadMedia: 'media: carica "{{path}}"'
     deleteMedia: 'media: rimuovi "{{path}}"'
 
-local_backend: true
-
-locale: 'it'
 site_url: 'https://duerremedia.com'
 display_url: 'https://duerremedia.com'
 logo_url: 'https://duerremedia.com/favicon.svg'
@@ -27,42 +23,35 @@ slug:
   sanitize_replacement: '-'
 
 collections:
-  - name: 'articoli'
-    label: 'Articoli'
-    label_singular: 'Articolo'
-    folder: 'src/content/articoli'
+  - name: 'blog_it'
+    label: 'Blog — Articoli (IT)'
+    label_singular: 'Articolo (IT)'
+    folder: 'src/content/blog'
+    path: '{{slug}}/it'
     create: true
-    extension: 'mdx'
+    extension: 'md'
     format: 'frontmatter'
     slug: '{{slug}}'
-    summary: '{{title}} — {{publishDate}} (Bozza: {{draft}})'
+    summary: '{{title}} — {{publishDate}}'
     sortable_fields: ['publishDate', 'title', 'featured', 'draft']
     fields:
       - label: 'Titolo Articolo'
         name: 'title'
         widget: 'string'
         required: true
-        pattern: ['^.{5,120}$', 'Il titolo deve avere tra 5 e 120 caratteri']
-
-      - label: 'Slug URL personalizzato (opzionale)'
-        name: 'slug'
-        widget: 'string'
-        required: false
-        hint: 'Usato per generare l’URL /articoli/<slug>/ (solo lettere minuscole, numeri e trattini).'
-        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Usa solo lettere minuscole, numeri e trattini (es. illuminazione-cinematografica)']
+        pattern: ['^.{5,160}$', 'Il titolo deve avere tra 5 e 160 caratteri']
 
       - label: 'Estratto SEO (Meta Description)'
         name: 'description'
         widget: 'text'
         required: true
         hint: 'Testo mostrato su Google e nelle anteprime social (consigliato 120-160 caratteri, max 320).'
-        pattern: ['^[\s\S]{20,320}$', 'Inserisci tra 20 e 320 caratteri']
+        pattern: ['^[\s\S]{10,320}$', 'Inserisci tra 10 e 320 caratteri']
 
       - label: 'Data di Pubblicazione'
         name: 'publishDate'
         widget: 'datetime'
         format: 'YYYY-MM-DD'
-        date_format: 'DD/MM/YYYY'
         time_format: false
         required: true
 
@@ -70,7 +59,6 @@ collections:
         name: 'updatedDate'
         widget: 'datetime'
         format: 'YYYY-MM-DD'
-        date_format: 'DD/MM/YYYY'
         time_format: false
         required: false
 
@@ -78,7 +66,7 @@ collections:
         name: 'category'
         widget: 'select'
         default: 'cinema-video'
-        required: true
+        required: false
         options:
           - { label: 'Cinema & Video Production', value: 'cinema-video' }
           - { label: 'Fotografia Commerciale', value: 'fotografia' }
@@ -92,21 +80,19 @@ collections:
         default: ['Cinema']
         min: 1
         required: true
-        hint: 'Inserisci uno o più tag separati da virgola.'
+        hint: 'Inserisci uno o più tag per filtrare e classificare l’articolo.'
 
       - label: 'Immagine di Copertina'
         name: 'coverImage'
         widget: 'image'
         required: true
-        choose_url: false
-        hint: 'Carica un’immagine orizzontale (16:9 o 21:9, formato WebP o JPG ad alta resa).'
+        hint: 'Carica un’immagine orizzontale (16:9 o 21:9, formato WebP o JPG). Salvata in /uploads/.'
 
-      - label: 'Testo Alternativo Immagine (Alt Text - Obbligatorio WCAG 2.1 AA)'
+      - label: 'Testo Alternativo Immagine (Alt Text — WCAG 2.1 AA)'
         name: 'coverAlt'
         widget: 'string'
-        required: true
-        hint: 'Obbligatorio per accessibilità: descrivi chiaramente il soggetto dell’immagine.'
-        pattern: ['^.{5,200}$', 'Inserisci una descrizione accessibile di almeno 5 caratteri']
+        required: false
+        hint: 'Consigliato per accessibilità e SEO: descrivi il soggetto dell’immagine.'
 
       - label: 'In Evidenza'
         name: 'featured'
@@ -126,33 +112,115 @@ collections:
         widget: 'markdown'
         required: true
 
-  - name: 'progetti'
-    label: 'Progetti'
-    label_singular: 'Progetto'
-    folder: 'src/content/progetti'
+  - name: 'blog_en'
+    label: 'Blog — Articles (EN)'
+    label_singular: 'Article (EN)'
+    folder: 'src/content/blog'
+    path: '{{slug}}/en'
     create: true
-    extension: 'mdx'
+    extension: 'md'
     format: 'frontmatter'
     slug: '{{slug}}'
-    summary: '{{title}} ({{client}} · {{year}}) — {{category}}'
-    sortable_fields: ['publishDate', 'year', 'title', 'featured']
+    summary: '{{title}} — {{publishDate}}'
+    sortable_fields: ['publishDate', 'title', 'featured', 'draft']
+    fields:
+      - label: 'Article Title'
+        name: 'title'
+        widget: 'string'
+        required: true
+        pattern: ['^.{5,160}$', 'Title must be between 5 and 160 characters']
+
+      - label: 'SEO Excerpt (Meta Description)'
+        name: 'description'
+        widget: 'text'
+        required: true
+        hint: 'Displayed on search engines and social previews (recommended 120-160 chars, max 320).'
+        pattern: ['^[\s\S]{10,320}$', 'Enter between 10 and 320 characters']
+
+      - label: 'Publish Date'
+        name: 'publishDate'
+        widget: 'datetime'
+        format: 'YYYY-MM-DD'
+        time_format: false
+        required: true
+
+      - label: 'Last Updated Date'
+        name: 'updatedDate'
+        widget: 'datetime'
+        format: 'YYYY-MM-DD'
+        time_format: false
+        required: false
+
+      - label: 'Editorial Category'
+        name: 'category'
+        widget: 'select'
+        default: 'cinema-video'
+        required: false
+        options:
+          - { label: 'Cinema & Video Production', value: 'cinema-video' }
+          - { label: 'Commercial Photography', value: 'fotografia' }
+          - { label: '3D & CGI Rendering', value: '3d-cgi' }
+          - { label: 'Digital Brand Direction', value: 'brand-direction' }
+          - { label: 'Behind the Scenes & Gear', value: 'dietro-le-quinte' }
+
+      - label: 'Tags'
+        name: 'tags'
+        widget: 'list'
+        default: ['Cinema']
+        min: 1
+        required: true
+
+      - label: 'Cover Image'
+        name: 'coverImage'
+        widget: 'image'
+        required: true
+        hint: 'Upload a landscape image (16:9 or 21:9, WebP or JPG). Saved to /uploads/.'
+
+      - label: 'Cover Alt Text (WCAG 2.1 AA)'
+        name: 'coverAlt'
+        widget: 'string'
+        required: false
+
+      - label: 'Featured'
+        name: 'featured'
+        widget: 'boolean'
+        default: false
+        required: false
+
+      - label: 'Draft'
+        name: 'draft'
+        widget: 'boolean'
+        default: false
+        required: false
+        hint: 'If enabled, saved to GitHub without publishing to the live site.'
+
+      - label: 'Article Body'
+        name: 'body'
+        widget: 'markdown'
+        required: true
+
+  - name: 'portfolio_it'
+    label: 'Portfolio — Progetti (IT)'
+    label_singular: 'Progetto (IT)'
+    folder: 'src/content/portfolio'
+    path: '{{slug}}/it'
+    create: true
+    extension: 'md'
+    format: 'frontmatter'
+    slug: '{{slug}}'
+    summary: '{{title}} ({{client}} · {{year}})'
+    sortable_fields: ['publishDate', 'year', 'title', 'featured', 'draft']
     fields:
       - label: 'Titolo Progetto'
         name: 'title'
         widget: 'string'
         required: true
 
-      - label: 'Slug URL personalizzato (opzionale)'
-        name: 'slug'
-        widget: 'string'
-        required: false
-        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Usa solo lettere minuscole, numeri e trattini']
-
       - label: 'Estratto SEO & Sintesi Progetto'
         name: 'description'
         widget: 'text'
         required: true
-        pattern: ['^[\s\S]{20,320}$', 'Inserisci tra 20 e 320 caratteri']
+        pattern: ['^[\s\S]{10,320}$', 'Inserisci tra 10 e 320 caratteri']
 
       - label: 'Cliente / Brand'
         name: 'client'
@@ -176,7 +244,6 @@ collections:
         name: 'publishDate'
         widget: 'datetime'
         format: 'YYYY-MM-DD'
-        date_format: 'DD/MM/YYYY'
         time_format: false
         required: true
 
@@ -234,11 +301,10 @@ collections:
         widget: 'image'
         required: true
 
-      - label: 'Testo Alternativo Copertina (Alt Text - Obbligatorio WCAG 2.1 AA)'
+      - label: 'Testo Alternativo Copertina (Alt Text — WCAG 2.1 AA)'
         name: 'coverAlt'
         widget: 'string'
         required: true
-        pattern: ['^.{5,200}$', 'Inserisci una descrizione accessibile di almeno 5 caratteri']
 
       - label: 'ID Video YouTube (11 caratteri, opzionale)'
         name: 'youtubeId'
@@ -251,7 +317,7 @@ collections:
         widget: 'string'
         required: false
 
-      - label: 'Aspect Ratio (es. 16/9, 2.39/1)'
+      - label: 'Aspect Ratio (es. 16:9, 2.39:1 CinemaScope)'
         name: 'aspectRatio'
         widget: 'string'
         required: false
@@ -290,7 +356,169 @@ collections:
           - { label: 'Alt Text Accessibile (Obbligatorio)', name: 'alt', widget: 'string', required: true }
           - { label: 'Didascalia (opzionale)', name: 'caption', widget: 'string', required: false }
 
-      - label: 'Descrizione Completa Case Study (MDX / Markdown)'
+      - label: 'Descrizione Completa Case Study'
+        name: 'body'
+        widget: 'markdown'
+        required: true
+
+  - name: 'portfolio_en'
+    label: 'Portfolio — Projects (EN)'
+    label_singular: 'Project (EN)'
+    folder: 'src/content/portfolio'
+    path: '{{slug}}/en'
+    create: true
+    extension: 'md'
+    format: 'frontmatter'
+    slug: '{{slug}}'
+    summary: '{{title}} ({{client}} · {{year}})'
+    sortable_fields: ['publishDate', 'year', 'title', 'featured', 'draft']
+    fields:
+      - label: 'Project Title'
+        name: 'title'
+        widget: 'string'
+        required: true
+
+      - label: 'SEO Summary'
+        name: 'description'
+        widget: 'text'
+        required: true
+        pattern: ['^[\s\S]{10,320}$', 'Enter between 10 and 320 characters']
+
+      - label: 'Client / Brand'
+        name: 'client'
+        widget: 'string'
+        required: true
+
+      - label: 'Role'
+        name: 'role'
+        widget: 'string'
+        default: 'Creative & Visual Direction'
+        required: true
+
+      - label: 'Year (YYYY)'
+        name: 'year'
+        widget: 'string'
+        default: '2026'
+        required: true
+        pattern: ['^\d{4}$', 'Enter a 4-digit year (e.g. 2026)']
+
+      - label: 'Publish Date'
+        name: 'publishDate'
+        widget: 'datetime'
+        format: 'YYYY-MM-DD'
+        time_format: false
+        required: true
+
+      - label: 'Category'
+        name: 'category'
+        widget: 'select'
+        default: 'photo'
+        required: true
+        options:
+          - { label: 'Commercial Photography (photo)', value: 'photo' }
+          - { label: 'Cinema & Video Production (video)', value: 'video' }
+          - { label: '3D & CGI Rendering (3d)', value: '3d' }
+          - { label: 'Digital Brand Direction (marketing)', value: 'marketing' }
+
+      - label: 'Services'
+        name: 'services'
+        widget: 'list'
+        default: ['Creative Direction']
+        min: 1
+        required: true
+
+      - label: 'Tags'
+        name: 'tags'
+        widget: 'list'
+        default: ['Commercial']
+        min: 1
+        required: true
+
+      - label: 'Bento Grid Span'
+        name: 'bentoSpan'
+        widget: 'select'
+        default: 'standard'
+        required: false
+        options:
+          - { label: 'Standard (1x1)', value: 'standard' }
+          - { label: 'Wide (2x1)', value: 'wide' }
+          - { label: 'Tall (1x2)', value: 'tall' }
+          - { label: 'Hero (2x2)', value: 'hero' }
+          - { label: 'Full Width', value: 'full' }
+
+      - label: 'Featured'
+        name: 'featured'
+        widget: 'boolean'
+        default: false
+        required: false
+
+      - label: 'Draft'
+        name: 'draft'
+        widget: 'boolean'
+        default: false
+        required: false
+
+      - label: 'Cover Image'
+        name: 'coverImage'
+        widget: 'image'
+        required: true
+
+      - label: 'Cover Alt Text (WCAG 2.1 AA)'
+        name: 'coverAlt'
+        widget: 'string'
+        required: true
+
+      - label: 'YouTube Video ID (11 chars, optional)'
+        name: 'youtubeId'
+        widget: 'string'
+        required: false
+        pattern: ['^[\w-]{11}$', 'Enter only the 11-character YouTube video ID']
+
+      - label: 'Direct Video MP4/WebM URL (optional)'
+        name: 'videoUrl'
+        widget: 'string'
+        required: false
+
+      - label: 'Aspect Ratio (e.g. 16:9, 2.39:1 CinemaScope)'
+        name: 'aspectRatio'
+        widget: 'string'
+        required: false
+
+      - label: 'Challenge'
+        name: 'challenge'
+        widget: 'text'
+        required: false
+
+      - label: 'Solution'
+        name: 'solution'
+        widget: 'text'
+        required: false
+
+      - label: 'Results'
+        name: 'results'
+        widget: 'text'
+        required: false
+
+      - label: 'Deliverables'
+        name: 'deliverables'
+        widget: 'list'
+        required: false
+
+      - label: 'Gear & Pipeline'
+        name: 'gear'
+        widget: 'list'
+        required: false
+
+      - label: 'Project Gallery'
+        name: 'gallery'
+        widget: 'list'
+        required: false
+        fields:
+          - { label: 'Image', name: 'image', widget: 'image', required: true }
+          - { label: 'Accessible Alt Text (Required)', name: 'alt', widget: 'string', required: true }
+          - { label: 'Caption (optional)', name: 'caption', widget: 'string', required: false }
+
+      - label: 'Case Study Body'
         name: 'body'
         widget: 'markdown'
         required: true

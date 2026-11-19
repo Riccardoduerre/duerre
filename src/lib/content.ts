@@ -1,9 +1,19 @@
+import type { ImageMetadata } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { type Locale } from '../i18n';
 
 export type PortfolioItem = CollectionEntry<'portfolio'>;
 export type Project = PortfolioItem;
 export type Post = CollectionEntry<'blog'>;
+export type CmsImage = ImageMetadata | string;
+
+export function isAstroImage(img: CmsImage): img is ImageMetadata {
+  return typeof img === 'object' && img !== null && 'src' in img;
+}
+
+export function imageUrl(img: CmsImage): string {
+  return isAstroImage(img) ? img.src : img;
+}
 
 /**
  * Supports both localized subfolder entries (`<slug>/it.md`, `<slug>/en.md`)

@@ -2,9 +2,10 @@
 import { render, getCollection } from 'astro:content';
 import { Picture } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
+import CmsPicture from '../CmsPicture.astro';
 import PostPreview from '../PostPreview.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
-import { splitId, formatDate, readingMinutes, type Post } from '../../lib/content';
+import { splitId, formatDate, readingMinutes, imageUrl, type Post } from '../../lib/content';
 import { useTranslations, localePath, type Locale } from '../../i18n';
 
 import authorPortrait from '../../assets/blog/DSCN7050.webp';
@@ -43,7 +44,7 @@ const relatedPosts = allPosts
   title={`${post.data.title} | Duerre`}
   description={post.data.description}
   lang={lang}
-  image={post.data.coverImage.src}
+  image={imageUrl(post.data.coverImage)}
   type="article"
 >
   <!-- Reading Progress Bar -->
@@ -106,8 +107,7 @@ const relatedPosts = allPosts
     <!-- 02. HIGH-IMPACT WIDESCREEN HERO IMAGE -->
     <div class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-20 md:mb-28" data-reveal>
       <div class="aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-surface">
-        <Picture
-          formats={['avif', 'webp']}
+        <CmsPicture
           src={post.data.coverImage}
           alt={post.data.coverAlt || post.data.title}
           class="w-full h-full object-cover"
