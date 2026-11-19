@@ -19,7 +19,6 @@ jobs:
     name: Build & Verify Astro Static Site
     runs-on: ubuntu-latest
     env:
-      NODE_ENV: production
       TINACMS_CLIENT_ID: ${{ secrets.TINACMS_CLIENT_ID }}
       TINACMS_TOKEN: ${{ secrets.TINACMS_TOKEN }}
     steps:
@@ -35,6 +34,9 @@ jobs:
       - name: Setup GitHub Pages configuration
         uses: actions/configure-pages@v5
 
+      - name: Install dependencies deterministically
+        run: npm ci --prefer-offline --no-audit
+
       - name: Restore Astro & Image Optimization Cache (.astro)
         uses: actions/cache@v4
         with:
@@ -45,9 +47,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-astro-assets-
 
-      - name: Install dependencies deterministically
-        run: npm ci --prefer-offline --no-audit
-
       - name: Validate Content Collections & TypeScript (Strict Check)
         run: npm run typecheck
 
@@ -56,6 +55,8 @@ jobs:
         run: npx @tinacms/cli build --skip-cloud-checks
 
       - name: Build Astro Production Bundle
+        env:
+          NODE_ENV: production
         run: npm run build
 
       - name: Ensure .nojekyll and CNAME exist in dist/
