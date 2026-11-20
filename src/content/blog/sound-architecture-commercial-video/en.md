@@ -2,7 +2,8 @@
 title: "Audio Architecture: Sound Design, Foley and Dynamic Weight in Video"
 publishDate: 2026-01-12
 pubDate: 2026-01-12
-coverImage: ../../../assets/blog/_DSC2919.webp
+coverImage: ../../../assets/media/_DSC2919.webp
+coverAlt: "Atmospheric interior production frame paired with layered acoustic room tone and cinematic foley design"
 description: "Audiences forgive average image resolution, but they never forgive poor audio. How layered room tone and subtle foley elevate visual impact."
 tags: ["Sound Design", "Post-Production", "Direction"]
 ---

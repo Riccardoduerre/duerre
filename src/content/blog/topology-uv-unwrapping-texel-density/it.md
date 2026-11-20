@@ -2,7 +2,8 @@
 title: "Topologia pulita e densità texel: fondamenta degli asset 3D commerciali"
 publishDate: 2026-03-23
 pubDate: 2026-03-23
-coverImage: ../../../assets/blog/Landscapes_00003.webp
+coverImage: ../../../assets/media/Landscapes_00003.webp
+coverAlt: "Geometrie montane nitide che illustrano una topologia strutturata a quadrilateri e densità texel uniforme"
 description: "Perché la modellazione a soli quad previene artefatti di shading con la subdivision, e come una densità texel uniforme garantisce texture nitide."
 tags: ["3D & CGI", "Modellazione", "Workflow"]
 ---

@@ -7,32 +7,41 @@ import { localePath, useTranslations, type Locale } from '../i18n';
 interface Props {
   post: Post;
   lang?: Locale;
+  headingTag?: 'h2' | 'h3';
 }
 
-const { post, lang: propLang } = Astro.props;
+const { post, lang: propLang, headingTag = 'h3' } = Astro.props;
+const HeadingTag = headingTag;
 const parsed = splitId(post.id);
 const lang: Locale = propLang || (parsed.lang === 'en' ? 'en' : 'it');
 const { slug } = parsed;
 const t = useTranslations(lang);
 const mins = readingMinutes(post.body);
-const primaryTag = post.data.tags?.[0] || 'Monograph';
+const categoryKey = post.data.category ? `category_${post.data.category}` : '';
+const categoryBadge =
+  categoryKey && t(categoryKey) !== categoryKey
+    ? t(categoryKey)
+    : post.data.tags?.[0] || 'Monograph';
+const postHref = localePath(lang, `/blog/${slug}/`);
 ---
 
 <article class="group flex flex-col justify-between border-t border-line/60 pt-6 pb-10 transition-colors duration-500" data-reveal>
   <div>
     <div class="flex items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-5">
-      <span class="text-accent">{primaryTag}</span>
+      <span class="text-accent">{categoryBadge}</span>
       <div class="flex items-center gap-2">
         <time datetime={post.data.publishDate.toISOString()}>
           {formatDate(post.data.publishDate, lang)}
         </time>
-        <span>·</span>
+        <span aria-hidden="true">·</span>
         <span>{mins} MIN</span>
       </div>
     </div>
 
     <a
-      href={localePath(lang, `/blog/${slug}/`)}
+      href={postHref}
+      tabindex="-1"
+      aria-hidden="true"
       class="block relative w-full aspect-[16/10] overflow-hidden bg-surface mb-6 media-zoom"
     >
       <CmsPicture
@@ -44,11 +53,11 @@ const primaryTag = post.data.tags?.[0] || 'Monograph';
       />
     </a>
 
-    <h3 class="text-xl sm:text-2xl font-light tracking-tight leading-snug text-ink group-hover:text-accent transition-colors duration-300">
-      <a href={localePath(lang, `/blog/${slug}/`)}>
+    <HeadingTag class="text-xl sm:text-2xl font-light tracking-tight leading-snug text-ink group-hover:text-accent transition-colors duration-300">
+      <a href={postHref}>
         {post.data.title}
       </a>
-    </h3>
+    </HeadingTag>
 
     <p class="mt-3 line-clamp-3 text-sm font-light leading-relaxed text-muted">
       {post.data.description}
@@ -57,11 +66,13 @@ const primaryTag = post.data.tags?.[0] || 'Monograph';
 
   <div class="mt-6 pt-4">
     <a
-      href={localePath(lang, `/blog/${slug}/`)}
+      href={postHref}
+      tabindex="-1"
+      aria-hidden="true"
       class="inline-flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.24em] text-ink group-hover:text-accent transition-colors"
     >
       <span>{t('read_more')}</span>
-      <span class="transition-transform duration-300 group-hover:translate-x-1">↗</span>
+      <span class="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">↗</span>
     </a>
   </div>
 </article>

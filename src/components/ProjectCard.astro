@@ -8,9 +8,10 @@ interface Props {
   project: PortfolioItem;
   index?: number;
   lang?: Locale;
+  headingTag?: 'h2' | 'h3';
 }
 
-const { project, index = 0, lang: propLang } = Astro.props;
+const { project, index = 0, lang: propLang, headingTag = 'h3' } = Astro.props;
 const parsed = splitId(project.id);
 const lang: Locale = propLang || (parsed.lang === 'en' ? 'en' : 'it');
 const { slug } = parsed;
@@ -30,7 +31,9 @@ const t = useTranslations(lang);
   aspectRatio="4/5"
   aspectRatioLabel={project.data.aspectRatio}
   youtubeId={project.data.youtubeId}
+  videoUrl={project.data.videoUrl}
   tags={project.data.services || project.data.tags}
   transitionSlug={slug}
   ctaLabel={t('view_project')}
+  headingTag={headingTag}
 />

@@ -91,7 +91,7 @@ collections:
       - label: 'Testo Alternativo Immagine (Alt Text — WCAG 2.1 AA)'
         name: 'coverAlt'
         widget: 'string'
-        required: false
+        required: true
         hint: 'Consigliato per accessibilità e SEO: descrivi il soggetto dell’immagine.'
 
       - label: 'In Evidenza'
@@ -179,7 +179,7 @@ collections:
       - label: 'Cover Alt Text (WCAG 2.1 AA)'
         name: 'coverAlt'
         widget: 'string'
-        required: false
+        required: true
 
       - label: 'Featured'
         name: 'featured'

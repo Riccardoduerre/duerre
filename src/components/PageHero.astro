@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 
 <section class="relative overflow-hidden border-b border-line/60 pt-24 pb-20 md:pt-36 md:pb-28 px-6 sm:px-10">
   <div class="mx-auto max-w-[1440px]">
-    <div class="grid lg:grid-cols-12 gap-8 items-end" data-reveal>
+    <div class="grid lg:grid-cols-12 gap-8 items-end">
       <div class="lg:col-span-9">
         <span class="pill-subtext mb-6">
           {eyebrow}
@@ -34,8 +34,8 @@ const t = useTranslations(lang);
           <a href={localePath(lang, '/')} class="hover:text-ink transition-colors">
             {t('nav_home')}
           </a>
-          <span class="text-line">/</span>
-          <span class="text-ink">{title}</span>
+          <span class="text-line" aria-hidden="true">/</span>
+          <span class="text-ink" aria-current="page">{title}</span>
         </nav>
       </div>
     </div>

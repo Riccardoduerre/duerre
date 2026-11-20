@@ -1,7 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
 import ProjectDetailPage from '../../components/views/ProjectDetailPage.astro';
-import { splitId, type PortfolioItem } from '../../lib/content';
+import { getPortfolio, splitId, type PortfolioItem } from '../../lib/content';
 
 interface Props {
   project: PortfolioItem;
@@ -10,14 +9,7 @@ interface Props {
 }
 
 export async function getStaticPaths() {
-  const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
-  const entries = await getCollection('portfolio', (e: PortfolioItem) => {
-    const parsed = splitId(e.id);
-    return (parsed.lang === 'it' || parsed.lang === 'shared') && isVisible(e.data.draft);
-  });
-  const projects = entries.sort(
-    (a: PortfolioItem, b: PortfolioItem) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-  );
+  const projects = await getPortfolio('it');
 
   return projects.map((project, i) => {
     const prev = i > 0 ? projects[i - 1] : null;

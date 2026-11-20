@@ -2,7 +2,8 @@
 title: "The Power of Negative Fill: Subtracting Light to Build Contrast"
 publishDate: 2026-06-01
 pubDate: 2026-06-01
-coverImage: ../../../assets/blog/_DSC2365.webp
+coverImage: ../../../assets/media/_DSC2365.webp
+coverAlt: "Natural light portrait utilizing architectural negative fill to carve deep chiaroscuro shadow contrast"
 description: "Why great photographers bring black solids rather than silver reflectors to overcast outdoor commercial shoots."
 tags: ["Lighting", "Cinematography", "Photography"]
 ---

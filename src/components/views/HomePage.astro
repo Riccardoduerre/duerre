@@ -1,22 +1,21 @@
 ---
 import { Picture } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import CmsPicture from '../CmsPicture.astro';
 import HeroSection from '../HeroSection.astro';
 import ServiceProjectCard from '../ServiceProjectCard.astro';
+import PostPreview from '../PostPreview.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
-import { splitId, formatDate, readingMinutes, type PortfolioItem, type Post } from '../../lib/content';
+import { getPortfolio, getPosts, splitId } from '../../lib/content';
 import { useTranslations, localePath, type Locale } from '../../i18n';
 import { SITE } from '../../config/site';
 
 import heroImg from '../../assets/site/hero.jpg';
 import studioImg from '../../assets/site/studio.jpg';
-import imgPhoto from '../../assets/blog/Giau_00001.webp';
-import imgVideo from '../../assets/blog/_DSC2365.webp';
-import img3d from '../../assets/blog/Giau_00004.webp';
-import imgMarketing from '../../assets/blog/Landscapes_00003.webp';
-import imgVision from '../../assets/blog/DSCN7050.webp';
+import imgPhoto from '../../assets/media/Giau_00001.webp';
+import imgVideo from '../../assets/media/_DSC2365.webp';
+import img3d from '../../assets/media/Giau_00004.webp';
+import imgMarketing from '../../assets/media/Landscapes_00003.webp';
+import imgVision from '../../assets/media/DSCN7050.webp';
 
 interface Props {
   lang: Locale;
@@ -25,22 +24,10 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
-const matchesLocale = (id: string) => {
-  const parsed = splitId(id);
-  return parsed.lang === lang || parsed.lang === 'shared';
-};
+// Pull portfolio and blog entries via centralized content helpers
+const allProjects = await getPortfolio(lang);
 
-// Pull portfolio and blog entries dynamically via Astro's native getCollection()
-const rawPortfolio = await getCollection(
-  'portfolio',
-  (entry: PortfolioItem) => matchesLocale(entry.id) && isVisible(entry.data.draft),
-);
-const allProjects = rawPortfolio.sort(
-  (a: PortfolioItem, b: PortfolioItem) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
-
-// Order Bento showcase so the Cinema Showreel dominates Slot 01, 3D CGI takes the tall Slot 02, followed by photography campaigns
+// Order Bento showcase: prioritize featured projects and editorial slot sequence
 const bentoOrder = [
   'commercial-showreel',
   'lumen-atelier',
@@ -48,18 +35,21 @@ const bentoOrder = [
   'urban-character-study',
   'ethereal-landscapes',
 ];
-const bentoProjects = [...allProjects].sort((a, b) => {
+const featuredPool = allProjects.filter((p) => p.data.featured);
+const showcaseSource = featuredPool.length > 0 ? featuredPool : allProjects;
+const bentoProjects = [...showcaseSource].sort((a, b) => {
+  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
   const idxA = bentoOrder.indexOf(splitId(a.id).slug);
   const idxB = bentoOrder.indexOf(splitId(b.id).slug);
   return (idxA === -1 ? 99 : idxA) - (idxB === -1 ? 99 : idxB);
 });
 
-const rawPosts = await getCollection(
-  'blog',
-  (entry: Post) => matchesLocale(entry.id) && isVisible(entry.data.draft),
-);
-const latestPosts = rawPosts
-  .sort((a: Post, b: Post) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+const allPosts = await getPosts(lang);
+const latestPosts = [...allPosts]
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    return b.data.publishDate.valueOf() - a.data.publishDate.valueOf();
+  })
   .slice(0, 3);
 
 const capabilities = [
@@ -177,6 +167,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
 >
   <!-- 01. CINEMATIC LOOKBOOK HERO -->
   <HeroSection
+    lang={lang}
     eyebrow={t('hero_eyebrow')}
     headlinePrefix={t('hero_headline_prefix')}
     headlineHighlight={t('hero_headline_highlight')}
@@ -188,7 +179,11 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
     secondaryCtaHref={localePath(lang, '/contact/')}
     secondaryCtaAriaLabel={t('hero_cta_secondary')}
     showreelHref={localePath(lang, '/portfolio/commercial-showreel/')}
-    showreelLabel={t('hero_cta_primary')}
+    showreelLabel={
+      lang === 'it'
+        ? 'Guarda lo Showreel Cinematografico Duerre (2.39:1 Anamorphic)'
+        : 'Watch the Duerre Cinematic Showreel (2.39:1 Anamorphic)'
+    }
     backgroundImage={heroImg}
     backgroundAlt="Duerre Visual Atelier — Commercial Photography, Cinema & 3D CGI"
     telemetryLeft="01 / VISUAL ARCHITECTURE ATELIER"
@@ -196,7 +191,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
     telemetryRight={lang === 'it' ? 'ITALIA / WORLDWIDE' : 'ITALY / WORLDWIDE'}
   />
 
-  <!-- 02. ASYMMETRIC BENTO GRID PORTFOLIO SHOWCASE ("alcuni dei nostri lavori") -->
+  <!-- 02. ASYMMETRIC BENTO GRID PORTFOLIO SHOWCASE -->
   <section id="featured-work" class="py-28 md:py-44 px-6 sm:px-10">
     <div class="mx-auto max-w-[1440px]">
       <!-- Editorial Section Header -->
@@ -212,7 +207,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
         <div class="lg:col-span-4 flex lg:justify-end">
           <a href={localePath(lang, '/portfolio/')} class="learn-more-btn">
             <span>{t('all_projects_link')} ({allProjects.length})</span>
-            <span class="arrow-box">↗</span>
+            <span class="arrow-box" aria-hidden="true">↗</span>
           </a>
         </div>
       </div>
@@ -239,6 +234,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
               aspectRatio="fill"
               aspectRatioLabel={project.data.aspectRatio}
               youtubeId={project.data.youtubeId}
+              videoUrl={project.data.videoUrl}
               tags={project.data.services || project.data.tags}
               featured={bento.isHero}
               transitionSlug={slug}
@@ -250,7 +246,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
     </div>
   </section>
 
-  <!-- 03. CAPABILITIES MATRIX (Replaces legacy abstract skill percentage bars) -->
+  <!-- 03. CAPABILITIES MATRIX -->
   <section class="section-carbon py-28 md:py-44 px-6 sm:px-10 border-y border-white/10">
     <div class="mx-auto max-w-[1440px]">
       <!-- Matrix Header -->
@@ -269,7 +265,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
           </p>
           <a href={localePath(lang, '/services/')} class="learn-more-btn-dark">
             <span>{t('capabilities_subtitle')}</span>
-            <span class="arrow-box">↗</span>
+            <span class="arrow-box" aria-hidden="true">↗</span>
           </a>
         </div>
       </div>
@@ -294,8 +290,8 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
                       {cap.title}
                     </h3>
                   </div>
-                  <span class="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45 group-hover:text-white transition-colors">
-                    {cap.subtitle} ↗
+                  <span class="font-mono text-[10px] uppercase tracking-[0.24em] text-white/60 group-hover:text-white transition-colors">
+                    {cap.subtitle} <span aria-hidden="true">↗</span>
                   </span>
                 </div>
 
@@ -312,7 +308,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
                   </div>
                 </div>
 
-                <div class="mt-6 pl-0 sm:pl-11 font-mono text-[9px] uppercase tracking-[0.26em] text-white/35">
+                <div class="mt-6 pl-0 sm:pl-11 font-mono text-[9px] uppercase tracking-[0.26em] text-white/60">
                   PIPELINE // {cap.telemetry}
                 </div>
               </a>
@@ -373,7 +369,7 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
           </p>
           <a href={localePath(lang, '/about/')} class="learn-more-btn">
             <span>{t('discover_more')}</span>
-            <span class="arrow-box">↗</span>
+            <span class="arrow-box" aria-hidden="true">↗</span>
           </a>
         </div>
 
@@ -468,65 +464,14 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
           </div>
           <a href={localePath(lang, '/blog/')} class="learn-more-btn self-start md:self-auto">
             <span>{t('go_to_blog')}</span>
-            <span class="arrow-box">↗</span>
+            <span class="arrow-box" aria-hidden="true">↗</span>
           </a>
         </div>
 
         <div class="grid md:grid-cols-3 gap-10 lg:gap-12">
-          {latestPosts.map((post) => {
-            const { slug } = splitId(post.id);
-            const mins = readingMinutes(post.body);
-            const primaryTag = post.data.tags?.[0] || 'Journal';
-            return (
-              <article class="group flex flex-col justify-between border-t border-line/60 pt-6" data-reveal>
-                <div>
-                  <div class="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-5">
-                    <span class="text-accent">{primaryTag}</span>
-                    <div class="flex items-center gap-2">
-                      <time datetime={post.data.publishDate.toISOString()}>
-                        {formatDate(post.data.publishDate, lang)}
-                      </time>
-                      <span>·</span>
-                      <span>{mins} MIN</span>
-                    </div>
-                  </div>
-
-                  <a
-                    href={localePath(lang, `/blog/${slug}/`)}
-                    class="block relative aspect-[16/10] overflow-hidden bg-surface mb-6 media-zoom"
-                  >
-                    <CmsPicture
-                      src={post.data.coverImage}
-                      alt={post.data.coverAlt || post.data.title}
-                      class="h-full w-full object-cover"
-                      widths={[400, 800]}
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </a>
-
-                  <h3 class="text-xl sm:text-2xl font-light tracking-tight text-ink leading-snug mb-3 group-hover:text-accent transition-colors">
-                    <a href={localePath(lang, `/blog/${slug}/`)}>
-                      {post.data.title}
-                    </a>
-                  </h3>
-
-                  <p class="text-sm font-light text-muted leading-relaxed line-clamp-3">
-                    {post.data.description}
-                  </p>
-                </div>
-
-                <div class="mt-6 pt-4">
-                  <a
-                    href={localePath(lang, `/blog/${slug}/`)}
-                    class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-ink group-hover:text-accent transition-colors"
-                  >
-                    <span>{t('read_more')}</span>
-                    <span class="transition-transform duration-300 group-hover:translate-x-1">↗</span>
-                  </a>
-                </div>
-              </article>
-            );
-          })}
+          {latestPosts.map((post) => (
+            <PostPreview post={post} lang={lang} />
+          ))}
         </div>
       </div>
     </section>
@@ -560,7 +505,6 @@ function getBentoClasses(span?: string, index = 0): { wrapper: string; aspect: s
       });
     }
 
-    initCapabilitiesMatrix();
     document.addEventListener('astro:page-load', initCapabilitiesMatrix);
   </script>
 </Layout>

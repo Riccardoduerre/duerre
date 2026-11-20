@@ -2,7 +2,8 @@
 title: "Physically Based Rendering: padroneggiare la pipeline Roughness-Metallic"
 publishDate: 2026-09-07
 pubDate: 2026-09-07
-coverImage: ../../../assets/blog/Giau_00004.webp
+coverImage: ../../../assets/media/Giau_00004.webp
+coverAlt: "Formazione rocciosa materica delle Dolomiti che illustra la rugosità microfacet PBR e la riflettanza di Fresnel"
 description: "Demistificare la microfacet theory, la riflettanza dielettrica di Fresnel e perché le mappe di roughness sono la vera anima del realismo 3D."
 tags: ["3D & CGI", "Shading", "Rendering"]
 ---

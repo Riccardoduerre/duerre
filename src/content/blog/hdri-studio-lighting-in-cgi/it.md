@@ -2,7 +2,8 @@
 title: "Illuminare mondi 3D: HDRI abbinate a luci d’accento controllate"
 publishDate: 2026-07-27
 pubDate: 2026-07-27
-coverImage: ../../../assets/blog/Landscapes_00002.webp
+coverImage: ../../../assets/media/Landscapes_00002.webp
+coverAlt: "Illuminazione ambientale ad alta gamma dinamica abbinata a luci d'accento direzionali sui volumi"
 description: "Perché affidarsi solo a un’environment map rende i render piatti, e come l’aggiunta di luci di contorno intaglia volumi tangibili."
 tags: ["3D & CGI", "Illuminazione", "Rendering"]
 ---

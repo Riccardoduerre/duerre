@@ -14,7 +14,6 @@ if (fs.existsSync(dir)) {
 }
 
 fs.mkdirSync(dir, { recursive: true });
-fs.copyFileSync('src/assets/blog/_RIK7376_HDR.webp', path.join(dir, 'cover.webp'));
 
 const date = new Date().toISOString().split('T')[0];
 const year = date.slice(0, 4);
@@ -42,14 +41,14 @@ gear: []
 challenge: "Describe the creative challenge"
 solution: "Describe the strategic and technical approach"
 results: "Key impact or metrics"
-coverImage: "./cover.webp"
+coverImage: "../../../assets/media/_DSC2919.webp"
 coverAlt: "Describe the cover image"
 # youtubeId: "vpW0ibNGsBo"
 gallery: []
 ---
 `;
 
-fs.writeFileSync(path.join(dir, 'en.md'), `${frontmatter('New Project', 'English summary.')}\nEnglish case study.\n`);
-fs.writeFileSync(path.join(dir, 'it.md'), `${frontmatter('Nuovo Progetto', 'Sommario in italiano.')}\nCaso studio in italiano.\n`);
+fs.writeFileSync(path.join(dir, 'en.md'), `${frontmatter('New Project', 'English summary of the case study.')}\nEnglish case study.\n`);
+fs.writeFileSync(path.join(dir, 'it.md'), `${frontmatter('Nuovo Progetto', 'Sommario in italiano del caso studio.')}\nCaso studio in italiano.\n`);
 
-console.log(`Created draft portfolio project in ${dir} — replace cover.webp, then set draft: false to publish.`);
+console.log(`Created draft portfolio project in ${dir} — update coverImage, then set draft: false to publish.`);

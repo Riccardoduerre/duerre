@@ -53,6 +53,7 @@ const nextSteps =
   title={`${t('thanks_title')} | Duerre`}
   description={t('thanks_desc')}
   lang={lang}
+  noindex={true}
 >
   <PageHero
     lang={lang}
@@ -86,11 +87,11 @@ const nextSteps =
         <div class="flex flex-wrap gap-4">
           <a href={localePath(lang, '/')} class="btn-primary">
             <span>{t('thanks_back')}</span>
-            <span>↗</span>
+            <span aria-hidden="true">↗</span>
           </a>
           <a href={localePath(lang, '/portfolio/')} class="btn-ghost">
             <span>{t('hero_cta_primary')}</span>
-            <span>↗</span>
+            <span aria-hidden="true">↗</span>
           </a>
         </div>
       </div>

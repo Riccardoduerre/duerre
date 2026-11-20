@@ -7,7 +7,7 @@ import DualCtaBanner from '../DualCtaBanner.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n';
 import { SITE } from '../../config/site';
 
-import portraitImg from '../../assets/blog/DSCN7050.webp';
+import portraitImg from '../../assets/media/DSCN7050.webp';
 import studioImg from '../../assets/site/studio.jpg';
 
 interface Props {
@@ -77,14 +77,14 @@ const faqItems =
   <!-- 01. CINEMATIC STUDIO PLATE & EDITORIAL MANIFESTO -->
   <section class="py-24 md:py-40 px-6 sm:px-10">
     <div class="mx-auto max-w-[1440px]">
-      <!-- Full-Bleed Studio Panorama -->
-      <div class="overflow-hidden bg-surface aspect-[21/9] mb-24 md:mb-36 media-zoom group" data-reveal>
+      <!-- Full-Bleed Studio Panorama (Above the fold: no data-reveal opacity delay) -->
+      <div class="overflow-hidden bg-surface aspect-[21/9] mb-24 md:mb-36 media-zoom group">
         <Picture
           formats={['avif', 'webp']}
           src={studioImg}
           alt="Duerre Studio — Riccardo Riva"
           class="h-full w-full object-cover"
-          widths={[800, 1400, 2200]}
+          widths={[640, 1024, 1200]}
           sizes="100vw"
           loading="eager"
           fetchpriority="high"
@@ -116,11 +116,11 @@ const faqItems =
           <div class="flex flex-wrap items-center gap-8 pt-4">
             <a href={localePath(lang, '/services/')} class="learn-more-btn">
               <span>{t('nav_services')}</span>
-              <span class="arrow-box">↗</span>
+              <span class="arrow-box" aria-hidden="true">↗</span>
             </a>
             <a href={localePath(lang, '/portfolio/')} class="learn-more-btn">
               <span>{t('nav_projects')}</span>
-              <span class="arrow-box">↗</span>
+              <span class="arrow-box" aria-hidden="true">↗</span>
             </a>
           </div>
         </div>

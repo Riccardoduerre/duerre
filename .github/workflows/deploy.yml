@@ -3,24 +3,21 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-${{ github.ref }}"
   cancel-in-progress: false
 
 jobs:
   build:
     name: Build & Verify Astro Static Site
     runs-on: ubuntu-latest
-    env:
-      TINACMS_CLIENT_ID: ${{ secrets.TINACMS_CLIENT_ID }}
-      TINACMS_TOKEN: ${{ secrets.TINACMS_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,6 +29,7 @@ jobs:
           cache: 'npm'
 
       - name: Setup GitHub Pages configuration
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
       - name: Install dependencies deterministically
@@ -43,36 +41,37 @@ jobs:
           path: |
             .astro
             node_modules/.astro
-          key: ${{ runner.os }}-astro-assets-${{ hashFiles('src/assets/**/*', 'public/uploads/**/*', 'astro.config.mjs', 'src/content/config.ts') }}
+          key: ${{ runner.os }}-astro-assets-${{ hashFiles('src/assets/**/*', 'public/uploads/**/*', 'astro.config.mjs', 'src/content.config.ts', 'src/content/**/*.{md,mdx}', 'package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-astro-assets-
 
       - name: Validate Content Collections & TypeScript (Strict Check)
         run: npm run typecheck
 
-      - name: Build TinaCMS Admin Panel (if TinaCloud credentials are set)
-        if: ${{ env.TINACMS_CLIENT_ID != '' && env.TINACMS_TOKEN != '' }}
-        run: npx @tinacms/cli build --skip-cloud-checks
-
       - name: Build Astro Production Bundle
         env:
           NODE_ENV: production
         run: npm run build
 
-      - name: Ensure .nojekyll and CNAME exist in dist/
+      - name: Verify CNAME and .nojekyll in dist/
         run: |
           touch dist/.nojekyll
-          if [ ! -f dist/CNAME ]; then echo "duerremedia.com" > dist/CNAME; fi
+          test -f dist/CNAME
 
       - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
 
   deploy:
     name: Deploy to GitHub Pages
     needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

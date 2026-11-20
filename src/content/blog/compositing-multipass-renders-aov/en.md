@@ -2,7 +2,8 @@
 title: "Compositing Multipass Renders: Beauty Passes, AOVs and Cryptomatte"
 publishDate: 2026-02-09
 pubDate: 2026-02-09
-coverImage: ../../../assets/blog/Giau_00001.webp
+coverImage: ../../../assets/media/Giau_00001.webp
+coverAlt: "High-dynamic-range scene illustrating separated diffuse, specular, and atmospheric depth passes"
 description: "Breaking down the CGI render equation into separate diffuse, specular, and emissive passes for surgical control in post."
 tags: ["3D & CGI", "Post-Production", "VFX"]
 ---

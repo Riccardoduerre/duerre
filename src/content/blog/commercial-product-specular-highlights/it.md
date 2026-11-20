@@ -2,7 +2,8 @@
 title: "Illuminare superfici speculari: scrim, gradienti e controllo dei riflessi"
 publishDate: 2026-03-09
 pubDate: 2026-03-09
-coverImage: ../../../assets/blog/_DSC2344.webp
+coverImage: ../../../assets/media/_DSC2344.webp
+coverAlt: "Gradienti di riflessione speculare controllati e diffusione morbida della luce su superficie materica"
 description: "Gli oggetti metallici e lucidi non si illuminano direttamente: si illumina ciò che riflettono. Padroneggiare i gradienti di diffusione."
 tags: ["Illuminazione", "Fotografia", "Commerciale"]
 ---

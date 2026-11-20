@@ -3,31 +3,58 @@ import Layout from '../layouts/Layout.astro';
 import { useTranslations, DEFAULT_LOCALE } from '../i18n';
 
 const t = useTranslations(DEFAULT_LOCALE);
+const tEn = useTranslations('en');
 ---
 
 <Layout
   title={`404 — ${t('not_found_title')} | Duerre`}
   description="Pagina non trovata"
   lang={DEFAULT_LOCALE}
+  noindex={true}
 >
-  <section class="mx-auto max-w-[1440px] px-6 sm:px-10 py-32 md:py-48 flex flex-col items-start justify-center min-h-[70vh]">
+  <section
+    id="not-found-section"
+    data-en-title={tEn('not_found_title')}
+    data-en-back={tEn('thanks_back')}
+    class="mx-auto max-w-[1440px] px-6 sm:px-10 py-32 md:py-48 flex flex-col items-start justify-center min-h-[70vh]"
+  >
     <span class="pill-subtext mb-6">ERROR 404 / MISSING FRAME</span>
-    <h1 class="display-monument text-ink mb-8">
+    <h1 id="not-found-heading" class="display-monument text-ink mb-8">
       {t('not_found_title')}
     </h1>
-    <a href="/" class="btn-primary">
-      <span>{t('thanks_back')}</span>
-      <span>↗</span>
+    <a id="not-found-cta" href="/" class="btn-primary">
+      <span id="not-found-cta-label">{t('thanks_back')}</span>
+      <span aria-hidden="true">↗</span>
     </a>
   </section>
 
   <script is:inline>
-    if (window.location.pathname === '/it' || window.location.pathname.startsWith('/it/')) {
-      const target =
-        (window.location.pathname.replace(/^\/it(?=\/|$)/, '') || '/') +
-        window.location.search +
-        window.location.hash;
-      window.location.replace(target);
-    }
+    (function () {
+      const path = window.location.pathname;
+      if (path === '/it' || path.startsWith('/it/')) {
+        const target =
+          (path.replace(/^\/it(?=\/|$)/, '') || '/') +
+          window.location.search +
+          window.location.hash;
+        window.location.replace(target);
+        return;
+      }
+
+      if (path === '/en' || path.startsWith('/en/')) {
+        document.documentElement.lang = 'en';
+        const section = document.getElementById('not-found-section');
+        const heading = document.getElementById('not-found-heading');
+        const cta = document.getElementById('not-found-cta');
+        const ctaLabel = document.getElementById('not-found-cta-label');
+        if (section && heading && section.dataset.enTitle) {
+          heading.textContent = section.dataset.enTitle;
+          document.title = '404 — ' + section.dataset.enTitle + ' | Duerre';
+        }
+        if (cta) cta.setAttribute('href', '/en/');
+        if (section && ctaLabel && section.dataset.enBack) {
+          ctaLabel.textContent = section.dataset.enBack;
+        }
+      }
+    })();
   </script>
 </Layout>

@@ -2,7 +2,8 @@
 title: "Rapporti di contrasto Key-to-Fill: disegnare la luce emotiva nel video"
 publishDate: 2026-05-18
 pubDate: 2026-05-18
-coverImage: ../../../assets/blog/DSCN7050.webp
+coverImage: ../../../assets/media/DSCN7050.webp
+coverAlt: "Ritratto editoriale low-key scolpito con un rapporto di contrasto cinematografico 8:1 tra luce chiave e riempimento"
 description: "Passare da un’illuminazione piatta 2:1 a rapporti cinematografici 8:1 usando book light e sfumature ambientali controllate."
 tags: ["Illuminazione", "Cinematografia", "Teoria"]
 ---

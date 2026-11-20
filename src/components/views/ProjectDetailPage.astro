@@ -25,22 +25,25 @@ const t = useTranslations(lang);
   description={project.data.description}
   lang={lang}
   image={imageUrl(project.data.coverImage)}
+  imageAlt={project.data.coverAlt}
   type="creativework"
+  publishDate={project.data.publishDate}
+  tags={project.data.tags}
 >
   <article class="pt-16 md:pt-28 pb-24">
-    <!-- 01. EDITORIAL CASE STUDY HEADER -->
-    <header class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-14 md:mb-20" data-reveal>
+    <!-- 01. EDITORIAL CASE STUDY HEADER (Above the fold: no data-reveal opacity delay) -->
+    <header class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-14 md:mb-20">
       <div class="flex flex-wrap items-center justify-between gap-4 mb-10 font-mono text-[10px] uppercase tracking-[0.26em] text-muted">
         <a
           href={localePath(lang, '/portfolio/')}
           class="inline-flex items-center gap-2 text-ink hover:text-accent transition-colors"
         >
-          <span>←</span>
+          <span aria-hidden="true">←</span>
           <span>{t('nav_projects')}</span>
         </a>
         <div class="flex items-center gap-3">
           <span class="text-accent">{t(`category_${project.data.category}`)}</span>
-          <span>/</span>
+          <span aria-hidden="true">/</span>
           <span>{project.data.year}</span>
         </div>
       </div>
@@ -97,8 +100,8 @@ const t = useTranslations(lang);
       </div>
     </header>
 
-    <!-- 02. HIGH-IMPACT WIDESCREEN HERO FRAME -->
-    <div class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-20 md:mb-32" data-reveal>
+    <!-- 02. HIGH-IMPACT WIDESCREEN HERO FRAME (Above the fold: no data-reveal opacity delay) -->
+    <div class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-20 md:mb-32">
       <div class="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-surface">
         <CmsPicture
           src={project.data.coverImage}
@@ -118,9 +121,9 @@ const t = useTranslations(lang);
         <div class="grid md:grid-cols-3 gap-10 lg:gap-14 border-y border-line/60 py-14">
           {project.data.challenge && (
             <div>
-              <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
+              <h2 class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
                 {t('challenge_title')}
-              </span>
+              </h2>
               <p class="text-sm sm:text-base font-light text-muted leading-relaxed">
                 {project.data.challenge}
               </p>
@@ -129,9 +132,9 @@ const t = useTranslations(lang);
 
           {project.data.solution && (
             <div>
-              <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
+              <h2 class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
                 {t('solution_title')}
-              </span>
+              </h2>
               <p class="text-sm sm:text-base font-light text-muted leading-relaxed">
                 {project.data.solution}
               </p>
@@ -140,9 +143,9 @@ const t = useTranslations(lang);
 
           {project.data.results && (
             <div>
-              <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
+              <h2 class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
                 {t('results_title')}
-              </span>
+              </h2>
               <p class="text-sm sm:text-base font-normal text-ink leading-relaxed">
                 {project.data.results}
               </p>
@@ -158,13 +161,13 @@ const t = useTranslations(lang);
       <aside class="lg:col-span-4 space-y-10 lg:sticky lg:top-28 self-start" data-reveal>
         {project.data.deliverables && project.data.deliverables.length > 0 && (
           <div class="border-t border-line/60 pt-6">
-            <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
+            <h2 class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
               {t('deliverables_title')}
-            </span>
+            </h2>
             <ul class="space-y-2.5 text-sm font-light text-muted">
               {project.data.deliverables.map((item) => (
                 <li class="flex items-start gap-3">
-                  <span class="font-mono text-xs text-accent">—</span>
+                  <span class="font-mono text-xs text-accent" aria-hidden="true">—</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -174,13 +177,13 @@ const t = useTranslations(lang);
 
         {project.data.gear && project.data.gear.length > 0 && (
           <div class="border-t border-line/60 pt-6">
-            <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
+            <h2 class="font-mono text-[10px] uppercase tracking-[0.26em] text-accent block mb-4">
               {t('gear_title')}
-            </span>
+            </h2>
             <ul class="space-y-2 font-mono text-xs text-muted">
               {project.data.gear.map((item) => (
                 <li class="flex items-start gap-2.5">
-                  <span class="text-accent/70">/</span>
+                  <span class="text-accent/70" aria-hidden="true">/</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -190,9 +193,9 @@ const t = useTranslations(lang);
 
         {project.data.tags && project.data.tags.length > 0 && (
           <div class="border-t border-line/60 pt-6">
-            <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-muted block mb-4">
+            <h2 class="font-mono text-[10px] uppercase tracking-[0.26em] text-muted block mb-4">
               INDEX TAGS
-            </span>
+            </h2>
             <div class="flex flex-wrap gap-2">
               {project.data.tags.map((tag) => (
                 <span class="border border-line/70 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
@@ -214,7 +217,7 @@ const t = useTranslations(lang);
     {project.data.youtubeId && (
       <section class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-28 md:mb-36" data-reveal>
         <div class="flex items-center justify-between border-t border-line/60 pt-8 mb-8">
-          <span class="pill-subtext">CINEMA PLAYBACK · {project.data.aspectRatio || '2.39:1'}</span>
+          <h2 class="pill-subtext">CINEMA PLAYBACK · {project.data.aspectRatio || '2.39:1'}</h2>
           <span class="font-mono text-[10px] uppercase tracking-[0.24em] text-muted">MASTER STREAM</span>
         </div>
         <YouTubeEmbed
@@ -229,12 +232,12 @@ const t = useTranslations(lang);
     {project.data.gallery && project.data.gallery.length > 0 && (
       <section class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-28 md:mb-36">
         <div class="flex items-center justify-between border-t border-line/60 pt-8 mb-12" data-reveal>
-          <span class="pill-subtext">PRODUCTION PLATES & STILLS</span>
+          <h2 class="pill-subtext">PRODUCTION PLATES & STILLS</h2>
           <span class="font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
             {String(project.data.gallery.length).padStart(2, '0')} FRAMES
           </span>
         </div>
-        <PhotoGallery images={project.data.gallery} />
+        <PhotoGallery images={project.data.gallery} lang={lang} />
       </section>
     )}
 
@@ -252,7 +255,7 @@ const t = useTranslations(lang);
               class="group block"
             >
               <span class="font-mono text-[10px] text-muted uppercase tracking-[0.26em] block mb-2">
-                ← {t('prev_project')}
+                <span aria-hidden="true">←</span> {t('prev_project')}
               </span>
               <span class="text-2xl sm:text-3xl font-light tracking-tight text-ink group-hover:text-accent transition-colors">
                 {prev.data.title}
@@ -267,7 +270,7 @@ const t = useTranslations(lang);
               class="group block"
             >
               <span class="font-mono text-[10px] text-muted uppercase tracking-[0.26em] block mb-2">
-                {t('next_project')} →
+                {t('next_project')} <span aria-hidden="true">→</span>
               </span>
               <span class="text-2xl sm:text-3xl font-light tracking-tight text-ink group-hover:text-accent transition-colors">
                 {next.data.title}

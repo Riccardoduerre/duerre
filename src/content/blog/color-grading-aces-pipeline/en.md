@@ -3,7 +3,8 @@ featured: true
 title: "The ACES Color Pipeline: Color Space Management for Commercial Films"
 publishDate: 2026-02-23
 pubDate: 2026-02-23
-coverImage: ../../../assets/blog/Landscapes_00001.webp
+coverImage: ../../../assets/media/Landscapes_00001.webp
+coverAlt: "Wide-gamut panoramic mountain frame graded in an ACEScc color management pipeline"
 description: "Standardizing mixed camera sources into an unconstrained wide gamut workspace to maintain highlight integrity and smooth roll-off."
 tags: ["Color Grading", "Post-Production", "ACES"]
 ---

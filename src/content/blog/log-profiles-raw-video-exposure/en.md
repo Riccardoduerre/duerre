@@ -3,7 +3,8 @@ featured: true
 title: "Exposing Log Curves and RAW Video: The False Color Method"
 publishDate: 2026-08-10
 pubDate: 2026-08-10
-coverImage: ../../../assets/blog/_DSC2344.webp
+coverImage: ../../../assets/media/_DSC2344.webp
+coverAlt: "Calibrated middle-grey exposure study for logarithmic gamma curves and RAW cinema capture"
 description: "Stop guessing on flat monitor profiles. How middle grey IRE mapping guarantees clean shadow recovery and rich skin tones."
 tags: ["Cinematography", "Color Grading", "Workflow"]
 ---

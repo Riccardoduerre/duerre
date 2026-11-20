@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import heroFallbackImg from '../assets/site/hero.jpg';
+import { useTranslations, type Locale } from '../i18n';
 
 export interface HeroMetric {
   value: string;
@@ -10,6 +11,7 @@ export interface HeroMetric {
 }
 
 export interface Props {
+  lang?: Locale;
   eyebrow?: string;
   headlinePrefix?: string;
   headlineHighlight?: string;
@@ -32,48 +34,57 @@ export interface Props {
   metrics?: HeroMetric[];
 }
 
+const detectedLang: Locale =
+  Astro.props.lang ?? (Astro.url.pathname === '/en' || Astro.url.pathname.startsWith('/en/') ? 'en' : 'it');
+const t = useTranslations(detectedLang);
+
+const defaultMetrics: HeroMetric[] = [
+  {
+    value: '100/100',
+    label: 'Core Web Vitals & SEO',
+    spec: detectedLang === 'en' ? 'ZERO-JS ARCHITECTURE' : 'ARCHITETTURA ZERO-JS',
+  },
+  {
+    value: t('hero_metric_1_value'),
+    label: t('hero_metric_1_label'),
+    spec: 'ACEScc · RAW 16-BIT · HDR',
+  },
+  {
+    value: t('hero_metric_2_value'),
+    label: t('hero_metric_2_label'),
+    spec: detectedLang === 'en' ? 'FULL-FRAME OPTICS & PBR CGI' : 'OTTICHE FULL-FRAME & CGI PBR',
+  },
+  {
+    value: t('hero_metric_3_value'),
+    label: t('hero_metric_3_label'),
+    spec: detectedLang === 'en' ? 'CONTRAST > 9.1:1' : 'CONTRASTO > 9.1:1',
+  },
+];
+
 const {
-  eyebrow = 'ATELIER DI PRODUZIONE VISIVA & DIREZIONE CREATIVA',
-  headlinePrefix = 'Immagini ad alto impatto per brand che cercano',
-  headlineHighlight = 'autorevolezza visiva.',
+  eyebrow = t('hero_eyebrow'),
+  headlinePrefix = t('hero_headline_prefix'),
+  headlineHighlight = t('hero_headline_highlight'),
   headlineSuffix = '',
-  subheadline = 'Fotografia commerciale, cinema anamorfico, CGI 3D fotorealistica e direzione editoriale. Progettiamo ecosistemi visivi ad altissima resa estetica e prestazionale.',
-  primaryCtaLabel = 'Esplora i Progetti Selezionati',
+  subheadline = t('hero_subheadline'),
+  primaryCtaLabel = t('hero_cta_primary'),
   primaryCtaHref = '#featured-work',
-  primaryCtaAriaLabel = 'Esplora i progetti selezionati nel portfolio Duerre Media',
-  secondaryCtaLabel = 'Richiedi una Consulenza di Produzione',
-  secondaryCtaHref = '/contact/',
-  secondaryCtaAriaLabel = 'Vai alla pagina contatti per richiedere una consulenza di produzione',
-  showreelHref = '/portfolio/commercial-showreel/',
-  showreelLabel = 'Guarda lo Showreel Cinematografico Duerre (2.39:1 Anamorphic)',
+  primaryCtaAriaLabel = t('hero_cta_primary'),
+  secondaryCtaLabel = t('hero_cta_secondary'),
+  secondaryCtaHref = detectedLang === 'en' ? '/en/contact/' : '/contact/',
+  secondaryCtaAriaLabel = t('hero_cta_secondary'),
+  showreelHref = detectedLang === 'en' ? '/en/portfolio/commercial-showreel/' : '/portfolio/commercial-showreel/',
+  showreelLabel =
+    detectedLang === 'en'
+      ? 'Watch Duerre Cinematic Showreel (2.39:1 Anamorphic)'
+      : 'Guarda lo Showreel Cinematografico Duerre (2.39:1 Anamorphic)',
   backgroundImage = heroFallbackImg,
   backgroundAlt = 'Set di produzione cinematografica e fotografica Duerre Media',
   videoSrc,
   telemetryLeft = '01 / VISUAL ARCHITECTURE ATELIER',
   telemetryCenter = 'OPTICS · ANAMORPHIC MOTION · 3D CGI · ACEScc',
-  telemetryRight = 'ITALIA / WORLDWIDE',
-  metrics = [
-    {
-      value: '100/100',
-      label: 'Core Web Vitals & SEO',
-      spec: 'ARCHITETTURA ZERO-JS',
-    },
-    {
-      value: 'ACEScc',
-      label: 'Pipeline Colore Cinema',
-      spec: 'RAW 16-BIT · HDR MASTER',
-    },
-    {
-      value: '2.39:1',
-      label: 'Produzione Anamorfica & 3D',
-      spec: 'OTTICHE FULL-FRAME & CGI PBR',
-    },
-    {
-      value: 'WCAG AA+',
-      label: 'Accessibilità Certificata',
-      spec: 'CONTRASTO > 9.1:1',
-    },
-  ],
+  telemetryRight = detectedLang === 'en' ? 'ITALY / WORLDWIDE' : 'ITALIA / WORLDWIDE',
+  metrics = defaultMetrics,
 } = Astro.props;
 
 const isAstroImage = typeof backgroundImage === 'object' && backgroundImage !== null && 'src' in backgroundImage;
@@ -85,7 +96,10 @@ const posterUrl = isAstroImage ? backgroundImage.src : String(backgroundImage);
   class="section-carbon relative min-h-[90vh] flex flex-col justify-between overflow-hidden pt-16 pb-16 md:pt-24 md:pb-24 px-6 sm:px-10 border-b border-white/10"
 >
   <!-- Background Media Layer (LCP Preloaded & Hardware-Accelerated) -->
-  <div class="absolute inset-0 z-0 select-none pointer-events-none" aria-hidden="true">
+  <div
+    class="absolute inset-0 z-0 select-none pointer-events-none"
+    aria-hidden={backgroundAlt ? undefined : 'true'}
+  >
     {
       isAstroImage ? (
         <Picture
@@ -93,7 +107,7 @@ const posterUrl = isAstroImage ? backgroundImage.src : String(backgroundImage);
           src={backgroundImage as ImageMetadata}
           alt={backgroundAlt}
           class="h-full w-full object-cover object-center opacity-40 animate-subtle-zoom"
-          widths={[640, 1024, 1536, 2048]}
+          widths={[640, 1024, 1200]}
           sizes="100vw"
           loading="eager"
           fetchpriority="high"
@@ -103,8 +117,8 @@ const posterUrl = isAstroImage ? backgroundImage.src : String(backgroundImage);
         <img
           src={String(backgroundImage)}
           alt={backgroundAlt}
-          width="1920"
-          height="1080"
+          width="1200"
+          height="798"
           loading="eager"
           fetchpriority="high"
           decoding="sync"
@@ -132,6 +146,7 @@ const posterUrl = isAstroImage ? backgroundImage.src : String(backgroundImage);
 
     <!-- Multi-Stop Scrim for Certified WCAG AAA Text Contrast -->
     <div
+      aria-hidden="true"
       class="absolute inset-0 bg-gradient-to-b from-[#070707]/90 via-[#070707]/60 to-[#070707]"
     >
     </div>

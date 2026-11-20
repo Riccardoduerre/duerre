@@ -2,7 +2,8 @@
 title: "Bump, Normal e Displacement: scegliere l’architettura corretta della profondità"
 publishDate: 2026-06-15
 pubDate: 2026-06-15
-coverImage: ../../../assets/blog/_DSC2919.webp
+coverImage: ../../../assets/media/_DSC2919.webp
+coverAlt: "Dettaglio superficiale architettonico con profondità geometrica da displacement e shading delle normali"
 description: "Bilanciare memoria di calcolo e fedeltà visiva: quando i vettori normali bastano e quando la tassellazione geometrica è indispensabile."
 tags: ["3D & CGI", "Shading", "Texture"]
 ---

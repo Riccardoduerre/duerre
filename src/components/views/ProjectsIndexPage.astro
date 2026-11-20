@@ -1,10 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../PageHero.astro';
 import ProjectCard from '../ProjectCard.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
-import { splitId, type PortfolioItem } from '../../lib/content';
+import { getPortfolio } from '../../lib/content';
 import { useTranslations, type Locale } from '../../i18n';
 
 interface Props {
@@ -14,19 +13,8 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
-const matchesLocale = (id: string) => {
-  const parsed = splitId(id);
-  return parsed.lang === lang || parsed.lang === 'shared';
-};
-
-const rawProjects = await getCollection(
-  'portfolio',
-  (entry: PortfolioItem) => matchesLocale(entry.id) && isVisible(entry.data.draft),
-);
-const projects = rawProjects.sort(
-  (a: PortfolioItem, b: PortfolioItem) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
+const projects = await getPortfolio(lang);
+const categories = ['photo', 'video', '3d', 'marketing'] as const;
 ---
 
 <Layout
@@ -52,35 +40,25 @@ const projects = rawProjects.sort(
         <span class="font-mono text-[10px] uppercase tracking-[0.26em] text-muted">
           {t('filter_label')}
         </span>
-        <div class="flex flex-wrap gap-6">
+        <div class="flex flex-wrap gap-6" role="group" aria-label={t('filter_label')}>
           <button
             type="button"
             data-filter="all"
+            aria-pressed="true"
             class="filter-pill active font-mono text-[11px] uppercase tracking-[0.24em] text-ink underline decoration-accent underline-offset-8 cursor-pointer transition-colors"
           >
             {t('all_projects_link')} [{projects.length}]
           </button>
-          <button
-            type="button"
-            data-filter="photo"
-            class="filter-pill font-mono text-[11px] uppercase tracking-[0.24em] text-muted hover:text-ink cursor-pointer transition-colors"
-          >
-            {t('category_photo')} [{projects.filter((p) => p.data.category === 'photo').length}]
-          </button>
-          <button
-            type="button"
-            data-filter="video"
-            class="filter-pill font-mono text-[11px] uppercase tracking-[0.24em] text-muted hover:text-ink cursor-pointer transition-colors"
-          >
-            {t('category_video')} [{projects.filter((p) => p.data.category === 'video').length}]
-          </button>
-          <button
-            type="button"
-            data-filter="3d"
-            class="filter-pill font-mono text-[11px] uppercase tracking-[0.24em] text-muted hover:text-ink cursor-pointer transition-colors"
-          >
-            {t('category_3d')} [{projects.filter((p) => p.data.category === '3d').length}]
-          </button>
+          {categories.map((cat) => (
+            <button
+              type="button"
+              data-filter={cat}
+              aria-pressed="false"
+              class="filter-pill font-mono text-[11px] uppercase tracking-[0.24em] text-muted hover:text-ink cursor-pointer transition-colors"
+            >
+              {t(`category_${cat}`)} [{projects.filter((p) => p.data.category === cat).length}]
+            </button>
+          ))}
         </div>
       </div>
 
@@ -98,44 +76,60 @@ const projects = rawProjects.sort(
               class={`project-item ${spanClass} transition-opacity duration-500`}
               data-category={project.data.category}
             >
-              <ProjectCard project={project} index={idx} lang={lang} />
+              <ProjectCard project={project} index={idx} lang={lang} headingTag="h2" />
             </div>
           );
         })}
       </div>
+
+      <p
+        id="projects-empty-state"
+        class="hidden py-16 text-center font-mono text-xs uppercase tracking-[0.24em] text-muted"
+        aria-live="polite"
+      >
+        {t('filter_empty')}
+      </p>
     </div>
   </section>
 
   <DualCtaBanner lang={lang} />
 
   <script>
-    function initProjectFilters() {
-      const filterButtons = document.querySelectorAll('.filter-pill');
-      const projectItems = document.querySelectorAll('.project-item');
+    function initPortfolioFilters() {
+      const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-pill');
+      const projectItems = document.querySelectorAll<HTMLElement>('.project-item');
+      const emptyState = document.getElementById('projects-empty-state');
 
       filterButtons.forEach((btn) => {
-        (btn as HTMLButtonElement).onclick = () => {
-          const filter = (btn as HTMLElement).dataset.filter;
+        btn.onclick = () => {
+          const filter = btn.dataset.filter;
 
           filterButtons.forEach((b) => {
             b.classList.remove('text-ink', 'underline', 'decoration-accent', 'underline-offset-8');
             b.classList.add('text-muted');
+            b.setAttribute('aria-pressed', 'false');
           });
           btn.classList.add('text-ink', 'underline', 'decoration-accent', 'underline-offset-8');
           btn.classList.remove('text-muted');
+          btn.setAttribute('aria-pressed', 'true');
 
+          let visibleCount = 0;
           projectItems.forEach((item) => {
-            if (filter === 'all' || (item as HTMLElement).dataset.category === filter) {
+            if (filter === 'all' || item.dataset.category === filter) {
               item.classList.remove('hidden');
+              visibleCount++;
             } else {
               item.classList.add('hidden');
             }
           });
+
+          if (emptyState) {
+            emptyState.classList.toggle('hidden', visibleCount > 0);
+          }
         };
       });
     }
 
-    initProjectFilters();
-    document.addEventListener('astro:page-load', initProjectFilters);
+    document.addEventListener('astro:page-load', initPortfolioFilters);
   </script>
 </Layout>

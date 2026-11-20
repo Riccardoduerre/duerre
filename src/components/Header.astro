@@ -66,19 +66,23 @@ const navItems = [
     </nav>
 
     <!-- Desktop Controls & Commission Link -->
-    <div class="hidden md:flex items-center gap-5">
+    <div class="hidden lg:flex items-center gap-5">
       <div class="flex items-center gap-1 font-mono text-[10px] tracking-[0.2em]">
         <a
           href={switchLocalePath(currentPath, 'it')}
+          lang="it"
+          hreflang="it"
           data-set-lang="it"
           class={`px-2 py-1 transition-colors ${lang === 'it' ? 'text-ink font-bold underline decoration-accent underline-offset-4' : 'text-muted hover:text-ink'}`}
           aria-label="Italiano"
         >
           IT
         </a>
-        <span class="text-line">/</span>
+        <span class="text-line" aria-hidden="true">/</span>
         <a
           href={switchLocalePath(currentPath, 'en')}
+          lang="en"
+          hreflang="en"
           data-set-lang="en"
           class={`px-2 py-1 transition-colors ${lang === 'en' ? 'text-ink font-bold underline decoration-accent underline-offset-4' : 'text-muted hover:text-ink'}`}
           aria-label="English"
@@ -94,14 +98,16 @@ const navItems = [
         class="inline-flex items-center gap-2.5 border border-line/80 px-5 py-2.5 font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-ink transition-all duration-500 hover:border-ink hover:bg-ink hover:text-bg"
       >
         <span>{t('nav_cta')}</span>
-        <span class="text-accent">↗</span>
+        <span class="text-accent" aria-hidden="true">↗</span>
       </a>
     </div>
 
-    <!-- Mobile Menu Trigger -->
-    <div class="flex items-center gap-3 md:hidden">
+    <!-- Mobile & Tablet Menu Trigger -->
+    <div class="flex items-center gap-3 lg:hidden">
       <a
         href={switchLocalePath(currentPath, otherLang)}
+        lang={otherLang}
+        hreflang={otherLang}
         data-set-lang={otherLang}
         class="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] px-2.5 py-1 border border-line/70 text-muted hover:text-ink"
         aria-label={t('switch_lang_label')}
@@ -114,9 +120,10 @@ const navItems = [
         type="button"
         aria-label="Toggle navigation menu"
         aria-expanded="false"
-        class="p-2 text-ink hover:opacity-75 focus:outline-hidden"
+        aria-controls="mobile-menu"
+        class="p-2 text-ink hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path id="menu-icon-bars" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8h18M3 16h18" />
           <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
         </svg>
@@ -127,11 +134,12 @@ const navItems = [
   <!-- Editorial Mobile Overlay Drawer -->
   <div
     id="mobile-menu"
-    class="hidden md:hidden border-t border-line/50 bg-bg/98 backdrop-blur-2xl px-6 py-10 space-y-6"
+    class="hidden lg:hidden border-t border-line/50 bg-bg/98 backdrop-blur-2xl px-6 py-10 space-y-6"
   >
-    <div class="space-y-4">
+    <nav aria-label="Mobile" class="space-y-4">
       <a
         href={localePath(lang, '/')}
+        aria-current={isHome ? 'page' : undefined}
         class={`flex items-baseline justify-between border-b border-line/40 pb-3 text-xl font-light tracking-tight ${
           isHome ? 'text-ink' : 'text-muted'
         }`}
@@ -142,6 +150,7 @@ const navItems = [
       {navItems.map((item) => (
         <a
           href={item.href}
+          aria-current={item.active ? 'page' : undefined}
           class={`flex items-baseline justify-between border-b border-line/40 pb-3 text-xl font-light tracking-tight ${
             item.active ? 'text-ink' : 'text-muted'
           }`}
@@ -150,12 +159,12 @@ const navItems = [
           <span class="font-mono text-[10px] tracking-[0.24em] text-accent">{item.num}</span>
         </a>
       ))}
-    </div>
+    </nav>
 
     <div class="pt-4">
       <a href={localePath(lang, '/contact/')} class="btn-primary w-full text-center">
         <span>{t('nav_cta')}</span>
-        <span>↗</span>
+        <span aria-hidden="true">↗</span>
       </a>
     </div>
   </div>
@@ -179,7 +188,7 @@ const navItems = [
     }
 
     document.querySelectorAll<HTMLAnchorElement>('[data-set-lang]').forEach((link) => {
-      link.addEventListener('click', () => {
+      link.onclick = () => {
         const targetLang = link.getAttribute('data-set-lang');
         if (targetLang) {
           try {
@@ -188,10 +197,9 @@ const navItems = [
             // ignore
           }
         }
-      });
+      };
     });
   }
 
-  setupMobileMenu();
   document.addEventListener('astro:page-load', setupMobileMenu);
 </script>

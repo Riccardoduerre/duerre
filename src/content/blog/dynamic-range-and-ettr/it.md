@@ -2,7 +2,8 @@
 title: "Massimizzare la gamma dinamica: la strategia ETTR sul campo"
 publishDate: 2026-08-24
 pubDate: 2026-08-24
-coverImage: ../../../assets/blog/Giau_00001.webp
+coverImage: ../../../assets/media/Giau_00001.webp
+coverAlt: "Tramonto sul Passo Giau acquisito con tecnica ETTR per preservare alte luci nelle nubi e dettaglio nelle ombre rocciose"
 description: "Spingere l’esposizione del sensore a destra per preservare il segnale nelle ombre senza sacrificare la transizione graduale delle alte luci."
 tags: ["Fotografia", "Cinematografia", "Workflow"]
 ---

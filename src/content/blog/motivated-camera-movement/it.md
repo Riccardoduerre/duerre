@@ -2,7 +2,8 @@
 title: "Movimento di macchina motivato: parallasse, ritmo e intenzione cinetica"
 publishDate: 2026-06-29
 pubDate: 2026-06-29
-coverImage: ../../../assets/blog/Giau_00003.webp
+coverImage: ../../../assets/media/Giau_00003.webp
+coverAlt: "Sentiero alpino in quota con parallasse in primo piano che guida il movimento di macchina motivato"
 description: "Abbandonare movimenti di camera arbitrari per un blocking intenzionale dove la parallasse enfatizza la psicologia del soggetto."
 tags: ["Cinematografia", "Regia", "Filmmaking"]
 ---

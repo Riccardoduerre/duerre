@@ -10,8 +10,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "typecheck": "astro sync && tsc --noEmit",
-    "cms:dev": "npx @tinacms/cli dev -c \"astro dev\"",
-    "cms:build": "npx @tinacms/cli build --skip-cloud-checks && astro build",
     "new-post": "node scripts/new-post.js",
     "new-project": "node scripts/new-project.js"
   },

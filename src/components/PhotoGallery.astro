@@ -2,16 +2,23 @@
 import { getImage } from 'astro:assets';
 import CmsPicture from './CmsPicture.astro';
 import { isAstroImage, type CmsImage } from '../lib/content';
+import { useTranslations, type Locale } from '../i18n';
 
 interface Props {
   images: { image: CmsImage; alt: string; caption?: string }[];
+  lang?: Locale;
 }
 
-const { images } = Astro.props;
+const {
+  images,
+  lang = Astro.url.pathname === '/en' || Astro.url.pathname.startsWith('/en/') ? 'en' : 'it',
+} = Astro.props;
+const t = useTranslations(lang);
+
 const lightboxSources = await Promise.all(
   images.map(async (img) =>
     isAstroImage(img.image)
-      ? (await getImage({ src: img.image, width: Math.min(img.image.width, 2400), format: 'webp' })).src
+      ? (await getImage({ src: img.image, width: Math.min(img.image.width, 2000), format: 'webp' })).src
       : img.image,
   ),
 );
@@ -28,29 +35,27 @@ const lightboxSources = await Promise.all(
     const aspectClass = index % 3 === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]';
 
     return (
-      <figure
-        class={`${spanClass} group relative cursor-zoom-in overflow-hidden bg-surface`}
-        data-gallery-item
-        data-img-src={lightboxSources[index]}
-        data-alt={img.alt}
-        data-caption={img.caption || ''}
-        data-index={index}
-        data-reveal
-        tabindex="0"
-        role="button"
-        aria-label={`View photo: ${img.alt}`}
-      >
-        <div class={`overflow-hidden ${aspectClass} media-zoom`}>
+      <figure class={`${spanClass} group relative overflow-hidden bg-surface`} data-reveal>
+        <button
+          type="button"
+          class={`block w-full text-left cursor-zoom-in overflow-hidden ${aspectClass} media-zoom focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent`}
+          data-gallery-item
+          data-img-src={lightboxSources[index]}
+          data-alt={img.alt}
+          data-caption={img.caption || ''}
+          data-index={index}
+          aria-label={`${t('lightbox_view')}: ${img.alt}`}
+        >
           <CmsPicture
             src={img.image}
             alt={img.alt}
             class="w-full h-full object-cover"
-            widths={[600, 1200, 1800, 2400]}
+            widths={[600, 1200, 1800, 2000]}
             sizes={index % 3 === 0 ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
             loading="lazy"
             decoding="async"
           />
-        </div>
+        </button>
         <figcaption class="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
           <span>FIG. {String(index + 1).padStart(2, '0')}</span>
           {img.caption && <span class="text-ink/80 normal-case tracking-normal font-sans text-xs">{img.caption}</span>}
@@ -63,7 +68,9 @@ const lightboxSources = await Promise.all(
 <!-- Native High-Performance Image Lightbox Modal -->
 <dialog
   id="photo-lightbox"
-  class="fixed inset-0 m-auto max-w-[96vw] max-h-[96vh] bg-transparent p-0 border-0 outline-hidden select-none z-50"
+  data-frame-label={t('lightbox_frame')}
+  aria-label={lang === 'en' ? 'Image lightbox' : 'Galleria immagini a schermo intero'}
+  class="fixed inset-0 m-auto max-w-[96vw] max-h-[96vh] bg-transparent p-0 border-0 select-none z-50 focus-visible:outline-2 focus-visible:outline-accent"
 >
   <div class="relative flex flex-col items-center justify-center p-4">
     <div class="w-full max-w-[90vw] flex items-center justify-between mb-4 text-white">
@@ -72,16 +79,15 @@ const lightboxSources = await Promise.all(
         id="lightbox-close"
         type="button"
         class="px-4 py-1.5 border border-white/25 font-mono text-[10px] uppercase tracking-[0.24em] text-white hover:bg-white hover:text-black transition cursor-pointer"
-        aria-label="Close lightbox"
+        aria-label={t('lightbox_close_aria')}
       >
-        Close [ESC]
+        {t('lightbox_close')}
       </button>
     </div>
 
     <div class="relative overflow-hidden bg-black/60 border border-white/10 shadow-2xl flex flex-col items-center group">
       <img
         id="lightbox-img"
-        src=""
         alt=""
         loading="lazy"
         decoding="async"
@@ -92,17 +98,17 @@ const lightboxSources = await Promise.all(
         id="lightbox-prev"
         type="button"
         class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/65 border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition cursor-pointer"
-        aria-label="Previous image"
+        aria-label={t('lightbox_prev_aria')}
       >
-        ←
+        <span aria-hidden="true">←</span>
       </button>
       <button
         id="lightbox-next"
         type="button"
         class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/65 border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition cursor-pointer"
-        aria-label="Next image"
+        aria-label={t('lightbox_next_aria')}
       >
-        →
+        <span aria-hidden="true">→</span>
       </button>
 
       <div id="lightbox-caption" class="w-full py-3 px-6 text-center font-mono text-xs text-white/80 bg-black/85"></div>
@@ -111,7 +117,13 @@ const lightboxSources = await Promise.all(
 </dialog>
 
 <script>
+  let lightboxAbortController: AbortController | null = null;
+
   function initLightbox() {
+    lightboxAbortController?.abort();
+    lightboxAbortController = new AbortController();
+    const { signal } = lightboxAbortController;
+
     const dialog = document.getElementById('photo-lightbox') as HTMLDialogElement | null;
     const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
     const lightboxCaption = document.getElementById('lightbox-caption');
@@ -123,6 +135,7 @@ const lightboxSources = await Promise.all(
     let currentIndex = 0;
 
     if (!dialog || !lightboxImg || items.length === 0) return;
+    const frameLabel = dialog.dataset.frameLabel || 'FRAME';
 
     function showIndex(idx: number) {
       if (idx < 0) idx = items.length - 1;
@@ -134,7 +147,7 @@ const lightboxSources = await Promise.all(
       lightboxImg.alt = item.dataset.alt || '';
 
       if (lightboxCounter) {
-        lightboxCounter.textContent = `FRAME ${String(currentIndex + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+        lightboxCounter.textContent = `${frameLabel} ${String(currentIndex + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
       }
 
       const caption = item.dataset.caption;
@@ -149,46 +162,58 @@ const lightboxSources = await Promise.all(
     }
 
     items.forEach((item, index) => {
-      const openModal = () => {
-        showIndex(index);
-        dialog.showModal();
-      };
-
-      item.onclick = openModal;
-      item.onkeydown = (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openModal();
-        }
-      };
+      item.addEventListener(
+        'click',
+        () => {
+          showIndex(index);
+          dialog.showModal();
+        },
+        { signal },
+      );
     });
 
-    if (closeBtn) closeBtn.onclick = () => dialog.close();
-    if (prevBtn)
-      prevBtn.onclick = (e) => {
+    closeBtn?.addEventListener('click', () => dialog.close(), { signal });
+    prevBtn?.addEventListener(
+      'click',
+      (e) => {
         e.stopPropagation();
         showIndex(currentIndex - 1);
-      };
-    if (nextBtn)
-      nextBtn.onclick = (e) => {
+      },
+      { signal },
+    );
+    nextBtn?.addEventListener(
+      'click',
+      (e) => {
         e.stopPropagation();
         showIndex(currentIndex + 1);
-      };
+      },
+      { signal },
+    );
 
-    dialog.onclick = (e) => {
-      if (e.target === dialog) dialog.close();
-    };
+    dialog.addEventListener(
+      'click',
+      (e) => {
+        if (e.target === dialog) dialog.close();
+      },
+      { signal },
+    );
 
-    window.onkeydown = (e) => {
-      if (!dialog.open) return;
-      if (e.key === 'ArrowRight') {
-        showIndex(currentIndex + 1);
-      } else if (e.key === 'ArrowLeft') {
-        showIndex(currentIndex - 1);
-      }
-    };
+    window.addEventListener(
+      'keydown',
+      (e) => {
+        if (!dialog.open) return;
+        if (e.key === 'ArrowRight') {
+          showIndex(currentIndex + 1);
+        } else if (e.key === 'ArrowLeft') {
+          showIndex(currentIndex - 1);
+        }
+      },
+      { signal },
+    );
   }
 
-  initLightbox();
   document.addEventListener('astro:page-load', initLightbox);
+  document.addEventListener('astro:before-swap', () => {
+    lightboxAbortController?.abort();
+  });
 </script>

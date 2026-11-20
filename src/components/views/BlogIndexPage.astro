@@ -1,10 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../PageHero.astro';
 import PostPreview from '../PostPreview.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
-import { splitId, type Post } from '../../lib/content';
+import { getPosts } from '../../lib/content';
 import { useTranslations, type Locale } from '../../i18n';
 
 interface Props {
@@ -14,19 +13,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
-const matchesLocale = (id: string) => {
-  const parsed = splitId(id);
-  return parsed.lang === lang || parsed.lang === 'shared';
-};
-
-const rawPosts = await getCollection(
-  'blog',
-  (entry: Post) => matchesLocale(entry.id) && isVisible(entry.data.draft),
-);
-const allPosts = rawPosts.sort(
-  (a: Post, b: Post) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
+const allPosts = await getPosts(lang);
 
 const tagCounts = new Map<string, number>();
 allPosts.forEach((post) => {
@@ -56,11 +43,14 @@ const sortedTags = Array.from(tagCounts.keys()).sort();
         <div
           class="flex flex-wrap gap-x-6 gap-y-3 pb-10 mb-16 border-b border-line/60 items-center"
           id="blog-filters"
+          role="group"
+          aria-label={t('filter_label')}
           data-reveal
         >
           <button
             type="button"
             data-tag="all"
+            aria-pressed="true"
             class="blog-filter-pill active font-mono text-[11px] uppercase tracking-[0.22em] text-ink underline decoration-accent underline-offset-8 cursor-pointer transition-colors"
           >
             {t('all_articles')} [{allPosts.length}]
@@ -69,6 +59,7 @@ const sortedTags = Array.from(tagCounts.keys()).sort();
             <button
               type="button"
               data-tag={tag}
+              aria-pressed="false"
               class="blog-filter-pill font-mono text-[11px] uppercase tracking-[0.22em] text-muted hover:text-ink cursor-pointer transition-colors"
             >
               {tag} [{tagCounts.get(tag)}]
@@ -80,11 +71,19 @@ const sortedTags = Array.from(tagCounts.keys()).sort();
       <!-- Essays Grid -->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12" id="blog-grid">
         {allPosts.map((post) => (
-          <div class="blog-item transition-opacity duration-500" data-tags={(post.data.tags || []).join(',')}>
-            <PostPreview post={post} lang={lang} />
+          <div class="blog-item transition-opacity duration-500" data-tags={JSON.stringify(post.data.tags || [])}>
+            <PostPreview post={post} lang={lang} headingTag="h2" />
           </div>
         ))}
       </div>
+
+      <p
+        id="blog-empty-state"
+        class="hidden py-16 text-center font-mono text-xs uppercase tracking-[0.24em] text-muted"
+        aria-live="polite"
+      >
+        {t('filter_empty')}
+      </p>
     </div>
   </section>
 
@@ -92,33 +91,46 @@ const sortedTags = Array.from(tagCounts.keys()).sort();
 
   <script>
     function initBlogFilters() {
-      const filterButtons = document.querySelectorAll('.blog-filter-pill');
-      const blogItems = document.querySelectorAll('.blog-item');
+      const filterButtons = document.querySelectorAll<HTMLButtonElement>('.blog-filter-pill');
+      const blogItems = document.querySelectorAll<HTMLElement>('.blog-item');
+      const emptyState = document.getElementById('blog-empty-state');
 
       filterButtons.forEach((btn) => {
-        (btn as HTMLButtonElement).onclick = () => {
-          const selectedTag = (btn as HTMLElement).dataset.tag;
+        btn.onclick = () => {
+          const selectedTag = btn.dataset.tag;
 
           filterButtons.forEach((b) => {
             b.classList.remove('text-ink', 'underline', 'decoration-accent', 'underline-offset-8');
             b.classList.add('text-muted');
+            b.setAttribute('aria-pressed', 'false');
           });
           btn.classList.add('text-ink', 'underline', 'decoration-accent', 'underline-offset-8');
           btn.classList.remove('text-muted');
+          btn.setAttribute('aria-pressed', 'true');
 
+          let visibleCount = 0;
           blogItems.forEach((item) => {
-            const tags = ((item as HTMLElement).dataset.tags || '').split(',');
-            if (selectedTag === 'all' || tags.includes(selectedTag!)) {
+            let tags: string[] = [];
+            try {
+              tags = JSON.parse(item.dataset.tags || '[]');
+            } catch {
+              tags = [];
+            }
+            if (selectedTag === 'all' || (selectedTag && tags.includes(selectedTag))) {
               item.classList.remove('hidden');
+              visibleCount++;
             } else {
               item.classList.add('hidden');
             }
           });
+
+          if (emptyState) {
+            emptyState.classList.toggle('hidden', visibleCount > 0);
+          }
         };
       });
     }
 
-    initBlogFilters();
     document.addEventListener('astro:page-load', initBlogFilters);
   </script>
 </Layout>

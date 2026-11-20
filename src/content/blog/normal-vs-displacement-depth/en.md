@@ -2,7 +2,8 @@
 title: "Bump, Normal and Displacement: Choosing the Correct Depth Architecture"
 publishDate: 2026-06-15
 pubDate: 2026-06-15
-coverImage: ../../../assets/blog/_DSC2919.webp
+coverImage: ../../../assets/media/_DSC2919.webp
+coverAlt: "Architectural interior surface detail showing micro-polygon displacement depth and normal shading"
 description: "Balancing render memory and visual accuracy: when normal vectors suffice versus when micro-polygon tessellation is non-negotiable."
 tags: ["3D & CGI", "Shading", "Texturing"]
 ---

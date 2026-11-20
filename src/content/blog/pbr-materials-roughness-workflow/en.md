@@ -2,7 +2,8 @@
 title: "Physically Based Rendering: Mastering the Roughness-Metallic Pipeline"
 publishDate: 2026-09-07
 pubDate: 2026-09-07
-coverImage: ../../../assets/blog/Giau_00004.webp
+coverImage: ../../../assets/media/Giau_00004.webp
+coverAlt: "Textural Dolomites rock formation illustrating physically based microfacet roughness and grazing Fresnel reflections"
 description: "Demystifying microfacet theory, dielectric Fresnel reflectance, and why roughness maps are the authentic soul of 3D realism."
 tags: ["3D & CGI", "Shading", "Rendering"]
 ---

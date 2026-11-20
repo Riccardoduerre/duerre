@@ -6,10 +6,10 @@ import FaqAccordion from '../FaqAccordion.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n';
 
-import imgPhoto from '../../assets/blog/Giau_00001.webp';
-import imgVideo from '../../assets/blog/_DSC2365.webp';
-import img3d from '../../assets/blog/Giau_00004.webp';
-import imgMarketing from '../../assets/blog/Landscapes_00003.webp';
+import imgPhoto from '../../assets/media/Giau_00001.webp';
+import imgVideo from '../../assets/media/_DSC2365.webp';
+import img3d from '../../assets/media/Giau_00004.webp';
+import imgMarketing from '../../assets/media/Landscapes_00003.webp';
 
 interface Props {
   lang: Locale;
@@ -175,14 +175,14 @@ const faqItems =
                 </h2>
               </div>
 
-              <div class="service-row-preview">
+              <div class="service-row-preview" aria-hidden="true">
                 <Picture
                   formats={['avif', 'webp']}
                   src={service.img}
-                  alt={service.title}
+                  alt=""
                   class="h-full w-full object-cover"
                   widths={[400, 700]}
-                  sizes="320px"
+                  sizes="256px"
                 />
               </div>
 
@@ -193,7 +193,7 @@ const faqItems =
               </div>
 
               <div class="lg:col-span-1 flex lg:justify-end">
-                <span class="font-mono text-sm text-muted group-hover:text-ink transition-colors">
+                <span class="font-mono text-sm text-muted group-hover:text-ink transition-colors" aria-hidden="true">
                   ↓
                 </span>
               </div>
@@ -231,14 +231,14 @@ const faqItems =
               <ul class="space-y-4 border-t border-white/12 pt-8 mb-12">
                 {service.bullets.map((bullet) => (
                   <li class="flex items-start gap-4 text-sm sm:text-base font-light text-white/85">
-                    <span class="font-mono text-xs text-[#CCA870]">—</span>
+                    <span class="font-mono text-xs text-[#CCA870]" aria-hidden="true">—</span>
                     <span>{bullet}</span>
                   </li>
                 ))}
               </ul>
               <a href={localePath(lang, '/contact/')} class="learn-more-btn-dark">
                 <span>{t('nav_cta')}</span>
-                <span class="arrow-box">↗</span>
+                <span class="arrow-box" aria-hidden="true">↗</span>
               </a>
             </div>
 

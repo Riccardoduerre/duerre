@@ -2,7 +2,8 @@
 title: "Understanding Light Quality: Direction, Softness and Falloff"
 publishDate: 2026-10-05
 pubDate: 2026-10-05
-coverImage: ../../../assets/blog/Landscapes_00003.webp
+coverImage: ../../../assets/media/Landscapes_00003.webp
+coverAlt: "Soft twilight cloud diffusion over glacial valleys illustrating relative light source size and shadow falloff"
 description: "How relative source size, inverse-square falloff, and shadow transitions define the sculptural identity of your frames."
 tags: ["Lighting", "Photography", "Cinematography"]
 ---

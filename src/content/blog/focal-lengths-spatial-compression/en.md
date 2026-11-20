@@ -2,7 +2,8 @@
 title: "Focal Lengths and Spatial Compression: Beyond Field of View"
 publishDate: 2026-07-13
 pubDate: 2026-07-13
-coverImage: ../../../assets/blog/Landscapes_00001.webp
+coverImage: ../../../assets/media/Landscapes_00001.webp
+coverAlt: "Expansive alpine landscape demonstrating spatial compression and perspective geometry across focal lengths"
 description: "How camera-to-subject distance alters perspective geometry and why a 24mm feels intimate while an 85mm isolates prestige."
 tags: ["Optics", "Composition", "Cinematography"]
 ---

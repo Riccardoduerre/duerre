@@ -2,7 +2,8 @@
 title: "Illuminating 3D Worlds: HDRIs Paired with Controlled Accent Lights"
 publishDate: 2026-07-27
 pubDate: 2026-07-27
-coverImage: ../../../assets/blog/Landscapes_00002.webp
+coverImage: ../../../assets/media/Landscapes_00002.webp
+coverAlt: "High-dynamic-range mountain environment lighting paired with directional rim light contours"
 description: "Why relying solely on an environment map makes renders muddy, and how adding directional rim lights carves tangible volume."
 tags: ["3D & CGI", "Lighting", "Rendering"]
 ---

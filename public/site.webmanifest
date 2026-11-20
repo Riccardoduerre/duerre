@@ -1,0 +1,27 @@
+{
+  "name": "Duerre — Visual Production Atelier",
+  "short_name": "Duerre",
+  "description": "Commercial Photography, Cinema & Video Production, 3D CGI Rendering, and Digital Brand Direction by Riccardo Riva.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070707",
+  "theme_color": "#070707",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

@@ -24,7 +24,7 @@ const serviceOptions = [
 
 <Layout
   title={`${t('nav_contact')} | Duerre`}
-  description={t('contact_title')}
+  description={t('contact_meta_description')}
   lang={lang}
 >
   <PageHero
@@ -72,7 +72,7 @@ const serviceOptions = [
 
         <div class="border-t border-line/60 pt-8 space-y-4">
           <div class="inline-flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.24em] text-ink">
-            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
             <span>
               {SITE.location} · {lang === 'it' ? 'Disponibile per nuove commissioni' : 'Accepting Commissions'}
             </span>
@@ -108,7 +108,7 @@ const serviceOptions = [
           <input type="hidden" name="_template" value="box" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_next" value={thanksUrl} />
-          <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
+          <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
           <div class="grid md:grid-cols-2 gap-10">
             <div>
@@ -119,6 +119,7 @@ const serviceOptions = [
                 type="text"
                 id="name"
                 name="name"
+                autocomplete="name"
                 required
                 class="field"
                 placeholder={lang === 'it' ? 'Mario Rossi' : 'Jane Doe'}
@@ -132,6 +133,7 @@ const serviceOptions = [
                 type="email"
                 id="email"
                 name="email"
+                autocomplete="email"
                 required
                 class="field"
                 placeholder={lang === 'it' ? 'nome@azienda.it' : 'jane@brand.com'}
@@ -148,6 +150,7 @@ const serviceOptions = [
                 type="text"
                 id="company"
                 name="company"
+                autocomplete="organization"
                 class="field"
                 placeholder={lang === 'it' ? 'Nome Azienda o Studio' : 'Brand or Studio Name'}
               />
@@ -166,10 +169,10 @@ const serviceOptions = [
             </div>
           </div>
 
-          <div>
-            <span class="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-4">
+          <fieldset>
+            <legend class="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-4">
               {lang === 'it' ? 'Discipline richieste' : 'Requested Disciplines'}
-            </span>
+            </legend>
             <div class="flex flex-wrap gap-3">
               {serviceOptions.map((service) => (
                 <label class="cursor-pointer select-none">
@@ -179,13 +182,13 @@ const serviceOptions = [
                     value={service}
                     class="peer sr-only"
                   />
-                  <span class="inline-flex items-center px-4 py-2.5 border border-line/80 font-mono text-[10px] uppercase tracking-[0.2em] text-muted transition-all peer-checked:bg-ink peer-checked:text-bg peer-checked:border-ink hover:border-ink">
+                  <span class="inline-flex items-center px-4 py-2.5 border border-line/80 font-mono text-[10px] uppercase tracking-[0.2em] text-muted transition-all peer-checked:bg-ink peer-checked:text-bg peer-checked:border-ink peer-focus-visible:ring-2 peer-focus-visible:ring-accent peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-bg hover:border-ink">
                     {service}
                   </span>
                 </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           <div>
             <label for="message" class="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mb-2">
@@ -213,7 +216,8 @@ const serviceOptions = [
               data-sending-label={lang === 'it' ? 'Trasmissione in corso...' : 'Transmitting...'}
               class="btn-primary w-full sm:w-auto cursor-pointer disabled:opacity-60"
             >
-              {t('label_send')} ↗
+              <span>{t('label_send')}</span>
+              <span aria-hidden="true">↗</span>
             </button>
             <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
               {lang === 'it' ? 'Risposta diretta entro 24–48 ore' : 'Direct response within 24–48 hours'}
@@ -255,13 +259,16 @@ const serviceOptions = [
   </section>
 
   <script>
-    function initContactPage() {
+    function initContactForm() {
+      const form = document.getElementById('contact-request-form') as HTMLFormElement | null;
+      const recipientEmail = form?.dataset.recipient || 'riccardo@duerremedia.com';
+
       const copyBtn = document.getElementById('copy-contact-email');
       const copyLabel = document.getElementById('copy-email-label');
       if (copyBtn && copyLabel) {
         copyBtn.onclick = async () => {
           try {
-            await navigator.clipboard.writeText('riccardo@duerremedia.com');
+            await navigator.clipboard.writeText(recipientEmail);
             const originalText = copyLabel.textContent;
             copyLabel.textContent = copyBtn.dataset.copiedText || 'Copied!';
             setTimeout(() => {
@@ -273,7 +280,6 @@ const serviceOptions = [
         };
       }
 
-      const form = document.getElementById('contact-request-form') as HTMLFormElement | null;
       const submitBtn = document.getElementById('contact-submit-btn') as HTMLButtonElement | null;
       const feedbackBox = document.getElementById('contact-dispatch-feedback');
       const copyBriefBtn = document.getElementById('copy-compiled-brief') as HTMLButtonElement | null;
@@ -302,7 +308,7 @@ const serviceOptions = [
         const recipient = form.dataset.recipient || 'riccardo@duerremedia.com';
         const baseSubject = form.dataset.subject || 'New inquiry from duerremedia.com';
         const thanksPath = form.dataset.thanksPath || '/thanks/';
-        const ajaxAction = form.dataset.ajaxAction || 'https://formsubmit.co/ajax/b3c0b49afe301d86d6a62a3f768735fd';
+        const ajaxAction = form.dataset.ajaxAction || '';
 
         const subject = company ? `${baseSubject} — ${name} (${company})` : `${baseSubject} — ${name}`;
 
@@ -324,7 +330,7 @@ const serviceOptions = [
           submitBtn.textContent = submitBtn.dataset.sendingLabel || 'Sending...';
         }
 
-        if (mode === 'formsubmit') {
+        if (mode === 'formsubmit' && ajaxAction) {
           try {
             const response = await fetch(ajaxAction, {
               method: 'POST',
@@ -389,7 +395,6 @@ const serviceOptions = [
       }
     }
 
-    initContactPage();
-    document.addEventListener('astro:page-load', initContactPage);
+    document.addEventListener('astro:page-load', initContactForm);
   </script>
 </Layout>

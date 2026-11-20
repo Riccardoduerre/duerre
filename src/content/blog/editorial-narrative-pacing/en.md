@@ -2,7 +2,8 @@
 title: "Editorial Pacing: Sequencing Still Frames for Lasting Brand Impact"
 publishDate: 2026-01-26
 pubDate: 2026-01-26
-coverImage: ../../../assets/blog/DSCN7050.webp
+coverImage: ../../../assets/media/DSCN7050.webp
+coverAlt: "Editorial portrait sequenced to establish visual rhythm and narrative intimacy in a brand campaign"
 description: "How pairing wide atmospheric scenes with intimate macro details creates a visual cadence that guides the viewer’s eye through a campaign."
 tags: ["Editorial", "Storytelling", "Direction"]
 ---

@@ -2,7 +2,8 @@
 title: "Elevare il B-Roll: trasformare le coperture in pilastri narrativi"
 publishDate: 2026-04-06
 pubDate: 2026-04-06
-coverImage: ../../../assets/blog/_RIK7376_HDR.webp
+coverImage: ../../../assets/media/_RIK7376_HDR.webp
+coverAlt: "Inquadratura atmosferica grandangolare utilizzata come B-roll narrativo in un brand film commerciale"
 description: "Allontanarsi dai riempitivi visivi: come texture tattili, match cut deliberati e dettagli d’atmosfera approfondiscono il ritmo dello spot."
 tags: ["Filmmaking", "Regia", "Storytelling"]
 ---

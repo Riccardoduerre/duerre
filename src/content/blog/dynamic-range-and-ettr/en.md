@@ -2,7 +2,8 @@
 title: "Maximizing Dynamic Range: The ETTR Strategy in the Field"
 publishDate: 2026-08-24
 pubDate: 2026-08-24
-coverImage: ../../../assets/blog/Giau_00001.webp
+coverImage: ../../../assets/media/Giau_00001.webp
+coverAlt: "Sunset over Passo Giau captured with ETTR exposure to preserve both glowing clouds and deep rock shadows"
 description: "Pushing sensor exposure to the right to retain pristine shadow signal without sacrificing organic highlight roll-off."
 tags: ["Photography", "Cinematography", "Workflow"]
 ---

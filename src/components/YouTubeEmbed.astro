@@ -9,52 +9,57 @@ interface Props {
 }
 
 const { id, title = 'YouTube video player', poster } = Astro.props;
+const isValidId = /^[\w-]{11}$/.test(id);
 const posterUrl =
   poster && !isAstroImage(poster) ? poster : `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-const embedSrc = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+const embedSrc = isValidId ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0` : '';
 ---
 
-<div
-  class="youtube-facade relative w-full aspect-[21/9] overflow-hidden bg-black border border-line/50 group cursor-pointer"
-  data-embed-src={embedSrc}
-  data-title={title}
-  data-reveal
->
-  {poster && isAstroImage(poster) ? (
-    <Picture
-      formats={['avif', 'webp']}
-      src={poster}
-      alt={title}
-      widths={[800, 1400, 2000]}
-      sizes="100vw"
-      loading="lazy"
-      decoding="async"
-      class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-    />
-  ) : (
-    <img
-      src={posterUrl}
-      alt={title}
-      loading="lazy"
-      decoding="async"
-      class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-    />
-  )}
-  <div class="absolute inset-0 bg-black/45 transition-colors duration-500 group-hover:bg-black/25 flex flex-col items-center justify-center gap-4">
-    <button
-      type="button"
-      aria-label={`Play ${title}`}
-      class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/35 bg-black/50 backdrop-blur-md text-white flex items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:bg-white group-hover:text-black focus:outline-hidden"
-    >
-      <svg class="w-6 h-6 md:w-7 md:h-7 translate-x-0.5 fill-current" viewBox="0 0 24 24">
-        <path d="M8 5v14l11-7z" />
-      </svg>
-    </button>
-    <span class="font-mono text-[10px] uppercase tracking-[0.28em] text-white/80">
-      Play Master Reel · 2.39:1
-    </span>
+{isValidId && (
+  <div
+    class="youtube-facade relative w-full aspect-[21/9] overflow-hidden bg-black border border-line/50 group cursor-pointer"
+    data-embed-src={embedSrc}
+    data-title={title}
+    data-reveal
+  >
+    {poster && isAstroImage(poster) ? (
+      <Picture
+        formats={['avif', 'webp']}
+        src={poster}
+        alt={title}
+        widths={[800, 1400, 2000]}
+        sizes="100vw"
+        loading="lazy"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+      />
+    ) : (
+      <img
+        src={posterUrl}
+        alt={title}
+        width="1600"
+        height="686"
+        loading="lazy"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+      />
+    )}
+    <div class="absolute inset-0 bg-black/45 transition-colors duration-500 group-hover:bg-black/25 flex flex-col items-center justify-center gap-4">
+      <button
+        type="button"
+        aria-label={`Play ${title}`}
+        class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/35 bg-black/50 backdrop-blur-md text-white flex items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:bg-white group-hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+      >
+        <svg class="w-6 h-6 md:w-7 md:h-7 translate-x-0.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </button>
+      <span class="font-mono text-[10px] uppercase tracking-[0.28em] text-white/80">
+        Play Master Reel · 2.39:1
+      </span>
+    </div>
   </div>
-</div>
+)}
 
 <script is:inline>
   document.querySelectorAll('.youtube-facade').forEach((facade) => {

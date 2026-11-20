@@ -2,7 +2,8 @@
 title: "Clean Topology and Texel Density: Foundations of Commercial 3D Assets"
 publishDate: 2026-03-23
 pubDate: 2026-03-23
-coverImage: ../../../assets/blog/Landscapes_00003.webp
+coverImage: ../../../assets/media/Landscapes_00003.webp
+coverAlt: "Clean geometric ridgelines illustrating structured all-quad topology and uniform surface texel density"
 description: "Why all-quad modeling prevents shading artifacts under subdivision, and how uniform texel density ensures sharp texture resolution."
 tags: ["3D & CGI", "Modeling", "Workflow"]
 ---

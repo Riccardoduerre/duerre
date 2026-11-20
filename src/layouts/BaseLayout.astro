@@ -49,19 +49,23 @@ const defaultAlternate = alternates.find((a) => a.locale === DEFAULT_LOCALE)?.hr
 const ogType = type === 'website' ? 'website' : 'article';
 const primarySchemaType = type === 'article' ? 'Article' : type === 'creativework' ? 'CreativeWork' : 'WebPage';
 
-const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const rawSegments = Astro.url.pathname.split('/').filter(Boolean);
+const isEnRoute = rawSegments[0] === 'en';
+const pathSegments = isEnRoute ? rawSegments.slice(1) : rawSegments;
+const localePrefix = isEnRoute ? '/en/' : '/';
+
 const breadcrumbItems = [
   {
     '@type': 'ListItem',
     position: 1,
     name: 'Home',
-    item: siteOrigin.href,
+    item: new URL(localePrefix, siteOrigin).href,
   },
   ...pathSegments.map((segment, index) => ({
     '@type': 'ListItem',
     position: index + 2,
     name: segment.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()),
-    item: new URL('/' + pathSegments.slice(0, index + 1).join('/') + '/', siteOrigin).href,
+    item: new URL(localePrefix + pathSegments.slice(0, index + 1).join('/') + '/', siteOrigin).href,
   })),
 ];
 
@@ -142,6 +146,7 @@ const jsonLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <!-- Primary SEO Meta Tags -->
     <title>{formattedTitle}</title>
@@ -162,9 +167,11 @@ const jsonLd = {
     {alternates.map(({ locale, href }) => <link rel="alternate" hreflang={locale} href={href} />)}
     <link rel="alternate" hreflang="x-default" href={defaultAlternate} />
 
-    <!-- Icons, RSS & Sitemap -->
+    <!-- Icons, Manifest, RSS & Sitemap -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link
       rel="alternate"
@@ -176,6 +183,7 @@ const jsonLd = {
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content={ogType} />
     <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'it' ? 'en_US' : 'it_IT'} />
     <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={formattedTitle} />
@@ -196,13 +204,17 @@ const jsonLd = {
     <meta name="twitter:image" content={imageURL.href} />
     <meta name="twitter:image:alt" content={imageAlt} />
 
-    <!-- JSON-LD Structured Data -->
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <!-- JSON-LD Structured Data (escaped against script-breakout) -->
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')}
+    />
 
     <!-- Astro Native View Transitions (Zero external router bloat) -->
     <ClientRouter fallback="swap" />
 
-    <!-- Critical Anti-FOUC Theme & Locale Bootstrap -->
+    <!-- Critical Anti-FOUC Theme & Explicit User Locale Bootstrap -->
     <script is:inline>
       function detectLanguageAndRedirect() {
         try {
@@ -232,20 +244,6 @@ const jsonLd = {
           if (savedLang === 'en' && !isEnglishPath) {
             const enTarget = '/en' + (path === '/' ? '/' : path) + window.location.search + window.location.hash;
             window.location.replace(enTarget);
-            return;
-          }
-
-          if (savedLang === 'it') {
-            return;
-          }
-
-          if (!isEnglishPath) {
-            const rawLang = (navigator.languages && navigator.languages[0]) || navigator.language || 'it';
-            const primaryLang = rawLang.toLowerCase();
-            if (primaryLang && !primaryLang.startsWith('it')) {
-              const enTarget = '/en' + (path === '/' ? '/' : path) + window.location.search + window.location.hash;
-              window.location.replace(enTarget);
-            }
           }
         } catch {
           // ignore storage/navigation errors
@@ -257,7 +255,10 @@ const jsonLd = {
         root.classList.add('js');
         try {
           const stored = localStorage.getItem('theme');
-          const theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
+          const prefersLight =
+            window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          const theme =
+            stored === 'light' || stored === 'dark' ? stored : prefersLight ? 'light' : 'dark';
           root.setAttribute('data-theme', theme);
         } catch {
           root.setAttribute('data-theme', 'dark');
@@ -291,14 +292,25 @@ const jsonLd = {
 
     <!-- Progressive Enhancement: Scroll Reveal & Save-Data Aware Video Hydration -->
     <script>
+      let activeRevealObserver: IntersectionObserver | null = null;
+      let activeVideoObserver: IntersectionObserver | null = null;
+
+      function cleanupEditorialMotion() {
+        activeRevealObserver?.disconnect();
+        activeRevealObserver = null;
+        activeVideoObserver?.disconnect();
+        activeVideoObserver = null;
+      }
+
       function initEditorialMotion() {
+        cleanupEditorialMotion();
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const revealNodes = document.querySelectorAll<HTMLElement>('[data-reveal]');
 
         if (prefersReduced || !('IntersectionObserver' in window)) {
           revealNodes.forEach((el) => el.classList.add('is-visible'));
         } else {
-          const revealObserver = new IntersectionObserver(
+          activeRevealObserver = new IntersectionObserver(
             (entries, obs) => {
               for (const entry of entries) {
                 if (entry.isIntersecting) {
@@ -313,27 +325,38 @@ const jsonLd = {
             },
             { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
           );
-          revealNodes.forEach((el) => revealObserver.observe(el));
+          revealNodes.forEach((el) => activeRevealObserver?.observe(el));
         }
 
         const lazyVideos = document.querySelectorAll<HTMLVideoElement>('video[data-lazy-video]');
         const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
 
         if (!prefersReduced && !saveData && lazyVideos.length > 0 && 'IntersectionObserver' in window) {
-          const videoObserver = new IntersectionObserver(
+          activeVideoObserver = new IntersectionObserver(
             (entries) => {
               for (const entry of entries) {
                 const video = entry.target as HTMLVideoElement;
                 if (entry.isIntersecting) {
                   if (!video.dataset.loaded) {
+                    let hasSource = false;
                     video.querySelectorAll<HTMLSourceElement>('source[data-src]').forEach((source) => {
-                      if (source.dataset.src) source.src = source.dataset.src;
+                      if (source.dataset.src) {
+                        source.src = source.dataset.src;
+                        hasSource = true;
+                      }
                     });
-                    if (video.dataset.src && !video.src) video.src = video.dataset.src;
-                    video.load();
-                    video.dataset.loaded = 'true';
+                    if (video.dataset.src && !video.src) {
+                      video.src = video.dataset.src;
+                      hasSource = true;
+                    }
+                    if (hasSource || video.currentSrc || video.src) {
+                      video.load();
+                      video.dataset.loaded = 'true';
+                    }
                   }
-                  video.play().catch(() => {});
+                  if (video.dataset.loaded === 'true' || video.currentSrc || video.src) {
+                    video.play().catch(() => {});
+                  }
                 } else if (video.dataset.loaded === 'true') {
                   video.pause();
                 }
@@ -341,11 +364,11 @@ const jsonLd = {
             },
             { rootMargin: '150px 0px', threshold: 0.05 },
           );
-          lazyVideos.forEach((v) => videoObserver.observe(v));
+          lazyVideos.forEach((v) => activeVideoObserver?.observe(v));
         }
       }
 
-      initEditorialMotion();
+      document.addEventListener('astro:before-swap', cleanupEditorialMotion);
       document.addEventListener('astro:page-load', initEditorialMotion);
     </script>
   </body>

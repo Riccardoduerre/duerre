@@ -2,7 +2,8 @@
 title: "Compositing di render multipass: Beauty pass, AOV e Cryptomatte"
 publishDate: 2026-02-09
 pubDate: 2026-02-09
-coverImage: ../../../assets/blog/Giau_00001.webp
+coverImage: ../../../assets/media/Giau_00001.webp
+coverAlt: "Scena ad alta gamma dinamica che illustra la separazione dei pass di diffusione, riflessione e profondità atmosferica"
 description: "Scomporre l’equazione di rendering in pass separati di diffusione, riflessione ed emissione per un controllo chirurgico in post."
 tags: ["3D & CGI", "Post-Produzione", "VFX"]
 ---

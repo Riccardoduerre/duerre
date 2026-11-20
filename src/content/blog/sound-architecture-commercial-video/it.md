@@ -9,10 +9,9 @@ tags:
   - Post-Produzione
   - Regia
 coverImage: /uploads/_RIK7533.jpeg
-coverAlt: ''
+coverAlt: "Inquadratura di produzione d'interni atmosferica abbinata a room tone stratificato e sound design foley"
 featured: false
 draft: false
-pubDate: 2026-01-12
 ---
 
 Nel cinema e nella videografia per brand, il suono rappresenta più della metà dell'esperienza emotiva. Il pubblico accetta senza problemi una grana marcata, una risoluzione non estrema o movimenti di camera imperfetti, ma un audio scadente, rimbombante o metallico distrugge all'istante la percezione di autorevolezza del progetto. Una narrazione visiva d'autore esige un'architettura sonora curata con lo stesso rigore delle immagini.

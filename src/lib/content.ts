@@ -36,11 +36,13 @@ export function splitId(id: string): { slug: string; lang: Locale | 'shared' } {
   return { slug: normalized, lang: 'shared' };
 }
 
+export const cleanSlug = (id: string) => splitId(id).slug;
 export const slugOf = (entry: { id: string }) => splitId(entry.id).slug;
 
-const visible = (data: { draft?: boolean }) => import.meta.env.DEV || !data.draft;
+export const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
+const visible = (data: { draft?: boolean }) => isVisible(data.draft);
 
-function matchesLocale(entryId: string, lang: Locale): boolean {
+export function matchesLocale(entryId: string, lang: Locale): boolean {
   const parsed = splitId(entryId);
   return parsed.lang === lang || parsed.lang === 'shared';
 }
@@ -57,6 +59,22 @@ export const getProjects = getPortfolio;
 export async function getPosts(lang: Locale): Promise<Post[]> {
   const all = await getCollection('blog', (e: Post) => matchesLocale(e.id, lang) && visible(e.data));
   return all.sort((a: Post, b: Post) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+}
+
+export async function hasTranslation(
+  collection: 'blog' | 'portfolio',
+  slug: string,
+  targetLang: Locale,
+): Promise<boolean> {
+  const entries = await getCollection(collection);
+  return entries.some((entry) => {
+    const parsed = splitId(entry.id);
+    return (
+      parsed.slug === slug &&
+      (parsed.lang === targetLang || parsed.lang === 'shared') &&
+      visible(entry.data)
+    );
+  });
 }
 
 export function readingMinutes(body = ''): number {

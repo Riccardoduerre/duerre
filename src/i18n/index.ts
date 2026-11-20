@@ -27,6 +27,12 @@ const translations: Record<Locale, Record<string, string>> = {
       'Bespoke commercial photography, anamorphic cinema production, photorealistic 3D CGI rendering, and digital brand direction by Riccardo Riva.',
     hero_cta_primary: 'Explore Selected Works',
     hero_cta_secondary: 'Initiate a Brief',
+    hero_metric_1_value: '100%',
+    hero_metric_1_label: 'Cinema Color Pipeline',
+    hero_metric_2_value: '4K+',
+    hero_metric_2_label: 'Anamorphic & 3D Production',
+    hero_metric_3_value: 'AA',
+    hero_metric_3_label: 'Certified Accessibility',
     vision_title_line1: 'Light is',
     vision_title_line2: 'architecture',
     vision_subtitle:
@@ -78,7 +84,7 @@ const translations: Record<Locale, Record<string, string>> = {
     services_page_subtitle: 'Four interconnected disciplines, one cohesive visual signature.',
 
     // Portfolio & Clients
-    marquee_portfolio: 'alcuni dei nostri lavori',
+    marquee_portfolio: 'Selected Works',
     view_project: 'Read Case Study',
     selected_works: 'Selected Works',
     all_projects_link: 'View Full Archive',
@@ -113,16 +119,30 @@ const translations: Record<Locale, Record<string, string>> = {
     blog_meta_desc: 'Technical essays and monographs on commercial photography, filmmaking, 3D CGI, and digital direction.',
     blog_intro: 'Deep technical notes on cinema optics, studio lighting, 3D CGI pipelines, and visual direction.',
 
-    // Portfolio page
+    // Portfolio page & Filters
     projects_breadcrumb_sub: 'Archive & Case Studies',
     projects_title: 'Selected Works',
     projects_intro:
       'Curated commercial campaigns, anamorphic films, 3D CGI studies, and editorial monographs produced for forward-thinking brands.',
     filter_label: 'Filter by discipline',
+    filter_empty: 'No items found for this filter.',
     category_photo: 'Photography',
     category_video: 'Cinema & Motion',
     category_3d: '3D / CGI',
     category_marketing: 'Digital Strategy',
+    'category_cinema-video': 'Cinema & Video Production',
+    category_fotografia: 'Commercial Photography',
+    'category_3d-cgi': '3D & CGI Rendering',
+    'category_brand-direction': 'Digital Brand Direction',
+    'category_dietro-le-quinte': 'Behind the Scenes & Gear',
+
+    // Lightbox
+    lightbox_view: 'View photo',
+    lightbox_close: 'Close [ESC]',
+    lightbox_close_aria: 'Close lightbox',
+    lightbox_prev_aria: 'Previous image',
+    lightbox_next_aria: 'Next image',
+    lightbox_frame: 'FRAME',
 
     // FAQ
     faq_eyebrow: 'Inquiries & Process',
@@ -134,6 +154,8 @@ const translations: Record<Locale, Record<string, string>> = {
     post_cta_title: 'Looking for visual direction with this level of technical depth?',
     contact_breadcrumb_sub: 'Direct Inquiry',
     contact_title: 'Let’s craft something enduring.',
+    contact_meta_description:
+      'Contact Duerre Media for commercial photography, video production, 3D CGI, and tailored digital marketing strategies for ambitious brands.',
     contact_form_subject: 'New commission inquiry from duerremedia.com',
     contact_form_budget: 'Estimated Scope / Budget (optional)',
     contact_form_budget_placeholder: 'e.g. €5k – €15k',
@@ -201,6 +223,12 @@ const translations: Record<Locale, Record<string, string>> = {
       'Fotografia commerciale d’autore, produzioni cinema anamorfiche, rendering 3D CGI fotorealistico e direzione digitale di Riccardo Riva.',
     hero_cta_primary: 'Esplora le Opere',
     hero_cta_secondary: 'Invia un Brief',
+    hero_metric_1_value: '100%',
+    hero_metric_1_label: 'Pipeline Colore Cinema',
+    hero_metric_2_value: '4K+',
+    hero_metric_2_label: 'Produzione Anamorfica & 3D',
+    hero_metric_3_value: 'AA',
+    hero_metric_3_label: 'Accessibilità Certificata',
     vision_title_line1: 'La luce è',
     vision_title_line2: 'architettura',
     vision_subtitle:
@@ -287,16 +315,30 @@ const translations: Record<Locale, Record<string, string>> = {
     blog_meta_desc: 'Saggi tecnici e approfondimenti su fotografia commerciale, cinema, 3D CGI e digital marketing.',
     blog_intro: 'Analisi tecniche su ottiche cinema, illuminazione da studio, pipeline 3D CGI e direzione visiva.',
 
-    // Portfolio page
+    // Portfolio page & Filters
     projects_breadcrumb_sub: 'Archivio & Casi Studio',
     projects_title: 'Opere Selezionate',
     projects_intro:
       'Campagne commerciali, produzioni cinematografiche, studi 3D CGI e monografie editoriali realizzate per brand e istituzioni.',
     filter_label: 'Filtra per disciplina',
+    filter_empty: 'Nessun elemento trovato per questo filtro.',
     category_photo: 'Fotografia',
     category_video: 'Cinema & Video',
     category_3d: '3D / CGI',
     category_marketing: 'Strategia Digitale',
+    'category_cinema-video': 'Cinema & Video Production',
+    category_fotografia: 'Fotografia Commerciale',
+    'category_3d-cgi': '3D & CGI Rendering',
+    'category_brand-direction': 'Digital Brand Direction',
+    'category_dietro-le-quinte': 'Behind the Scenes & Gear',
+
+    // Lightbox
+    lightbox_view: 'Visualizza foto',
+    lightbox_close: 'Chiudi [ESC]',
+    lightbox_close_aria: 'Chiudi galleria a schermo intero',
+    lightbox_prev_aria: 'Immagine precedente',
+    lightbox_next_aria: 'Immagine successiva',
+    lightbox_frame: 'SCATTO',
 
     // FAQ
     faq_eyebrow: 'Domande Frequenti',
@@ -308,6 +350,8 @@ const translations: Record<Locale, Record<string, string>> = {
     post_cta_title: 'Cerchi una direzione visiva con questo livello di rigore tecnico?',
     contact_breadcrumb_sub: 'Contatto Diretto',
     contact_title: 'Diamo forma a qualcosa che resti.',
+    contact_meta_description:
+      'Contatta Duerre Media per produzioni fotografiche commerciali, regia video, CGI 3D e strategie digitali su misura per brand ambiziosi.',
     contact_form_subject: 'Nuova richiesta di commissione da duerremedia.com',
     contact_form_budget: 'Budget indicativo (facoltativo)',
     contact_form_budget_placeholder: 'es. €5k – €15k',

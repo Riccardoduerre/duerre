@@ -7,6 +7,8 @@ interface Props {
   alt: string;
   widths?: number[];
   sizes?: string;
+  width?: number;
+  height?: number;
   class?: string;
   loading?: 'eager' | 'lazy';
   fetchpriority?: 'high' | 'low' | 'auto';
@@ -18,6 +20,8 @@ const {
   alt,
   widths = [480, 960, 1440],
   sizes = '100vw',
+  width = 1600,
+  height = 1000,
   class: className = '',
   loading = 'lazy',
   fetchpriority,
@@ -41,6 +45,8 @@ const {
   <img
     src={src}
     alt={alt}
+    width={width}
+    height={height}
     class={className}
     loading={loading}
     fetchpriority={fetchpriority}

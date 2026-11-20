@@ -1,14 +1,14 @@
 ---
-import { render, getCollection } from 'astro:content';
+import { render } from 'astro:content';
 import { Picture } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import CmsPicture from '../CmsPicture.astro';
 import PostPreview from '../PostPreview.astro';
 import DualCtaBanner from '../DualCtaBanner.astro';
-import { splitId, formatDate, readingMinutes, imageUrl, type Post } from '../../lib/content';
+import { getPosts, splitId, formatDate, readingMinutes, imageUrl, type Post } from '../../lib/content';
 import { useTranslations, localePath, type Locale } from '../../i18n';
 
-import authorPortrait from '../../assets/blog/DSCN7050.webp';
+import authorPortrait from '../../assets/media/DSCN7050.webp';
 
 interface Props {
   lang: Locale;
@@ -22,22 +22,22 @@ const { Content } = await render(post);
 const t = useTranslations(lang);
 const mins = readingMinutes(post.body);
 
-const isVisible = (draft?: boolean) => import.meta.env.DEV || !draft;
-const matchesLocale = (id: string) => {
-  const parsed = splitId(id);
-  return parsed.lang === lang || parsed.lang === 'shared';
-};
-
-const rawPosts = await getCollection(
-  'blog',
-  (entry: Post) => matchesLocale(entry.id) && isVisible(entry.data.draft),
-);
-const allPosts = rawPosts.sort(
-  (a: Post, b: Post) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
+const allPosts = await getPosts(lang);
 const relatedPosts = allPosts
   .filter((p) => p.id !== post.id && (p.data.tags || []).some((tag) => (post.data.tags || []).includes(tag)))
   .slice(0, 2);
+
+const categoryLabels: Record<string, { it: string; en: string }> = {
+  'cinema-video': { it: 'Cinema & Video Production', en: 'Cinema & Video Production' },
+  fotografia: { it: 'Fotografia Commerciale', en: 'Commercial Photography' },
+  '3d-cgi': { it: '3D & CGI Rendering', en: '3D & CGI Rendering' },
+  'brand-direction': { it: 'Digital Brand Direction', en: 'Digital Brand Direction' },
+  'dietro-le-quinte': { it: 'Behind the Scenes & Gear', en: 'Behind the Scenes & Gear' },
+};
+const categoryLabel =
+  post.data.category && categoryLabels[post.data.category]
+    ? categoryLabels[post.data.category][lang]
+    : null;
 ---
 
 <Layout
@@ -45,34 +45,46 @@ const relatedPosts = allPosts
   description={post.data.description}
   lang={lang}
   image={imageUrl(post.data.coverImage)}
+  imageAlt={post.data.coverAlt || post.data.title}
   type="article"
+  publishDate={post.data.publishDate}
+  updatedDate={post.data.updatedDate}
+  tags={post.data.tags}
 >
   <!-- Reading Progress Bar -->
   <div
     id="reading-progress"
-    class="fixed top-0 left-0 h-[2px] bg-accent z-50 transition-all duration-75 w-0 pointer-events-none"
+    aria-hidden="true"
+    class="fixed top-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-accent z-50 transition-transform duration-75 pointer-events-none"
   ></div>
 
   <article class="pt-16 md:pt-28 pb-24">
-    <!-- 01. EDITORIAL MONOGRAPH HEADER -->
-    <header class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-14 md:mb-20" data-reveal>
+    <!-- 01. EDITORIAL MONOGRAPH HEADER (Above the fold: no data-reveal opacity delay) -->
+    <header class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-14 md:mb-20">
       <div class="flex flex-wrap items-center justify-between gap-4 mb-10 font-mono text-[10px] uppercase tracking-[0.26em] text-muted">
         <a
           href={localePath(lang, '/blog/')}
           class="inline-flex items-center gap-2 text-ink hover:text-accent transition-colors"
         >
-          <span>←</span>
+          <span aria-hidden="true">←</span>
           <span>{t('nav_blog')}</span>
         </a>
-        <button
-          id="copy-link-btn"
-          type="button"
-          class="hover:text-accent transition-colors flex items-center gap-2 cursor-pointer"
-          data-copied-text={t('link_copied')}
-        >
-          <span id="copy-btn-label">{t('copy_link')}</span>
-          <span>↗</span>
-        </button>
+        <div class="flex items-center gap-4">
+          {categoryLabel && (
+            <span class="border border-line/70 px-3 py-1 text-accent">
+              {categoryLabel}
+            </span>
+          )}
+          <button
+            id="copy-link-btn"
+            type="button"
+            class="hover:text-accent transition-colors flex items-center gap-2 cursor-pointer"
+            data-copied-text={t('link_copied')}
+          >
+            <span id="copy-btn-label">{t('copy_link')}</span>
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-10 items-end mb-14">
@@ -81,11 +93,11 @@ const relatedPosts = allPosts
             <time datetime={post.data.publishDate.toISOString()} class="text-accent">
               {formatDate(post.data.publishDate, lang)}
             </time>
-            <span>/</span>
+            <span aria-hidden="true">/</span>
             <span>{mins} MIN READ</span>
             {post.data.tags.map((tag) => (
               <>
-                <span>·</span>
+                <span aria-hidden="true">·</span>
                 <span>{tag}</span>
               </>
             ))}
@@ -104,8 +116,8 @@ const relatedPosts = allPosts
       </div>
     </header>
 
-    <!-- 02. HIGH-IMPACT WIDESCREEN HERO IMAGE -->
-    <div class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-20 md:mb-28" data-reveal>
+    <!-- 02. HIGH-IMPACT WIDESCREEN HERO IMAGE (Above the fold: no data-reveal opacity delay) -->
+    <div class="mx-auto max-w-[1440px] px-6 sm:px-10 mb-20 md:mb-28">
       <div class="aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-surface">
         <CmsPicture
           src={post.data.coverImage}
@@ -139,7 +151,7 @@ const relatedPosts = allPosts
               />
             </div>
             <div>
-              <h3 class="text-base font-medium text-ink">Riccardo Riva</h3>
+              <h2 class="text-base font-medium text-ink">Riccardo Riva</h2>
               <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
                 Founder · Duerre
               </span>
@@ -185,7 +197,7 @@ const relatedPosts = allPosts
               {prev && (
                 <a href={localePath(lang, `/blog/${splitId(prev.id).slug}/`)} class="group block">
                   <span class="font-mono text-[10px] text-muted uppercase tracking-[0.24em] block mb-2">
-                    ← {t('prev_post')}
+                    <span aria-hidden="true">←</span> {t('prev_post')}
                   </span>
                   <span class="text-lg sm:text-xl font-light text-ink group-hover:text-accent transition-colors">
                     {prev.data.title}
@@ -197,7 +209,7 @@ const relatedPosts = allPosts
               {next && (
                 <a href={localePath(lang, `/blog/${splitId(next.id).slug}/`)} class="group block">
                   <span class="font-mono text-[10px] text-muted uppercase tracking-[0.24em] block mb-2">
-                    {t('next_post')} →
+                    {t('next_post')} <span aria-hidden="true">→</span>
                   </span>
                   <span class="text-lg sm:text-xl font-light text-ink group-hover:text-accent transition-colors">
                     {next.data.title}
@@ -213,7 +225,7 @@ const relatedPosts = allPosts
     <!-- Related Reading -->
     {relatedPosts.length > 0 && (
       <section class="mx-auto max-w-[1440px] px-6 sm:px-10 mt-24 pt-16 border-t border-line/60">
-        <span class="pill-subtext mb-12">{t('related_posts')}</span>
+        <h2 class="pill-subtext mb-12">{t('related_posts')}</h2>
         <div class="grid md:grid-cols-2 gap-10 lg:gap-14">
           {relatedPosts.map((p) => (
             <PostPreview post={p} lang={lang} />
@@ -226,14 +238,36 @@ const relatedPosts = allPosts
   <DualCtaBanner lang={lang} />
 
   <script>
-    function setupPostInteractions() {
+    let blogScrollController: AbortController | null = null;
+
+    function cleanupBlogEnhancements() {
+      blogScrollController?.abort();
+      blogScrollController = null;
+    }
+
+    function initBlogEnhancements() {
+      cleanupBlogEnhancements();
       const bar = document.getElementById('reading-progress');
       if (bar) {
-        window.onscroll = () => {
+        blogScrollController = new AbortController();
+        let ticking = false;
+        const updateProgress = () => {
           const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
-          bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+          const ratio = totalHeight > 0 ? Math.min(1, Math.max(0, window.scrollY / totalHeight)) : 0;
+          bar.style.transform = `scaleX(${ratio})`;
+          ticking = false;
         };
+        window.addEventListener(
+          'scroll',
+          () => {
+            if (!ticking) {
+              window.requestAnimationFrame(updateProgress);
+              ticking = true;
+            }
+          },
+          { passive: true, signal: blogScrollController.signal },
+        );
+        updateProgress();
       }
 
       const copyBtn = document.getElementById('copy-link-btn');
@@ -254,7 +288,7 @@ const relatedPosts = allPosts
       }
     }
 
-    setupPostInteractions();
-    document.addEventListener('astro:page-load', setupPostInteractions);
+    document.addEventListener('astro:before-swap', cleanupBlogEnhancements);
+    document.addEventListener('astro:page-load', initBlogEnhancements);
   </script>
 </Layout>

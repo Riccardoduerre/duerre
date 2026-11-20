@@ -2,7 +2,8 @@
 title: "Lighting Specular Surfaces: Scrims, Gradients and Reflection Control"
 publishDate: 2026-03-09
 pubDate: 2026-03-09
-coverImage: ../../../assets/blog/_DSC2344.webp
+coverImage: ../../../assets/media/_DSC2344.webp
+coverAlt: "Controlled specular highlight gradients and diffused light reflection on a textured surface"
 description: "You don’t light metallic and glossy objects directly—you light the surfaces they reflect. Master large diffusion gradients."
 tags: ["Lighting", "Photography", "Commercial"]
 ---
